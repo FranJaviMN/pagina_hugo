@@ -1,4 +1,29 @@
 baseURL = ""
 languageCode = "es-ES"
 title = "My New Hugo Site"
+copyright = "Francisco Javier Martín Núñez"
 theme = "cactus"
+
+[[menu.main]]
+  name = "Home"
+  url = "/"
+  weight = 1
+
+[[menu.main]]
+  name = "posts"
+  url = "/post"
+  weight = 2
+
+[[menu.main]]
+  name = "Sobre mi"
+  url = "/sobre_mi/yo"
+  weight = "3"
+
+
+[params]
+
+  colortheme = "white"
+  description = "En esta pagina estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno."
+  mainSection = "post"
+  showAllPostsOnHomePage = false
+  postsOnHomePage = 5
