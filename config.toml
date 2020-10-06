@@ -1,6 +1,6 @@
 baseURL = ""
 languageCode = "es-ES"
-title = "My New Hugo Site"
+title = "Blog"
 copyright = "Francisco Javier Martín Núñez"
 theme = "cactus"
 
@@ -10,9 +10,16 @@ theme = "cactus"
   weight = 1
 
 [[menu.main]]
-  name = "posts"
-  url = "/post"
+  name = "Sistemas"
+  url = "/Sistemas"
   weight = 2
+
+[[menu.main]]
+  name = "Seguridad"
+  url = "/Seguridad"
+  weight = 3
+
+
 
 
 
@@ -20,6 +27,13 @@ theme = "cactus"
 
   colortheme = "white"
   description = "En esta pagina estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno."
-  mainSection = "post"
   showAllPostsOnHomePage = false
   postsOnHomePage = 5
+
+[[params.social]]
+  name = "github"
+  link = "https://github.com/FranJaviMN"
+
+[[params.social]]
+  name = "email"
+  link = "franjaviermn17100@gmail.com"
