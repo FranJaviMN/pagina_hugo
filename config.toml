@@ -1,4 +1,4 @@
-baseURL = ""
+baseURL = "https://prueba-5i5d.onrender.com"
 languageCode = "es-ES"
 title = "Blog"
 copyright = "Francisco Javier Martín Núñez"
@@ -11,12 +11,12 @@ theme = "cactus"
 
 [[menu.main]]
   name = "Sistemas"
-  url = "/Sistemas"
+  url = "https://prueba-5i5d.onrender.com/Sistemas"
   weight = 2
 
 [[menu.main]]
   name = "Seguridad"
-  url = "/Seguridad"
+  url = "https://prueba-5i5d.onrender.com/Seguridad"
   weight = 3
 
 
