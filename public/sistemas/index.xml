@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Sistemas on Blog</title>
-    <link>https://prueba-5i5d.onrender.com/sistemas/</link>
+    <link>https://franjavimn.onrender.com/sistemas/</link>
     <description>Recent content in Sistemas on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Mon, 05 Oct 2020 18:13:34 +0200</lastBuildDate><atom:link href="https://prueba-5i5d.onrender.com/sistemas/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 05 Oct 2020 18:13:34 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/sistemas/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Dpkg Apt</title>
-      <link>https://prueba-5i5d.onrender.com/sistemas/dpkg-apt/</link>
+      <link>https://franjavimn.onrender.com/sistemas/dpkg-apt/</link>
       <pubDate>Mon, 05 Oct 2020 18:13:34 +0200</pubDate>
       
-      <guid>https://prueba-5i5d.onrender.com/sistemas/dpkg-apt/</guid>
+      <guid>https://franjavimn.onrender.com/sistemas/dpkg-apt/</guid>
       <description>Ejercicios de dpkg y APT En primer lugar prepara una máquina virtual con Debian buster, puedes hacerlo de la forma que prefieras o usando el fichero Vagrantfile que se proporciona.
 La versión de debian buster a fecha de hoy, es la versión 10.6. Sobre una máquina de versión anterior realizar las siguientes acciones:
 Trabajo con apt, aptitude, dpkg  ¿Qué acciones consigo al realizar apt update y apt upgrade? Explica detalladamente.</description>
