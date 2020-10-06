@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Mon, 05 Oct 2020 20:01:02 +0200</lastBuildDate><atom:link href="https://prueba-5i5d.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 06 Oct 2020 19:05:29 +0200</lastBuildDate><atom:link href="https://prueba-5i5d.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Dhcp Ejercicio</title>
+      <link>https://prueba-5i5d.onrender.com/servicios/dhcp-ejercicio/</link>
+      <pubDate>Tue, 06 Oct 2020 19:05:29 +0200</pubDate>
+      
+      <guid>https://prueba-5i5d.onrender.com/servicios/dhcp-ejercicio/</guid>
+      <description>Ejercicio: Instalación y configuración del servidor dhcp en linux En las siguientes tareas vamos ver como podemos instalar y configurar un servidor dhcp en una maquina vagrant para que este proporcione direcciones dinamicas a otras maquinas clientes.
+Instalción del servidor isc-dhcp-server Para poder hacer una instalacion del servidor isc-dhcp-server en nuestro servidor, para ello nos vamos a la linea de comandos y escribimos:
+vagrant@servidor:~$ sudo apt install isc-dhcp-server Con ese comando vamos a hacer la instalacion de nuestro servidor.</description>
+    </item>
+    
     <item>
       <title>Raid5</title>
       <link>https://prueba-5i5d.onrender.com/seguridad/raid5/</link>

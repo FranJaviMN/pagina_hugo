@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Dhcp Ejercicio | Blog</title>
+  <meta name="description" content="En esta pagina estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Dhcp Ejercicio" />
+<meta property="og:description" content="Ejercicio: Instalación y configuración del servidor dhcp en linux En las siguientes tareas vamos ver como podemos instalar y configurar un servidor dhcp en una maquina vagrant para que este proporcione direcciones dinamicas a otras maquinas clientes.
+Instalción del servidor isc-dhcp-server Para poder hacer una instalacion del servidor isc-dhcp-server en nuestro servidor, para ello nos vamos a la linea de comandos y escribimos:
+vagrant@servidor:~$ sudo apt install isc-dhcp-server Con ese comando vamos a hacer la instalacion de nuestro servidor." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://prueba-5i5d.onrender.com/servicios/dhcp-ejercicio/" />
+<meta property="article:published_time" content="2020-10-06T19:05:29+02:00" />
+<meta property="article:modified_time" content="2020-10-06T19:05:29+02:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Dhcp Ejercicio"/>
+<meta name="twitter:description" content="Ejercicio: Instalación y configuración del servidor dhcp en linux En las siguientes tareas vamos ver como podemos instalar y configurar un servidor dhcp en una maquina vagrant para que este proporcione direcciones dinamicas a otras maquinas clientes.
+Instalción del servidor isc-dhcp-server Para poder hacer una instalacion del servidor isc-dhcp-server en nuestro servidor, para ello nos vamos a la linea de comandos y escribimos:
+vagrant@servidor:~$ sudo apt install isc-dhcp-server Con ese comando vamos a hacer la instalacion de nuestro servidor."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://prueba-5i5d.onrender.com/css/style-white.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://prueba-5i5d.onrender.com/images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://prueba-5i5d.onrender.com">
+  
+    <div id="logo" style="background-image: url(https://prueba-5i5d.onrender.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/">Home</a></li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+       
+        <li><a href="/servicios">Servicios</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h1 id="ejercicio-instalación-y-configuración-del-servidor-dhcp-en-linux">Ejercicio: Instalación y configuración del servidor dhcp en linux</h1>
+<p>En las siguientes tareas vamos ver como podemos instalar y configurar un servidor dhcp en una maquina vagrant para que este proporcione direcciones dinamicas a otras maquinas clientes.</p>
+<h2 id="instalción-del-servidor-isc-dhcp-server">Instalción del servidor isc-dhcp-server</h2>
+<p>Para poder hacer una instalacion del servidor isc-dhcp-server en nuestro servidor, para ello nos vamos a la linea de comandos y escribimos:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@servidor:~$ sudo apt install isc-dhcp-server
+</code></pre></div><p>Con ese comando vamos a hacer la instalacion de nuestro servidor. Veremos que cuando estamos instalado este servidor dhcp nos saldra unos errores pero no debemos tenerlos en cuenta ya que estos errores se deben a que nuestro servidor dhcp no esta configurado.</p>
+<h2 id="configuración-del-servidor-isc-dhcp-server">Configuración del servidor isc-dhcp-server</h2>
+<p>Lo primero que debemos de hacer es indicar a nuestro servidor que interfaz de red por la que va a trabajar dhcp, para ello debemos de irnos al siguiente fichero de configuración:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@servidor:~$ sudo nano /etc/default/isc-dhcp-server
+</code></pre></div><p>Cuando estamos en el fichero nos fijamos que hay una linea en la que pone <strong>INTERFACESv4=&quot;&quot;</strong>. Nosotros nos vamos a esta linea y le indicamos la interfaz que va a usar nuestro servidor dhcp, en este caso la mia es la eth1:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">INTERFACESv4<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;eth1&#34;</span>
+</code></pre></div><p>Ahora nos dirigimos al fichero de configuracion de dhcp que es <em><strong>/etc/dhcp/dhcpd.conf</strong></em>. En dicho fichero debemos de poner la configuracion dhcp que nosotros necesitemos en nuestro servidor, todos los parametros que se pueden especificar son:</p>
+<ul>
+<li>
+<p>Subnet: Especifican rangos de direcciones IPs que serán cedidas a los clientes que lo soliciten.</p>
+</li>
+<li>
+<p>max-lease-time: Tiempo de la concesión de la dirección IP</p>
+</li>
+<li>
+<p>default-lease-time: Tiempo de renovación de la concesión</p>
+</li>
+<li>
+<p>option routers: Indicamos la dirección red de la puerta de enlace que se utiliza para salir a internet.</p>
+</li>
+<li>
+<p>option domain-name-servers: Se pone las direcciones IP de los servidores DNS que va a utilizar el cliente.</p>
+</li>
+<li>
+<p>option domain­-name: Nombre del dominio que se manda al cliente.</p>
+</li>
+<li>
+<p>option subnet­mask: Subred enviada a los clientes.</p>
+</li>
+<li>
+<p>option broadcast-­address: Dirección de difusión de la red.</p>
+</li>
+</ul>
+<p>Al indicar una sección subnet tenemos que indicar la dirección de la red y la mascara de red y entre llaves podemos poner los siguientes parámetros:</p>
+<ul>
+<li>
+<p>range: Indicamos el rango de direcciones IP que vamos a asignar.</p>
+</li>
+<li>
+<p>Algunos de los parámetros que hemos explicado en la sección principal.</p>
+</li>
+</ul>
+<p>Ejemplo de configuración de la sección subnet puede ser:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">subnet 192.168.100.0 netmask 255.255.255.0 <span style="color:#f92672">{</span>
+  range 192.168.100.100 192.168.100.110;
+  option routers 192.168.100.1;
+  option domain-name-servers 80.58.0.33, 80.58.32.9;
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Reinciciamos el servidor dhcp:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@servidor:~$ sudo systemctl restart isc-dhcp-server.service
+</code></pre></div><h3 id="ejercicio-1">Ejercicio 1</h3>
+<ol>
+<li>
+<p>Configura el servidor dhcp con las siguientes características</p>
+<ul>
+<li>Rango de direcciones a repartir: 192.168.0.100 - 192.168.0.110</li>
+<li>Máscara de red: 255.255.255.0</li>
+<li>Duración de la concesión: 1 hora</li>
+<li>Puerta de enlace: 192.168.0.1</li>
+<li>Servidores DNS: 8.8.8.8, 8.8.4.4</li>
+</ul>
+</li>
+<li>
+<p>Configura los clientes para obtener direccionamiento dinámico. Comprueba las configuraciones de red que han tomado los clientes. Visualiza el fichero del servidor donde se guarda las configuraciones asignadas.</p>
+</li>
+</ol>
+<h4 id="tarea-1">Tarea 1</h4>
+<p>Para poder realizar este ejercicio necesitaremos minimos dos maquinas para poder hacer un servidor y un cliente, para ello vamos a usar <strong>vagrant</strong> para la creacion de estas dos maquinas y usaremos el siguiente contenido en el <em><strong>Vagrantfile</strong></em>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">Vagrant</span><span style="color:#f92672">.</span>configure(<span style="color:#e6db74">&#34;2&#34;</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>config<span style="color:#f92672">|</span>
+  config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>define <span style="color:#e6db74">:servidor</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>servidor<span style="color:#f92672">|</span>
+    servidor<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>box <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;debian/buster64&#34;</span>
+    servidor<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>hostname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;servidor&#34;</span>
+    servidor<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>network <span style="color:#e6db74">:private_network</span>, <span style="color:#e6db74">ip</span>: <span style="color:#e6db74">&#34;192.168.0.1&#34;</span>,
+    <span style="color:#e6db74">virtualboxintnet</span>: <span style="color:#e6db74">&#34;red1&#34;</span>
+  <span style="color:#66d9ef">end</span>
+  config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>define <span style="color:#e6db74">:nodolan1</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>nodolan1<span style="color:#f92672">|</span>
+    nodolan1<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>box <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;debian/buster64&#34;</span>
+    nodolan1<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>hostname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;nodolan1&#34;</span>
+    nodolan1<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>network <span style="color:#e6db74">:private_network</span>, <span style="color:#e6db74">type</span>: <span style="color:#e6db74">&#34;dhcp&#34;</span>,
+    <span style="color:#e6db74">virtualboxintnet</span>: <span style="color:#e6db74">&#34;red1&#34;</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Una vez tengamos ambas maquinas creadas nos vamos a la maquina &ldquo;servidor&rdquo; mediante <strong>vagrant ssh servidor</strong> y una vez dentro seguimos los pasos de instalacion del servidor dhcp hasta la parte donde añadimos la interfaz de red que vamos a usar, en este caso usaremos eth1 por lo que debemos de tener en el fichero <em><strong>/etc/default/isc-dhcp-server</strong></em> y tener el parametro <strong>INTERFACESv4=&ldquo;eth1&rdquo;</strong>.</p>
+<p>Una vez tengamos este paso nos dirigimos al fichero de configuracion de dhcp y ponemos lo siguiente:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">subnet 192.168.0.1 netmask 255.255.255.0 <span style="color:#f92672">{</span>
+  range 192.168.0.100 192.168.0.110;
+  option domain-name-servers 8.8.8.8, 8.8.4.4;
+  option routers 192.168.0.1;
+  option broadcast-address 192.168.0.255;
+  default-lease-time 600;
+  max-lease-time 3600;
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Una vez hecho este ultimo paso, reiniciamos nuestro servicio con:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@servidor:~$ sudo systemctl restart isc-dhcp-server.service
+
+Y vemos el estado del servicio veremos que esta activo:
+
+vagrant@servidor:~$ sudo systemctl status isc-dhcp-server.service
+</code></pre></div><h4 id="tarea-2">Tarea 2</h4>
+<p>Ahora que ya tenemos el servicio dhcp configurado y activado, si nos dirigimos a nuestra maquina cliente y hacemos <em><strong>vagrant@nodolan1:~$ ip a show dev eth1</strong></em> y veremos que tiene asignada una ip del rango que nosotros le hemos dicho en nuestro fichero de configuracion del servidor dhcp y tambien la direccion de broadcast que le hemos indicado.</p>
+<p>A la hora de ver la configuracion que toma nuestro cliente se le añade a nuestro servidor unas concesiones, donde tenemos los datos de la maquina a la que se le a asignado la ip. En este fichero nos muestra el tiempo de concesion que tiene esa ip, y el tiempo de renovacion de esa concesion, que en este caso el tiempo de renovacion es de 10 min.</p>
+<p>Para ver este fichero nos dirigimos al fichero <em><strong>/var/lib/dhcp/dhcpd.leases</strong></em> y ahi tendremos todas las concesiones a los clientes que estan cogiendo ip de nuestro servidor dhcp.</p>
+<h3 id="ejercicio-2">Ejercicio 2</h3>
+<ol>
+<li>
+<p>Crea en el servidor dhcp una sección HOST para conceder a un cliente una dirección IP determinada (por ejemplo la 192.168.0.105)</p>
+</li>
+<li>
+<p>Obtén una nueva dirección IP en el cliente y comprueba que es la que has asignado por medio de la sección host.</p>
+</li>
+</ol>
+<p><strong>Realiza las siguientes comprobaciones</strong></p>
+<p>Vamos a comprobar que ocurre con la configuración de los clientes en determinadas circunstancias, para ello vamos a poner un tiempo de concesión muy bajo.</p>
+<ol>
+<li>
+<p>Los clientes toman una configuración, y a continuación apagamos el servidor dhcp. ¿qué ocurre con el cliente windows? ¿Y con el cliente linux?</p>
+</li>
+<li>
+<p>Los clientes toman una configuración, y a continuación cambiamos la configuración del servidor dhcp (por ejemplo el rango). ¿qué ocurre con el cliente windows? ¿Y con el cliente linux?</p>
+</li>
+</ol>
+<h4 id="tarea-1-1">Tarea 1</h4>
+<p>En esta tarea debemos de hacer que una ip determinada (en este caso usaremos la 192.168.0.105) pueda ser asignada a un solo dispositivo y que dicho dispositivo al hacer una peticion dhcp a nuestro servidor este solo le asigne la ip que hemos mencionado anteriormente.</p>
+<p>Para realizar este proceso tenemos que indicar en el fichero de configuracion <em><strong>/etc/dhcp/dhcpd.conf</strong></em> y, esto es muy importante, para realizar esta reserva debemos de indicarla dentro de la subnet que tengamos definida, en este caso la subnet de la tarea anterior:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">subnet 192.168.0.1 netmask 255.255.255.0 <span style="color:#f92672">{</span>
+  range 192.168.0.100 192.168.0.110;
+  option domain-name-servers 8.8.8.8, 8.8.4.4;
+  option routers 192.168.0.1;
+  option broadcast-address 192.168.0.255;
+  default-lease-time 600;
+  max-lease-time 3600;
+
+  host reserva-1 <span style="color:#f92672">{</span> <span style="color:#75715e">#seccion host dentro de la subnet</span>
+        fixed-address 192.168.0.105; <span style="color:#75715e"># La dirección IP que le vamos a asignar.</span>
+        hardware ethernet 08:00:27:38:ee:c6; <span style="color:#75715e"># Es la dirección MAC de la tarjeta de red del host.</span>
+        <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>De esta forma tendremos que, cuando nuestra maquina cliente haga una peticion dhcp a nuestro servidor se le asignara la ip que le hemos indicado en el fichero de configuración. Para que nos de la ip solo debemos de renovar nuestra concesion con <em><strong>dhclient</strong></em> y al hacer <em><strong>ip a show dev eth1</strong></em> veremos que nos han asignado la ip 192.168.0.105 .</p>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2020  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+         
+        <li><a href="/servicios">Servicios</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>
