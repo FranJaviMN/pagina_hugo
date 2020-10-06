@@ -11,12 +11,12 @@ theme = "cactus"
 
 [[menu.main]]
   name = "Sistemas"
-  url = "https://prueba-5i5d.onrender.com/Sistemas"
+  url = "/Sistemas"
   weight = 2
 
 [[menu.main]]
   name = "Seguridad"
-  url = "https://prueba-5i5d.onrender.com/Seguridad"
+  url = "/Seguridad"
   weight = 3
 
 
