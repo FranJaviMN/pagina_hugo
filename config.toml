@@ -19,6 +19,12 @@ theme = "cactus"
   url = "/Seguridad"
   weight = 3
 
+[[menu.main]]
+  name = "Servicios"
+  url = "/Servicios"
+  weight = 4
+
+
 
 
 
