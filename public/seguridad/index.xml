@@ -2,27 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Seguridads on Blog</title>
-    <link>/seguridad/</link>
+    <link>https://prueba-5i5d.onrender.com/seguridad/</link>
     <description>Recent content in Seguridads on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Mon, 05 Oct 2020 20:01:02 +0200</lastBuildDate><atom:link href="/seguridad/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 05 Oct 2020 20:01:02 +0200</lastBuildDate><atom:link href="https://prueba-5i5d.onrender.com/seguridad/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Raid5</title>
-      <link>/seguridad/raid5/</link>
+      <link>https://prueba-5i5d.onrender.com/seguridad/raid5/</link>
       <pubDate>Mon, 05 Oct 2020 20:01:02 +0200</pubDate>
       
-      <guid>/seguridad/raid5/</guid>
+      <guid>https://prueba-5i5d.onrender.com/seguridad/raid5/</guid>
       <description>Raid 5 ¿Qué es RAID 5? Un RAID 5 (también llamado distribuido con paridad) es una división de datos a nivel de bloques que distribuye la información de paridad entre todos los discos miembros del conjunto. El RAID 5 ha logrado popularidad gracias a su bajo coste de redundancia. Generalmente, el RAID 5 se implementa con soporte hardware para el cálculo de la paridad. RAID 5 necesitará un mínimo de 3 discos para ser implementado.</description>
     </item>
     
     <item>
       <title>Rclone</title>
-      <link>/seguridad/rclone/</link>
+      <link>https://prueba-5i5d.onrender.com/seguridad/rclone/</link>
       <pubDate>Mon, 05 Oct 2020 19:55:23 +0200</pubDate>
       
-      <guid>/seguridad/rclone/</guid>
+      <guid>https://prueba-5i5d.onrender.com/seguridad/rclone/</guid>
       <description>rclone en linux ¿Qué es rclone? se trata de una herramienta en línea de comando para sincronizar archivos y directorios desde la computadora con los proveedores más importantes de alojamiento de contenidos en la nube. También permite efectuar copias dentro de nuestro propio sistema de archivos.
 Practica con rclone A continuación vamos a realizar distintas practicas con la herramienta de rclone en nuestro ordenador, para ello vamos a tener en total 4 tareas distintas.</description>
     </item>

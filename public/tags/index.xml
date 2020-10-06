@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Blog</title>
-    <link>/tags/</link>
+    <link>https://prueba-5i5d.onrender.com/tags/</link>
     <description>Recent content in Tags on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
-    <copyright>Francisco Javier Martín Núñez</copyright><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>Francisco Javier Martín Núñez</copyright><atom:link href="https://prueba-5i5d.onrender.com/tags/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
