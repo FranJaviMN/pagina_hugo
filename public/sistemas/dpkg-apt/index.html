@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Dpkg Apt | Blog</title>
+  <meta name="description" content="En esta pagina estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Dpkg Apt" />
+<meta property="og:description" content="Ejercicios de dpkg y APT En primer lugar prepara una máquina virtual con Debian buster, puedes hacerlo de la forma que prefieras o usando el fichero Vagrantfile que se proporciona.
+La versión de debian buster a fecha de hoy, es la versión 10.6. Sobre una máquina de versión anterior realizar las siguientes acciones:
+Trabajo con apt, aptitude, dpkg  ¿Qué acciones consigo al realizar apt update y apt upgrade? Explica detalladamente." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/sistemas/dpkg-apt/" />
+<meta property="article:published_time" content="2020-10-05T18:13:34+02:00" />
+<meta property="article:modified_time" content="2020-10-05T18:13:34+02:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Dpkg Apt"/>
+<meta name="twitter:description" content="Ejercicios de dpkg y APT En primer lugar prepara una máquina virtual con Debian buster, puedes hacerlo de la forma que prefieras o usando el fichero Vagrantfile que se proporciona.
+La versión de debian buster a fecha de hoy, es la versión 10.6. Sobre una máquina de versión anterior realizar las siguientes acciones:
+Trabajo con apt, aptitude, dpkg  ¿Qué acciones consigo al realizar apt update y apt upgrade? Explica detalladamente."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="css/style-white.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="">
+  
+    <div id="logo" style="background-image: url(images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/">Home</a></li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h1 id="ejercicios-de-dpkg-y-apt">Ejercicios de dpkg y APT</h1>
+<p>En primer lugar prepara una máquina virtual con Debian buster, puedes hacerlo de la forma que prefieras o usando el fichero Vagrantfile que se proporciona.</p>
+<p>La versión de debian buster a fecha de hoy, es la versión 10.6. Sobre una máquina de versión anterior realizar las siguientes acciones:</p>
+<h2 id="trabajo-con-apt-aptitude-dpkg">Trabajo con apt, aptitude, dpkg</h2>
+<ol>
+<li>¿Qué acciones consigo al realizar apt update y apt upgrade? Explica detalladamente.</li>
+</ol>
+<p>Al realizar el comando de <strong>apt update</strong> lo que estamos haciendo no es una actualizacion de los paquetes, sino que descarga la lista de paquetes desde los repositorios que tenemos indicados en el fichero <em><strong>/etc/apt/sources.list</strong></em> y &ldquo;actualiza&rdquo; la informacion de las nuevas versiones de los paquetes y las dependencias de estos.</p>
+<p>Cuando usamos el comando <strong>apt upgrade</strong> lo que estamos haciendo el leer la lista de paquetes que hemos descargado con <strong>apt update</strong> para proceder a, o bien actualizar un paquete que tengamos instalado en nuestro sistema o instalar una dependencia nueva del paquete para que este funcione.</p>
+<ol start="2">
+<li>Lista la relación de paquetes que pueden ser actualizados. ¿Qué información puedes sacar a tenor de lo mostrado en el listado?.</li>
+</ol>
+<p>Si en nuestro sistema, despues de realizar un <strong>apt update</strong>, queremos ver la lista de los paquetes que pueden ser actualizados solo debemos de usar el comando <strong>apt list &ndash;upgradable</strong> y si queremos que la salida del comando la podamos ver paginada solo debemos de usar:</p>
+<pre><code>apt list --upgradable | less
+</code></pre>
+<p>De esta forma veremos la informacion paginada. Cuando realizamos el comando y vemos su salida podemos ver los paquetes que se van a actualizar en nuestro sistema indicandonos la version que tenemos en nuestro sistema y la version que se va a instalar.</p>
+<ol start="3">
+<li>Indica la versión instalada, candidata así como la prioridad del paquete openssh-client.</li>
+</ol>
+<p>Para poder ver la version que tenemos de algun paquete asi como de la version candidata que existe para instalar y su prioridad en el sistema debemos de introducir el comando:</p>
+<pre><code>apt-cache policy (nombre del paquete)
+</code></pre>
+<p>en este caso seria el siguiente comando:</p>
+<pre><code>apt-cache policy openssh-client
+</code></pre>
+<p>De esta forma veremos si el paquete que estamos consultando esta instalado en nuestra sistema y, si esta instalado como si no lo esta, nos indicara el paquete candidato a instalar que sera la version mas actual que se encuentre.</p>
+<ol start="4">
+<li>¿Cómo puedes sacar información de un paquete oficial instalado o que no este instalado?</li>
+</ol>
+<p>Si queremos ver la informacion de un paquete, este instalado o no, debemos usar el comando:</p>
+<pre><code>apt-cache show (nombre del paquete)
+</code></pre>
+<p>De esta forma veremos el nombre del paquete, la version que tenemos en nuestra lista de paquetes, los que mantienen el paquete y mucha mas informacion acerca del paquete consultado.</p>
+<ol start="7">
+<li>todo el contenido referente al paquete openssh-client actual de tu máquina. Utiliza para ello tanto dpkg como apt.</li>
+</ol>
+<p>Si queremos ver el contenido referente a cualquier paquete podemos usar tanto <strong>dpkg</strong> como <strong>apt</strong>.</p>
+<pre><code>Con dpkg: dpkg -L (nombre del paquete)
+Con apt: apt-file list (nombre del paquete)
+apt-file puede que requiera una instalacion: apt install apt-file y luego apt-file update.
+</code></pre>
+<ol start="8">
+<li>Listar el contenido de un paquete sin la necesidad de instalarlo o descargarlo.</li>
+</ol>
+<p>Para ver el contenido de paquetes no instalados o no descargados podemos usar el comando:</p>
+<pre><code>apt-list
+</code></pre>
+<p>De esta forma podremos ver el contenido del paquete, aunque como se ha dicho en el apartado anterior, <strong>apt-file</strong> puede que necesite una instalacion y una actualizacion de su lista de paquetes.</p>
+<ol start="9">
+<li>Simula la instalación del paquete openssh-client.</li>
+</ol>
+<p>Para la instalacion de un paquete lo podemos hacer con el comando:</p>
+<pre><code>apt install openssh-client
+</code></pre>
+<p>o lo podemos hacer con</p>
+<pre><code>aptitude install openssh-client
+</code></pre>
+<ol start="10">
+<li>¿Qué comando te informa de los posible bugs que presente un determinado paquete?</li>
+</ol>
+<p>Para poder ver los posibles bugs que puede tener un paquete que tengamos en meten instalar, podemos usar el comando:</p>
+<pre><code>apt-listbugs list (nombre del paquete)
+</code></pre>
+<ol start="11">
+<li>
+<p>Después de realizar un apt update &amp;&amp; apt upgrade. Si quisieras actualizar únicamente los paquetes que tienen de cadena openssh. ¿Qué procedimiento seguirías?. Realiza esta acción, con las estructuras repetitivas que te ofrece bash, así como con el comando xargs.</p>
+</li>
+<li>
+<p>¿Cómo encontrarías qué paquetes dependen de un paquete específico?</p>
+</li>
+</ol>
+<p>Para encontrar las despendecias de un paquete en concreto que podemos usar el comando:</p>
+<pre><code>apt-cache depends (nombre del paquete)
+</code></pre>
+<p>Cuando realizamos el comando apt-cache depends nos mostrara por pantalla los paquetes que dependen del paquete del que hemos hecho la busqueda como los paquetes que se recomiendan instalar y con aquellos paquetes con los que tiene conflicto.</p>
+<ol start="13">
+<li>Como procederías para encontrar el paquete al que pertenece un determinado archivo.</li>
+</ol>
+<p>Para realizar la busqueda de un paquete mediante un fichero de este paquete solo debemos usar el comando:</p>
+<pre><code>apt-file search (nombre del fichero del paquete en cuestion)
+</code></pre>
+<ol start="14">
+<li>¿Que procedimientos emplearías para eliminar liberar la cache en cuanto a descargas de paquetería?</li>
+</ol>
+<p>Para poder liberar la cache que se genera cuando realizamos un <strong>apt update</strong>, solo debemos de realizar el siguiente comando:</p>
+<pre><code>apt autoclean -&gt; Elimina los paquetes obsoletos del cache de apt
+
+apt clean -&gt; Elimina todo el cache de apt
+</code></pre>
+<h2 id="trabajo-con-ficheros-deb">Trabajo con ficheros .deb</h2>
+<ol>
+<li>Descarga un paquete sin instalarlo, es decir, descarga el fichero .deb correspondiente. Indica diferentes formas de hacerlo.</li>
+</ol>
+<p>Para poder descargar un fichero .deb podemos hacerlo de una forma grafica descargando el fichero desde la pagina o repositorio que indiquemos. Tambien podemos descargar el paquete que nosotros indiquemos desde los repositorios debian que tengamos asignados y con todas sus dependencias, para ello solo debemos usar el siguiente comando:</p>
+<pre><code>apt install --download-only (nombre del paquete) -&gt; Este fichero se guardara en /var/cache/apt/archives
+</code></pre>
+<ol start="2">
+<li>¿Cómo puedes ver el contenido, que no extraerlo, de lo que se instalará en el sistema de un paquete deb?</li>
+</ol>
+<p>Para poder listar el contenido de un archivo .deb podemos usar <strong>dpkg</strong> con el siguiente comando:</p>
+<pre><code>dpkg -c (nombre del fichero .deb) -&gt; Vemos su interior sin descomprimirlo
+</code></pre>
+<p>o tambien podemos usar el comando <strong>ar</strong></p>
+<pre><code>ar t (nombre del fichero .deb)
+</code></pre>
+<ol start="3">
+<li>Sobre el fichero .deb descargado, utiliza el comando ar. ar permite extraer el contenido de una paquete deb. Indica el procedimiento para visualizar con ar el contenido del paquete deb. Con el paquete que has descargado y utilizando el comando ar, descomprime el paquete. ¿Qué información dispones después de la extracción?. Indica la finalidad de lo extraído.</li>
+</ol>
+<p>Si no tubieramos la utilidad <strong>ar</strong> en nuestro sistema solo debemos ejecutar el siguiente comando para poder tenerla disponible:</p>
+<pre><code>apt install binutils 
+</code></pre>
+<p>Una vez instalado la utilidad <strong>ar</strong> solo debemos de mirar su documentacion para poder ver la forma de ver el contenido de un fichero .deb y la forma de descomprimirlos:</p>
+<pre><code>ar t (nombre del fichero .deb) -&gt; Vemos el interiro del fichero .deb
+
+ar x (nombre del fichero .deb) -&gt; Descomprimimos el fichero .deb
+</code></pre>
+<p>De esta forma, al descomprimir el fichero .deb nos apareceran 3 nuevos ficheros, donde:</p>
+<pre><code>debian-binary -&gt; es un archivo de texto plano que indica la versión del archivo .deb.
+
+control.tar.gz -&gt; contiene toda la metadata disponible. Entre otras cosas, la información contenida en este archivo indica si se puede instalar el paquete en cuestión basándose en las dependencias necesarias y en su presencia en el sistema.
+
+data.tar.gz -&gt; contiene todos los archivos que serán extraídos por dpkg. Esto incluye archivos ejecutables, el man page, y todo lo relacionado con el paquete.
+</code></pre>
+<ol start="4">
+<li>Indica el procedimiento para descomprimir lo extraído por ar del punto anterior. ¿Qué información contiene?</li>
+</ol>
+<p>Para poder descomprimir lo anteriormente descomprimido con <strong>ar</strong>, debemos usar la utilidad <strong>tar</strong> que nos permitira descomprimir los ficheros tar.xz, para ello usamos el siguiente comando:</p>
+<pre><code>tar -xvf (fichero a descomprimir)
+donde:
+-x -&gt; Extraer el archivo
+-v -&gt; Muestra una descripción detallada del progreso de la compresión
+-f -&gt; Nombre del archivo
+</code></pre>
+<h2 id="trabajo-con-repositorios">Trabajo con repositorios</h2>
+<ol>
+<li>Añade a tu fichero sources.list los repositorios de backports y sid.</li>
+</ol>
+<p>Para ello debemos de dirigirnos hacia el fichero /etc/apt/source.list con privilegios de root para poder modificar este fichero, una vez estemos con el fichero delante debemos de poner las siguientes lineas:</p>
+<pre><code>deb http://deb.debian.org/debian buster-backports main -&gt; repositorios de backports
+
+deb http://deb.debian.org/debian sid main -&gt; repositorios sid
+</code></pre>
+<ol start="2">
+<li>¿Cómo añades la posibilidad de descargar paquetería de la arquitectura i386 en tu sistema. ¿Que comando has empleado?. Lista arquitecturas no nativas. ¿Cómo procederías para desechar la posibilidad de descargar paquetería de la arquitectura i386?</li>
+</ol>
+<p>En nuestro sistema podemos tener paqueteria de varias arquitecturas, si nosotros queremos añadir mas arquitecturas aparte de la nuestra debemos de realizar el siguiente comando, en mi caso añadire la arquitectura i386:</p>
+<pre><code>dpkg –add-architecture (arquitectura)
+
+dpkg --add-architecture i386 --&gt; Añadimos la arquitectura i386
+</code></pre>
+<p>Si queremos ver las arquitecturas no nativas que tenemos en nuestro sistema usamos el siguiente comando:</p>
+<pre><code>dpkg --print-foreign-architectures -&gt; Nos muestra las arquitecturas no nativas
+</code></pre>
+<p>Si tuvieramos que desechar la descarga de paqueteria de i386:</p>
+<pre><code>dpkg –remove-architecture i386
+</code></pre>
+<ol start="4">
+<li>
+<p>Indica el procedimiento para descargar un paquete del repositorio stable.</p>
+<p>apt install -t stable (nombre paquete)</p>
+</li>
+<li>
+<p>Indica el procedimiento para descargar un paquete del repositorio de backports.</p>
+<p>apt install -t backports (nombre paquete)</p>
+</li>
+<li>
+<p>Indica el procedimiento para descargar un paquete del repositorio de sid.</p>
+<p>apt install -t sid (nombre paquete)</p>
+</li>
+<li>
+<p>Indica el procedimiento para descargar un paquete de arquitectura i386.</p>
+<p>apt install (nombre paquete):(nombre arquitectura)</p>
+</li>
+</ol>
+<h2 id="trabajo-con-directorios">Trabajo con directorios</h2>
+<ol>
+<li>
+<p>Que cometidos tienen:</p>
+<p>/var/lib/apt/lists/ -&gt;</p>
+<p>/var/lib/dpkg/available -&gt;</p>
+<p>/var/lib/dpkg/status -&gt;</p>
+<p>/var/cache/apt/archives/ -&gt;</p>
+</li>
+</ol>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2020  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>
