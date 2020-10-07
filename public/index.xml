@@ -7,7 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Tue, 06 Oct 2020 19:05:29 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 07 Oct 2020 19:37:24 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Router Nat</title>
+      <link>https://franjavimn.onrender.com/servicios/router-nat/</link>
+      <pubDate>Wed, 07 Oct 2020 19:37:24 +0200</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/servicios/router-nat/</guid>
+      <description>Crear router-NAT con vagrant Queremos automatizar la creación de la siguiente infraestructura usando Vagrant, el esquema que queremos desarrollar, que vemos en la imagen, tiene las siguientes características:
+  El escenario debe tener 2 maquinas:
+  router, que está conectada a una red pública y a una red privada. La interfaz de red en la red privada se configura con la IP 10.0.0.1.
+  cliente: Esta máquina está conectada a la misma red privada que la máquina anterior, en este caso su direccionamiento es 10.</description>
+    </item>
+    
     <item>
       <title>Dhcp Ejercicio</title>
       <link>https://franjavimn.onrender.com/servicios/dhcp-ejercicio/</link>
