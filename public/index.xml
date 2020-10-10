@@ -7,7 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Wed, 07 Oct 2020 19:37:24 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 10 Oct 2020 12:40:00 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Practica Dhcp</title>
+      <link>https://franjavimn.onrender.com/servicios/practica-dhcp/</link>
+      <pubDate>Sat, 10 Oct 2020 12:40:00 +0200</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/servicios/practica-dhcp/</guid>
+      <description>Practica DHCP Teoria  Tarea 1 (1 punto): Lee el documento Teoría: Servidor DHCP y explica el funcionamiento del servidor DHCP resumido en este gráfico.  Preparación del escenario Crea un escenario usando Vagrant que defina las siguientes máquinas:
+  Servidor: Tiene dos tarjetas de red: una pública y una privada que se conectan a la red local.
+  nodolan1: Un cliente conectado a la red local.
+  Instala un servidor dhcp en el ordenador “servidor” que de servicio a los ordenadores de red local, teniendo en cuenta que el tiempo de concesión sea 12 horas y que la red local tiene el direccionamiento 192.</description>
+    </item>
+    
     <item>
       <title>Router Nat</title>
       <link>https://franjavimn.onrender.com/servicios/router-nat/</link>
