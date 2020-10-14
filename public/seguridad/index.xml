@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Mon, 05 Oct 2020 20:01:02 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/seguridad/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 07 Oct 2020 18:57:04 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/seguridad/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Practica Cifrado</title>
+      <link>https://franjavimn.onrender.com/seguridad/practica-cifrado/</link>
+      <pubDate>Wed, 07 Oct 2020 18:57:04 +0200</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/seguridad/practica-cifrado/</guid>
+      <description>Cifrado asimétrico con gpg y openssl En esta practica sobre el cifrado asimétrico con gpg y openssl vamos a realizar las siguientes tareas:
+  Tarea 1: Generación de claves
+ Genera un par de claves (pública y privada). ¿En que directorio se guarda las claves de un usuario? Lista las claves públicas que tienes en tu almacén de claves. Explica los distintos datos que nos muestra. ¿Cómo deberías haber generado las claves para indicar, por ejemplo, que tenga un 1 mes de validez?</description>
+    </item>
+    
     <item>
       <title>Raid5</title>
       <link>https://franjavimn.onrender.com/seguridad/raid5/</link>

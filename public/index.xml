@@ -33,6 +33,17 @@
     </item>
     
     <item>
+      <title>Practica Cifrado</title>
+      <link>https://franjavimn.onrender.com/seguridad/practica-cifrado/</link>
+      <pubDate>Wed, 07 Oct 2020 18:57:04 +0200</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/seguridad/practica-cifrado/</guid>
+      <description>Cifrado asimétrico con gpg y openssl En esta practica sobre el cifrado asimétrico con gpg y openssl vamos a realizar las siguientes tareas:
+  Tarea 1: Generación de claves
+ Genera un par de claves (pública y privada). ¿En que directorio se guarda las claves de un usuario? Lista las claves públicas que tienes en tu almacén de claves. Explica los distintos datos que nos muestra. ¿Cómo deberías haber generado las claves para indicar, por ejemplo, que tenga un 1 mes de validez?</description>
+    </item>
+    
+    <item>
       <title>Dhcp Ejercicio</title>
       <link>https://franjavimn.onrender.com/servicios/dhcp-ejercicio/</link>
       <pubDate>Tue, 06 Oct 2020 19:05:29 +0200</pubDate>
