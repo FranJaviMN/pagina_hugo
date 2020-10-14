@@ -24,6 +24,10 @@ theme = "cactus"
   url = "/Servicios"
   weight = 4
 
+[[menu.main]]
+  name = "Implantacion"
+  url = "/Implantacion"
+  weight = 5
 
 
 
