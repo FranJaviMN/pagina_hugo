@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Implantacions on Blog</title>
+    <link>https://franjavimn.onrender.com/implantacion/</link>
+    <description>Recent content in Implantacions on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>es-ES</language>
+    <copyright>Francisco Javier Martín Núñez</copyright>
+    <lastBuildDate>Wed, 14 Oct 2020 17:15:19 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/implantacion/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Guia Hugo</title>
+      <link>https://franjavimn.onrender.com/implantacion/guia-hugo/</link>
+      <pubDate>Wed, 14 Oct 2020 17:15:19 +0200</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/implantacion/guia-hugo/</guid>
+      <description>GoHugo ¿Que es GoHugo? Hugo es un generador de sitio estático escrito en Go. Hugo ha visto un gran aumento en las características y el rendimiento gracias al desarrollador principal actual Bjørn Erik Pedersen y otros colaboradores. Hugo es de codigo abierto bajo la licencia de Apache License 2.0.
+Al ser capaz de generar la mayoría de los sitios web en segundos (a &amp;lt;1 ms por página), Hugo es reconocido como &amp;ldquo;el framework más rápido del mundo para la creación de sitios web&amp;rdquo; gracias no solo a que se ha creado con Go, sino también a los esfuerzos concienzudos de sus desarrolladores para comparar y aumentar actuación.</description>
+    </item>
+    
+  </channel>
+</rss>

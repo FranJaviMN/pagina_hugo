@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Sat, 10 Oct 2020 12:40:00 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 14 Oct 2020 17:15:19 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Guia Hugo</title>
+      <link>https://franjavimn.onrender.com/implantacion/guia-hugo/</link>
+      <pubDate>Wed, 14 Oct 2020 17:15:19 +0200</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/implantacion/guia-hugo/</guid>
+      <description>GoHugo ¿Que es GoHugo? Hugo es un generador de sitio estático escrito en Go. Hugo ha visto un gran aumento en las características y el rendimiento gracias al desarrollador principal actual Bjørn Erik Pedersen y otros colaboradores. Hugo es de codigo abierto bajo la licencia de Apache License 2.0.
+Al ser capaz de generar la mayoría de los sitios web en segundos (a &amp;lt;1 ms por página), Hugo es reconocido como &amp;ldquo;el framework más rápido del mundo para la creación de sitios web&amp;rdquo; gracias no solo a que se ha creado con Go, sino también a los esfuerzos concienzudos de sus desarrolladores para comparar y aumentar actuación.</description>
+    </item>
+    
     <item>
       <title>Practica Dhcp</title>
       <link>https://franjavimn.onrender.com/servicios/practica-dhcp/</link>
