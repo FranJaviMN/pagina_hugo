@@ -267,7 +267,7 @@ En la siguiente tarea vamos a cambiar la configuracion de nuestro servidor dhcp,
 subnet 192.168.100.0 netmask 255.255.255.0 {
   range 192.168.100.111 192.168.100.120;
   option domain-name-servers 8.8.8.8, 8.8.4.4;
-  option routers 192.168.100.2;
+  option routers 192.168.100.1;
   option broadcast-address 192.168.100.255;
   default-lease-time 60;
   max-lease-time 43200;
@@ -304,7 +304,7 @@ El siguiente paso es dirigirnos a nuestra maquina servidor e ir al fichero de co
 subnet 192.168.100.0 netmask 255.255.255.0 {
   range 192.168.100.111 192.168.100.120;
   option domain-name-servers 8.8.8.8, 8.8.4.4;
-  option routers 192.168.100.2;
+  option routers 192.168.100.1;
   option broadcast-address 192.168.100.255;
   default-lease-time 60;
   max-lease-time 43200;
