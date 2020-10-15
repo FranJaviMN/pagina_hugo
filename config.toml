@@ -36,7 +36,7 @@ theme = "cactus"
 [params]
 
   colortheme = "white"
-  description = "En esta pagina estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno."
+  description = "En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno."
   showAllPostsOnHomePage = false
   postsOnHomePage = 5
 
