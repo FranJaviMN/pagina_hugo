@@ -130,6 +130,30 @@ draft: true
 Donde:
     --minify: Soporte para cualquier formato
     --gc: habilitar para ejecutar algunas tareas de limpieza
+</code></pre></div><h2 id="script">Script</h2>
+<p>He realizado el siguiente <a href="https://github.com/FranJaviMN/elementos-grado/blob/main/Implantacion/pagina-estatica/script-commit.sh">script</a> en el cual subimos los cambios que realicemos en nuestra pagina estatica:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e"># Nos vamos al directorio donde tenemos la pagina estatica, en este caso es el directorio /home/francisco/Documentos/Implantacion/pagina_hugo</span>
+
+cd /home/francisco/pagina_hugo
+
+<span style="color:#75715e"># Generamos los elementos necesarios de nuestra pagina estatica.</span>
+
+hugo -D
+
+<span style="color:#75715e"># Añadimos todos los ficheros nuvos que hemos creado, en caso de que no haya ningun fichero que añadir no añadira nada.</span>
+
+git add *
+
+<span style="color:#75715e"># Nos pide que introduzcamos la descripcion del commit que vamos subir a nuestro repositorio en github</span>
+
+echo <span style="color:#e6db74">&#34;Dime el mensaje del commit:&#34;</span>
+read commit
+
+<span style="color:#75715e"># Crea el commit con el mensaje que hemos metido</span>
+
+git commit -m <span style="color:#e6db74">&#34;</span>$commit<span style="color:#e6db74">&#34;</span>
 </code></pre></div>
   
   </div>
