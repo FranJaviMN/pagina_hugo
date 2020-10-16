@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Sat, 10 Oct 2020 12:40:00 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/servicios/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 16 Oct 2020 09:11:56 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/servicios/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ej3 Apache</title>
+      <link>https://franjavimn.onrender.com/servicios/ej3-apache/</link>
+      <pubDate>Fri, 16 Oct 2020 09:11:56 +0200</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/servicios/ej3-apache/</guid>
+      <description>Ejercicio 3: VirtualHosting con Apache Introducción al VirtualHosting El término Hosting Virtual se refiere a hacer funcionar más de un sitio web (tales como www.company1.com y www.company2.com) en una sola máquina. Los sitios web virtuales pueden estar “basados en direcciones IP”, lo que significa que cada sitio web tiene una dirección IP diferente, o “basados en nombres diferentes”, lo que significa que con una sola dirección IP están funcionando sitios web con diferentes nombres (de dominio).</description>
+    </item>
+    
     <item>
       <title>Practica Dhcp</title>
       <link>https://franjavimn.onrender.com/servicios/practica-dhcp/</link>
