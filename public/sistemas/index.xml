@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Mon, 05 Oct 2020 18:13:34 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/sistemas/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 18 Oct 2020 14:44:56 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/sistemas/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Script Paquetes</title>
+      <link>https://franjavimn.onrender.com/sistemas/script-paquetes/</link>
+      <pubDate>Sun, 18 Oct 2020 14:44:56 +0200</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/sistemas/script-paquetes/</guid>
+      <description>Script para seleccionar paquetes por repositorio Tenemos que realizar un script que introduciéndolo como parámetro el nombre de un repositorio, muestre como salida los paquetes de ese repositorio que están instalados en la máquina. Los repositorios pueden ser introducidos de dos formas distintas:
+ ./script.sh security.debian.org  o bien
+ ./script.sh http://security.debian.org  Script para la selección de paquetes He realizado el siguiente script el cual tambien podemos encontrar em el siguiente enlace:</description>
+    </item>
+    
     <item>
       <title>Dpkg Apt</title>
       <link>https://franjavimn.onrender.com/sistemas/dpkg-apt/</link>
