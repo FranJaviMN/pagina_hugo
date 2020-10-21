@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Sun, 18 Oct 2020 14:44:56 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 21 Oct 2020 18:10:55 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ej4 Apache</title>
+      <link>https://franjavimn.onrender.com/servicios/ej4-apache/</link>
+      <pubDate>Wed, 21 Oct 2020 18:10:55 +0200</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/servicios/ej4-apache/</guid>
+      <description>Ejercicio 4: Mapear URL a ubicaciones de un sistema de ficheros Crea un nuevo host virtual que es accedido con el nombre www.mapeo.com, cuyo DocumentRoot sea /srv/mapeo
+  Cuando se entre a la dirección www.mapeo.com se redireccionará automáticamente a www.mapeo.com/principal, donde se mostrará el mensaje de bienvenida.
+  En el directorio principal no se permite ver la lista de los ficheros, no se permite que se siga los enlaces simbólicos y no se permite negociación de contenido.</description>
+    </item>
+    
     <item>
       <title>Script Paquetes</title>
       <link>https://franjavimn.onrender.com/sistemas/script-paquetes/</link>
