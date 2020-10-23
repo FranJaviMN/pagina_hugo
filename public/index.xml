@@ -14,7 +14,7 @@
       <pubDate>Wed, 21 Oct 2020 18:10:55 +0200</pubDate>
       
       <guid>https://franjavimn.onrender.com/servicios/ej4-apache/</guid>
-      <description>Ejercicio 4: Mapear URL a ubicaciones de un sistema de ficheros Crea un nuevo host virtual que es accedido con el nombre www.mapeo.com, cuyo DocumentRoot sea /srv/mapeo
+      <description>Ejercicio : Mapear URL a ubicaciones de un sistema de ficheros Crea un nuevo host virtual que es accedido con el nombre www.mapeo.com, cuyo DocumentRoot sea /srv/mapeo
   Cuando se entre a la dirección www.mapeo.com se redireccionará automáticamente a www.mapeo.com/principal, donde se mostrará el mensaje de bienvenida.
   En el directorio principal no se permite ver la lista de los ficheros, no se permite que se siga los enlaces simbólicos y no se permite negociación de contenido.</description>
     </item>
