@@ -4,7 +4,7 @@ date: 2020-10-21T18:10:55+02:00
 draft: true
 ---
 
-# Ejercicio : Mapear URL a ubicaciones de un sistema de ficheros
+# Ejercicio 4 : Mapear URL a ubicaciones de un sistema de ficheros
 
 Crea un nuevo host virtual que es accedido con el nombre www.mapeo.com, cuyo DocumentRoot sea /srv/mapeo
 
