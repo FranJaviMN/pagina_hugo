@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Wed, 21 Oct 2020 18:10:55 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 25 Oct 2020 12:23:58 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Compilacion Programa</title>
+      <link>https://franjavimn.onrender.com/sistemas/compilacion-programa/</link>
+      <pubDate>Sun, 25 Oct 2020 12:23:58 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/sistemas/compilacion-programa/</guid>
+      <description>Compilación de un programa en C utilizando un Makefile En la siguiente tarea vamos a realizar la compilacion de un programa en c usando la herramienta make, para ello vamos a usar dos programas para hacer la compilacion: htop y nano
+Compilando el programa nano Primero vamos a proceder a la compilacion del programa nano, nano es un editor de texto fácil de usar. Nano trata de emular la funcionalidad y la interfaz de fácil manejo de Pico, pero sin la integración con Pine.</description>
+    </item>
+    
     <item>
       <title>Ej4 Apache</title>
       <link>https://franjavimn.onrender.com/servicios/ej4-apache/</link>
