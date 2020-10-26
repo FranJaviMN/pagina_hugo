@@ -253,7 +253,7 @@ Nos dirigimos al fichero /etc/sysctl.conf y buscamos una linea como: net.ipv4.ip
 </code></pre></div><p>Ahora vamos a nuestra maquina <em><strong>nodolan1</strong></em> y en ella tenemos que hacer que salga a internet a traves de la interfaz por la que esta recibiendo servicio DHCP, en este caso es <em>eth1</em>. Para hacer eso posible usamos el comando siguiente:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@nodolan1:~$ sudo ip route replace default via 192.168.100.1
 </code></pre></div><p>Asi cambiaremos la ruta por defecto por la que tenemos asignada en nuestro <em>servidor</em>.</p>
-<p>Ahora si realizamos un <em><strong>apt update</strong></em> en nuestra maquina <em>nodolan1</em> veremos que lo hace sin problemas.</p>
+<p>Ahora si realizamos un <em><strong>apt update</strong></em> en nuestra maquina <em>nodolan1</em> veremos que lo hace sin problemas. <a href="https://youtu.be/A14CUHS93Xk">ver video demostración</a></p>
 <h3 id="tarea-5">Tarea 5</h3>
 <p>Ahora vamos a realizar una captura de los paquetes que corresponden a una concesión: <em>DISCOVER, OFFER, REQUEST, ACK</em>. Para ello vamos a usar <em>tcpdump</em> para la captura de los paquetes. Debemos asegurarnos que esta instalado, normalmente no lo esta y tendremos que instalarlo usando <em><strong>vagrant@servidor:~$ sudo apt install tcpdump</strong></em> y una vez instalado usamos el siguiente comando:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@servidor:~$ sudo tcpdump -i eth2 port <span style="color:#ae81ff">67</span> or port <span style="color:#ae81ff">68</span> -e -n -vv
@@ -269,13 +269,13 @@ Nos dirigimos al fichero /etc/sysctl.conf y buscamos una linea como: net.ipv4.ip
 -vv: Vemos la salida de la captura al completo.
 </code></pre></div><p>Podemos ver el trafico capturado en el siguiente <a href="https://github.com/FranJaviMN/elementos-grado/blob/main/Servicios/dhcp/captura-practica.txt">fichero</a>.</p>
 <h3 id="tarea-6">Tarea 6</h3>
-<p>A la hora de apagar nuestro servidor dhcp, si le cambiamos la concesion a un numero muy bajo veremos que en una maquina linux, al no encontrar el servidor dhcp y no poder recibir la respuesta por parte del servidor, si hacemos un <em><strong>ip a</strong></em> veremos que ya no tiene la asignacion ip que tenia antes de apagar el servidor.</p>
+<p>A la hora de apagar nuestro servidor dhcp, si le cambiamos la concesion a un numero muy bajo veremos que en una maquina linux, al no encontrar el servidor dhcp y no poder recibir la respuesta por parte del servidor, si hacemos un <em><strong>ip a</strong></em> veremos que ya no tiene la asignacion ip que tenia antes de apagar el servidor. <a href="https://youtu.be/e70UdFwDvYI">video</a></p>
 <h3 id="tarea-7">Tarea 7</h3>
 <p>En la siguiente tarea vamos a cambiar la configuracion de nuestro servidor dhcp, para ello nos dirigimos al fichero <em><strong>/etc/dhcp/dhcpd.conf</strong></em> y una vez ahi, cambiamos el rango de ip que vamos a servir, en este caso el fichero de configuracion quedaria asi:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">subnet 192.168.100.0 netmask 255.255.255.0 <span style="color:#f92672">{</span>
   range 192.168.100.111 192.168.100.120;
   option domain-name-servers 8.8.8.8, 8.8.4.4;
-  option routers 192.168.100.1;
+  option routers 192.168.100.2;
   option broadcast-address 192.168.100.255;
   default-lease-time 60;
   max-lease-time 43200;
@@ -287,8 +287,9 @@ Nos dirigimos al fichero /etc/sysctl.conf y buscamos una linea como: net.ipv4.ip
     inet 192.168.100.111/24 brd 192.168.100.255 scope global dynamic eth1
        valid_lft 188sec preferred_lft 188sec
     inet6 fe80::a00:27ff:fea1:2674/64 scope link 
-       valid_lft forever preferred_lft forever
-</code></pre></div><h3 id="tarea-8">Tarea 8</h3>
+       valid_lft forever preferred_lft forever 
+</code></pre></div><p><a href="https://youtu.be/DtaTbQh5558">Ver video de demostración</a></p>
+<h3 id="tarea-8">Tarea 8</h3>
 <p>Ahoa vamos a añadir una reserva en nuestro servidor dhcp para que, cuando nosotros tengamos a nuestro cliente y su tiempo de concesion acabe, le de una ip que nosotros hemos reservado, para ello vamos a necesitar la MAC de la interfaz de red de nuestra maquina <em>cliente</em>, para ello usamos el comando <em><strong>ip link show dev eth1</strong></em>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@nodolan1:~$ ip link show dev eth1
 3: eth1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">1500</span> qdisc pfifo_fast state UP mode DEFAULT group default qlen <span style="color:#ae81ff">1000</span>
@@ -298,7 +299,7 @@ Nos dirigimos al fichero /etc/sysctl.conf y buscamos una linea como: net.ipv4.ip
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">subnet 192.168.100.0 netmask 255.255.255.0 <span style="color:#f92672">{</span>
   range 192.168.100.111 192.168.100.120;
   option domain-name-servers 8.8.8.8, 8.8.4.4;
-  option routers 192.168.100.1;
+  option routers 192.168.100.2;
   option broadcast-address 192.168.100.255;
   default-lease-time 60;
   max-lease-time 43200;
@@ -384,7 +385,8 @@ vagrant@nodolan1:~$ sudo ip route replace default via 192.168.100.1
 <span style="color:#75715e">#### nodolan2 ####</span>
 
 vagrant@nodolan2:~$ sudo ip route replace default via 192.168.200.1
-</code></pre></div><p>Despues de estas modificaciones si hacemos un <em>apt update</em> veremos que tendremos internet a traves de nuestra maquina <em>servidor</em></p>
+</code></pre></div><p>Despues de estas modificaciones si hacemos un <em>apt update</em> veremos que tendremos internet a traves de nuestra maquina <em>servidor</em>
+<a href="https://youtu.be/xYUgZyVj3-4">ver video demostración</a></p>
 
   
   </div>

@@ -232,7 +232,7 @@ vagrant@nodolan1:~$ sudo ip route replace default via 192.168.100.1
 
 Asi cambiaremos la ruta por defecto por la que tenemos asignada en nuestro *servidor*. 
 
-Ahora si realizamos un ***apt update*** en nuestra maquina *nodolan1* veremos que lo hace sin problemas.
+Ahora si realizamos un ***apt update*** en nuestra maquina *nodolan1* veremos que lo hace sin problemas. [ver video demostración](https://youtu.be/A14CUHS93Xk)
 
 ### Tarea 5
 
@@ -256,7 +256,7 @@ Podemos ver el trafico capturado en el siguiente [fichero](https://github.com/Fr
 
 ### Tarea 6
 
-A la hora de apagar nuestro servidor dhcp, si le cambiamos la concesion a un numero muy bajo veremos que en una maquina linux, al no encontrar el servidor dhcp y no poder recibir la respuesta por parte del servidor, si hacemos un ***ip a*** veremos que ya no tiene la asignacion ip que tenia antes de apagar el servidor.
+A la hora de apagar nuestro servidor dhcp, si le cambiamos la concesion a un numero muy bajo veremos que en una maquina linux, al no encontrar el servidor dhcp y no poder recibir la respuesta por parte del servidor, si hacemos un ***ip a*** veremos que ya no tiene la asignacion ip que tenia antes de apagar el servidor. [video](https://youtu.be/e70UdFwDvYI)
 
 
 ### Tarea 7
@@ -267,7 +267,7 @@ En la siguiente tarea vamos a cambiar la configuracion de nuestro servidor dhcp,
 subnet 192.168.100.0 netmask 255.255.255.0 {
   range 192.168.100.111 192.168.100.120;
   option domain-name-servers 8.8.8.8, 8.8.4.4;
-  option routers 192.168.100.1;
+  option routers 192.168.100.2;
   option broadcast-address 192.168.100.255;
   default-lease-time 60;
   max-lease-time 43200;
@@ -283,8 +283,10 @@ vagrant@nodolan1:~$ ip a show dev eth1
     inet 192.168.100.111/24 brd 192.168.100.255 scope global dynamic eth1
        valid_lft 188sec preferred_lft 188sec
     inet6 fe80::a00:27ff:fea1:2674/64 scope link 
-       valid_lft forever preferred_lft forever
+       valid_lft forever preferred_lft forever 
 ```
+
+[Ver video de demostración](https://youtu.be/DtaTbQh5558)
 
 ### Tarea 8
 
@@ -304,7 +306,7 @@ El siguiente paso es dirigirnos a nuestra maquina servidor e ir al fichero de co
 subnet 192.168.100.0 netmask 255.255.255.0 {
   range 192.168.100.111 192.168.100.120;
   option domain-name-servers 8.8.8.8, 8.8.4.4;
-  option routers 192.168.100.1;
+  option routers 192.168.100.2;
   option broadcast-address 192.168.100.255;
   default-lease-time 60;
   max-lease-time 43200;
@@ -420,3 +422,4 @@ vagrant@nodolan2:~$ sudo ip route replace default via 192.168.200.1
 ```
 
 Despues de estas modificaciones si hacemos un *apt update* veremos que tendremos internet a traves de nuestra maquina *servidor*
+[ver video demostración](https://youtu.be/xYUgZyVj3-4)
