@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Wed, 07 Oct 2020 18:57:04 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/seguridad/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 27 Oct 2020 18:30:09 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/seguridad/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Practica Integridad</title>
+      <link>https://franjavimn.onrender.com/seguridad/practica-integridad/</link>
+      <pubDate>Tue, 27 Oct 2020 18:30:09 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/seguridad/practica-integridad/</guid>
+      <description>Práctica: Integridad, firmas y autenticación Tarea 1: Firmas electrónicas En este apartado vamos a con las firmas electrónicas. Para ello vamos a necesitar subir nuestra clave publica a un servidor de claves, en este caso lo he subido al servidor keys.gnupg.net con el siguiente comando:
+gpg --send-keys --keyserver pgp.rediris.es D6BE9BF1C7D6A435BF1B9D38BEAECEA4DC2F7A96  ¿Qué significa el mensaje que aparece en el momento de verificar la firma?  EL mensaje que nos muestra en nuestra terminal siginufica que, si bien tenemos la clave publica para poder verificar la firma, esta no la tenemos firmada por nadie de confianza y nosotros tampoco le hemos dado una confianza a esa clave.</description>
+    </item>
+    
     <item>
       <title>Practica Cifrado</title>
       <link>https://franjavimn.onrender.com/seguridad/practica-cifrado/</link>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Practica Integridad | Blog</title>
+  <meta name="description" content="En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Practica Integridad" />
+<meta property="og:description" content="Práctica: Integridad, firmas y autenticación Tarea 1: Firmas electrónicas En este apartado vamos a con las firmas electrónicas. Para ello vamos a necesitar subir nuestra clave publica a un servidor de claves, en este caso lo he subido al servidor keys.gnupg.net con el siguiente comando:
+gpg --send-keys --keyserver pgp.rediris.es D6BE9BF1C7D6A435BF1B9D38BEAECEA4DC2F7A96  ¿Qué significa el mensaje que aparece en el momento de verificar la firma?  EL mensaje que nos muestra en nuestra terminal siginufica que, si bien tenemos la clave publica para poder verificar la firma, esta no la tenemos firmada por nadie de confianza y nosotros tampoco le hemos dado una confianza a esa clave." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://franjavimn.onrender.com/seguridad/practica-integridad/" />
+<meta property="article:published_time" content="2020-10-27T18:30:09+01:00" />
+<meta property="article:modified_time" content="2020-10-27T18:30:09+01:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Practica Integridad"/>
+<meta name="twitter:description" content="Práctica: Integridad, firmas y autenticación Tarea 1: Firmas electrónicas En este apartado vamos a con las firmas electrónicas. Para ello vamos a necesitar subir nuestra clave publica a un servidor de claves, en este caso lo he subido al servidor keys.gnupg.net con el siguiente comando:
+gpg --send-keys --keyserver pgp.rediris.es D6BE9BF1C7D6A435BF1B9D38BEAECEA4DC2F7A96  ¿Qué significa el mensaje que aparece en el momento de verificar la firma?  EL mensaje que nos muestra en nuestra terminal siginufica que, si bien tenemos la clave publica para poder verificar la firma, esta no la tenemos firmada por nadie de confianza y nosotros tampoco le hemos dado una confianza a esa clave."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://franjavimn.onrender.com/images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://franjavimn.onrender.com">
+  
+    <div id="logo" style="background-image: url(https://franjavimn.onrender.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/">Home</a></li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+       
+        <li><a href="/servicios">Servicios</a></li>
+       
+        <li><a href="/implantacion">Implantacion</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h1 id="práctica-integridad-firmas-y-autenticación">Práctica: Integridad, firmas y autenticación</h1>
+<h2 id="tarea-1-firmas-electrónicas">Tarea 1: Firmas electrónicas</h2>
+<p>En este apartado vamos a con las firmas electrónicas. Para ello vamos a necesitar subir nuestra clave publica a un servidor de claves, en este caso lo he subido al servidor <em><strong>keys.gnupg.net</strong></em> con el siguiente comando:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">gpg --send-keys --keyserver pgp.rediris.es D6BE9BF1C7D6A435BF1B9D38BEAECEA4DC2F7A96
+</code></pre></div><ol>
+<li>¿Qué significa el mensaje que aparece en el momento de verificar la firma?</li>
+</ol>
+<p>EL mensaje que nos muestra en nuestra terminal siginufica que, si bien tenemos la clave publica para poder verificar la firma, esta no la tenemos firmada por nadie de confianza y nosotros tampoco le hemos dado una confianza a esa clave.</p>
+<ol start="2">
+<li>Vamos a crear un anillo de confianza entre los miembros de nuestra clase.</li>
+</ol>
+<p>El anillo que hemos formado consta de tres personas que en este caso son: Juan Luis Millan Hidalgo, Álvaro Vaca Ferreras y Adrián Rodríguez Povea.</p>
+<ol start="3">
+<li>Muestra las firmas que tiene tu clave pública.</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">francisco@debian10:~$ gpg --list-sign D6BE9BF1C7D6A435BF1B9D38BEAECEA4DC2F7A96
+pub   rsa3072 2020-10-07 <span style="color:#f92672">[</span>SC<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>caduca: 2022-10-07<span style="color:#f92672">]</span>
+      D6BE9BF1C7D6A435BF1B9D38BEAECEA4DC2F7A96
+uid        <span style="color:#f92672">[</span>  absoluta <span style="color:#f92672">]</span> Francisco Javier Martín Núñez &lt;franjaviermn17100@gmail.com&gt;
+sig <span style="color:#ae81ff">3</span>        BEAECEA4DC2F7A96 2020-10-07  Francisco Javier Martín Núñez &lt;franjaviermn17100@gmail.com&gt;
+sig          3E0DA17912B9A4F8 2020-10-21  Álvaro Vaca Ferreras &lt;avacaferreras@gmail.com&gt;
+sig          73986F40D4BB0593 2020-10-21  Adrián Rodríguez Povea &lt;arodriguezpovea@gmail.com&gt;
+sig          15E1B16E8352B9BB 2020-10-27  Juan Luis Millan Hidalgo &lt;juanluismillanhidalgo@gmail.com&gt;
+sub   rsa3072 2020-10-07 <span style="color:#f92672">[</span>E<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>caduca: 2022-10-07<span style="color:#f92672">]</span>
+sig          BEAECEA4DC2F7A96 2020-10-07  Francisco Javier Martín Núñez &lt;franjaviermn17100@gmail.com&gt;
+</code></pre></div><ol start="4">
+<li>
+<p>Comprueba que ya puedes verificar sin “problemas” una firma recibida por una persona en la que confías.</p>
+</li>
+<li>
+<p>Comprueba que puedes verificar con confianza una firma de una persona en las que no confías, pero sin embargo si confía otra persona en la que tu tienes confianza total.</p>
+</li>
+</ol>
+<p>Para ello hemos pedido a nuestro compañero <strong>Javier Pérez Hidalgo</strong> que nos ayude. Primero uno de nosotros debe de firmar su clave publica, en este caso <strong>Juan Luis Millan Hidalgo</strong> ha sido el que ha firmado la clave publica de <strong>Javier</strong>. Una vez firmada tenemos que importar su clave firmada a nuestro anillo de claves. Como nosotros tenemos a <strong>Juan Luis Millan Hidalgo</strong> en nuestro anillo de confianza y él confia en <strong>Javier</strong>, a la hora de verificar un fichero firmado nos saldra los siguiente:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">francisco@debian10:~$ gpg --verify Documentos/Seguridad/Encriptado/Claves<span style="color:#ae81ff">\ </span>firmadas/apariencia_dashtopanel.gpg 
+gpg: Firmado el mar <span style="color:#ae81ff">27</span> oct <span style="color:#ae81ff">2020</span> 12:50:41 CET
+gpg:                usando RSA clave 76270D5E766E0F22D70466BE6F7A456BC67662D3
+gpg: Firma correcta de <span style="color:#e6db74">&#34;Javier Pérez Hidalgo &lt;javierperezhidalgo01@gmail.com&gt;&#34;</span> <span style="color:#f92672">[</span>total<span style="color:#f92672">]</span>
+</code></pre></div><h2 id="tarea-2-correo-seguro-con-evolutionthunderbird">Tarea 2: Correo seguro con evolution/thunderbird</h2>
+<p>Ahora vamos a configurar nuestro cliente de correo electrónico para poder mandar correos cifrados, para ello:</p>
+<ol>
+<li>Configura el cliente de correo evolution con tu cuenta de correo habitual.</li>
+</ol>
+<p>Lo primero que debemos de hacer es instalar el cliente de correos evolution, una vez instalado solo debemos de configurarlo siguiendo los pasos que nos indica el configurador, introduciendo nuestro correo electronico.</p>
+<ol start="2">
+<li>Añade a la cuenta las opciones de seguridad para poder enviar correos firmados con tu clave privada o cifrar los mensajes para otros destinatarios.</li>
+</ol>
+<p>Para poder usar las claves privadas para cifrar los correos debemos de irnos al menú <strong>editar -&gt; preferencias</strong>. Una vez ahi nos vamos a la zona de <strong>cuentas de correo</strong> y editamos nuestro correo. UNa vez dentro solo debemos ir a la seccion de seguridad y veremos el apartado de gpg donde tendremos que poner el id de nuestra clave, en mi caso <strong>DC2F7A96</strong>, y seleccionamos los apartados siempre cifrar a mi mismo cuando envie correo cifrado y siempre confiar en las claves de mi almacen al cifrar. De esta forma ya tendremos configurado nuestro servidor para enviar mensajes cifrados con nuestra clave privada.</p>
+<ol start="3">
+<li>Envía y recibe varios mensajes con tus compañeros y comprueba el funcionamiento adecuado de GPG</li>
+</ol>
+<ul>
+<li>Para enviar: Cuando queramos enviar un mensaje cifrado debemos de irnos a la pestaña de <strong>opciones</strong> y ahi seleccionar <strong>firmar con pgp</strong> y <strong>cifrar con pgp</strong>, asi nuestros mensajes enviados estaran cifrados.
+<img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Seguridad/Encriptado/firma-valida.png" alt="firma valida"></li>
+</ul>
+<h2 id="tarea-3-integridad-de-ficheros">Tarea 3: Integridad de ficheros</h2>
+<p>Vamos a descargarnos la ISO de debian, y posteriormente vamos a comprobar su integridad.</p>
+<p>Puedes encontrar la ISO en la dirección <a href="https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/">siguiente</a></p>
+<ol>
+<li>
+<p>Para validar el contenido de la imagen CD, solo asegúrese de usar la herramienta apropiada para sumas de verificación. Para cada versión publicada existen archivos de suma de comprobación con algoritmos fuertes (SHA256 y SHA512); debería usar las herramientas sha256sum o sha512sum para trabajar con ellos.</p>
+</li>
+<li>
+<p>Verifica que el contenido del hash que has utilizado no ha sido manipulado, usando la firma digital que encontrarás en el repositorio. Puedes encontrar una guía para realizarlo en este <a href="https://linuxconfig.org/how-to-verify-an-authenticity-of-downloaded-debian-iso-images">artículo</a></p>
+</li>
+</ol>
+<p>Lo primero que debemos de hacer es verificar que la firma es correcta, para ello si realizamos un <strong>&ndash;verify</strong> sobre el fichero SHA512SUMS.sign veremos que no podra verificar ya que no tenemos la clave publica de Debian, por lo que debemos de seguir los siguiente pasos para verificar la firma:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Importamos la clave publica de Debian a nuestro anillo de claves ####</span>
+francisco@debian10:~/Descargas$ gpg --keyserver keyring.debian.org --recv DF9B9C49EAA9298432589D76DA87E80D6294BE9B
+
+
+<span style="color:#75715e">#### Verificamos el fichero SHA512SUMS.sign ####</span>
+francisco@debian10:~/Descargas$ gpg --verify SHA512SUMS.sign SHA512SUMS
+gpg: Firmado el dom <span style="color:#ae81ff">27</span> sep <span style="color:#ae81ff">2020</span> 02:24:23 CEST
+gpg:                usando RSA clave DF9B9C49EAA9298432589D76DA87E80D6294BE9B
+gpg: Firma correcta de <span style="color:#e6db74">&#34;Debian CD signing key &lt;debian-cd@lists.debian.org&gt;&#34;</span> <span style="color:#f92672">[</span>desconocido<span style="color:#f92672">]</span>
+gpg: ATENCIÓN: ¡Esta clave no está certificada por una firma de confianza!
+gpg:          No hay indicios de que la firma pertenezca al propietario.
+Huellas dactilares de la clave primaria: DF9B 9C49 EAA9 <span style="color:#ae81ff">2984</span> <span style="color:#ae81ff">3258</span>  9D76 DA87 E80D <span style="color:#ae81ff">6294</span> BE9B
+</code></pre></div><h2 id="tarea-4-integridad-y-autenticidad">Tarea 4: Integridad y autenticidad</h2>
+<p>Cuando nos instalamos un paquete en nuestra distribución linux tenemos que asegurarnos que ese paquete es legítimo. Para conseguir este objetivo se utiliza criptografía asimétrica, y en el caso de Debian a este sistema se llama apt secure. Esto lo debemos tener en cuenta al utilizar los repositorios oficiales. Cuando añadamos nuevos repositorios tendremos que añadir las firmas necesarias para confiar en que los paquetes son legítimos y no han sido modificados.</p>
+<ol>
+<li>¿Qué software utiliza apt secure para realizar la criptografía asimétrica?</li>
+</ol>
+<p>El binario de <em>apt-secure</em> usa el software de <strong>gpg</strong></p>
+<ol start="2">
+<li>¿Para que sirve el comando apt-key? ¿Qué muestra el comando apt-key list?</li>
+</ol>
+<ul>
+<li>apt-key: Es un binario que se usa para gestionar el anillo de llaves de gpg para asegurar Apt.</li>
+<li>apt-key list: Nos lista las claves de confianza que usa nuestro sistema con apt</li>
+</ul>
+<ol start="3">
+<li>¿En que fichero se guarda el anillo de claves que guarda la herramienta apt-key?</li>
+</ol>
+<p>El anillo de claves se guarda en el archivo /etc/apt/trusted.gpg. En mi caso todas la claves se guardan en un directorio llamado <strong>trusted.gpg.d/</strong></p>
+<ol start="4">
+<li>¿Qué contiene el archivo Release de un repositorio de paquetes?. ¿Y el archivo Release.gpg?. Puedes ver estos archivos en el repositorio <a href="http://ftp.debian.org/debian/dists/Debian10.1/">http://ftp.debian.org/debian/dists/Debian10.1/</a>. Estos archivos se descargan cuando hacemos un apt update.</li>
+</ol>
+<p>El archivo Release de un repositorio lo que contiene es la clave publica de ese repositorio para validar que los paquetes que descargamos desde ahi son validos y no han sido modificados.</p>
+<ol start="5">
+<li>Explica el proceso por el cual el sistema nos asegura que los ficheros que estamos descargando son legítimos.</li>
+</ol>
+<p>Siempre descarga los ficheros Release.gpg cuando está descargando los ficheros Release, y si no puede descargar el Release.gpg, o si la firma está mal, lo advertirá, y te dirá que el fichero Packages al cual apunta el fichero Release, y todos los paquetes enumerados dentro, son de una fuente sin autentificar.</p>
+<ol start="6">
+<li>Añade de forma correcta el repositorio de virtualbox añadiendo la clave pública de virtualbox como se indica en la documentación.</li>
+</ol>
+<p>Lo primero que debemos de hacer es añadir la linea del repositorio de virtualbox en el fichero <strong>/etc/apt/sources.list</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">deb http://deb.debian.org/debian/ buster main contrib non-free
+deb http://security.debian.org/debian-security buster/updates main contrib non-free
+deb http://deb.debian.org/debian/ buster-updates main contrib non-free
+deb <span style="color:#f92672">[</span>arch<span style="color:#f92672">=</span>amd64<span style="color:#f92672">]</span> https://download.virtualbox.org/virtualbox/debian &lt;mydist&gt; contrib
+</code></pre></div><p>Una vez añadido el repositorio necesitamos la clave de oracle para añadirla a nuestro circulo de llaves, para ello podemos hacer lo siguiente:</p>
+<pre><code>sudo apt-key add oracle_vbox_2016.asc
+sudo apt-key add oracle_vbox.asc
+</code></pre><p>Con lo cual ya tendriamos las claves de oracle añadidas junto al repositorio de virtualbox y solo nos queda realizar un <strong>apt update</strong> y luego instalar la version de virtualbox que nosotros necesitemos.</p>
+<h2 id="tarea-5-autentificación-ejemplo-ssh">Tarea 5: Autentificación: ejemplo SSH</h2>
+<p>Vamos a estudiar como la criptografía nos ayuda a cifrar las comunicaciones que hacemos utilizando el protocolo ssh, y cómo nos puede servir también para conseguir que un cliente se autentifique contra el servidor. Responde las siguientes cuestiones:</p>
+<ol>
+<li>Explica los pasos que se producen entre el cliente y el servidor para que el protocolo cifre la información que se transmite? ¿Para qué se utiliza la criptografía simétrica? ¿Y la asimétrica?</li>
+</ol>
+<ul>
+<li>
+<p>Claves simetricas: Las claves simétricas se utilizan para cifrar toda la comunicación durante una sesión SSH. Tanto el cliente como el servidor derivan la clave secreta utilizando un método acordado, y la clave resultante nunca se revela a terceros. El proceso de creación de una clave simétrica se lleva a cabo mediante un algoritmo de intercambio de claves.</p>
+</li>
+<li>
+<p>Claves asimetricas: el cifrado asimétrico no se utiliza para cifrar toda la sesión SSH. En lugar de eso, sólo se utiliza durante el algoritmo de intercambio de claves de cifrado simétrico. Antes de iniciar una conexión segura, ambas partes generan pares de claves públicas-privadas temporales y comparten sus respectivas claves privadas para producir la clave secreta compartida.</p>
+</li>
+</ul>
+<p>Una vez que se ha establecido una comunicación simétrica segura, el servidor utiliza la clave pública de los clientes para generar y desafiar y transmitirla al cliente para su autenticación. Si el cliente puede descifrar correctamente el mensaje, significa que contiene la clave privada necesaria para la conexión. Y entonces comienza la sesión SSH.</p>
+<ol start="2">
+<li>Explica los dos métodos principales de autentificación: por contraseña y utilizando un par de claves públicas y privadas.</li>
+</ol>
+<ul>
+<li>Usando par de claves: Esta forma es la mas eficaz y rapida ya que no tendremos que recordar la contraseña para entrar en el servidor. Para usar el metodo por par de claves tenemos que generar en nuestro equipo cliente un par de claves privada y publica:</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@maquina:~$ ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key <span style="color:#f92672">(</span>/home/vagrant/.ssh/id_rsa<span style="color:#f92672">)</span>: 
+Enter passphrase <span style="color:#f92672">(</span>empty <span style="color:#66d9ef">for</span> no passphrase<span style="color:#f92672">)</span>: 
+Enter same passphrase again: 
+Your identification has been saved in /home/vagrant/.ssh/id_rsa.
+Your public key has been saved in /home/vagrant/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:5n5dc+Lwx+B/yFnHx/Ne6JbLOmmAsSGqhyr6Hculc6U vagrant@maquina
+The key<span style="color:#960050;background-color:#1e0010">&#39;</span>s randomart image is:
++---<span style="color:#f92672">[</span>RSA 2048<span style="color:#f92672">]</span>----+
+|                 |
+|                 |
+|                 |
+|      . o        |
+|     . .S<span style="color:#f92672">=</span>     o |
+|    .  o+ . . <span style="color:#f92672">=</span>oB|
+|   o. .o.  o O.@*|
+|. ooo<span style="color:#f92672">=</span>E.  . <span style="color:#f92672">=</span>oX *|
+|<span style="color:#f92672">=</span>o..<span style="color:#f92672">=</span>o  .. ..++<span style="color:#f92672">=</span>+|
++----<span style="color:#f92672">[</span>SHA256<span style="color:#f92672">]</span>-----+
+</code></pre></div><p>De esta forma vamos a generar dos claves en el directorio <strong>/home/usuario/.ssh</strong> de las cuales una es la publica(id_rsa.pub), que es la que tenemos que pasar al servidor donde vamos a hacer conexion ssh, y un aclave privada(id_rsa) que no debe de ser revelada a nadie. Ahora que tenemos la clave privada y la publica tenemos que pasarle a nuestro servidor la clave publica, para ello nos dirigimos al directorio .ssh/ y ahi ejecutamos el siguiente comando:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ssh-copy-id -i ./id_rsa.pub usuario@host
+</code></pre></div><p>De esta forma ya tendriamos en nuestro servidor la clave publica. Ya solo queda entrar en el servidor con la clave publica, para ello vamos al directorio .ssh/ y ejecutamos el siguiente comando:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ssh -i id_rsa usuario@host
+</code></pre></div><ul>
+<li>Usando el sistema con contraseña: Este es el sistema mas sencillo donde lo unico que debemos de conocer es la contraseña del usuario del servidor a donde nos vamos a conectar, de tal forma al realizar la conexion nos va a pedir la contraseña del usuario:</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ssh usuario@host
+</code></pre></div><ol start="3">
+<li>En el cliente para que sirve el contenido que se guarda en el fichero ~/.ssh/know_hosts?</li>
+</ol>
+<p>Este fichero contiene las claves de host DSA de los servidores SSH a los que se accede mediante el usuario. Este fichero es muy importante para asegurse de que el cliente SHH está conectado al servidor SSH correcto.</p>
+<ol start="4">
+<li>¿Qué significa este mensaje que aparece la primera vez que nos conectamos a un servidor?</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ssh debian@172.22.200.74
+The authenticity of host <span style="color:#e6db74">&#39;172.22.200.74 (172.22.200.74)&#39;</span> can<span style="color:#960050;background-color:#1e0010">&#39;</span>t be established.
+ECDSA key fingerprint is SHA256:7ZoNZPCbQTnDso1meVSNoKszn38ZwUI4i6saebbfL4M.
+Are you sure you want to <span style="color:#66d9ef">continue</span> connecting <span style="color:#f92672">(</span>yes/no<span style="color:#f92672">)</span>?
+</code></pre></div><p>Este es el mensaje que nos muestra la primera vez que nos intentamos conectar por via ssh por el metodo de clave publica y privada a una maquina a la que nunca nos hemos conectado. Nos pregunta si de verdad queremos entrar en esa maquina.</p>
+<ol start="5">
+<li>En ocasiones cuando estamos trabajando en el cloud, y reutilizamos una ip flotante nos aparece este mensaje:</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ssh debian@172.22.200.74
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now <span style="color:#f92672">(</span>man-in-the-middle attack<span style="color:#f92672">)</span>!
+It is also possible that a host key has just been changed.
+The fingerprint <span style="color:#66d9ef">for</span> the ECDSA key sent by the remote host is
+SHA256:W05RrybmcnJxD3fbwJOgSNNWATkVftsQl7EzfeKJgNc.
+Please contact your system administrator.
+Add correct host key in /home/jose/.ssh/known_hosts to get rid of this message.
+Offending ECDSA key in /home/jose/.ssh/known_hosts:103
+    remove with:
+    ssh-keygen -f <span style="color:#e6db74">&#34;/home/jose/.ssh/known_hosts&#34;</span> -R <span style="color:#e6db74">&#34;172.22.200.74&#34;</span>
+ECDSA host key <span style="color:#66d9ef">for</span> 172.22.200.74 has changed and you have requested strict checking.
+</code></pre></div><p>ESto ocurre porque esa ip flotante pertenecia a otra maquina que no es a la que nos estamos intentado conectar con shh ya que en nuestro fichero de <strong>known_hosts</strong> aparece que nos conectamos a esa ip en una determinada maquina pero esa maquina ya no existe y a cambiado a otra maquina, por lo que, como bien dice en el mensaje de error debemos de remover de nuestro fichero <strong>known_hosts</strong> esa ip.</p>
+<ol start="6">
+<li>¿Qué guardamos y para qué sirve el fichero en el servidor ~/.ssh/authorized_keys?</li>
+</ol>
+<p>El fichero authorized_keys es el fichero que contiene las claves públicas utilizadas durante el proceso de autentificación pública.</p>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2020  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+         
+        <li><a href="/servicios">Servicios</a></li>
+         
+        <li><a href="/implantacion">Implantacion</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>
