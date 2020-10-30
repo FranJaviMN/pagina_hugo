@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Vpn Openstack | Blog</title>
+  <meta name="description" content="En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Vpn Openstack" />
+<meta property="og:description" content="Configuración de cliente OpenVPN con certificados X.509 En este caso vamos a configurar una VPN con el cliente OpenVPN para poder conectarnos a la maquina virtual sputnik.gonzalonazareno.org, los pasos a seguir son los siguientes:
+ Disponer de un certificado x509 para nuestro equipo firmado por la CA Gonzalo Nazareno Configurar OpenVPN para que se conecte a sputnik.  Creacion de clave privada y solicitud de firma. Lo primero que vamos a crear va a ser una clave privada con la herramienta openssl, en este caso una clave privada RSA de 4096 bits." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://franjavimn.onrender.com/sistemas/vpn-openstack/" />
+<meta property="article:published_time" content="2020-10-30T13:21:46+01:00" />
+<meta property="article:modified_time" content="2020-10-30T13:21:46+01:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Vpn Openstack"/>
+<meta name="twitter:description" content="Configuración de cliente OpenVPN con certificados X.509 En este caso vamos a configurar una VPN con el cliente OpenVPN para poder conectarnos a la maquina virtual sputnik.gonzalonazareno.org, los pasos a seguir son los siguientes:
+ Disponer de un certificado x509 para nuestro equipo firmado por la CA Gonzalo Nazareno Configurar OpenVPN para que se conecte a sputnik.  Creacion de clave privada y solicitud de firma. Lo primero que vamos a crear va a ser una clave privada con la herramienta openssl, en este caso una clave privada RSA de 4096 bits."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://franjavimn.onrender.com/images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://franjavimn.onrender.com">
+  
+    <div id="logo" style="background-image: url(https://franjavimn.onrender.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/">Home</a></li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+       
+        <li><a href="/servicios">Servicios</a></li>
+       
+        <li><a href="/implantacion">Implantacion</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h1 id="configuración-de-cliente-openvpn-con-certificados-x509">Configuración de cliente OpenVPN con certificados X.509</h1>
+<p>En este caso vamos a configurar una VPN con el cliente <strong>OpenVPN</strong> para poder conectarnos a la maquina virtual <strong>sputnik.gonzalonazareno.org</strong>, los pasos a seguir son los siguientes:</p>
+<ol>
+<li>Disponer de un certificado x509 para nuestro equipo firmado por la CA Gonzalo Nazareno</li>
+<li>Configurar OpenVPN para que se conecte a sputnik.</li>
+</ol>
+<h2 id="creacion-de-clave-privada-y-solicitud-de-firma">Creacion de clave privada y solicitud de firma.</h2>
+<p>Lo primero que vamos a crear va a ser una clave privada con la herramienta <strong>openssl</strong>, en este caso una clave privada RSA de 4096 bits. Tenemos que tener en cuenta que esta acciones las vamos a realizar como root. Despues de crear nuestra clave privada vamos a generar un fichero .csr el cual debe de ser firmado por la autoridad de nuestro instituto Gonzalo Nazareno.</p>
+<ol>
+<li>Creamos nuestra clave privada desde el usuario <strong>root</strong>:</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@debian10:~# openssl genrsa <span style="color:#ae81ff">4096</span> &gt; /etc/ssl/private/nombredemimaquina.key
+Generating RSA private key, <span style="color:#ae81ff">4096</span> bit long modulus <span style="color:#f92672">(</span><span style="color:#ae81ff">2</span> primes<span style="color:#f92672">)</span>
+..................................................................................................................................................................................++++
+..............................................................++++
+e is <span style="color:#ae81ff">65537</span> <span style="color:#f92672">(</span>0x010001<span style="color:#f92672">)</span>
+</code></pre></div><ol start="2">
+<li>Generamos el fichero csr que debe de ser firmado por CA del Gonzalo Nazareno:</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@debian10:~# openssl req -new -key /etc/ssl/private/nombredemimaquina.key -out /root/nombredemimaquina.csr
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter <span style="color:#e6db74">&#39;.&#39;</span>, the field will be left blank.
+-----
+Country Name <span style="color:#f92672">(</span><span style="color:#ae81ff">2</span> letter code<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>AU<span style="color:#f92672">]</span>:ES
+State or Province Name <span style="color:#f92672">(</span>full name<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>Some-State<span style="color:#f92672">]</span>:Sevilla
+Locality Name <span style="color:#f92672">(</span>eg, city<span style="color:#f92672">)</span> <span style="color:#f92672">[]</span>:Dos Hermanas
+Organization Name <span style="color:#f92672">(</span>eg, company<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>Internet Widgits Pty Ltd<span style="color:#f92672">]</span>:IES Gonzalo Nazareno
+Organizational Unit Name <span style="color:#f92672">(</span>eg, section<span style="color:#f92672">)</span> <span style="color:#f92672">[]</span>:Informatica
+Common Name <span style="color:#f92672">(</span>e.g. server FQDN or YOUR name<span style="color:#f92672">)</span> <span style="color:#f92672">[]</span>:nombremimaquina-francisco.martin
+</code></pre></div><p>De esta forma ya tendremos la clave privada y el fichero csr, dicho fichero csr debe de ser firmado. Para poder entragar nuestro fichero csr debemos de enviarlo por este <a href="https://dit.gonzalonazareno.org/gestiona/">enlace</a> en el apartado de de Utilidades -&gt; Certifcados.</p>
+<h2 id="configuración-de-openvpn">Configuración de OpenVPN</h2>
+<p>Una vez hayamos obtenido el certificado debemos de configurar nuestro OpenVPN, para ello debemos de dirigirnos(como root) al directorio <strong>/etc/openvpn</strong> y en dicho directorio generamos un fichero de extensión <strong>.conf</strong> en el cual debemos de tener las siguientes lineas:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">dev tun
+remote sputnik.gonzalonazareno.org
+ifconfig 172.23.0.0 255.255.255.0
+pull
+proto tcp-client
+tls-client
+remote-cert-tls server
+ca /etc/ssl/certs/gonzalonazareno.pem &lt;- La ruta al certificado de la CA Gonzalo Nazareno
+cert /etc/openvpn/nombremimaquina-francisco.martin.crt &lt;- La ruta al certificado CRT firmado que nos han devuelto
+key /etc/ssl/private/nombredemimaquina.key &lt;- La ruta a la clave privada con permisos <span style="color:#ae81ff">600</span>
+comp-lzo
+keepalive <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">60</span>
+log /var/log/openvpn-sputnik.log
+verb <span style="color:#ae81ff">1</span>
+</code></pre></div><p>Donde podemos ver lo siguiente:</p>
+<ul>
+<li>gonzalonazareno.pem: Este certificado lo podemos encontrar <a href="https://dit.gonzalonazareno.org/gestiona/info/documentacion/ca">en este enlace</a>.</li>
+<li>nombremimaquina.francisco.martin.crt: Certificado firmado por la CA Gonzalo Nazareno.</li>
+<li>nombredemimaquina.key: Es la clave privada que habiamos generado anteriormente.</li>
+</ul>
+<p>Una vez creado el fichero vamos a reiniciar el servicio de OpenVPN y comprobamos que tenemos las rutas de enlace y veremos una linea como la siguiente:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@debian10:~# ip r
+...
+172.22.0.0/16 via 172.23.0.37 dev tun0 
+...
+</code></pre></div><p>Y si vemos el documento de log de OpenVPN en <strong>/var/log/openvpn.log</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@debian10:~# cat /var/log/openvpn-sputnik.log 
+Fri Oct <span style="color:#ae81ff">30</span> 13:10:22 <span style="color:#ae81ff">2020</span> OpenVPN 2.4.7 x86_64-pc-linux-gnu <span style="color:#f92672">[</span>SSL <span style="color:#f92672">(</span>OpenSSL<span style="color:#f92672">)]</span> <span style="color:#f92672">[</span>LZO<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>LZ4<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>EPOLL<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>PKCS11<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>MH/PKTINFO<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>AEAD<span style="color:#f92672">]</span> built on Feb <span style="color:#ae81ff">20</span> <span style="color:#ae81ff">2019</span>
+Fri Oct <span style="color:#ae81ff">30</span> 13:10:22 <span style="color:#ae81ff">2020</span> library versions: OpenSSL 1.1.1d  <span style="color:#ae81ff">10</span> Sep 2019, LZO 2.10
+Fri Oct <span style="color:#ae81ff">30</span> 13:10:22 <span style="color:#ae81ff">2020</span> WARNING: using --pull/--client and --ifconfig together is probably not what you want
+Fri Oct <span style="color:#ae81ff">30</span> 13:10:22 <span style="color:#ae81ff">2020</span> TCP/UDP: Preserving recently used remote address: <span style="color:#f92672">[</span>AF_INET<span style="color:#f92672">]</span>92.222.86.77:1194
+Fri Oct <span style="color:#ae81ff">30</span> 13:10:22 <span style="color:#ae81ff">2020</span> Attempting to establish TCP connection with <span style="color:#f92672">[</span>AF_INET<span style="color:#f92672">]</span>92.222.86.77:1194 <span style="color:#f92672">[</span>nonblock<span style="color:#f92672">]</span>
+Fri Oct <span style="color:#ae81ff">30</span> 13:10:23 <span style="color:#ae81ff">2020</span> TCP connection established with <span style="color:#f92672">[</span>AF_INET<span style="color:#f92672">]</span>92.222.86.77:1194
+Fri Oct <span style="color:#ae81ff">30</span> 13:10:23 <span style="color:#ae81ff">2020</span> TCP_CLIENT link local: <span style="color:#f92672">(</span>not bound<span style="color:#f92672">)</span>
+Fri Oct <span style="color:#ae81ff">30</span> 13:10:23 <span style="color:#ae81ff">2020</span> TCP_CLIENT link remote: <span style="color:#f92672">[</span>AF_INET<span style="color:#f92672">]</span>92.222.86.77:1194
+Fri Oct <span style="color:#ae81ff">30</span> 13:10:24 <span style="color:#ae81ff">2020</span> <span style="color:#f92672">[</span>sputnik.gonzalonazareno.org<span style="color:#f92672">]</span> Peer Connection Initiated with <span style="color:#f92672">[</span>AF_INET<span style="color:#f92672">]</span>92.222.86.77:1194
+Fri Oct <span style="color:#ae81ff">30</span> 13:10:26 <span style="color:#ae81ff">2020</span> TUN/TAP device tun0 opened
+Fri Oct <span style="color:#ae81ff">30</span> 13:10:26 <span style="color:#ae81ff">2020</span> /sbin/ip link set dev tun0 up mtu <span style="color:#ae81ff">1500</span>
+Fri Oct <span style="color:#ae81ff">30</span> 13:10:26 <span style="color:#ae81ff">2020</span> /sbin/ip addr add dev tun0 local 172.23.0.38 peer 172.23.0.37
+Fri Oct <span style="color:#ae81ff">30</span> 13:10:26 <span style="color:#ae81ff">2020</span> WARNING: this configuration may cache passwords in memory -- use the auth-nocache option to prevent this
+Fri Oct <span style="color:#ae81ff">30</span> 13:10:26 <span style="color:#ae81ff">2020</span> Initialization Sequence Completed
+</code></pre></div><p><strong>IMPORTANTE:</strong> Si queremos que este servicio solo se active manualmente debemos de usar el siguiente comando con el que dehabilitalemos que inicie al encender el ordenador:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@debian10:~# systemctl disable openvpn.service
+Synchronizing state of openvpn.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install disable openvpn
+</code></pre></div><p>Tambien es recomendable actualizar nuestro fichero <strong>/etc/hosts</strong> y añadir la resolucion estatica de las siguientes ip:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">...
+172.22.222.1    jupiter
+172.22.0.1       macaco
+...
+</code></pre></div>
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2020  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+         
+        <li><a href="/servicios">Servicios</a></li>
+         
+        <li><a href="/implantacion">Implantacion</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>
