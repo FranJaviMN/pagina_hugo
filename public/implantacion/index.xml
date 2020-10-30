@@ -7,7 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Wed, 14 Oct 2020 17:15:19 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/implantacion/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 30 Oct 2020 18:03:23 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/implantacion/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Practica Cms</title>
+      <link>https://franjavimn.onrender.com/implantacion/practica-cms/</link>
+      <pubDate>Fri, 30 Oct 2020 18:03:23 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/implantacion/practica-cms/</guid>
+      <description>Instalación local de un CMS PHP Esta tarea consiste en instalar un CMS de tecnología PHP en un servidor local. Los pasos que tendrás que dar los siguientes:
+Tarea 1: Instalación de un servidor LAMP   Crear una instancia de vagrant basado en un box debian o ubuntu
+  Instala en esa máquina virtual toda la pila LAMP
+  Tarea 2: Instalación de drupal en mi servidor local   Configura el servidor web con virtual hosting para que el CMS sea accesible desde la dirección: www.</description>
+    </item>
+    
     <item>
       <title>Guia Hugo</title>
       <link>https://franjavimn.onrender.com/implantacion/guia-hugo/</link>
