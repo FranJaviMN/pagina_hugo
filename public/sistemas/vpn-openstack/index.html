@@ -163,6 +163,14 @@ Executing: /lib/systemd/systemd-sysv-install disable openvpn
 172.22.222.1    jupiter
 172.22.0.1       macaco
 ...
+</code></pre></div><p>Comprobamos que podemos hacer ping a <strong>172.22.0.1</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@debian10:~# ping 172.22.0.1
+PING 172.22.0.1 <span style="color:#f92672">(</span>172.22.0.1<span style="color:#f92672">)</span> 56<span style="color:#f92672">(</span>84<span style="color:#f92672">)</span> bytes of data.
+<span style="color:#ae81ff">64</span> bytes from 172.22.0.1: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">63</span> time<span style="color:#f92672">=</span><span style="color:#ae81ff">157</span> ms
+<span style="color:#ae81ff">64</span> bytes from 172.22.0.1: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">63</span> time<span style="color:#f92672">=</span><span style="color:#ae81ff">107</span> ms
+<span style="color:#ae81ff">64</span> bytes from 172.22.0.1: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">63</span> time<span style="color:#f92672">=</span><span style="color:#ae81ff">104</span> ms
+<span style="color:#ae81ff">64</span> bytes from 172.22.0.1: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">63</span> time<span style="color:#f92672">=</span><span style="color:#ae81ff">108</span> ms
+<span style="color:#ae81ff">64</span> bytes from 172.22.0.1: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">63</span> time<span style="color:#f92672">=</span>96.10 ms
 </code></pre></div>
   
   </div>

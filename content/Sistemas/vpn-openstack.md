@@ -109,3 +109,14 @@ Tambien es recomendable actualizar nuestro fichero **/etc/hosts** y añadir la r
 172.22.0.1       macaco
 ...
 ```
+
+Comprobamos que podemos hacer ping a **172.22.0.1**:
+```shell
+root@debian10:~# ping 172.22.0.1
+PING 172.22.0.1 (172.22.0.1) 56(84) bytes of data.
+64 bytes from 172.22.0.1: icmp_seq=1 ttl=63 time=157 ms
+64 bytes from 172.22.0.1: icmp_seq=2 ttl=63 time=107 ms
+64 bytes from 172.22.0.1: icmp_seq=3 ttl=63 time=104 ms
+64 bytes from 172.22.0.1: icmp_seq=4 ttl=63 time=108 ms
+64 bytes from 172.22.0.1: icmp_seq=5 ttl=63 time=96.10 ms
+```
