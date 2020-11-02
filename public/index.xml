@@ -7,7 +7,27 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Fri, 30 Oct 2020 18:03:23 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 02 Nov 2020 17:15:12 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ej5 Apache2</title>
+      <link>https://franjavimn.onrender.com/servicios/ej5-apache2/</link>
+      <pubDate>Mon, 02 Nov 2020 17:15:12 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/servicios/ej5-apache2/</guid>
+      <description>Ejercicio 5: Control de acceso, autentificación y autorización El Control de acceso en un servidor web nos permite determinar desde donde podemos acceder a los recursos del servidor. En los servidores apache podemos tener dos tipos de Autentificación:
+Autentificación básica Es un método simple que utiliza codificación Base64 y por lo tanto es menos seguro. Podemos hacer aún más seguro el acceso a nuestras páginas sensibles haciendo uso conjunto de HTTPS y autenticación Basic, es decir, que en primer lugar nuestro servidor web utilice SSL o TLS en las conexiones y sobre la conexión encriptada, usar Basic como método de autenticación.</description>
+    </item>
+    
+    <item>
+      <title>Ej6 Apache2</title>
+      <link>https://franjavimn.onrender.com/servicios/ej6-apache2/</link>
+      <pubDate>Mon, 02 Nov 2020 17:15:07 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/servicios/ej6-apache2/</guid>
+      <description>Configuración de apache mediante archivo .htaccess Un fichero .htaccess (hypertext access), también conocido como archivo de configuración distribuida, es un fichero especial, popularizado por el Servidor HTTP Apache que nos permite definir diferentes directivas de configuración para cada directorio (con sus respectivos subdirectorios) sin necesidad de editar el archivo de configuración principal de Apache.
+Para permitir el uso de los ficheros .htaccess o restringir las directivas que se pueden aplicar usamos ela directiva AllowOverride, que puede ir acompañada de una o varias opciones: All, AuthConfig, FileInfo, Indexes, Limit, …</description>
+    </item>
+    
     <item>
       <title>Practica Cms</title>
       <link>https://franjavimn.onrender.com/implantacion/practica-cms/</link>
