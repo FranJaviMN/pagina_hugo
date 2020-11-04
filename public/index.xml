@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Mon, 02 Nov 2020 17:15:12 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 04 Nov 2020 17:42:53 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Practica Servidor Nginx</title>
+      <link>https://franjavimn.onrender.com/servicios/practica-servidor-nginx/</link>
+      <pubDate>Wed, 04 Nov 2020 17:42:53 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/servicios/practica-servidor-nginx/</guid>
+      <description>Práctica: Servidor Web Nginx Nginx es un famoso software de servidor web de código abierto. En su versión inicial, funcionaba en servidores web HTTP. Sin embargo, hoy en día también sirve como proxy inverso, balanceador de carga HTTP y proxy de correo electrónico para IMAP, POP3 y SMTP.
+Debido a su excelente capacidad para manejar muchas conexiones y a su velocidad, muchos sitios web de alto tráfico usan el servicio de NGINX.</description>
+    </item>
+    
     <item>
       <title>Ej5 Apache2</title>
       <link>https://franjavimn.onrender.com/servicios/ej5-apache2/</link>
