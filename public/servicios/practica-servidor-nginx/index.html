@@ -138,11 +138,11 @@ debian@practica-nginx:~$ sudo apt install nginx
 /etc/nginx/sites-enabled/
 </code></pre></div><p>Por lo tanto, si necesitamos tener nuestras dos paginas debemos de generar primero los dos virtualhost, para ello vamos a realizar la copia del fichero <em>default</em> para crear nuestros dos virtualhost:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Copiamos el fichero default ####</span>
-debian@practica-nginx:/etc/nginx/sites-available$ sudo cp default ./iesgn
+debian@practica-nginx:/etc/nginx/sites-available$ sudo cp default ./iesgn.conf
 
-debian@practica-nginx:/etc/nginx/sites-available$ sudo cp default ./departamentos
+debian@practica-nginx:/etc/nginx/sites-available$ sudo cp default ./departamentos.conf
 </code></pre></div><p>Una vez tengamos copiados los ficheros debemos de tener el siguiente contenido en los fichero que hemos creado:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero de iesgn ####</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero de iesgn.conf ####</span>
 ...
 server <span style="color:#f92672">{</span>
     listen 80;
@@ -159,7 +159,7 @@ server <span style="color:#f92672">{</span>
 ...
 <span style="color:#f92672">}</span>
 
-<span style="color:#75715e">#### Fichero de departamentos ####</span>
+<span style="color:#75715e">#### Fichero de departamentos.conf ####</span>
 ...
 server <span style="color:#f92672">{</span>
     listen 80;
@@ -176,11 +176,11 @@ server <span style="color:#f92672">{</span>
 ...
 <span style="color:#f92672">}</span>
 </code></pre></div><p>Una vez tengamos ya nuestros fichero debemos de crear un enlace simbolico para hacer que estos sitios esten activos, para ello usamos el siguiente comando:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero departamentos ####</span>
-debian@practica-nginx:/etc/nginx/sites-available$ sudo ln -s /etc/nginx/sites-available/departamentos /etc/nginx/sites-enabled/
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero departamentos.conf ####</span>
+debian@practica-nginx:/etc/nginx/sites-available$ sudo ln -s /etc/nginx/sites-available/departamentos.conf /etc/nginx/sites-enabled/
 
-<span style="color:#75715e">#### Fichero iegn ####</span>
-debian@practica-nginx:/etc/nginx/sites-available$ sudo ln -s /etc/nginx/sites-available/iesgn /etc/nginx/sites-enabled/
+<span style="color:#75715e">#### Fichero iegn.conf ####</span>
+debian@practica-nginx:/etc/nginx/sites-available$ sudo ln -s /etc/nginx/sites-available/iesgn.conf /etc/nginx/sites-enabled/
 </code></pre></div><p>Ahora debemos de crear en el directorio <strong>/srv/www</strong> las dos carpetas llamadas iesgn y departamentos y dentro de ellas un fichero index.html en el cual tendremos un mensaje de bienvenida:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos las carpetas ####</span>
 debian@practica-nginx:~$ sudo mkdir /srv/www/<span style="color:#f92672">{</span>iesgn,departamentos<span style="color:#f92672">}</span>

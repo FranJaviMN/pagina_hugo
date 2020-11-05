@@ -78,14 +78,14 @@ Siguiendo con la filosofia que teniamos en **apache2**, podemos encontrar los si
 Por lo tanto, si necesitamos tener nuestras dos paginas debemos de generar primero los dos virtualhost, para ello vamos a realizar la copia del fichero *default* para crear nuestros dos virtualhost:
 ```shell
 #### Copiamos el fichero default ####
-debian@practica-nginx:/etc/nginx/sites-available$ sudo cp default ./iesgn
+debian@practica-nginx:/etc/nginx/sites-available$ sudo cp default ./iesgn.conf
 
-debian@practica-nginx:/etc/nginx/sites-available$ sudo cp default ./departamentos
+debian@practica-nginx:/etc/nginx/sites-available$ sudo cp default ./departamentos.conf
 ```
 
 Una vez tengamos copiados los ficheros debemos de tener el siguiente contenido en los fichero que hemos creado:
 ```shell
-#### Fichero de iesgn ####
+#### Fichero de iesgn.conf ####
 ...
 server {
     listen 80;
@@ -102,7 +102,7 @@ server {
 ...
 }
 
-#### Fichero de departamentos ####
+#### Fichero de departamentos.conf ####
 ...
 server {
     listen 80;
@@ -122,11 +122,11 @@ server {
 
 Una vez tengamos ya nuestros fichero debemos de crear un enlace simbolico para hacer que estos sitios esten activos, para ello usamos el siguiente comando:
 ```shell
-#### Fichero departamentos ####
-debian@practica-nginx:/etc/nginx/sites-available$ sudo ln -s /etc/nginx/sites-available/departamentos /etc/nginx/sites-enabled/
+#### Fichero departamentos.conf ####
+debian@practica-nginx:/etc/nginx/sites-available$ sudo ln -s /etc/nginx/sites-available/departamentos.conf /etc/nginx/sites-enabled/
 
-#### Fichero iegn ####
-debian@practica-nginx:/etc/nginx/sites-available$ sudo ln -s /etc/nginx/sites-available/iesgn /etc/nginx/sites-enabled/
+#### Fichero iegn.conf ####
+debian@practica-nginx:/etc/nginx/sites-available$ sudo ln -s /etc/nginx/sites-available/iesgn.conf /etc/nginx/sites-enabled/
 ```
 
 Ahora debemos de crear en el directorio **/srv/www** las dos carpetas llamadas iesgn y departamentos y dentro de ellas un fichero index.html en el cual tendremos un mensaje de bienvenida:
