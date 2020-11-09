@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Wed, 04 Nov 2020 17:42:53 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/servicios/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 09 Nov 2020 11:11:39 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/servicios/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Nginx Ovh</title>
+      <link>https://franjavimn.onrender.com/servicios/nginx-ovh/</link>
+      <pubDate>Mon, 09 Nov 2020 11:11:39 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/servicios/nginx-ovh/</guid>
+      <description>Instalación de un servidor LEMP Esta practica se va a realizar en el servidor de OVH que nos han proporcionado, en mi caso, el servidor es omega.iesgn13.es. A esta maquina se va a acceder con las claves privadas que tenemos en dicha maquina.
+francisco@debian10:~/.ssh$ ssh -i id_rsa debian@omega.iesgn13.es Enter passphrase for key &amp;#39;id_rsa&amp;#39;: Linux omega 4.19.0-11-cloud-amd64 #1 SMP Debian 4.19.146-1 (2020-09-17) x86_64 The programs included with the Debian GNU/Linux system are free software; the exact distribution terms for each program are described in the individual files in /usr/share/doc/*/copyright.</description>
+    </item>
+    
     <item>
       <title>Practica Servidor Nginx</title>
       <link>https://franjavimn.onrender.com/servicios/practica-servidor-nginx/</link>

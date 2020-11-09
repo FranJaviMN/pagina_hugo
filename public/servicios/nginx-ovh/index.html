@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Nginx Ovh | Blog</title>
+  <meta name="description" content="En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Nginx Ovh" />
+<meta property="og:description" content="Instalación de un servidor LEMP Esta practica se va a realizar en el servidor de OVH que nos han proporcionado, en mi caso, el servidor es omega.iesgn13.es. A esta maquina se va a acceder con las claves privadas que tenemos en dicha maquina.
+francisco@debian10:~/.ssh$ ssh -i id_rsa debian@omega.iesgn13.es Enter passphrase for key &#39;id_rsa&#39;: Linux omega 4.19.0-11-cloud-amd64 #1 SMP Debian 4.19.146-1 (2020-09-17) x86_64 The programs included with the Debian GNU/Linux system are free software; the exact distribution terms for each program are described in the individual files in /usr/share/doc/*/copyright." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://franjavimn.onrender.com/servicios/nginx-ovh/" />
+<meta property="article:published_time" content="2020-11-09T11:11:39+01:00" />
+<meta property="article:modified_time" content="2020-11-09T11:11:39+01:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Nginx Ovh"/>
+<meta name="twitter:description" content="Instalación de un servidor LEMP Esta practica se va a realizar en el servidor de OVH que nos han proporcionado, en mi caso, el servidor es omega.iesgn13.es. A esta maquina se va a acceder con las claves privadas que tenemos en dicha maquina.
+francisco@debian10:~/.ssh$ ssh -i id_rsa debian@omega.iesgn13.es Enter passphrase for key &#39;id_rsa&#39;: Linux omega 4.19.0-11-cloud-amd64 #1 SMP Debian 4.19.146-1 (2020-09-17) x86_64 The programs included with the Debian GNU/Linux system are free software; the exact distribution terms for each program are described in the individual files in /usr/share/doc/*/copyright."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://franjavimn.onrender.com/images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://franjavimn.onrender.com">
+  
+    <div id="logo" style="background-image: url(https://franjavimn.onrender.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/">Home</a></li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+       
+        <li><a href="/servicios">Servicios</a></li>
+       
+        <li><a href="/implantacion">Implantacion</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h1 id="instalación-de-un-servidor-lemp">Instalación de un servidor LEMP</h1>
+<p>Esta practica se va a realizar en el servidor de OVH que nos han proporcionado, en mi caso, el servidor es <strong>omega.iesgn13.es</strong>. A esta maquina se va a acceder con las claves privadas que tenemos en dicha maquina.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">francisco@debian10:~/.ssh$ ssh -i id_rsa debian@omega.iesgn13.es
+Enter passphrase <span style="color:#66d9ef">for</span> key <span style="color:#e6db74">&#39;id_rsa&#39;</span>: 
+Linux omega 4.19.0-11-cloud-amd64 <span style="color:#75715e">#1 SMP Debian 4.19.146-1 (2020-09-17) x86_64</span>
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms <span style="color:#66d9ef">for</span> each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Fri Oct <span style="color:#ae81ff">30</span> 12:53:39 <span style="color:#ae81ff">2020</span> from 89.37.78.58
+debian@omega:~$ 
+</code></pre></div><h2 id="tarea-1">Tarea 1</h2>
+<p>En esta primera tarea debemos de instalar un servidor web <strong>nginx</strong>, para ello debemos de usar el siguiente comando:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@omega:~$ sudo apt install nginx
+</code></pre></div><p>De esta forma ya tendriamos nuestro servidor web instalado, de momento no vamos a hacer nada mas con dicho servdor.</p>
+<h2 id="tarea-2">Tarea 2</h2>
+<p>Instala un servidor de base de datos MariaDB. Ejecuta el programa necesario para asegurar el servicio, ya que lo vamos a tener corriendo en el entorno de producción.</p>
+<p>Primero lo que debemos de hacer es instalar los paquetes asociados a la base de datos <strong>Mariadb</strong> que son <em>mariadb-server</em> y <em>mariadbclient</em>. Una vez los tengamos instalados, como este entorno <strong>LEMP</strong> lo vamos a poner en produccion, debemos de asegurar el servicio de base de datos que hemos instalado:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos los paquetes asociados a Mariadb ####</span>
+debian@omega:~$ sudo apt install mariadb-server mariadb-client
+
+<span style="color:#75715e">#### Comprobamos el estado del servicio de mariadb ####</span>
+debian@omega:~$ sudo systemctl status mariadb.service 
+● mariadb.service - MariaDB 10.3.25 database server
+   Loaded: loaded <span style="color:#f92672">(</span>/lib/systemd/system/mariadb.service; enabled; vendor preset: enabled<span style="color:#f92672">)</span>
+   Active: active <span style="color:#f92672">(</span>running<span style="color:#f92672">)</span> since Thu 2020-11-05 08:29:18 UTC; 14min ago
+</code></pre></div><p>Ya hemos instalado y comprobado que nuestro servicio de mariadb esta activo, ahora lo que debemos de hacer es asegurar nuestro servicio de base de datos con el comando <strong>mysql_secure_installation</strong> con lo que conseguiremos:</p>
+<ul>
+<li>Estableces una contraseña fuerte de root</li>
+<li>Eliminar los usuarios anonimos</li>
+<li>Deshabilitar el inicio de sesión remoto para el usuario root</li>
+<li>Eliminar la base de datos de prueba y el acceso a ella</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@omega:~$ sudo mysql_secure_installation 
+
+NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
+      SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!
+
+...
+
+Enter current password <span style="color:#66d9ef">for</span> root <span style="color:#f92672">(</span>enter <span style="color:#66d9ef">for</span> none<span style="color:#f92672">)</span>: 
+OK, successfully used password, moving on...
+
+...
+
+Set root password? <span style="color:#f92672">[</span>Y/n<span style="color:#f92672">]</span> y
+New password: 
+Re-enter new password: 
+Password updated successfully!
+Reloading privilege tables..
+ ... Success!
+
+...
+
+Remove anonymous users? <span style="color:#f92672">[</span>Y/n<span style="color:#f92672">]</span> y
+ ... Success!
+
+...
+
+Disallow root login remotely? <span style="color:#f92672">[</span>Y/n<span style="color:#f92672">]</span> y
+ ... Success!
+
+...
+
+Remove test database and access to it? <span style="color:#f92672">[</span>Y/n<span style="color:#f92672">]</span> y
+ - Dropping test database...
+ ... Success!
+ - Removing privileges on test database...
+ ... Success!
+
+...
+
+Reload privilege tables now? <span style="color:#f92672">[</span>Y/n<span style="color:#f92672">]</span> y
+ ... Success!
+
+Cleaning up...
+
+All <span style="color:#66d9ef">done</span>!  If you<span style="color:#960050;background-color:#1e0010">&#39;</span>ve completed all of the above steps, your MariaDB
+installation should now be secure.
+</code></pre></div><h2 id="tarea-3">Tarea 3</h2>
+<p>Instala un servidor de aplicaciones php php-fpm.</p>
+<p>Para ello solo debemos instalar el paquete <strong>php-fpm</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@omega:~$ sudo apt install php-fpm
+</code></pre></div><h1 id="tarea-4">Tarea 4</h1>
+<p>Crea un virtualhost al que vamos acceder con el nombre <a href="http://www.iesgnXX.es">www.iesgnXX.es</a>. Recuerda que tendrás que crear un registro CNAME en la zona DNS.</p>
+<p>para poder crear nuestro registro <strong>CNAME</strong> debemos de irnos al panel de control de OVH y seleccionar la zona <strong>DNS</strong>. Una vez estemos en la configuracion de nuestro DNS de ovh solo debemos de añadir un nuevo registro CNAME.</p>
+<p>Primero vamos a crear el nuevo virtualhost, por lo que podemos seguir las indicaciones de la tarea de <a href="https://franjavimn.onrender.com/servicios/practica-servidor-nginx/">servidor de nginx</a> donde podemos encontrar, en la tarea 2 de la practica, como se crea un nuevo virtualhost:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el nuevo virtualhost ####</span>
+debian@omega:/etc/nginx/sites-available$ sudo cp default ./iesgn13.conf
+
+<span style="color:#75715e">#### Contenido del fichero iesgn13.conf ####</span>
+server <span style="color:#f92672">{</span>
+      listen <span style="color:#ae81ff">80</span> default_server;
+      listen <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:80 default_server;
+      root /srv/www/iesgn13;
+
+      <span style="color:#75715e"># Add index.php to the list if you are using PHP</span>
+      index index.html index.htm index.nginx-debian.html;
+
+      server_name www.iesgn13.es;
+
+      location / <span style="color:#f92672">{</span>
+            <span style="color:#75715e"># First attempt to serve request as file, then</span>
+            <span style="color:#75715e"># as directory, then fall back to displaying a 404.</span>
+            try_files $uri $uri/ <span style="color:#f92672">=</span>404;
+      <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e">#### Creamos el enlace simbolico ####</span>
+debian@omega:/etc/nginx/sites-available$ sudo ln -s /etc/nginx/sites-available/iesgn13.conf /etc/nginx/sites-enabled/
+
+<span style="color:#75715e">#### Comprobamos la sintaxis de nuestro fichero iesgn13.conf ####</span>
+debian@omega:/etc/nginx/sites-available$ sudo nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+
+<span style="color:#75715e">#### Reiniciamos el servicio de nginx ####</span>
+debian@omega:/etc/nginx/sites-available$ sudo systemctl restart nginx.service
+
+<span style="color:#75715e">#### Cambiamos los permisos para www-data ####</span>
+debian@omega:/etc/nginx/sites-available$ sudo chown -R www-data:www-data /srv/
+</code></pre></div><p>Ahora vamos a crear nuestro registro CNAME en nuestro proveedor OVH, por lo que tendremos que borrar el registro de tipo <strong>TXT</strong> con subdominio <strong><a href="http://www.iesgn13.es">www.iesgn13.es</a></strong> y con valor <strong>&ldquo;3|welcome&rdquo;</strong>. Una vez lo tengamos borrado solo debemos de modificar el registro CNAME con subdominio <strong><a href="http://www.iesgn13.es">www.iesgn13.es</a></strong> y con destino <strong>iesgn13.es</strong> el cual tenemos que cambiar por <strong>omega.iesgn13.es</strong>.</p>
+<p>Cuando tengamos cambiado nuestro registro <strong>CNAME</strong>, si entramos en <a href="http://www.iesgn13.es">www.iesgn13.es</a> debe de aparecernos la siguiente pagina:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Servicios/ovh/prueba-ovh.png" alt="pagina ovh"></p>
+<h2 id="tarea-5">Tarea 5</h2>
+<p>Cuando se acceda al virtualhost por defecto default nos tiene que redirigir al virtualhost que hemos creado en el punto anterior.</p>
+<h2 id="tarea-6">Tarea 6</h2>
+<p>Cuando se acceda a <a href="http://www.iesgnXX.es">www.iesgnXX.es</a> se nos redigirá a la página <a href="http://www.iesgnXX.es/principal">www.iesgnXX.es/principal</a></p>
+<p>Para ello, en nuestro fichero <strong>iesgn13.conf</strong> vamos a añadir la redireccion para cumplir con la tarea, para ello vamos a añadir un nuevo directorio en <strong>/srv/www/iesgn13/</strong> llamado <strong>/principal</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos la carpeta principal con un fichero de bienvenida ####</span>
+debian@omega:/etc/nginx/sites-available$ sudo mkdir /srv/www/iesgn13/principal
+debian@omega:/etc/nginx/sites-available$ sudo nano /srv/www/iesgn13/principal/index.html
+
+<span style="color:#75715e">#### Le cambiamos de propietario a los nuevos ficheros creados ####</span>
+debian@omega:/etc/nginx/sites-available$ sudo chown -R www-data:www-data /srv/
+
+<span style="color:#75715e">#### Lineas a añadir en el fichero de iesgn13.conf ####</span>
+rewrite ^/$ principal permanent;
+</code></pre></div><p>Por lo que al entrar en la url de nuestro sitio web <strong><a href="http://www.iesgn13.es">www.iesgn13.es</a></strong> nos va a redirigir a <strong><a href="http://www.iesgn13.es/principal">www.iesgn13.es/principal</a></strong> y nos mostrara el mensaje que nosotros le hayamos puesto:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Servicios/ovh/redireccion-ovh.png" alt="redireccion"></p>
+<h2 id="tarea-7">Tarea 7</h2>
+<p>En la página <a href="http://www.iesgnXX.es/principal">www.iesgnXX.es/principal</a> se debe mostrar una página web estática (utiliza alguna plantilla para que tenga hoja de estilo). En esta página debe aparecer tu nombre, y una lista de enlaces a las aplicaciones que vamos a ir desplegando posteriormente.</p>
+<p>Para ello he usado una plantilla muy sencilla del siguiente <a href="https://html5-templates.com/preview/html5-page-layout.html">enlace</a></p>
+<p>Lo descargamos y lo editamos en nuestra maquina local, lo editamos para luego subirlo a nuestra maquina ovh mediante <strong>scp</strong>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Subimos a nuestra maquina ovh la plantilla ####</span>
+francisco@debian10:~$ scp Descargas/html5-page-layout/html5-page-layout.tar.gz debian@omega.iesgn13.es:/home/debian/
+
+<span style="color:#75715e">#### Comprobamos que tenemos el archivo comprimido ####</span>
+debian@omega:~$ ls
+html5-page-layout.tar.gz
+
+<span style="color:#75715e">#### Lo descomprimimos y copiamos los fichero a /srv/www/iesgn13/principal ####</span>
+debian@omega:~$ tar -xzvf html5-page-layout.tar.gz
+
+<span style="color:#75715e">#### Movemos a nuestro directorio /srv/www/iesgn13/principal ####</span>
+debian@omega:~$ sudo mv style.css /srv/www/iesgn13/principal/
+debian@omega:~$ sudo mv index.html /srv/www/iesgn13/principal/
+
+<span style="color:#75715e">#### Cambiamos el propietario de los nuevos ficheros ####</span>
+debian@omega:~$ sudo chown -R www-data:www-data /srv/
+</code></pre></div><p>Ahora, si accedemos al sitio <a href="http://www.iesgn13.es">www.iesgn13.es</a> veremos que ha cambiado y ahora tenemos una pagina estatica donde podremos ir colgando las distintas aplicaciones que iremos desplegando.</p>
+<h2 id="tarea-8">Tarea 8</h2>
+<p>Configura el nuevo virtualhost, para que pueda ejecutar PHP. Determina que configuración tiene por defecto php-fpm (socket unix o socket TCP) para configurar nginx de forma adecuada.</p>
+<p>Ahora si queremos empezar a servir aplicaciones php debemos de habiliar el interprete de php que hemos instalado llamado <strong>php-fpm</strong>. Si entramos en nuestro fichero de <strong>iesgn13.conf</strong> veremos que hay unas lineas comentadas de la siguiente forma:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># pass PHP scripts to FastCGI server</span>
+      <span style="color:#75715e">#</span>
+      <span style="color:#75715e">#location ~ \.php$ {</span>
+      <span style="color:#75715e">#     include snippets/fastcgi-php.conf;</span>
+
+      <span style="color:#75715e">#    # With php-fpm (or other unix sockets):</span>
+      <span style="color:#75715e">#     fastcgi_pass unix:/run/php/php7.3-fpm.sock;</span>
+      <span style="color:#75715e">#     # With php-cgi (or other tcp sockets):</span>
+      <span style="color:#75715e">#     fastcgi_pass 127.0.0.1:9000;</span>
+      <span style="color:#75715e">#}</span>
+</code></pre></div><p>En la cual si leemos vemos que, si vamos a usar php debemos de descomentar la linea <em>location</em> e <em>include</em> y, si seguimos leyendo vemos que nos dice que si estamos usando <strong>php-fpm</strong> descomentemos la linea siguiente. Por lo que podemos ver que <strong>php-fpm</strong> trabaja con socket unix. El fichero de configuracion de nuestro virtualhost quedaria de la siguiente manera:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">server <span style="color:#f92672">{</span>
+      listen <span style="color:#ae81ff">80</span> default_server;
+      listen <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:80 default_server;
+
+      ...
+
+      root /srv/www/iesgn13;
+
+      <span style="color:#75715e"># Add index.php to the list if you are using PHP</span>
+      index index.html index.htm index.nginx-debian.html;
+
+      server_name www.iesgn13.es;
+
+      location / <span style="color:#f92672">{</span>
+            <span style="color:#75715e"># First attempt to serve request as file, then</span>
+            <span style="color:#75715e"># as directory, then fall back to displaying a 404.</span>
+            try_files $uri $uri/ <span style="color:#f92672">=</span>404;
+      <span style="color:#f92672">}</span>
+
+      <span style="color:#75715e"># Redireccion permanente para principal</span>
+      rewrite ^/$ principal permanent;
+
+      location ~ <span style="color:#ae81ff">\.</span>php$ <span style="color:#f92672">{</span>
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+      <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e">#### Reiniciamos el servicio ####</span>
+debian@omega:~$ sudo systemctl reload nginx.service
+</code></pre></div><p>Ahora, para comprobar que podemos servir ficheros php, vamos a crear un fichero llamado <strong>info.php</strong> en el cual vamos a añadir un pequeño script para ver si funciona, dicho fichero lo vamos a crear en <strong>/srv/www/iesgn13/</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el fichero info.php ####</span>
+debian@omega:~$ sudo nano /srv/www/iesgn13/info.php
+
+<span style="color:#75715e">#### Añadimos el script ####</span>
+&lt;?php phpinfo<span style="color:#f92672">()</span>;
+</code></pre></div><p>Entonces al entrar en <strong><a href="http://www.iesgn13.es/info.php">www.iesgn13.es/info.php</a></strong> nos saldra la siguiente pagina:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Servicios/ovh/php-nginx.png" alt="php info"></p>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2020  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+         
+        <li><a href="/servicios">Servicios</a></li>
+         
+        <li><a href="/implantacion">Implantacion</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>
