@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Mon, 09 Nov 2020 11:11:39 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 18 Nov 2020 18:21:55 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Instalacion Nginx Ovh</title>
+      <link>https://franjavimn.onrender.com/implantacion/instalacion-nginx-ovh/</link>
+      <pubDate>Wed, 18 Nov 2020 18:21:55 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/implantacion/instalacion-nginx-ovh/</guid>
+      <description>Realizar la migración de la aplicación drupal que tienes instalada en el entorno de desarrollo a nuestro entorno de producción, para ello ten en cuenta lo siguiente: Tarea 1 La aplicación se tendrá que migrar a un nuevo virtualhost al que se accederá con el nombre drupal.iesgn13.es.
+De esta forma ya tenemos listo nuestro documentroot para nuestro nuevo virtualhost, ahora el siguiente paso es crear dicho virtualhost, para ello seguimos los pasos siguientes:</description>
+    </item>
+    
     <item>
       <title>Nginx Ovh</title>
       <link>https://franjavimn.onrender.com/servicios/nginx-ovh/</link>

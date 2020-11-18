@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Instalacion Nginx Ovh | Blog</title>
+  <meta name="description" content="En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Instalacion Nginx Ovh" />
+<meta property="og:description" content="Realizar la migración de la aplicación drupal que tienes instalada en el entorno de desarrollo a nuestro entorno de producción, para ello ten en cuenta lo siguiente: Tarea 1 La aplicación se tendrá que migrar a un nuevo virtualhost al que se accederá con el nombre drupal.iesgn13.es.
+De esta forma ya tenemos listo nuestro documentroot para nuestro nuevo virtualhost, ahora el siguiente paso es crear dicho virtualhost, para ello seguimos los pasos siguientes:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://franjavimn.onrender.com/implantacion/instalacion-nginx-ovh/" />
+<meta property="article:published_time" content="2020-11-18T18:21:55+01:00" />
+<meta property="article:modified_time" content="2020-11-18T18:21:55+01:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Instalacion Nginx Ovh"/>
+<meta name="twitter:description" content="Realizar la migración de la aplicación drupal que tienes instalada en el entorno de desarrollo a nuestro entorno de producción, para ello ten en cuenta lo siguiente: Tarea 1 La aplicación se tendrá que migrar a un nuevo virtualhost al que se accederá con el nombre drupal.iesgn13.es.
+De esta forma ya tenemos listo nuestro documentroot para nuestro nuevo virtualhost, ahora el siguiente paso es crear dicho virtualhost, para ello seguimos los pasos siguientes:"/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://franjavimn.onrender.com/images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://franjavimn.onrender.com">
+  
+    <div id="logo" style="background-image: url(https://franjavimn.onrender.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/">Home</a></li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+       
+        <li><a href="/servicios">Servicios</a></li>
+       
+        <li><a href="/implantacion">Implantacion</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h1 id="realizar-la-migración-de-la-aplicación-drupal-que-tienes-instalada-en-el-entorno-de-desarrollo-a-nuestro-entorno-de-producción-para-ello-ten-en-cuenta-lo-siguiente">Realizar la migración de la aplicación drupal que tienes instalada en el entorno de desarrollo a nuestro entorno de producción, para ello ten en cuenta lo siguiente:</h1>
+<h2 id="tarea-1">Tarea 1</h2>
+<p>La aplicación se tendrá que migrar a un nuevo virtualhost al que se accederá con el nombre drupal.iesgn13.es.</p>
+<p>De esta forma ya tenemos listo nuestro documentroot para nuestro nuevo virtualhost, ahora el siguiente paso es crear dicho virtualhost, para ello seguimos los pasos siguientes:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Copiamos el nuevo virtualhost llamado drupal.conf ####</span>
+debian@omega:/etc/nginx/sites-available$ sudo cp default ./drupal.conf
+
+<span style="color:#75715e">#### El contenido de drupal.conf debe de ser el siguiente ####</span>
+server <span style="color:#f92672">{</span>
+    listen 80;
+
+    ...
+
+    root /srv/www/drupal;
+
+    <span style="color:#75715e"># Add index.php to the list if you are using PHP</span>
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name drupal.iesgn13.es;
+
+    location / <span style="color:#f92672">{</span>
+        <span style="color:#75715e"># First attempt to serve request as file, then</span>
+        <span style="color:#75715e"># as directory, then fall back to displaying a 404.</span>
+        <span style="color:#75715e">#try_files $uri $uri/ =404;</span>
+        try_files $uri /index.php?$query_string;
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e"># pass PHP scripts to FastCGI server</span>
+    location ~ <span style="color:#ae81ff">\.</span>php$ <span style="color:#f92672">{</span>
+        include snippets/fastcgi-php.conf;
+        <span style="color:#75715e"># With php-fpm (or other unix sockets):</span>
+        fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Ahora debemos de crear la zona DNS <strong>CNAME</strong> en nuestro proveedor OVH para que, al entrar en la url de <strong>drupal.iesgn13.es</strong> debe de salirnos el instalador de drupal pero aun no debemos de instalarlo ya que debemos de configurar nuestra base de datos antes.</p>
+<h2 id="tarea-2">Tarea 2</h2>
+<p>Vamos a nombrar el servicio de base de datos que tenemos en producción. Como es un servicio interno no la vamos a nombrar en la zona DNS, la vamos a nombrar usando resolución estática. El nombre del servicio de base de datos se debe llamar: bd.iesgn13.es.</p>
+<p>Para ello debemos de crear una resolucion estatica de la siguiente forma:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">127.0.0.1   bd.iesgn13.es
+</code></pre></div><h2 id="tarea-3">Tarea 3</h2>
+<p>Por lo tanto los recursos que deberás crear en la base de datos serán (respeta los nombres):</p>
+<ul>
+<li>Dirección de la base de datos: bd.iesgn13.es</li>
+<li>Base de datos: bd_drupal</li>
+<li>Usuario: user_drupal</li>
+<li>Password: pass_drupal</li>
+</ul>
+<p>Por lo que vamos a crear en nuestra maquina de ovh todos estos elementos para el cms drupal, por lo que debemos de crearlo:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos la base de datos vacia ####</span>
+MariaDB <span style="color:#f92672">[(</span>none<span style="color:#f92672">)]</span>&gt; CREATE DATABASE db_drupal;
+
+<span style="color:#75715e">#### Creamos el usuario con contraseña ####</span>
+MariaDB <span style="color:#f92672">[(</span>none<span style="color:#f92672">)]</span>&gt; CREATE USER <span style="color:#e6db74">&#39;user_drupal&#39;</span>@<span style="color:#e6db74">&#39;localhost&#39;</span> IDENTIFIED BY <span style="color:#e6db74">&#39;pass_drupal&#39;</span>;
+
+<span style="color:#75715e">#### Le damos los privilegios de la base de datos al usuario ####</span>
+MariaDB <span style="color:#f92672">[(</span>none<span style="color:#f92672">)]</span>&gt; GRANT ALL PRIVILEGES ON db_drupal.* to <span style="color:#e6db74">&#39;user_drupal&#39;</span>@<span style="color:#e6db74">&#39;localhost&#39;</span>;
+</code></pre></div><h2 id="tarea-4">Tarea 4</h2>
+<p>Realiza la migración de la aplicación.</p>
+<p>Ahora debemos de llevarnos nuestra base de datos del entorno de desarrollo a nuestra maquina ovh, para ello, mediante la utilidad de <strong>scp</strong> nos llevamos todo drupal a nuestra maquina de ovh. Una vez hayamos hecho esto, debemos de crear una copia de la base de datos de drupal de nuestro entorno de desarrollo, para ello usamos el siguiente comando:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Realizamos la copia de la base de datos ####</span>
+debian@cms:~$ sudo mysqldump drupal &gt; copia-drupal.sql
+
+<span style="color:#75715e">#### Copiamos a nuestra maquina ovh ####</span>
+debian@cms:~$ sudo scp copia-drupal.sql debian@146.59.196.94:/home/debian/
+
+<span style="color:#75715e">#### Restauramos la copia de la base de datos ####</span>
+debian@omega:~$ sudo mysql db_drupal &lt; copia-drupal.sql
+</code></pre></div><p>Ahora debemos de llevarnos todo el contenido de la carpeta drupal del servidor de desarrollo al de produccion, por lo que volvemos a usar scp pero con la carpeta drupal:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@cms:~$ sudo scp -r /srv/drupal debian@146.59.196.94:/home/debian/
+</code></pre></div><p>Una vez la tengamos, debemos de modificar el ficher llamado setting.php y buscar las lineas sobre la base de datos y debemos de introducir la nuevas credenciales de nuestra base de datos para que asi podamos usarla con drupal en esta maquina.</p>
+<h2 id="tarea-5">Tarea 5</h2>
+<p>La aplicación debe estar disponible en la URL: drupal.iesgn13.es</p>
+<p>Ahora, si entramos en la url drupal.iesgn13.es veremos que entraremos en drupal que hemos migrado desde el servidor de desarrollo hasta el servidor en produccion. Ademas vemos que tenemos las url limpias en nginx.</p>
+<h1 id="instalación--migración-de-la-aplicación-nextcloud">Instalación / migración de la aplicación Nextcloud</h1>
+<h2 id="tarea-1-1">Tarea 1</h2>
+<p>Instala la aplicación web Nextcloud en tu entorno de desarrollo.</p>
+<p>Para ello, en nuestro entorno de desarrollo debemos de crear, primero, un nuevo virtualhost que lo vamos a llamar nextcloud.conf el cual va a tener el siguiente contenido:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">&lt;VirtualHost *:80&gt;
+        ServerName www.francisco-nextcloud.org
+        ServerAdmin webmaster@localhost
+        DocumentRoot /srv/nextcloud
+        ErrorLog <span style="color:#e6db74">${</span>APACHE_LOG_DIR<span style="color:#e6db74">}</span>/error.log
+        CustomLog <span style="color:#e6db74">${</span>APACHE_LOG_DIR<span style="color:#e6db74">}</span>/access.log combined
+
+        &lt;directory /srv/nextcloud&gt;
+        AllowOverride All
+        &lt;/directory&gt;
+
+
+&lt;/VirtualHost&gt;
+
+</code></pre></div><p>Ahora, en nuestra documentroot vamos a descargar el cms de nextcloud mediando wget:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Lo descargamos ####</span>
+debian@cms:/srv$ sudo wget https://download.nextcloud.com/server/releases/nextcloud-20.0.1.tar.bz2
+
+<span style="color:#75715e">#### Lo descomprimimos ####</span>
+debian@cms:/srv$ sudo tar -xf nextcloud-20.0.1.tar.bz2
+</code></pre></div><p>Despues de hacer nuestro nuevo virtualhost vamos a crear una nueva base de datos llamada nextcloud con privilegios del usuario <strong>fran</strong>.</p>
+<p>Una vez lo tengamos lo descomprimimos y tendremos una carpeta llamada nextcloud. Cuando ya la tengamos nos vamos a nuestra pagina con resolucion estatica y nos saldra el instalador de nextcloud. En este paso es conveniente crear una carpeta en /srv/ la cual vamos a llamar datanextcloud que es donde vamos a guardar los ficheros de nuestro cloud.</p>
+<p>Cuando hayamos completado la instalacion debemos de tener una pagina como la siguiente:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Implantacion/php-nginx/nextcloud.png" alt="pagina next cloud"></p>
+<h2 id="tarea-2-1">Tarea 2</h2>
+<p>Realiza la migración al servidor en producción, para que la aplicación sea accesible en la URL: <a href="http://www.iesgnXX.es/cloud">www.iesgnXX.es/cloud</a></p>
+<p>Para ello debemos de crear una nueva base de datos y un nuevo usuario, seguiremos los prefijos que se han usado en la cracion de drupal:</p>
+<ul>
+<li>Dirección de la base de datos: bd.iesgn13.es</li>
+<li>Base de datos: bd_nextcloud</li>
+<li>Usuario: user_nextcloud</li>
+<li>Password: pass_nextcloud</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos la base de datos ####</span>
+MariaDB <span style="color:#f92672">[(</span>none<span style="color:#f92672">)]</span>&gt; create database bd_nextcloud;
+
+<span style="color:#75715e">#### Creamos el usuario ####</span>
+MariaDB <span style="color:#f92672">[(</span>none<span style="color:#f92672">)]</span>&gt; create user user_nextcloud@localhost identified by <span style="color:#e6db74">&#34;pass_nextcloud&#34;</span>;
+
+<span style="color:#75715e">#### Le damos los permisos ####</span>
+MariaDB <span style="color:#f92672">[(</span>none<span style="color:#f92672">)]</span>&gt; GRANT ALL PRIVILEGES ON db_nextcloud.* to <span style="color:#e6db74">&#39;user_nextcloud&#39;</span>@<span style="color:#e6db74">&#39;localhost&#39;</span>;
+
+<span style="color:#75715e">#### Restauramos la base de datos ####</span>
+debian@omega:~$ sudo mysql bd_nextcloud &lt; copia-nextcloud.sql
+</code></pre></div><p>Ahora debemos de instalar las librerias de php que habiamos instalado en el servidor de desarrollo que son php-zip php-curl:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@omega:~$ sudo apt install php-zip php-curlcd
+</code></pre></div><p>Ahora debemos mover la carpeta de nuestro entorno de desarrollo a produccion con el comando scp. Una vez la tengamos en producion la movemos a la carpeta de documentroot de <strong><a href="http://www.iesgn13.es">www.iesgn13.es</a></strong> con el nombre de <strong>cloud</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@omega:/srv/www/iesgn13$ sudo cp -r /home/debian/nextcloud/ ./cloud
+</code></pre></div><p>Ahora si intentamos entrar en la pagina <strong><a href="http://www.iesgn13.es/cloud">www.iesgn13.es/cloud</a></strong> no nos dejara ya que debemos de modificar el fichero de configuracion que se encuentra en <strong>config/config.php</strong>, lo editamos poniendo las credenciales de nuestra base de datos para nextcloud. Una vez hecho esto debemos de dirigirnos a nuestro fichero de nuestro virtualhost de <strong><a href="http://www.iesgn13.es">www.iesgn13.es</a></strong> y alli debemos de añadir la siguiente informacion, teniendo en cuenta que donde pone <strong>/cloud</strong> debemos de cambiarlo por el nombre del directorio del documentroot donde se encuentre la carpeta con nextcloud:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">upstream php-handler <span style="color:#f92672">{</span>
+	server unix:/run/php/php7.3-fpm.sock;
+<span style="color:#f92672">}</span>
+
+server <span style="color:#f92672">{</span>
+	listen <span style="color:#ae81ff">80</span> default_server;
+    listen <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:80 default_server;
+
+    ...
+
+    add_header X-Content-Type-Options nosniff;
+	add_header X-XSS-Protection <span style="color:#e6db74">&#34;1; mode=block&#34;</span>;
+	add_header X-Robots-Tag none;
+	add_header X-Download-Options noopen;
+	add_header X-Permitted-Cross-Domain-Policies none;
+	add_header Referrer-Policy no-referrer;
+
+    fastcgi_hide_header X-Powered-By;
+
+	location <span style="color:#f92672">=</span> /robots.txt <span style="color:#f92672">{</span>
+		allow all;
+		log_not_found off;
+		access_log off;
+	<span style="color:#f92672">}</span>
+
+    location <span style="color:#f92672">=</span> /.well-known/carddav <span style="color:#f92672">{</span>	
+		<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">301</span> $scheme://$host:$server_port/nextcloud/remote.php/dav;	
+	<span style="color:#f92672">}</span>
+
+	location <span style="color:#f92672">=</span> /.well-known/caldav <span style="color:#f92672">{</span>
+		<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">301</span> $scheme://$host:$server_port/nextcloud/remote.php/dav;
+	<span style="color:#f92672">}</span>
+
+    location /.well-known/acme-challenge <span style="color:#f92672">{</span> <span style="color:#f92672">}</span>
+
+	location ^~ /cloud <span style="color:#f92672">{</span>
+        client_max_body_size 512M;
+		fastcgi_buffers <span style="color:#ae81ff">64</span> 4K;
+		gzip on;
+		gzip_vary on;
+		gzip_comp_level 4;
+		gzip_min_length 256;
+		gzip_proxied expired no-cache no-store private no_last_modified no_etag auth;
+        gzip_types application/atom+xml application/javascript application/json application/ld+json application/manifest+json application/rss+xml application/vnd.geo+json application/vnd.ms-fontobject application/x-font-ttf application/x-web-app-manifest+json application/xhtml+xml application/xml font/opentype image/bmp image/svg+xml image/x-icon text/cache-manifest text/css text/plain text/vcard text/vnd.rim.location.xloc text/vtt text/x-component text/x-cross-domain-policy;
+
+        location /cloud <span style="color:#f92672">{</span>
+			rewrite ^ /cloud/index.php;
+		<span style="color:#f92672">}</span>
+
+		location ~ ^<span style="color:#ae81ff">\/</span>cloud<span style="color:#ae81ff">\/</span><span style="color:#f92672">(</span>?:build|tests|config|lib|3rdparty|templates|data<span style="color:#f92672">)</span><span style="color:#ae81ff">\/</span> <span style="color:#f92672">{</span>
+			deny all;
+		<span style="color:#f92672">}</span>	
+
+		location ~ ^<span style="color:#ae81ff">\/</span>cloud<span style="color:#ae81ff">\/</span><span style="color:#f92672">(</span>?:<span style="color:#ae81ff">\.</span>|autotest|occ|issue|indie|db_|console<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+			deny all;
+		<span style="color:#f92672">}</span>
+
+        location ~ ^<span style="color:#ae81ff">\/</span>cloud<span style="color:#ae81ff">\/</span><span style="color:#f92672">(</span>?:index|remote|public|cron|core<span style="color:#ae81ff">\/</span>ajax<span style="color:#ae81ff">\/</span>update|status|ocs<span style="color:#ae81ff">\/</span>v<span style="color:#f92672">[</span>12<span style="color:#f92672">]</span>|updater<span style="color:#ae81ff">\/</span>.+|oc<span style="color:#f92672">[</span>ms<span style="color:#f92672">]</span>-provider<span style="color:#ae81ff">\/</span>.+<span style="color:#f92672">)</span><span style="color:#ae81ff">\.</span>php<span style="color:#f92672">(</span>?:$|<span style="color:#ae81ff">\/</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+			fastcgi_split_path_info ^<span style="color:#f92672">(</span>.+?<span style="color:#ae81ff">\.</span>php<span style="color:#f92672">)(</span><span style="color:#ae81ff">\/</span>.*|<span style="color:#f92672">)</span>$;
+			set $path_info $fastcgi_path_info;
+			try_files $fastcgi_script_name <span style="color:#f92672">=</span>404;
+			include fastcgi_params;
+			fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+			fastcgi_param PATH_INFO $path_info;
+			fastcgi_param modHeadersAvailable true;
+			fastcgi_param front_controller_active true;
+			fastcgi_pass php-handler;
+			fastcgi_intercept_errors on;
+			fastcgi_request_buffering off;
+		<span style="color:#f92672">}</span>
+
+        location ~ ^<span style="color:#ae81ff">\/</span>nextcloud<span style="color:#ae81ff">\/</span><span style="color:#f92672">(</span>?:updater|oc<span style="color:#f92672">[</span>ms<span style="color:#f92672">]</span>-provider<span style="color:#f92672">)(</span>?:$|<span style="color:#ae81ff">\/</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+			try_files $uri/ <span style="color:#f92672">=</span>404;
+			index index.php;
+		<span style="color:#f92672">}</span>
+
+        location ~ ^<span style="color:#ae81ff">\/</span>cloud<span style="color:#ae81ff">\/</span>.+<span style="color:#f92672">[</span>^<span style="color:#ae81ff">\/</span><span style="color:#f92672">]</span><span style="color:#ae81ff">\.</span><span style="color:#f92672">(</span>?:css|js|woff2?|svg|gif|map<span style="color:#f92672">)</span>$ <span style="color:#f92672">{</span>
+			try_files $uri /cloud/index.php$request_uri;
+			add_header Cache-Control <span style="color:#e6db74">&#34;public, max-age=15778463&#34;</span>;
+			add_header X-Content-Type-Options nosniff;
+			add_header X-XSS-Protection <span style="color:#e6db74">&#34;1; mode=block&#34;</span>;
+			add_header X-Robots-Tag none;
+			add_header X-Download-Options noopen;
+			add_header X-Permitted-Cross-Domain-Policies none;
+			add_header Referrer-Policy no-referrer;
+			access_log off;
+		<span style="color:#f92672">}</span>
+
+        location ~ ^<span style="color:#ae81ff">\/</span>cloud<span style="color:#ae81ff">\/</span>.+<span style="color:#f92672">[</span>^<span style="color:#ae81ff">\/</span><span style="color:#f92672">]</span><span style="color:#ae81ff">\.</span><span style="color:#f92672">(</span>?:png|html|ttf|ico|jpg|jpeg|bcmap<span style="color:#f92672">)</span>$ <span style="color:#f92672">{</span>
+			try_files $uri /cloud/index.php$request_uri;
+			<span style="color:#75715e"># Optional: Don&#39;t log access to other asse	</span>
+			access_log off;
+		<span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+    root /srv/www/iesgn13;
+
+	<span style="color:#75715e"># Add index.php to the list if you are using PHP</span>
+	index index.html index.htm index.nginx-debian.html;
+
+	server_name www.iesgn13.es;
+
+	location / <span style="color:#f92672">{</span>
+		<span style="color:#75715e"># First attempt to serve request as file, then</span>
+		<span style="color:#75715e"># as directory, then fall back to displaying a 404.</span>
+		try_files $uri $uri/ <span style="color:#f92672">=</span>404;
+	<span style="color:#f92672">}</span>
+
+    <span style="color:#75715e"># Redireccion permanente para principal</span>
+	rewrite ^/$ principal permanent;
+
+	
+	<span style="color:#75715e"># pass PHP scripts to FastCGI server</span>
+	<span style="color:#75715e">#</span>
+	location ~ <span style="color:#ae81ff">\.</span>php$ <span style="color:#f92672">{</span>
+		include snippets/fastcgi-php.conf;
+        <span style="color:#75715e"># With php-fpm (or other unix sockets):</span>
+		fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Una vez hecho esto y al entrar en <strong><a href="http://www.iesgn13.es/cloud">www.iesgn13.es/cloud</a></strong> veremos que entramos en el login de nextcloud por lo que ya tendriamos nuestro cloud funcionando.</p>
+<h2 id="tarea-3-1">Tarea 3</h2>
+<p>Instala en un ordenador el cliente de nextcloud y realiza la configuración adecuada para acceder a &ldquo;tu nube&rdquo;.</p>
+<p>Para obtener el cliente de nextcloud debemos de entrar en la pagina de nextcloud y bajarnos el cliente para nuestra maquina, en mi caso para una maquina linux aunque vemos que podemos obtenerlo para otros sistemas operativos incluso para moviles.</p>
+<p>Una vez tengamos el fichero del cliente nextcloud, lo ejecutamos, en mi caso debemos de cambiar los permisos a ejecutable y ejecutar el fichero <strong>.AppImage</strong> como si fuera un script. Una vez este ejecutando nos saldra una ventana en la que tendremos que seleccionar la opcion de <strong>log in</strong> y ponemos la url de nuestro servidor nextcloud, en mi caso es <strong><a href="http://www.iesgn13.es/cloud">http://www.iesgn13.es/cloud</a></strong>, nos abrira el navegador y nos mostrara un mensaje de autorizacion a nuestra maquina, aceptamos y nos vamos de nuevo a la ventana del cliente. Si vemos que ya estamos configurando el lugar donde queremos tener los fichero de nuestro cloud, aceptamos y ya tendriamos listo el cliente nextcloud. Tendremos en nuestra barra de tareas un simbolo de una nube, que indica que estamos ya conectados a nextcloud.</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Implantacion/php-nginx/cliente-nextcloud.png" alt="nextcloud cliente"></p>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2020  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+         
+        <li><a href="/servicios">Servicios</a></li>
+         
+        <li><a href="/implantacion">Implantacion</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>
