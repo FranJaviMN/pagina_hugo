@@ -9,7 +9,7 @@
   <meta name="robots" content="all,follow">
   <meta name="googlebot" content="index,follow,snippet,archive">
   <meta property="og:title" content="Instalacion Nginx Ovh" />
-<meta property="og:description" content="Realizar la migración de la aplicación drupal que tienes instalada en el entorno de desarrollo a nuestro entorno de producción, para ello ten en cuenta lo siguiente: Tarea 1 La aplicación se tendrá que migrar a un nuevo virtualhost al que se accederá con el nombre drupal.iesgn13.es.
+<meta property="og:description" content="Realizar la migración de la aplicación drupal que tienes instalada en el entorno de desarrollo a nuestro entorno de producción, para ello ten en cuenta lo siguiente: Tarea 1 La aplicación se tendrá que migrar a un nuevo virtualhost al que se accederá con el nombre portal.iesgn13.es.
 De esta forma ya tenemos listo nuestro documentroot para nuestro nuevo virtualhost, ahora el siguiente paso es crear dicho virtualhost, para ello seguimos los pasos siguientes:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://franjavimn.onrender.com/implantacion/instalacion-nginx-ovh/" />
@@ -18,7 +18,7 @@ De esta forma ya tenemos listo nuestro documentroot para nuestro nuevo virtualho
 
   <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Instalacion Nginx Ovh"/>
-<meta name="twitter:description" content="Realizar la migración de la aplicación drupal que tienes instalada en el entorno de desarrollo a nuestro entorno de producción, para ello ten en cuenta lo siguiente: Tarea 1 La aplicación se tendrá que migrar a un nuevo virtualhost al que se accederá con el nombre drupal.iesgn13.es.
+<meta name="twitter:description" content="Realizar la migración de la aplicación drupal que tienes instalada en el entorno de desarrollo a nuestro entorno de producción, para ello ten en cuenta lo siguiente: Tarea 1 La aplicación se tendrá que migrar a un nuevo virtualhost al que se accederá con el nombre portal.iesgn13.es.
 De esta forma ya tenemos listo nuestro documentroot para nuestro nuevo virtualhost, ahora el siguiente paso es crear dicho virtualhost, para ello seguimos los pasos siguientes:"/>
 
   
@@ -79,7 +79,7 @@ De esta forma ya tenemos listo nuestro documentroot para nuestro nuevo virtualho
   
     <h1 id="realizar-la-migración-de-la-aplicación-drupal-que-tienes-instalada-en-el-entorno-de-desarrollo-a-nuestro-entorno-de-producción-para-ello-ten-en-cuenta-lo-siguiente">Realizar la migración de la aplicación drupal que tienes instalada en el entorno de desarrollo a nuestro entorno de producción, para ello ten en cuenta lo siguiente:</h1>
 <h2 id="tarea-1">Tarea 1</h2>
-<p>La aplicación se tendrá que migrar a un nuevo virtualhost al que se accederá con el nombre drupal.iesgn13.es.</p>
+<p>La aplicación se tendrá que migrar a un nuevo virtualhost al que se accederá con el nombre portal.iesgn13.es.</p>
 <p>De esta forma ya tenemos listo nuestro documentroot para nuestro nuevo virtualhost, ahora el siguiente paso es crear dicho virtualhost, para ello seguimos los pasos siguientes:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Copiamos el nuevo virtualhost llamado drupal.conf ####</span>
 debian@omega:/etc/nginx/sites-available$ sudo cp default ./drupal.conf
@@ -95,7 +95,7 @@ server <span style="color:#f92672">{</span>
     <span style="color:#75715e"># Add index.php to the list if you are using PHP</span>
     index index.html index.htm index.nginx-debian.html;
 
-    server_name drupal.iesgn13.es;
+    server_name portal.iesgn13.es;
 
     location / <span style="color:#f92672">{</span>
         <span style="color:#75715e"># First attempt to serve request as file, then</span>
@@ -111,7 +111,7 @@ server <span style="color:#f92672">{</span>
         fastcgi_pass unix:/run/php/php7.3-fpm.sock;
     <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
-</code></pre></div><p>Ahora debemos de crear la zona DNS <strong>CNAME</strong> en nuestro proveedor OVH para que, al entrar en la url de <strong>drupal.iesgn13.es</strong> debe de salirnos el instalador de drupal pero aun no debemos de instalarlo ya que debemos de configurar nuestra base de datos antes.</p>
+</code></pre></div><p>Ahora debemos de crear la zona DNS <strong>CNAME</strong> en nuestro proveedor OVH para que, al entrar en la url de <strong>portal.iesgn13.es</strong> debe de salirnos el instalador de drupal pero aun no debemos de instalarlo ya que debemos de configurar nuestra base de datos antes.</p>
 <h2 id="tarea-2">Tarea 2</h2>
 <p>Vamos a nombrar el servicio de base de datos que tenemos en producción. Como es un servicio interno no la vamos a nombrar en la zona DNS, la vamos a nombrar usando resolución estática. El nombre del servicio de base de datos se debe llamar: bd.iesgn13.es.</p>
 <p>Para ello debemos de crear una resolucion estatica de la siguiente forma:</p>
@@ -148,8 +148,8 @@ debian@omega:~$ sudo mysql db_drupal &lt; copia-drupal.sql
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@cms:~$ sudo scp -r /srv/drupal debian@146.59.196.94:/home/debian/
 </code></pre></div><p>Una vez la tengamos, debemos de modificar el ficher llamado setting.php y buscar las lineas sobre la base de datos y debemos de introducir la nuevas credenciales de nuestra base de datos para que asi podamos usarla con drupal en esta maquina.</p>
 <h2 id="tarea-5">Tarea 5</h2>
-<p>La aplicación debe estar disponible en la URL: drupal.iesgn13.es</p>
-<p>Ahora, si entramos en la url drupal.iesgn13.es veremos que entraremos en drupal que hemos migrado desde el servidor de desarrollo hasta el servidor en produccion. Ademas vemos que tenemos las url limpias en nginx.</p>
+<p>La aplicación debe estar disponible en la URL: portal.iesgn13.es</p>
+<p>Ahora, si entramos en la url portal.iesgn13.es veremos que entraremos en drupal que hemos migrado desde el servidor de desarrollo hasta el servidor en produccion. Ademas vemos que tenemos las url limpias en nginx.</p>
 <h1 id="instalación--migración-de-la-aplicación-nextcloud">Instalación / migración de la aplicación Nextcloud</h1>
 <h2 id="tarea-1-1">Tarea 1</h2>
 <p>Instala la aplicación web Nextcloud en tu entorno de desarrollo.</p>

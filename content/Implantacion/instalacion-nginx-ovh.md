@@ -8,7 +8,7 @@ draft: true
 
 ## Tarea 1
 
-La aplicación se tendrá que migrar a un nuevo virtualhost al que se accederá con el nombre drupal.iesgn13.es.
+La aplicación se tendrá que migrar a un nuevo virtualhost al que se accederá con el nombre portal.iesgn13.es.
 
 De esta forma ya tenemos listo nuestro documentroot para nuestro nuevo virtualhost, ahora el siguiente paso es crear dicho virtualhost, para ello seguimos los pasos siguientes:
 ```shell
@@ -26,7 +26,7 @@ server {
     # Add index.php to the list if you are using PHP
     index index.html index.htm index.nginx-debian.html;
 
-    server_name drupal.iesgn13.es;
+    server_name portal.iesgn13.es;
 
     location / {
         # First attempt to serve request as file, then
@@ -44,7 +44,7 @@ server {
 }
 ```
 
-Ahora debemos de crear la zona DNS **CNAME** en nuestro proveedor OVH para que, al entrar en la url de **drupal.iesgn13.es** debe de salirnos el instalador de drupal pero aun no debemos de instalarlo ya que debemos de configurar nuestra base de datos antes.
+Ahora debemos de crear la zona DNS **CNAME** en nuestro proveedor OVH para que, al entrar en la url de **portal.iesgn13.es** debe de salirnos el instalador de drupal pero aun no debemos de instalarlo ya que debemos de configurar nuestra base de datos antes.
 
 
 ## Tarea 2
@@ -103,9 +103,9 @@ Una vez la tengamos, debemos de modificar el ficher llamado setting.php y buscar
 
 ## Tarea 5
 
-La aplicación debe estar disponible en la URL: drupal.iesgn13.es
+La aplicación debe estar disponible en la URL: portal.iesgn13.es
 
-Ahora, si entramos en la url drupal.iesgn13.es veremos que entraremos en drupal que hemos migrado desde el servidor de desarrollo hasta el servidor en produccion. Ademas vemos que tenemos las url limpias en nginx.
+Ahora, si entramos en la url portal.iesgn13.es veremos que entraremos en drupal que hemos migrado desde el servidor de desarrollo hasta el servidor en produccion. Ademas vemos que tenemos las url limpias en nginx.
 
 # Instalación / migración de la aplicación Nextcloud
 
