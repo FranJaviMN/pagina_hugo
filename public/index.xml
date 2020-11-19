@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Wed, 18 Nov 2020 18:21:55 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 19 Nov 2020 13:23:35 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Actualizar Centos8</title>
+      <link>https://franjavimn.onrender.com/sistemas/actualizar-centos8/</link>
+      <pubDate>Thu, 19 Nov 2020 13:23:35 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/sistemas/actualizar-centos8/</guid>
+      <description>De centos7 a centos8 En este documento vamos a detallar como vamos a hacer una actualizacion desde centos7 a centos8. Para ello lo recomendable es hacer una copia de nuestra maquina que vamos a actualizar y guardar esa copia para que, en caso de que cometamos algun error y la maquina deje de funcionar, poder restaurarla para volver a intentar. En mi caso, antes de empezar a trabajar con la maquina que queremos tener actualizada, he realizado primero la actualizacion en una maquina de prueba con las mismas caracteristicas y paquetes que la maquina que queremos actualizar.</description>
+    </item>
+    
     <item>
       <title>Instalacion Nginx Ovh</title>
       <link>https://franjavimn.onrender.com/implantacion/instalacion-nginx-ovh/</link>
