@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Tue, 27 Oct 2020 18:30:09 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/seguridad/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 23 Nov 2020 14:15:09 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/seguridad/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Certificados Digitales</title>
+      <link>https://franjavimn.onrender.com/seguridad/certificados-digitales/</link>
+      <pubDate>Mon, 23 Nov 2020 14:15:09 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/seguridad/certificados-digitales/</guid>
+      <description>Práctica: Certificados digitales. HTTPS Tarea 1  Una vez que hayas obtenido tu certificado, explica brevemente como se instala en tu navegador favorito.  Para instalarlo en el navegador, en mi caso lo voy a instalar en firefox, solo debemos de descargarnos el certificado desde la pagina siguiente.
+Una vez lo tengamos nos vamos a la zona de preferencias -&amp;gt; Privacidad y seguridad y ahi buscamos el apartado de certificados, le damos a ver certificados y agregamos el nuestro que nos hemos descargado previamente.</description>
+    </item>
+    
     <item>
       <title>Practica Integridad</title>
       <link>https://franjavimn.onrender.com/seguridad/practica-integridad/</link>

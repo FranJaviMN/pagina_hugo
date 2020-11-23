@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Certificados Digitales | Blog</title>
+  <meta name="description" content="En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Certificados Digitales" />
+<meta property="og:description" content="Práctica: Certificados digitales. HTTPS Tarea 1  Una vez que hayas obtenido tu certificado, explica brevemente como se instala en tu navegador favorito.  Para instalarlo en el navegador, en mi caso lo voy a instalar en firefox, solo debemos de descargarnos el certificado desde la pagina siguiente.
+Una vez lo tengamos nos vamos a la zona de preferencias -&gt; Privacidad y seguridad y ahi buscamos el apartado de certificados, le damos a ver certificados y agregamos el nuestro que nos hemos descargado previamente." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://franjavimn.onrender.com/seguridad/certificados-digitales/" />
+<meta property="article:published_time" content="2020-11-23T14:15:09+01:00" />
+<meta property="article:modified_time" content="2020-11-23T14:15:09+01:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Certificados Digitales"/>
+<meta name="twitter:description" content="Práctica: Certificados digitales. HTTPS Tarea 1  Una vez que hayas obtenido tu certificado, explica brevemente como se instala en tu navegador favorito.  Para instalarlo en el navegador, en mi caso lo voy a instalar en firefox, solo debemos de descargarnos el certificado desde la pagina siguiente.
+Una vez lo tengamos nos vamos a la zona de preferencias -&gt; Privacidad y seguridad y ahi buscamos el apartado de certificados, le damos a ver certificados y agregamos el nuestro que nos hemos descargado previamente."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://franjavimn.onrender.com/images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://franjavimn.onrender.com">
+  
+    <div id="logo" style="background-image: url(https://franjavimn.onrender.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/">Home</a></li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+       
+        <li><a href="/servicios">Servicios</a></li>
+       
+        <li><a href="/implantacion">Implantacion</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h1 id="práctica-certificados-digitales-https">Práctica: Certificados digitales. HTTPS</h1>
+<h2 id="tarea-1">Tarea 1</h2>
+<ol>
+<li>Una vez que hayas obtenido tu certificado, explica brevemente como se instala en tu navegador favorito.</li>
+</ol>
+<p>Para instalarlo en el navegador, en mi caso lo voy a instalar en firefox, solo debemos de descargarnos el certificado desde la pagina <a href="https://www.sede.fnmt.gob.es/certificados/persona-fisica/obtener-certificado-con-dnie/descargar-certificado/descarga-chrome">siguiente</a>.</p>
+<p>Una vez lo tengamos nos vamos a la zona de preferencias -&gt; Privacidad y seguridad y ahi buscamos el apartado de certificados, le damos a ver certificados y agregamos el nuestro que nos hemos descargado previamente.</p>
+<ol start="2">
+<li>Muestra una captura de pantalla donde se vea las preferencias del navegador donde se ve instalado tu certificado.</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Seguridad/certificado/certificado-digital.png" alt="certificado"></p>
+<ol start="3">
+<li>¿Cómo puedes hacer una copia de tu certificado?, ¿Como vas a realizar la copia de seguridad de tu certificado?. Razona la respuesta.</li>
+</ol>
+<p>Desde la misma ventana donde vemos los certificados instalados, si le damos al nuestro tiene una opcion en la que nos deja hacer una copia de dicho certificado. Para realizar una copia de seguridad lo copiamos y lo debemos de guardar en distintos sitios donde sepamos que no lo vamos a perder en caso de que lo necesitemos de nuevo, en mi caso lo tengo en varios pendrives y en mi ordenador de sobremesa, a parte de en el portatil.</p>
+<ol start="4">
+<li>Investiga como exportar la clave pública de tu certificado.</li>
+</ol>
+<p>Para ello, a la hora de realizar la copia, debemos de fijarnos que la extension del fichero que vamos a obtener sea <strong>PKCS12</strong> la cual solo guarda la clave publica del certificado.</p>
+<h2 id="tarea-2">Tarea 2</h2>
+<p>Instala en tu ordenador el software <a href="https://firmaelectronica.gob.es/Home/Descargas.html">autofirma</a> y desde la página de VALIDe valida tu certificado. Muestra capturas de pantalla donde se comprueba la validación.</p>
+<p>Para ello debemos de tener instalado los siguientes paquetes para poder instalar el programa de autofirma, los paquetes a instalar son los siguientes:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Paquetes a instalar ####</span>
+sudo apt install default-jdk libnss3-tools openjdk-11-jdk
+
+<span style="color:#75715e">#### Descargamos el software de autofirma y lo instlamos ####</span>
+francisco@debian10:~/Descargas/AutoFirma_Linux$ sudo dpkg -i AutoFirma_1_6_5.deb
+</code></pre></div><p>Solo debemos de dirgirnos a la pagina VALIDe y desde ahi vamos a <a href="https://valide.redsara.es/valide/validarCertificado/ejecutar.html">verificar certificado</a>, le damos al boton donde dice seleccionar certificado y se nos abrira la aplicacion de <strong>Autofirma</strong>, en ella seleccinamos nuestro certificado y rellenamos el campo de seguridad y validamos. Cuando hayamos validado nos debe de aparecer algo como lo siguiente:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Seguridad/certificado/certificado-valido.png" alt="validacion certificado"></p>
+<h2 id="tarea-3">Tarea 3</h2>
+<ol>
+<li>Utilizando la página VALIDe y el programa autofirma, firma un documento con tu certificado y envíalo por correo a un compañero.</li>
+</ol>
+<p>Ahoara lo que debemos hacer, desde nuestro equipo, abrimos el programa de autofirma y seleccionamos un fichero que queremos firmar, en este caso una fotografia. Para firmarlo lo vamos a hacer mediante nuestro certificado digital, por lo que, cuandio lo firmemos podemos verificar que esta firmado por nosotros en la pagina de VALIDe:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Seguridad/certificado/firma-valida-documento.png" alt="imagen firma"></p>
+<ol start="2">
+<li>Tu debes recibir otro documento firmado por un compañero y utilizando las herramientas anteriores debes visualizar la firma (Visualizar Firma) y (Verificar Firma). ¿Puedes verificar la firma aunque no tengas la clave pública de tu compañero?, ¿Es necesario estar conectado a internet para hacer la validación de la firma?. Razona tus respuestas.</li>
+</ol>
+<p>Al recibir un fichero firmado con el certificado de mi compañero, vemos que si nos vamos a la pagina de VALIDe y verificamos la firma vemos que, aun sin tener la clave publica de mi compañero, puede verificar que es el ya que en el propio certificado de nuestro compañero esta tambien la clave publica de este. Al no tener internet no podemos entrar a la pagina de VALIDe por lo que no podremos verificar la firma de nuestro compañero.</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Seguridad/certificado/firma-celia.png" alt="firma compañero"></p>
+<p>Y aqui tenemos la firma verificada:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Seguridad/certificado/firma-valida-celia.png" alt="firma verificada"></p>
+<ol start="3">
+<li>Entre dos compañeros, firmar los dos un documento, verificar la firma para comprobar que está firmado por los dos.</li>
+</ol>
+<p>Para ello vamos a usar un fichero de texto y primero lo firmo yo y luego lo firmara nuestro compañero, asi, al entrar en la pagina de VALIDe y verificar la firma del documento veremos que esta firmado por dos personas, en este caso por mi y mi compañero.</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Seguridad/certificado/firma-ambos.png" alt="doble firma"></p>
+<h2 id="tarea-4">Tarea 4</h2>
+<ol>
+<li>Utilizando tu certificado accede a alguna página de la administración pública )cita médica, becas, puntos del carnet,…). Entrega capturas de pantalla donde se demuestre el acceso a ellas.</li>
+</ol>
+<p>Para ello vamos a consultar las becas que estan en vigor, para ello usamos la siguiente <a href="https://sede.educacion.gob.es/sede/login/inicio.jjsp?idConvocatoria=111">pagina</a> en la cual vamos a elegir como forma de identificacion el certificado digital, lo cual nos llevara a una pagina como la siguiente:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Seguridad/certificado/seleccion-digital.png" alt="pagina certificado"></p>
+<p>Al darle a usar el certificado digital nos saldra una ventana como la siguiente:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Seguridad/certificado/certificado-entrar-pagina.png" alt="certificado digital"></p>
+<h1 id="https--ssl">HTTPS / SSL</h1>
+<p><strong>Antes de hacer esta práctica vamos a crear una página web (puedes usar una página estática o instalar una aplicación web) en un servidor web apache2 que se acceda con el nombre tunombre.iesgn.org.</strong></p>
+<p>Para ello vamos a usar una instancia en cloud donde vamos a servir una pagina estatica de prueba.</p>
+<h2 id="tarea-1-1">Tarea 1</h2>
+<p>El alumno que hace de Autoridad Certificadora deberá entregar una documentación donde explique los siguientes puntos:</p>
+<ol>
+<li>Lo primero que debemos de hacer es preparar el directorio donde vamos a tener nuestra autoridad certificadora, para ello nos dirigimos al directorio root y creamos una carpeta llamada <strong>CA</strong>, y dentro de dicha carpeta creamos unsa serie de directirios:</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos la carpeta CA ####</span>
+root@debian10:~# mkdir CA
+
+<span style="color:#75715e">#### Dentro de CA creamos los siguiente directorios ####</span>
+root@debian10:~/CA# mkdir certsdb certreqs crl private
+
+Donde:
+    crl: Es donde los CRL se van a guardar
+    private: Donde vamos a guardar nuestra clave privada del CA
+    certsdb: Es donde vamos a guardar los certificados firmados
+    certreqs: Donde vamos a guardar las copias de los CSRs
+
+<span style="color:#75715e">#### Cambiamos los permisos de private para protegerlo ####</span>
+root@debian10:~/CA# chmod <span style="color:#ae81ff">700</span> private/
+
+<span style="color:#75715e">#### Creamos el fichero para la base de datos de nuestros certificados ####</span>
+root@debian10:~/CA# touch index.txt
+</code></pre></div><p>Ahora, dentro de la carpeta CA, debemos de copiar como plantilla el fichero openssl.cnf que, o bien puede estar en <strong>/etc/openssl.con</strong>, puede estar en <strong>/usr/lib/ssl/openssl.cnf</strong> o tambien puede estar en <strong>/usr/share/ssl/openssl.cnf</strong>. En mi caso esta plantilla estana en el directorio de <strong>/usr/lib/ssl/openssl.cnf</strong>. Una vez hayamos copiado este fichero en nuestro directorio <strong>CA</strong> vamos a buscar las siguientes lineas que son aquellas que vamos a modificar:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span> CA_default <span style="color:#f92672">]</span>
+
+dir             <span style="color:#f92672">=</span> /root/CA              <span style="color:#75715e"># Where everything is kept</span>
+certs           <span style="color:#f92672">=</span> $dir/certs            <span style="color:#75715e"># Where the issued certs are kept</span>
+crl_dir         <span style="color:#f92672">=</span> $dir/crl              <span style="color:#75715e"># Where the issued crl are kept</span>
+database        <span style="color:#f92672">=</span> $dir/index.txt        <span style="color:#75715e"># database index file.</span>
+
+new_certs_dir   <span style="color:#f92672">=</span> $dir/newcerts         <span style="color:#75715e"># default place for new certs.</span>
+
+certificate     <span style="color:#f92672">=</span> $dir/cacert.pem       <span style="color:#75715e"># The CA certificate</span>
+serial          <span style="color:#f92672">=</span> $dir/serial           <span style="color:#75715e"># The current serial number</span>
+crlnumber       <span style="color:#f92672">=</span> $dir/crlnumber        <span style="color:#75715e"># the current crl number</span>
+crl             <span style="color:#f92672">=</span> $dir/crl.pem          <span style="color:#75715e"># The current CRL</span>
+private_key     <span style="color:#f92672">=</span> $dir/private/cakey.pem <span style="color:#75715e"># The private key</span>
+</code></pre></div><p>En el apartado anterior estamos añadiendo las rutas donde va a buscar los distintos fichero que va a necesitra para crear nuestra entidad certificadora. A continuacion lo que debemos de modificar son los datos de nuestra autoridad certificadora, en mi caso seran los siguientes:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span> req_distinguished_name <span style="color:#f92672">]</span>
+countryName                     <span style="color:#f92672">=</span> Country Name <span style="color:#f92672">(</span><span style="color:#ae81ff">2</span> letter code<span style="color:#f92672">)</span>
+countryName_default             <span style="color:#f92672">=</span> ES
+countryName_min                 <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+countryName_max                 <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+
+stateOrProvinceName             <span style="color:#f92672">=</span> State or Province Name <span style="color:#f92672">(</span>full name<span style="color:#f92672">)</span>
+stateOrProvinceName_default     <span style="color:#f92672">=</span> SEVILLA
+
+localityName                    <span style="color:#f92672">=</span> Locality Name <span style="color:#f92672">(</span>eg, city<span style="color:#f92672">)</span>
+localityName_default            <span style="color:#f92672">=</span> Alcala de Guadaira
+
+0.organizationName              <span style="color:#f92672">=</span> Organization Name <span style="color:#f92672">(</span>eg, company<span style="color:#f92672">)</span>
+0.organizationName_default      <span style="color:#f92672">=</span> Francis Corp
+
+organizationalUnitName          <span style="color:#f92672">=</span> Organizational Unit Name <span style="color:#f92672">(</span>eg, section<span style="color:#f92672">)</span>
+organizationalUnitName_default  <span style="color:#f92672">=</span> Informatica
+</code></pre></div><p>LLegados a este punto ya solo debemos de comentar algunas lineas que no son interesantes para nuestro trabajo, en mi caso las siguientes:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#challengePassword              = A challenge password</span>
+<span style="color:#75715e">#challengePassword_min          = 4</span>
+<span style="color:#75715e">#challengePassword_max          = 20</span>
+
+<span style="color:#75715e">#unstructuredName               = An optional company name</span>
+</code></pre></div><p>Ahora ya tenemos nuestro fichero bien configurado, por lo que vamos a proceder a generar un par de claves y un fichero csr el cual, despues de generar las claves y el .crs, vamos a firmarnos nosotros mismos con nuestra autoridad certificadora:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@debian10:~/CA# openssl req -new -newkey rsa:2048 -keyout private/cakey.pem -out careq.pem -config ./openssl.cnf
+Generating a RSA private key
+....+++++
+...+++++
+writing new private key to <span style="color:#e6db74">&#39;private/cakey.pem&#39;</span>
+Enter PEM pass phrase:
+Verifying - Enter PEM pass phrase:
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter <span style="color:#e6db74">&#39;.&#39;</span>, the field will be left blank.
+-----
+Country Name <span style="color:#f92672">(</span><span style="color:#ae81ff">2</span> letter code<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>ES<span style="color:#f92672">]</span>:   
+State or Province Name <span style="color:#f92672">(</span>full name<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>SEVILLA<span style="color:#f92672">]</span>:
+Locality Name <span style="color:#f92672">(</span>eg, city<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>Alcala de Guadaira<span style="color:#f92672">]</span>:
+Organization Name <span style="color:#f92672">(</span>eg, company<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>Francis Corp<span style="color:#f92672">]</span>:
+Organizational Unit Name <span style="color:#f92672">(</span>eg, section<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>Informatica<span style="color:#f92672">]</span>:
+Common Name <span style="color:#f92672">(</span>e.g. server FQDN or YOUR name<span style="color:#f92672">)</span> <span style="color:#f92672">[]</span>:debian10
+Email Address <span style="color:#f92672">[]</span>:franjaviermn17100@gmail.com
+</code></pre></div><p>Ya hemos generado nuestro fichero .csr, por lo que debemos de autofirmarlo para que generemos un fichero .crt que es el que vamos a enviar a nuestros clientes como certificado de nuestra autoridad certificadora, para ello usamos el siguiente comando:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos un directorio llamado newcerts ####</span>
+root@debian10:~/CA# mkdir newcerts
+
+<span style="color:#75715e">#### Firmamos nuestro fichero .csr ####</span>
+root@debian10:~/CA# openssl ca -create_serial -out cacert.pem -days <span style="color:#ae81ff">365</span> -keyfile private/cakey.pem -selfsign -extensions v3_ca -config ./openssl.cnf -infiles careq.pem
+Using configuration from ./openssl.cnf
+Enter pass phrase <span style="color:#66d9ef">for</span> private/cakey.pem:
+Check that the request matches the signature
+Signature ok
+Certificate Details:
+        Serial Number:
+            6c:bf:83:1d:49:9a:1f:76:17:32:e1:51:13:7b:ff:9b:41:42:bb:0f
+        Validity
+            Not Before: Nov <span style="color:#ae81ff">23</span> 08:25:04 <span style="color:#ae81ff">2020</span> GMT
+            Not After : Nov <span style="color:#ae81ff">23</span> 08:25:04 <span style="color:#ae81ff">2021</span> GMT
+        Subject:
+            countryName               <span style="color:#f92672">=</span> ES
+            stateOrProvinceName       <span style="color:#f92672">=</span> SEVILLA
+            organizationName          <span style="color:#f92672">=</span> Francis Corp
+            organizationalUnitName    <span style="color:#f92672">=</span> Informatica
+            commonName                <span style="color:#f92672">=</span> debian10
+            emailAddress              <span style="color:#f92672">=</span> franjaviermn17100@gmail.com
+        X509v3 extensions:
+            X509v3 Subject Key Identifier: 
+                10:48:81:98:C5:9E:EA:71:B1:7A:84:44:7B:EB:27:A2:18:8B:64:11
+            X509v3 Authority Key Identifier: 
+                keyid:10:48:81:98:C5:9E:EA:71:B1:7A:84:44:7B:EB:27:A2:18:8B:64:11
+
+            X509v3 Basic Constraints: critical
+                CA:TRUE
+Certificate is to be certified <span style="color:#66d9ef">until</span> Nov <span style="color:#ae81ff">23</span> 08:25:04 <span style="color:#ae81ff">2021</span> GMT <span style="color:#f92672">(</span><span style="color:#ae81ff">365</span> days<span style="color:#f92672">)</span>
+Sign the certificate? <span style="color:#f92672">[</span>y/n<span style="color:#f92672">]</span>:y
+
+
+<span style="color:#ae81ff">1</span> out of <span style="color:#ae81ff">1</span> certificate requests certified, commit? <span style="color:#f92672">[</span>y/n<span style="color:#f92672">]</span>y
+Write out database with <span style="color:#ae81ff">1</span> new entries
+Data Base Updated
+</code></pre></div><p>Ahora ya solo queda que nuestro compañero nos envie su fichero .csr para que asi lo podamos firmar.</p>
+<ol start="2">
+<li>Debe recibir el fichero CSR (Solicitud de Firmar un Certificado) de su compañero, debe firmarlo y enviar el certificado generado a su compañero.</li>
+</ol>
+<p>Una vez hayamos recibido el fichero .csr de nuestro compañero vamos a proceder a firmalo, para ello el fichero .csr lo movemos al directorio <strong>certreqs</strong> y usamos el siguiente comando:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@debian10:~/CA# openssl ca -config openssl.cnf -out certsdb/fran.crt -infiles certreqs/fran.csr
+Using configuration from openssl.cnf
+Enter pass phrase <span style="color:#66d9ef">for</span> /root/CA/private/cakey.pem:
+Check that the request matches the signature
+Signature ok
+Certificate Details:
+        Serial Number:
+            6c:bf:83:1d:49:9a:1f:76:17:32:e1:51:13:7b:ff:9b:41:42:bb:10
+        Validity
+            Not Before: Nov <span style="color:#ae81ff">23</span> 09:06:10 <span style="color:#ae81ff">2020</span> GMT
+            Not After : Nov <span style="color:#ae81ff">23</span> 09:06:10 <span style="color:#ae81ff">2021</span> GMT
+        Subject:
+            countryName               <span style="color:#f92672">=</span> ES
+            stateOrProvinceName       <span style="color:#f92672">=</span> SEVILLA
+            organizationName          <span style="color:#f92672">=</span> Francis Corp
+            organizationalUnitName    <span style="color:#f92672">=</span> Informatica
+            commonName                <span style="color:#f92672">=</span> francisco.iesgn.org
+            emailAddress              <span style="color:#f92672">=</span> franjaviermn17100@gmail.com
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            Netscape Comment: 
+                OpenSSL Generated Certificate
+            X509v3 Subject Key Identifier: 
+                83:75:DA:09:16:5F:66:93:F9:33:91:88:12:02:87:71:E1:F7:62:4B
+            X509v3 Authority Key Identifier: 
+                keyid:10:48:81:98:C5:9E:EA:71:B1:7A:84:44:7B:EB:27:A2:18:8B:64:11
+
+Certificate is to be certified <span style="color:#66d9ef">until</span> Nov <span style="color:#ae81ff">23</span> 09:06:10 <span style="color:#ae81ff">2021</span> GMT <span style="color:#f92672">(</span><span style="color:#ae81ff">365</span> days<span style="color:#f92672">)</span>
+Sign the certificate? <span style="color:#f92672">[</span>y/n<span style="color:#f92672">]</span>:y
+
+
+<span style="color:#ae81ff">1</span> out of <span style="color:#ae81ff">1</span> certificate requests certified, commit? <span style="color:#f92672">[</span>y/n<span style="color:#f92672">]</span>y
+Write out database with <span style="color:#ae81ff">1</span> new entries
+Data Base Updated
+</code></pre></div><p>El fichero .crt generado debemos de enviarlo a nuestro compañero junto al certificado llamado cacert.pem que es el certificado de la autoridad certificadora.</p>
+<ol start="3">
+<li>¿Qué otra información debes aportar a tu compañero para que éste configure de forma adecuada su servidor web con el certificado generado?</li>
+</ol>
+<p>Debemos de entregarle el fichero <strong>cacert.pem</strong> a nuestro compañero junto con su certificado firmado. Una vez hecho solo tendra que actualizar su pagina a https</p>
+<ol>
+<li>Crea una clave privada RSA de 4096 bits para identificar el servidor.</li>
+</ol>
+<p>En nuestra maquina de prueba llamada <strong>prueba-https</strong> con ip flotante <strong>172.22.200.147</strong> vamos a generar un par de claves para poder identificarnos, para ello vamos a usar el siguiente comando:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@prueba-https:~# openssl genrsa <span style="color:#ae81ff">4096</span> &gt; /etc/ssl/private/fran.key
+Generating RSA private key, <span style="color:#ae81ff">4096</span> bit long modulus <span style="color:#f92672">(</span><span style="color:#ae81ff">2</span> primes<span style="color:#f92672">)</span>
+......................................................++++
+..................++++
+e is <span style="color:#ae81ff">65537</span> <span style="color:#f92672">(</span>0x010001<span style="color:#f92672">)</span>
+</code></pre></div><ol start="2">
+<li>Utiliza la clave anterior para generar un CSR, considerando que deseas acceder al servidor tanto con el FQDN (tunombre.iesgn.org) como con el nombre de host (implica el uso de las extensiones Alt Name).</li>
+</ol>
+<p>Ahora vamos a usar las claves que hemos generado anteriormente para poder crear nuestro fichero .csr que es el que le enviaremos a nuestro compañero para poder tener en nuestra pagina <strong>https</strong> bajo la firma de la autoridad certificadora de nuestro compañero.</p>
+<p>Tenemos que tener en cuenta que a la hora de generar nuestro fichero .csr debemos de introducir los valores que nuestro compañero haya puesto en su fichero de <strong>openssl.cnf</strong>, por lo que quedaria de la siguiente forma:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@prueba-https:~# openssl req -new -key /etc/ssl/private/fran.key -out ./fran.csr
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter <span style="color:#e6db74">&#39;.&#39;</span>, the field will be left blank.
+-----
+Country Name <span style="color:#f92672">(</span><span style="color:#ae81ff">2</span> letter code<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>AU<span style="color:#f92672">]</span>:ES
+State or Province Name <span style="color:#f92672">(</span>full name<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>Some-State<span style="color:#f92672">]</span>:SEVILLA
+Locality Name <span style="color:#f92672">(</span>eg, city<span style="color:#f92672">)</span> <span style="color:#f92672">[]</span>:Alcala de Guadaira
+Organization Name <span style="color:#f92672">(</span>eg, company<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>Internet Widgits Pty Ltd<span style="color:#f92672">]</span>:Francis Corp
+Organizational Unit Name <span style="color:#f92672">(</span>eg, section<span style="color:#f92672">)</span> <span style="color:#f92672">[]</span>:Informatica
+Common Name <span style="color:#f92672">(</span>e.g. server FQDN or YOUR name<span style="color:#f92672">)</span> <span style="color:#f92672">[]</span>:francisco.iesgn.org
+Email Address <span style="color:#f92672">[]</span>:franjaviermn17100@gmail.com
+
+Please enter the following <span style="color:#e6db74">&#39;extra&#39;</span> attributes
+to be sent with your certificate request
+A challenge password <span style="color:#f92672">[]</span>:
+An optional company name <span style="color:#f92672">[]</span>:
+</code></pre></div><ol start="3">
+<li>Envía la solicitud de firma a la entidad certificadora (su compañero).</li>
+</ol>
+<p>Ahora solo debemos de hacerle llegar el fichero .csr a nuestro compañero para que este lo pueda firmar y asi poderm generar el fichero .crt y poder seguir con el trabajo.</p>
+<ol start="4">
+<li>Recibe como respuesta un certificado X.509 para el servidor firmado y el certificado de la autoridad certificadora.</li>
+</ol>
+<p>Ahora ya he recibido como respuesta, el fichero .crt y el fichero cacert.pem de nuestro compañero, por lo que tenemos el certificado firmado pues la CA de nuestro compañero y a su vez el certificado de su CA.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@prueba-https:~$ ls
+cacert.pem  fran.crt
+</code></pre></div><p>Estos fichero debemos de moverlos al directorio <strong>/etc/ssl/certs/</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@prueba-https:~$ sudo mv cacert.pem /etc/private/certs/
+debian@prueba-https:~$ sudo mv fran.crt /etc/ssl/certs/
+</code></pre></div><ol start="5">
+<li>Configura tu servidor web con https en el puerto 443, haciendo que las peticiones http se redireccionen a https (forzar https).</li>
+</ol>
+<p>Para ello, en nuestro cloud debemos de tener el puerto 443 de https el cual debemos de habilitar en las reglas de seguridad:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Seguridad/certificado/puerto-443.png" alt="puerto 443"></p>
+<p>Hecho esto ahora debemos de montar nuestro escenario, primero vamos a montarlo en apache2. Para ello instalamos el paquete de apache2 y para la prueba voy a copiar una pagina estatica a nuestra maquina para poder tener un referente de prueba. Nuestro fichero de configuracion, sin https, es el siguiente:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">&lt;VirtualHost *:80&gt;
+
+        ServerName francisco.iesgn.org
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html
+
+        ErrorLog <span style="color:#e6db74">${</span>APACHE_LOG_DIR<span style="color:#e6db74">}</span>/error.log
+        CustomLog <span style="color:#e6db74">${</span>APACHE_LOG_DIR<span style="color:#e6db74">}</span>/access.log combined
+
+        <span style="color:#75715e"># Redireccion a https</span>
+        <span style="color:#75715e">#redirect / https://francisco.iesgn.org</span>
+
+&lt;/VirtualHost&gt;
+</code></pre></div><p>Asi, al acceder a la url <strong>francisco.iesgn.org</strong> veremos la siguiente pagina:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Seguridad/certificado/pagina-sinhttps.png" alt="pagina sin https"></p>
+<p>Ahora vamos a confirgurarlo para poder usar https, por lo que debemos de hacer lo siguiente:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero default ####</span>
+&lt;VirtualHost *:80&gt;
+
+        ServerName francisco.iesgn.org
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html
+
+        ErrorLog <span style="color:#e6db74">${</span>APACHE_LOG_DIR<span style="color:#e6db74">}</span>/error.log
+        CustomLog <span style="color:#e6db74">${</span>APACHE_LOG_DIR<span style="color:#e6db74">}</span>/access.log combined
+
+        <span style="color:#75715e"># Redireccion a https</span>
+        redirect / https://francisco.iesgn.org
+
+&lt;/VirtualHost&gt;
+
+<span style="color:#75715e">#### Fichero de default-ssl ####</span>
+
+    ...
+
+    ServerName francisco.iesgn.org
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/html
+    ErrorLog <span style="color:#e6db74">${</span>APACHE_LOG_DIR<span style="color:#e6db74">}</span>/error.log
+    CustomLog <span style="color:#e6db74">${</span>APACHE_LOG_DIR<span style="color:#e6db74">}</span>/access.log combined
+    SSLEngine on
+    SSLCertificateFile      /etc/ssl/certs/fran.crt
+    SSLCertificateKeyFile /etc/ssl/private/fran.key
+    SSLCACertificateFile    /etc/ssl/private/cacert.pem
+
+    ...
+</code></pre></div><p>Ahora solo debemos de activar los siguientes modulos de apache y el fichero <strong>default-ssl</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo a2ensite default-ssl.conf
+sudo a2enmod ssl
+sudo systemctl restart apache2
+</code></pre></div><p>Y ahora si entramos en nuestra pagina nos saldra el siguiente mensaje:
+<img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Seguridad/certificado/problema-https.png" alt="imagen https cuidado"></p>
+<p>Esto nos pasa porque no tenemos el certificado de la autoridad certificadora en nuestro navegador, por lo que vamos a añadir dicho certificado:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Seguridad/certificado/importar.png" alt="pagina certificados"></p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Seguridad/certificado/certificado.png" alt="importado"></p>
+<p>Por lo que ahora si entramos en nuestra pagina ya funcionara https sin problemas:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Seguridad/certificado/pagina-https.png" alt="pagina https"></p>
+<ol start="6">
+<li>Instala ahora un servidor nginx, y realiza la misma configuración que anteriormente para que se sirva la página con HTTPS.</li>
+</ol>
+<p>Ahora vamos a hacer lo mismo pero esta vez con el servidor con nginx, para ello vamos a parar el servicio de apache2 para que no haya conflictos:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@prueba-https:~$ sudo systemctl stop apache2.service
+</code></pre></div><p>Una vez hecho esto nos dirigimos al fichero de default de nuestro nginx, y ahi vamos a realizar los cambios para poder servir la pagina con https, para ello vamos a tener la siguiente configuracion en el fichero de nginx:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero de default en nginx ####</span>
+...
+
+server <span style="color:#f92672">{</span>
+        listen 80;
+        server_name francisco.iesgn.org;
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">301</span> https://$host$request_uri;
+<span style="color:#f92672">}</span>
+
+server <span style="color:#f92672">{</span>
+        listen 443;
+        server_name francisco.iesgn.org;
+        root /var/www/html;
+        index index.html index.htm index.nginx-debian.html;
+
+        ssl on;
+        ssl_certificate /etc/ssl/certs/fran.crt;
+        ssl_certificate_key /etc/ssl/private/fran.key;
+
+        location / <span style="color:#f92672">{</span>
+                try_files $uri $uri/ <span style="color:#f92672">=</span>404;
+        <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+...
+
+<span style="color:#75715e">#### Creamos el enlace simbolico ####</span>
+debian@prueba-https:/etc/nginx/sites-available$ ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+
+<span style="color:#75715e">#### Reiniciamos el servicio de nginx ####</span>
+debian@prueba-https:/etc/nginx/sites-available$ systemctl restart nginx.service
+</code></pre></div><p>De esta forma ya tendremos nuestro fichero listo, ahora solo debemos de entrar en nuestra pagina con url <strong>francisco.iesgn.org</strong> y veremos que tenemos https gracias a la redireccion forzada y que no nos sale el mensaje de advertencia sino que directamente entramos en la pagina:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Seguridad/certificado/pagina-https-nginx.png" alt="pagina de https con nginx"></p>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2020  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+         
+        <li><a href="/servicios">Servicios</a></li>
+         
+        <li><a href="/implantacion">Implantacion</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>
