@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Mon, 23 Nov 2020 14:15:09 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/seguridad/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 27 Nov 2020 11:04:59 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/seguridad/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Https Ovh</title>
+      <link>https://franjavimn.onrender.com/seguridad/https-ovh/</link>
+      <pubDate>Fri, 27 Nov 2020 11:04:59 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/seguridad/https-ovh/</guid>
+      <description>HTTPS en ovh   Vamos a utilizar el servicio https://letsencrypt.org para solicitar los certificados de nuestras páginas.
+  Explica detenidamente cómo se solicita un certificado en Let&amp;rsquo;s Encrypt. En tu explicación deberás responder a estas preguntas:
+ ¿Qué función tiene el cliente ACME? ¿Qué configuración se realiza en el servidor web? ¿Qué pruebas realiza Let&amp;rsquo;s Encrypt para asegurar que somos los administrados del sitio web? ¿Se puede usar el DNS para verificar que somos administradores del sitio?</description>
+    </item>
+    
     <item>
       <title>Certificados Digitales</title>
       <link>https://franjavimn.onrender.com/seguridad/certificados-digitales/</link>
