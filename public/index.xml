@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Fri, 27 Nov 2020 11:04:59 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 03 Dec 2020 13:47:57 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Practica Dns</title>
+      <link>https://franjavimn.onrender.com/servicios/practica-dns/</link>
+      <pubDate>Thu, 03 Dec 2020 13:47:57 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/servicios/practica-dns/</guid>
+      <description>Práctica: Servidor DNS Escenario   En nuestra red local tenemos un servidor Web que sirve dos páginas web: www.iesgn.org, departamentos.iesgn.org
+  Vamos a instalar en nuestra red local un servidor DNS (lo puedes instalar en el mismo equipo que tiene el servidor web)
+  Voy a suponer en este documento que el nombre del servidor DNS va a ser pandora.iesgn.org. El nombre del servidor de tu prácticas será tunombre.</description>
+    </item>
+    
     <item>
       <title>Https Ovh</title>
       <link>https://franjavimn.onrender.com/seguridad/https-ovh/</link>

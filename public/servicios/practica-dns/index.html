@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Practica Dns | Blog</title>
+  <meta name="description" content="En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Practica Dns" />
+<meta property="og:description" content="Práctica: Servidor DNS Escenario   En nuestra red local tenemos un servidor Web que sirve dos páginas web: www.iesgn.org, departamentos.iesgn.org
+  Vamos a instalar en nuestra red local un servidor DNS (lo puedes instalar en el mismo equipo que tiene el servidor web)
+  Voy a suponer en este documento que el nombre del servidor DNS va a ser pandora.iesgn.org. El nombre del servidor de tu prácticas será tunombre." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://franjavimn.onrender.com/servicios/practica-dns/" />
+<meta property="article:published_time" content="2020-12-03T13:47:57+01:00" />
+<meta property="article:modified_time" content="2020-12-03T13:47:57+01:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Practica Dns"/>
+<meta name="twitter:description" content="Práctica: Servidor DNS Escenario   En nuestra red local tenemos un servidor Web que sirve dos páginas web: www.iesgn.org, departamentos.iesgn.org
+  Vamos a instalar en nuestra red local un servidor DNS (lo puedes instalar en el mismo equipo que tiene el servidor web)
+  Voy a suponer en este documento que el nombre del servidor DNS va a ser pandora.iesgn.org. El nombre del servidor de tu prácticas será tunombre."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://franjavimn.onrender.com/images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://franjavimn.onrender.com">
+  
+    <div id="logo" style="background-image: url(https://franjavimn.onrender.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/">Home</a></li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+       
+        <li><a href="/servicios">Servicios</a></li>
+       
+        <li><a href="/implantacion">Implantacion</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h1 id="práctica-servidor-dns">Práctica: Servidor DNS</h1>
+<h2 id="escenario">Escenario</h2>
+<ol>
+<li>
+<p>En nuestra red local tenemos un servidor Web que sirve dos páginas web: <a href="http://www.iesgn.org">www.iesgn.org</a>, departamentos.iesgn.org</p>
+</li>
+<li>
+<p>Vamos a instalar en nuestra red local un servidor DNS (lo puedes instalar en el mismo equipo que tiene el servidor web)</p>
+</li>
+<li>
+<p>Voy a suponer en este documento que el nombre del servidor DNS va a ser pandora.iesgn.org. El nombre del servidor de tu prácticas será tunombre.iesgn.org.</p>
+</li>
+</ol>
+<p>Para poder generar el escenario vamos a usar una maquina vagrant, la cual tiene el siguiente contenido:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># -*- mode: ruby -*-</span>
+<span style="color:#75715e"># vi: set ft=ruby :</span>
+
+$install_apache <span style="color:#f92672">=</span> <span style="color:#e6db74">&lt;&lt;-SCRIPT
+</span><span style="color:#e6db74"></span>sudo apt update 
+sudo apt install apache2 <span style="color:#f92672">-</span>y
+<span style="color:#66d9ef">SCRIPT</span>
+
+
+
+<span style="color:#66d9ef">Vagrant</span><span style="color:#f92672">.</span>configure(<span style="color:#e6db74">&#34;2&#34;</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>config<span style="color:#f92672">|</span>
+  config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>box <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;debian/buster64&#34;</span>
+  config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>hostname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;maquinaDNS&#34;</span>
+  config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>network <span style="color:#e6db74">:private_network</span>, <span style="color:#e6db74">ip</span>: <span style="color:#e6db74">&#34;192.168.100.100&#34;</span>
+  config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provision <span style="color:#e6db74">&#39;shell&#39;</span>, <span style="color:#e6db74">inline</span>: $install_apache
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Con el que vamos a instalar apache como servidor web donde vamos a tener dos localhost en la misma ip. Generamos dos fichero en los virtualhost de apache2 con el siguiente contenido:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero de iesgn ####</span>
+&lt;VirtualHost *:80&gt;
+
+        ServerName www.iesgn.es
+        ServerAdmin webmaster@localhost
+        DocumentRoot /srv/iesgn
+
+        ErrorLog <span style="color:#e6db74">${</span>APACHE_LOG_DIR<span style="color:#e6db74">}</span>/error.log
+        CustomLog <span style="color:#e6db74">${</span>APACHE_LOG_DIR<span style="color:#e6db74">}</span>/access.log combined
+
+&lt;/VirtualHost&gt;
+
+<span style="color:#75715e">#### Fichero departamentos ####</span>
+&lt;VirtualHost *:80&gt;
+
+        ServerName departamentos.iesgn.es
+        ServerAdmin webmaster@localhost
+        DocumentRoot /srv/departamentos
+
+        ErrorLog <span style="color:#e6db74">${</span>APACHE_LOG_DIR<span style="color:#e6db74">}</span>/error.log
+        CustomLog <span style="color:#e6db74">${</span>APACHE_LOG_DIR<span style="color:#e6db74">}</span>/access.log combined
+
+&lt;/VirtualHost&gt;
+</code></pre></div><h1 id="servidor-dnsmasq">Servidor DNSmasq</h1>
+<p>Instala el servidor dns dnsmasq en pandora.iesgn.org y configúralo para que los clientes puedan conocer los nombres necesarios.</p>
+<p>Ahora vamos a realizar la instalacion para que, sin necesidad de usar resolucion estatica, podamos acceder a las paginas que hemos creado anteriorment por lo que debemos de instala el servidor dns llamado dnsmasq, para ello vamos a seguir los siguientes pasos:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos el paquete de dnsmasq ####</span>
+vagrant@maquinaDNS:~$ sudo apt install dnsmasq
+
+<span style="color:#75715e">#### Paramos el servicio para poder configurarlo ####</span>
+vagrant@maquinaDNS:~$ sudo systemctl stop dnsmasq.service
+
+vagrant@maquinaDNS:~$ sudo systemctl status dnsmasq.service 
+● dnsmasq.service - dnsmasq - A lightweight DHCP and caching DNS server
+   Loaded: loaded <span style="color:#f92672">(</span>/lib/systemd/system/dnsmasq.service; enabled; vendor preset: enabled<span style="color:#f92672">)</span>
+   Active: inactive <span style="color:#f92672">(</span>dead<span style="color:#f92672">)</span> since Tue 2020-11-17 18:29:39 GMT; 9s ago
+</code></pre></div><p>AHora ya tendremos listo el servicio para configurarlo. El fichero de dicho servcio se encuentra en <strong>/etc/dnsmasq.conf</strong>. Una vez entremos debemos de descomentar la linea llamada <strong>strict-order</strong> con lo que, si el servidor dnsmasq no es capaz de resolver la peticion consulte en el fichero <strong>/etc/resolv.conf</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># By  default,  dnsmasq  will  send queries to any of the upstream</span>
+<span style="color:#75715e"># servers it knows about and tries to favour servers to are  known</span>
+<span style="color:#75715e"># to  be  up.  Uncommenting this forces dnsmasq to try each query</span>
+<span style="color:#75715e"># with  each  server  strictly  in  the  order  they   appear   in</span>
+<span style="color:#75715e"># /etc/resolv.conf</span>
+strict-order
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">strict-order
+
+interface<span style="color:#f92672">=</span>eth1
+
+address<span style="color:#f92672">=</span>/www.iesgn.es/192.168.100.100
+address<span style="color:#f92672">=</span>/departamentos.iesgn.es/192.168.100.100
+
+listen-address<span style="color:#f92672">=</span>192.168.100.1
+
+listen-address<span style="color:#f92672">=</span>127.0.0.1
+</code></pre></div><h2 id="tarea-1">Tarea 1</h2>
+<p>Modifica los clientes para que utilicen el nuevo servidor dns. Realiza una consulta a <a href="http://www.iesgn.org">www.iesgn.org</a>, y a <a href="http://www.josedomingo.org">www.josedomingo.org</a>. Realiza una prueba de funcionamiento para comprobar que el servidor dnsmasq funciona como cache dns. Muestra el fichero hosts del cliente para demostrar que no estás utilizando resolución estática. Realiza una consulta directa al servidor dnsmasq. ¿Se puede realizar resolución inversa?.</p>
+<p>Para ellod debemos de añadir a nuestro fichero de <strong>/etc/resolv.conf</strong> y debemos de añadir la ip de nuestro servidor dns, en este caso es la ip <strong>192.168.100.100</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Generated by NetworkManager</span>
+search NetisRouter_64eeb719a5f2
+nameserver 192.168.100.100
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+nameserver 192.168.1.1
+</code></pre></div><p>Asi, al realizar una consulta a nuestras paginas <strong><a href="http://www.iesgn.es">www.iesgn.es</a></strong> veremos que lo hace mediante el servidor DNS con ip 192.168.100.100 y lo mismo pasa al hacer una consulta a la pagina <strong><a href="http://www.josedomingo.org">www.josedomingo.org</a></strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">francisco@debian10:~$ dig www.iesgn.es
+
+; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1+deb10u2-Debian &lt;&lt;&gt;&gt; www.iesgn.es
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER<span style="color:#e6db74">&lt;&lt;- opcode: QUERY, status: NOERROR, id: 42955
+</span><span style="color:#e6db74">;; flags: qr aa rd ra ad; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">;; OPT PSEUDOSECTION:
+</span><span style="color:#e6db74">; EDNS: version: 0, flags:; udp: 4096
+</span><span style="color:#e6db74">;; QUESTION SECTION:
+</span><span style="color:#e6db74">;www.iesgn.es.			IN	A
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">;; ANSWER SECTION:
+</span><span style="color:#e6db74">www.iesgn.es.		0	IN	A	192.168.100.100
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">;; Query time: 1 msec
+</span><span style="color:#e6db74">;; SERVER: 192.168.100.100#53(192.168.100.100)
+</span><span style="color:#e6db74">;; WHEN: mié nov 18 19:01:49 CET 2020
+</span><span style="color:#e6db74">;; MSG SIZE  rcvd: 57
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">#### Ahora a la pagina www.josedomingo.org ####
+</span><span style="color:#e6db74">francisco@debian10:~$ dig www.josedomingo.org
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1+deb10u2-Debian &lt;&lt;&gt;&gt; www.josedomingo.org
+</span><span style="color:#e6db74">;; global options: +cmd
+</span><span style="color:#e6db74">;; Got answer:
+</span><span style="color:#e6db74">;; -&gt;&gt;HEADER&lt;&lt;- opcode</span>: QUERY, status: NOERROR, id: <span style="color:#ae81ff">45149</span>
+;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: <span style="color:#ae81ff">1</span>
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: <span style="color:#ae81ff">512</span>
+;; QUESTION SECTION:
+;www.josedomingo.org.		IN	A
+
+;; ANSWER SECTION:
+www.josedomingo.org.	899	IN	CNAME	playerone.josedomingo.org.
+playerone.josedomingo.org. 899	IN	A	137.74.161.90
+
+;; Query time: <span style="color:#ae81ff">90</span> msec
+;; SERVER: 192.168.100.100#53<span style="color:#f92672">(</span>192.168.100.100<span style="color:#f92672">)</span>
+;; WHEN: mié nov <span style="color:#ae81ff">18</span> 19:04:30 CET <span style="color:#ae81ff">2020</span>
+;; MSG SIZE  rcvd: <span style="color:#ae81ff">88</span>
+</code></pre></div><p>Ademas si en el <strong>/etc/hosts</strong> de nuestro servidor con dnsmasq ponemos algun direccion para resolucion estatica y esta la consultamos veremos que nos funcionara perfectamente:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### /etc/hosts del servidor ####</span>
+...
+192.168.100.192 www.prueba.com
+...
+
+<span style="color:#75715e">#### Consulta desde el cliente ####</span>
+francisco@debian10:~$ dig www.prueba.com
+
+; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1+deb10u2-Debian &lt;&lt;&gt;&gt; www.prueba.com
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER<span style="color:#e6db74">&lt;&lt;- opco</span>de: QUERY, status: NOERROR, id: <span style="color:#ae81ff">19897</span>
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: <span style="color:#ae81ff">1</span>
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: <span style="color:#ae81ff">4096</span>
+;; QUESTION SECTION:
+;www.prueba.com.			IN	A
+
+;; ANSWER SECTION:
+www.prueba.com.		0	IN	A	192.168.100.192
+
+;; Query time: <span style="color:#ae81ff">0</span> msec
+;; SERVER: 192.168.100.100#53<span style="color:#f92672">(</span>192.168.100.100<span style="color:#f92672">)</span>
+;; WHEN: mar nov <span style="color:#ae81ff">24</span> 17:43:50 CET <span style="color:#ae81ff">2020</span>
+;; MSG SIZE  rcvd: <span style="color:#ae81ff">59</span>
+</code></pre></div><h1 id="servidor-bind9">Servidor bind9</h1>
+<p>Desinstala el servidor dnsmasq del ejercicio anterior e instala un servidor dns bind9. Las características del servidor DNS que queremos instalar son las siguientes:</p>
+<ul>
+<li>
+<p>El servidor DNS se llama pandora.iesgn.org y por supuesto, va a ser el servidor con autoridad para la zona iesgn.org.</p>
+</li>
+<li>
+<p>Vamos a suponer que tenemos un servidor para recibir los correos que se llame correo.iesgn.org y que está en la dirección x.x.x.200 (esto es ficticio).</p>
+</li>
+<li>
+<p>Vamos a suponer que tenemos un servidor ftp que se llame ftp.iesgn.org y que está en x.x.x.201 (esto es ficticio)</p>
+</li>
+<li>
+<p>Además queremos nombrar a los clientes.</p>
+</li>
+<li>
+<p>También hay que nombrar a los virtual hosts de apache: <a href="http://www.iesgn.org">www.iesgn.org</a> y departementos.iesgn.org</p>
+</li>
+<li>
+<p>Se tienen que configurar la zona de resolución inversa.</p>
+</li>
+</ul>
+<h2 id="tarea-2">Tarea 2</h2>
+<p>LO primero que debemos de hacer es instalar bind9 en nuestro servidor dns, pero antes debemos desinstalar el servidor dnsmasq que habiamos instalado anteriormente, para ello usamos el siguiente comando:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Desinstalamos dnsmasq ####</span>
+vagrant@maquinaDNS:~$ sudo apt --remove purge dnsmasq
+
+<span style="color:#75715e">#### Instalamos bind9 ####</span>
+vagrant@maquinaDNS:~$ sudo apt install bind9
+
+<span style="color:#75715e">#### Paramos el servicio para configurarlo ####</span>
+vagrant@maquinaDNS:~$ sudo systemctl stop bind9
+</code></pre></div><p>Una vez hayamos llegado a este paso debemos de dirigirnos al fichero de configuracion para definir las zonas que vamos a tener en este servidor dns, en este caso vamos a tener dos, una que sera la zona de <strong>iesgn.org</strong> y otra que sera la inversa de esta. Para ello debemos de configurar el fichero <strong>/etc/bind/named.conf.local</strong> y debemos de añadir lo siguiente:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Configuracion del fichero named.conf.local ####</span>
+...
+include <span style="color:#e6db74">&#34;/etc/bind/zones.rfc1918&#34;</span>;
+
+zone <span style="color:#e6db74">&#34;iesgn.org&#34;</span> <span style="color:#f92672">{</span>
+        type master;
+        file <span style="color:#e6db74">&#34;/var/cache/bind/db.iesgn.org&#34;</span>;
+<span style="color:#f92672">}</span>;
+
+zone <span style="color:#e6db74">&#34;100.168.192.in-addr.arpa&#34;</span> <span style="color:#f92672">{</span>
+        type master;
+        file <span style="color:#e6db74">&#34;/var/cache/bind/db.192.168.100&#34;</span>;
+<span style="color:#f92672">}</span>;
+</code></pre></div><p>Donde estamos definiendo la zona <strong>iesgn.org</strong> y su inversa, le estamos indicando que sera de <strong>tipo maestro</strong> y que los ficheros de dichas zonas se encuentren en esa ruta indicada.</p>
+<p>Vemos que hemos incluido un fichero llamado <strong>zones.rfc1918</strong> en la cual debemos de comentar la linea respecto a la ip de nuestra zona, en este caso la zona es la siguiente:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Zona que comentar ####</span>
+//zone <span style="color:#e6db74">&#34;168.192.in-addr.arpa&#34;</span> <span style="color:#f92672">{</span> type master; file <span style="color:#e6db74">&#34;/etc/bind/db.empty&#34;</span>; <span style="color:#f92672">}</span>;
+</code></pre></div><p>Una vez ya hayamos hecho todo lo anterior, reiniciamos el servicio para ver si nos da alguna falla en la sintaxis, si no es asi vamos a seguir con la configuracion.</p>
+<p>Ahora que ya hemos definido las zona vamos a empezar a configurar dichas zonas, empezando por la zona de <strong>iesgn.org</strong>, para ello vamos a tomar como referencia el fichero llamado <strong>db.empy</strong> que vamos a usar como plantilla para definir nuestra zona:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Copiamos el fichero a la ruta donde le indicamos en la zona ####</span>
+vagrant@maquinaDNS:/etc/bind$ sudo cp db.empty /var/cache/bind/db.iesgn.org
+</code></pre></div><p>Una vez lo tengamos vamos a empezar a modificarlo, lo primero sera definir cual es el servidor con privilegios sobre la zona, en este caso ese servidor se llama francisco.iesgn.org, por lo que lo definimos como un tipo <strong>NS</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Añadimos el registro NS ####</span>
+; BIND reverse data file <span style="color:#66d9ef">for</span> empty rfc1918 zone
+;
+; DO NOT EDIT THIS FILE - it is used <span style="color:#66d9ef">for</span> multiple zones.
+; Instead, copy it, edit named.conf, and use that copy.
+;
+$TTL    <span style="color:#ae81ff">86400</span>
+@       IN      SOA     francisco.iesgn.org. root.localhost. <span style="color:#f92672">(</span>
+                              <span style="color:#ae81ff">1</span>         ; Serial
+                         <span style="color:#ae81ff">604800</span>         ; Refresh
+                          <span style="color:#ae81ff">86400</span>         ; Retry
+                        <span style="color:#ae81ff">2419200</span>         ; Expire
+                          <span style="color:#ae81ff">86400</span> <span style="color:#f92672">)</span>       ; Negative Cache TTL
+;
+@       IN      NS      francisco.iesgn.org.
+
+$ORIGIN iesgn.org.
+
+francisco       IN      A       192.168.100.100
+</code></pre></div><p>Donde vemos que:</p>
+<ul>
+<li>El registro SOA es la autoridad sobre la zona, en este caso <strong>francisco.iesgn.org.</strong></li>
+<li>$ORIGIN Lo usamos para no tener que estar poniendo la zona <strong>iesgn.org</strong> por cada registro que vayamos creando.</li>
+<li>El registro de tipo A específica las direcciones IP correspondientes a tus dominios y subdominios.</li>
+</ul>
+<p>Por lo que, si en nuestra maquina cliente añadimos en el fichero <strong>/etc/resolv.conf</strong> el servidor dns y hacemos una consulta para saber quien es el que tiene autoridad sobre la zona <strong>iesgn.org</strong> debe de contestarnos de la siguiente manera:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Consulta sobre autoridad en la zona iesgn.org ####</span>
+francisco@debian10:~$ dig ns iesgn.org
+
+; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1+deb10u2-Debian &lt;&lt;&gt;&gt; ns iesgn.org
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER<span style="color:#e6db74">&lt;&lt;- opco</span>de: QUERY, status: NOERROR, id: <span style="color:#ae81ff">38755</span>
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: <span style="color:#ae81ff">2</span>
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: <span style="color:#ae81ff">4096</span>
+; COOKIE: e8c4b07d8650abc802c3a7d35fbd3f327bc46b0082729acd <span style="color:#f92672">(</span>good<span style="color:#f92672">)</span>
+;; QUESTION SECTION:
+;iesgn.org.			IN	NS
+
+;; ANSWER SECTION:
+iesgn.org.		86400	IN	NS	francisco.iesgn.org.
+
+;; ADDITIONAL SECTION:
+francisco.iesgn.org.	86400	IN	A	192.168.100.100
+
+;; Query time: <span style="color:#ae81ff">0</span> msec
+;; SERVER: 192.168.100.100#53<span style="color:#f92672">(</span>192.168.100.100<span style="color:#f92672">)</span>
+;; WHEN: mar nov <span style="color:#ae81ff">24</span> 18:13:22 CET <span style="color:#ae81ff">2020</span>
+;; MSG SIZE  rcvd: <span style="color:#ae81ff">106</span>
+</code></pre></div><p>Ahora que ya tenemos nuestra autoridad sobre la zona pasemos a definir el servidor de correos que, aunque no lo tengamos, lo vamos a definir igualmente, para ello debemos de dirigirnos al fichero de configuracion de la zona <strong>iesgn.org</strong> y ahi debemos de añadir un registro <strong>MX</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Añadiendo el registro MX ####</span>
+$TTL    <span style="color:#ae81ff">86400</span>
+@       IN      SOA     francisco.iesgn.org. root.localhost. <span style="color:#f92672">(</span>
+                              <span style="color:#ae81ff">1</span>         ; Serial
+                         <span style="color:#ae81ff">604800</span>         ; Refresh
+                          <span style="color:#ae81ff">86400</span>         ; Retry
+                        <span style="color:#ae81ff">2419200</span>         ; Expire
+                          <span style="color:#ae81ff">86400</span> <span style="color:#f92672">)</span>       ; Negative Cache TTL
+;
+@       IN      NS      francisco.iesgn.org.
+@       IN      MX      <span style="color:#ae81ff">10</span> correo.iesgn.org.
+
+$ORIGIN iesgn.org.
+
+francisco       IN      A       192.168.100.100
+correo          IN      A       192.168.100.200
+</code></pre></div><p>Donde vemos que hemos añadido el registro <strong>MX</strong> para el correo con esa direccion y que hemos definido un registro para identificar a <strong>correo</strong> con la ip 192.168.100.200. Ahora si nosotros hacemos una consulta al servidor dns y preguntamos sobre el servidor de correos <strong>correo.iesgn.org</strong> debe de aparecernos esto:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">francisco@debian10:~$ dig mx iesgn.org
+
+; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1+deb10u2-Debian &lt;&lt;&gt;&gt; mx iesgn.org
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER<span style="color:#e6db74">&lt;&lt;- opco</span>de: QUERY, status: NOERROR, id: <span style="color:#ae81ff">51974</span>
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: <span style="color:#ae81ff">3</span>
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: <span style="color:#ae81ff">4096</span>
+; COOKIE: dc7fc9a6704245ca745a4fba5fbd415df5e693c62a52ffab <span style="color:#f92672">(</span>good<span style="color:#f92672">)</span>
+;; QUESTION SECTION:
+;iesgn.org.			IN	MX
+
+;; ANSWER SECTION:
+iesgn.org.		86400	IN	MX	<span style="color:#ae81ff">10</span> correo.iesgn.org.
+
+;; AUTHORITY SECTION:
+iesgn.org.		86400	IN	NS	francisco.iesgn.org.
+
+;; ADDITIONAL SECTION:
+correo.iesgn.org.	86400	IN	A	192.168.100.200
+francisco.iesgn.org.	86400	IN	A	192.168.100.100
+
+;; Query time: <span style="color:#ae81ff">1</span> msec
+;; SERVER: 192.168.100.100#53<span style="color:#f92672">(</span>192.168.100.100<span style="color:#f92672">)</span>
+;; WHEN: mar nov <span style="color:#ae81ff">24</span> 18:22:37 CET <span style="color:#ae81ff">2020</span>
+;; MSG SIZE  rcvd: <span style="color:#ae81ff">145</span>
+</code></pre></div><p>Ahora vamos a añadir otro nombre mas a nuestra zona, en este caso va a ser <strong>ftp</strong> con una ip inventada ya que no existe realmente. Para esto seguimos el mismo proceso que hemos seguido en los anteriores registros:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Configuracion del fichero de nuestra zona ####</span>
+$TTL    <span style="color:#ae81ff">86400</span>
+@       IN      SOA     francisco.iesgn.org. root.localhost. <span style="color:#f92672">(</span>
+                              <span style="color:#ae81ff">1</span>         ; Serial
+                         <span style="color:#ae81ff">604800</span>         ; Refresh
+                          <span style="color:#ae81ff">86400</span>         ; Retry
+                        <span style="color:#ae81ff">2419200</span>         ; Expire
+                          <span style="color:#ae81ff">86400</span> <span style="color:#f92672">)</span>       ; Negative Cache TTL
+;
+@       IN      NS      francisco.iesgn.org.
+@       IN      MX      <span style="color:#ae81ff">10</span> correo.iesgn.org.
+
+$ORIGIN iesgn.org.
+
+francisco       IN      A       192.168.100.100
+correo          IN      A       192.168.100.200
+ftp             IN      A       192.168.100.201
+</code></pre></div><p>Ahora reiniciamos el servicio y en nuestra maquina cliente hacemos la consulta a esa direccion y nos debe dar un resultado como el siguiente:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Consulta a ftp.iesgn.org ####</span>
+francisco@debian10:~$ dig  ftp.iesgn.org
+
+; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1+deb10u2-Debian &lt;&lt;&gt;&gt; ftp.iesgn.org
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER<span style="color:#e6db74">&lt;&lt;- opco</span>de: QUERY, status: NOERROR, id: <span style="color:#ae81ff">21847</span>
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: <span style="color:#ae81ff">2</span>
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: <span style="color:#ae81ff">4096</span>
+; COOKIE: fd3343e73a81babf1068d7345fbd41f9bb49339ace7b3243 <span style="color:#f92672">(</span>good<span style="color:#f92672">)</span>
+;; QUESTION SECTION:
+;ftp.iesgn.org.			IN	A
+
+;; ANSWER SECTION:
+ftp.iesgn.org.		86400	IN	A	192.168.100.201
+
+;; AUTHORITY SECTION:
+iesgn.org.		86400	IN	NS	francisco.iesgn.org.
+
+;; ADDITIONAL SECTION:
+francisco.iesgn.org.	86400	IN	A	192.168.100.100
+
+;; Query time: <span style="color:#ae81ff">0</span> msec
+;; SERVER: 192.168.100.100#53<span style="color:#f92672">(</span>192.168.100.100<span style="color:#f92672">)</span>
+;; WHEN: mar nov <span style="color:#ae81ff">24</span> 18:25:13 CET <span style="color:#ae81ff">2020</span>
+;; MSG SIZE  rcvd: <span style="color:#ae81ff">126</span>
+</code></pre></div><p>Ahora que ya sabemos como hacerlo vamos a añadir los registros que nos faltan, en este caso va a ser <strong>client.iesgn.org</strong> y los virtualhost de apache.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Configuracion de los sitios ####</span>
+$TTL    <span style="color:#ae81ff">86400</span>
+@       IN      SOA     francisco.iesgn.org. root.localhost. <span style="color:#f92672">(</span>
+                              <span style="color:#ae81ff">1</span>         ; Serial
+                         <span style="color:#ae81ff">604800</span>         ; Refresh
+                          <span style="color:#ae81ff">86400</span>         ; Retry
+                        <span style="color:#ae81ff">2419200</span>         ; Expire
+                          <span style="color:#ae81ff">86400</span> <span style="color:#f92672">)</span>       ; Negative Cache TTL
+;
+@       IN      NS      francisco.iesgn.org.
+@       IN      MX      <span style="color:#ae81ff">10</span> correo.iesgn.org.
+
+$ORIGIN iesgn.org.
+
+francisco       IN      A       192.168.100.100
+correo          IN      A       192.168.100.200
+ftp             IN      A       192.168.100.201
+cliente         IN      A       192.168.100.202
+www             IN      CNAME   francisco
+departamentos   IN      CNAME   francisco
+</code></pre></div><p>Donde vemos que un registro <strong>CNAME</strong> específica las redirecciones desde los subdominios de los dominios a otros dominios / subdominios. Por lo que, si ahora intentamos entrar en las direcciones <strong><a href="http://www.iesgn.org">www.iesgn.org</a></strong> y en <strong>departamentos.iesgn.org</strong> nos debe de servir la pagina que tenemos en nuestro servidor sin necesidad de la resolucion estatica, ademas, si hacemos una consulta tambien nos debe de salir lo siguiente:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Consulta a www ####</span>
+francisco@debian10:~$ dig www.iesgn.org
+
+; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1+deb10u2-Debian &lt;&lt;&gt;&gt; www.iesgn.org
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER<span style="color:#e6db74">&lt;&lt;- opcode: QUERY, status: NOERROR, id: 44300
+</span><span style="color:#e6db74">;; flags: qr aa rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 1
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">;; OPT PSEUDOSECTION:
+</span><span style="color:#e6db74">; EDNS: version: 0, flags:; udp: 4096
+</span><span style="color:#e6db74">; COOKIE: 79cd321b284934654b68522e5fbd43d067d37db98dad4f6d (good)
+</span><span style="color:#e6db74">;; QUESTION SECTION:
+</span><span style="color:#e6db74">;www.iesgn.org.			IN	A
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">;; ANSWER SECTION:
+</span><span style="color:#e6db74">www.iesgn.org.		86400	IN	CNAME	francisco.iesgn.org.
+</span><span style="color:#e6db74">francisco.iesgn.org.	86400	IN	A	192.168.100.100
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">;; AUTHORITY SECTION:
+</span><span style="color:#e6db74">iesgn.org.		86400	IN	NS	francisco.iesgn.org.
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">;; Query time: 0 msec
+</span><span style="color:#e6db74">;; SERVER: 192.168.100.100#53(192.168.100.100)
+</span><span style="color:#e6db74">;; WHEN: mar nov 24 18:33:04 CET 2020
+</span><span style="color:#e6db74">;; MSG SIZE  rcvd: 124
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">#### Consulta a departamentos ####
+</span><span style="color:#e6db74">francisco@debian10:~$ dig departamentos.iesgn.org
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1+deb10u2-Debian &lt;&lt;&gt;&gt; departamentos.iesgn.org
+</span><span style="color:#e6db74">;; global options: +cmd
+</span><span style="color:#e6db74">;; Got answer:
+</span><span style="color:#e6db74">;; -&gt;&gt;HEADER&lt;&lt;- opcode</span>: QUERY, status: NOERROR, id: <span style="color:#ae81ff">57359</span>
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: <span style="color:#ae81ff">1</span>
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: <span style="color:#ae81ff">4096</span>
+; COOKIE: d4f1ca0f2c59ac1f7c983a9c5fbd440863c5461abaf3b586 <span style="color:#f92672">(</span>good<span style="color:#f92672">)</span>
+;; QUESTION SECTION:
+;departamentos.iesgn.org.	IN	A
+
+;; ANSWER SECTION:
+departamentos.iesgn.org. 86400	IN	CNAME	francisco.iesgn.org.
+francisco.iesgn.org.	86400	IN	A	192.168.100.100
+
+;; AUTHORITY SECTION:
+iesgn.org.		86400	IN	NS	francisco.iesgn.org.
+
+;; Query time: <span style="color:#ae81ff">0</span> msec
+;; SERVER: 192.168.100.100#53<span style="color:#f92672">(</span>192.168.100.100<span style="color:#f92672">)</span>
+;; WHEN: mar nov <span style="color:#ae81ff">24</span> 18:34:00 CET <span style="color:#ae81ff">2020</span>
+;; MSG SIZE  rcvd: <span style="color:#ae81ff">134</span>
+</code></pre></div><h3 id="configuracion-de-zona-inversa">Configuracion de Zona inversa</h3>
+<p>AHora que ya tenemos nuestra zona configurada, vamos a pasar a la zona inversa para su configuracion, para ello debemos de ir al fichero que vamos a crear llamado <strong>db.192.168.100</strong>, para ello vamos a usar como plantilla el fichero llamado <strong>/etc/bind/db.empy</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el fichero db.192.168.100 ####</span>
+vagrant@maquinaDNS:/var/cache/bind$ sudo cp /etc/bind/db.127 ./db.192.168.100
+
+<span style="color:#75715e">#### Lo modificamos de la siguiente forma ####</span>
+$TTL    <span style="color:#ae81ff">604800</span>
+@       IN      SOA     francisco.iesgn.org. root.localhost. <span style="color:#f92672">(</span>
+                              <span style="color:#ae81ff">1</span>         ; Serial
+                         <span style="color:#ae81ff">604800</span>         ; Refresh
+                          <span style="color:#ae81ff">86400</span>         ; Retry
+                        <span style="color:#ae81ff">2419200</span>         ; Expire
+                         <span style="color:#ae81ff">604800</span> <span style="color:#f92672">)</span>       ; Negative Cache TTL
+;
+@       IN      NS      francisco.iesgn.org.
+
+$ORIGIN 100.168.192.in-addr.arpa.
+
+<span style="color:#ae81ff">100</span>     IN      PTR     francisco.iesgn.org.
+<span style="color:#ae81ff">200</span>     IN      PTR     correo.iesgn.org.
+<span style="color:#ae81ff">201</span>     IN      PTR     ftp.iesgn.org.
+<span style="color:#ae81ff">202</span>     IN      PTR     cliente.iesgn.org.
+</code></pre></div><p>Donde vemos que, por cada registro <strong>A</strong> que tengamos en las zonas directas, debemos añadir un registro <strong>PTR</strong> que es un dominio que define las direcciones IP de todos los sistemas en una notación invertida.</p>
+<p>Si reiniciamos el servicio y nos dirigimos a nuestro cliente ya podremos hacer consultas inversas a nuestro servidor, para ello usamos la opcion <strong>-x</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Cosulta inversa a francisco.iesgn.org ####</span>
+francisco@debian10:~$ dig -x 192.168.100.100
+
+; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1+deb10u2-Debian &lt;&lt;&gt;&gt; -x 192.168.100.100
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER<span style="color:#e6db74">&lt;&lt;- opco</span>de: QUERY, status: NOERROR, id: <span style="color:#ae81ff">16129</span>
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: <span style="color:#ae81ff">2</span>
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: <span style="color:#ae81ff">4096</span>
+; COOKIE: 3edadbfd5aaeeecfac9dcbbf5fbd46fc90fe55df9317d7e3 <span style="color:#f92672">(</span>good<span style="color:#f92672">)</span>
+;; QUESTION SECTION:
+;100.100.168.192.in-addr.arpa.	IN	PTR
+
+;; ANSWER SECTION:
+100.100.168.192.in-addr.arpa. <span style="color:#ae81ff">604800</span> IN	PTR	francisco.iesgn.org.
+
+;; AUTHORITY SECTION:
+100.168.192.in-addr.arpa. <span style="color:#ae81ff">604800</span> IN	NS	francisco.iesgn.org.
+
+;; ADDITIONAL SECTION:
+francisco.iesgn.org.	86400	IN	A	192.168.100.100
+
+;; Query time: <span style="color:#ae81ff">1</span> msec
+;; SERVER: 192.168.100.100#53<span style="color:#f92672">(</span>192.168.100.100<span style="color:#f92672">)</span>
+;; WHEN: mar nov <span style="color:#ae81ff">24</span> 18:46:36 CET <span style="color:#ae81ff">2020</span>
+;; MSG SIZE  rcvd: <span style="color:#ae81ff">148</span>
+</code></pre></div><h2 id="tarea-3">Tarea 3</h2>
+<p>Para hacer esta tarea necesitamos otra maquina a la que vamos a llamar <strong>esclavodns</strong>, el fichero de vagrant quedaria asi:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># -*- mode: ruby -*-</span>
+<span style="color:#75715e"># vi: set ft=ruby :</span>
+
+$install_apache <span style="color:#f92672">=</span> <span style="color:#e6db74">&lt;&lt;-SCRIPT
+</span><span style="color:#e6db74"></span>sudo apt update 
+sudo apt install apache2 <span style="color:#f92672">-</span>y
+sudo apt install bind9
+<span style="color:#66d9ef">SCRIPT</span>
+
+
+
+<span style="color:#66d9ef">Vagrant</span><span style="color:#f92672">.</span>configure(<span style="color:#e6db74">&#34;2&#34;</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>config<span style="color:#f92672">|</span>
+  config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>define <span style="color:#e6db74">:maestro</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>maestro<span style="color:#f92672">|</span>
+    maestro<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>box <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;debian/buster64&#34;</span>
+    maestro<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>hostname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;maquinaDNS&#34;</span>
+    maestro<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>network <span style="color:#e6db74">:private_network</span>, <span style="color:#e6db74">ip</span>: <span style="color:#e6db74">&#34;192.168.100.100&#34;</span>
+    maestro<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provision <span style="color:#e6db74">&#39;shell&#39;</span>, <span style="color:#e6db74">inline</span>: $install_apache
+  <span style="color:#66d9ef">end</span>
+  config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>define <span style="color:#e6db74">:esclavo</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>esclavo<span style="color:#f92672">|</span>
+    esclavo<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>box <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;debian/buster64&#34;</span>
+    esclavo<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>hostname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;esclavodns&#34;</span>
+    esclavo<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>network <span style="color:#e6db74">:private_network</span>, <span style="color:#e6db74">ip</span>: <span style="color:#e6db74">&#34;192.168.100.101&#34;</span>
+    esclavo<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provision <span style="color:#e6db74">&#39;shell&#39;</span>, <span style="color:#e6db74">inline</span>: $install_apache
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Ahora lo que vamos a hacer es, en nuestra maquina maestra vamos a añadir a que maquina esclavo debe de transferir las zonas ya que nosotrso en ningun momento debemos de tocar la configuracion de las zonas en la maquina esclavo. Para ello debemos de añadir las siguientes lineas:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Por temas de seguridad debemos de tocar el fichero named.conf.options de nuestro servidor maestro ####</span>
+options <span style="color:#f92672">{</span>
+  ...
+  allow-transfer <span style="color:#f92672">{</span>none;<span style="color:#f92672">}</span>;
+  ...
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e">#### Confirguracion del fichero named.conf.local de maestro ####</span>
+...
+zone <span style="color:#e6db74">&#34;iesgn.org&#34;</span> <span style="color:#f92672">{</span>
+        type master;
+        file <span style="color:#e6db74">&#34;/var/cache/bind/db.iesgn.org&#34;</span>;
+        allow-transfer <span style="color:#f92672">{</span>192.168.100.101;<span style="color:#f92672">}</span>;
+        notify yes;
+<span style="color:#f92672">}</span>;
+
+zone <span style="color:#e6db74">&#34;100.168.192.in-addr.arpa&#34;</span> <span style="color:#f92672">{</span>
+        type master;
+        file <span style="color:#e6db74">&#34;/var/cache/bind/db.192.168.100&#34;</span>;
+        allow-transfer <span style="color:#f92672">{</span>192.168.100.101;<span style="color:#f92672">}</span>;
+        notify yes;
+...
+
+<span style="color:#75715e">#### Configuracion de named.conf.local en esclavo ####</span>
+include <span style="color:#e6db74">&#34;/etc/bind/zones.rfc1918&#34;</span>;
+
+zone <span style="color:#e6db74">&#34;iesgn.org&#34;</span> <span style="color:#f92672">{</span>
+        type slave;
+        file <span style="color:#e6db74">&#34;/var/cache/bind/db.iesgn.org&#34;</span>;
+        masters <span style="color:#f92672">{</span>192.168.100.100;<span style="color:#f92672">}</span>;
+<span style="color:#f92672">}</span>;
+
+zone <span style="color:#e6db74">&#34;100.168.192.in-addr.arpa&#34;</span> <span style="color:#f92672">{</span>
+        type slave;
+        file <span style="color:#e6db74">&#34;/var/cache/bind/db.192.168.100&#34;</span>;
+        masters <span style="color:#f92672">{</span>192.168.100.100;<span style="color:#f92672">}</span>;
+
+<span style="color:#f92672">}</span>;
+</code></pre></div><p>Donde le estamos indicando al servidor maestro que solo puede hacer una transferencia de zonas a la ip que le hemos indicado, en este caso la ip corresponde a la maquina esclavo. Ademas añadimos la opción de <strong>notify yes</strong> con la que, si hay un cambio en el mestro se le notifique al servidor esclavo.</p>
+<p>En cambio en el servidor esclavo debemos de decirle cual va a ser el servidor maestro de este en una zona dns concreta. Le indicamos el fichero donde va a tener la configuracion de las zonas pero <strong>estos ficheros no los debemos de crear ya que se generan solos al hacer la peticion de transferencia de las zonas</strong>.</p>
+<p>De esta forma ya tendremos nuestro servidor esclavo y maestro configurados para poder funcionar perfectamente entre si, ahora vamos a comprobar que no haya errores de sintaxis de los ficheros de configuracion, para ello usamos el comando <strong>named-checkconf</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Ficheros del maestro ####</span>
+vagrant@maquinaDNS:/etc/bind$ sudo named-checkconf named.conf.local 
+vagrant@maquinaDNS:/etc/bind$ sudo named-checkconf named.conf.options 
+
+<span style="color:#75715e">#### Ficherps del esclavo ####</span>
+vagrant@esclavodns:/etc/bind$ sudo named-checkconf named.conf.local 
+vagrant@esclavodns:/etc/bind$ sudo named-checkconf named.conf.options 
+</code></pre></div><p>Y ahora vamos a comprobar los ficheros de las zonas dns, esta vez solo en el maestro con el comando <strong>named-checkzone</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Comprobamos la zonas directas ####</span>
+vagrant@maquinaDNS:~$ sudo named-checkzone iesgn.org /var/cache/bind/db.iesgn.org 
+zone iesgn.org/IN: loaded serial <span style="color:#ae81ff">2</span>
+OK
+
+<span style="color:#75715e">#### Comprobamos las zonas inversas ####</span>
+vagrant@maquinaDNS:~$ sudo named-checkzone 100.168.192 /var/cache/bind/db.192.168.100 
+/var/cache/bind/db.192.168.100:17: ignoring out-of-zone data <span style="color:#f92672">(</span>100.100.168.192.in-addr.arpa<span style="color:#f92672">)</span>
+/var/cache/bind/db.192.168.100:18: ignoring out-of-zone data <span style="color:#f92672">(</span>101.100.168.192.in-addr.arpa<span style="color:#f92672">)</span>
+/var/cache/bind/db.192.168.100:19: ignoring out-of-zone data <span style="color:#f92672">(</span>200.100.168.192.in-addr.arpa<span style="color:#f92672">)</span>
+/var/cache/bind/db.192.168.100:20: ignoring out-of-zone data <span style="color:#f92672">(</span>201.100.168.192.in-addr.arpa<span style="color:#f92672">)</span>
+/var/cache/bind/db.192.168.100:21: ignoring out-of-zone data <span style="color:#f92672">(</span>202.100.168.192.in-addr.arpa<span style="color:#f92672">)</span>
+zone 100.168.192/IN: loaded serial <span style="color:#ae81ff">2</span>
+OK
+</code></pre></div><p>Y ahora vamos a mostrar los log que demuestran la transferencia:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Log de transferencia</span>
+...
+Nov <span style="color:#ae81ff">25</span> 13:41:25 buster named<span style="color:#f92672">[</span>3664<span style="color:#f92672">]</span>: transfer of <span style="color:#e6db74">&#39;100.168.192.in-addr.arpa/IN&#39;</span> from 192.168.100.100#53: connected using 192.168.100.101#33051
+Nov <span style="color:#ae81ff">25</span> 13:41:25 buster named<span style="color:#f92672">[</span>3664<span style="color:#f92672">]</span>: transfer of <span style="color:#e6db74">&#39;iesgn.org/IN&#39;</span> from 192.168.100.100#53: connected using 192.168.100.101#49793
+...
+</code></pre></div><h2 id="tarea-4">Tarea 4</h2>
+<p>Para esta tarea debemos de tener en nuestro cliente las ip de los dos servidores dns, el esclavo y el maestro, de esta forma:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"> Generated by NetworkManager
+nameserver 192.168.100.100
+nameserver 192.168.100.101
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+nameserver 192.168.1.1
+</code></pre></div><p>Y a la hora de hacer una consulta sobre la zona iesgn.org nos dara el siguiente resultado:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">francisco@debian10:~$ dig ns iesgn.org
+
+; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1+deb10u2-Debian &lt;&lt;&gt;&gt; ns iesgn.org
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER<span style="color:#e6db74">&lt;&lt;- opco</span>de: QUERY, status: NOERROR, id: <span style="color:#ae81ff">29709</span>
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: <span style="color:#ae81ff">3</span>
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: <span style="color:#ae81ff">4096</span>
+; COOKIE: 5235b2efd6f760b955c5ebc55fbe8947b6eaa84c7696582d <span style="color:#f92672">(</span>good<span style="color:#f92672">)</span>
+;; QUESTION SECTION:
+;iesgn.org.			IN	NS
+
+;; ANSWER SECTION:
+iesgn.org.		86400	IN	NS	esclavo.iesgn.org.
+iesgn.org.		86400	IN	NS	francisco.iesgn.org.
+
+;; ADDITIONAL SECTION:
+esclavo.iesgn.org.	86400	IN	A	192.168.100.101
+francisco.iesgn.org.	86400	IN	A	192.168.100.100
+
+;; Query time: <span style="color:#ae81ff">0</span> msec
+;; SERVER: 192.168.100.100#53<span style="color:#f92672">(</span>192.168.100.100<span style="color:#f92672">)</span>
+;; WHEN: mié nov <span style="color:#ae81ff">25</span> 17:41:43 CET <span style="color:#ae81ff">2020</span>
+;; MSG SIZE  rcvd: <span style="color:#ae81ff">144</span>
+</code></pre></div><p>Y vemos que nos da como resultado los dos servidores, el esclavo y el maestro, tecnicamente no deberiamos saber cual es cual pero los nombres que tienen los delatan. AHora vamos a intentar obtener una copia de las zonas de nuestro dns, para ello debemos de hacerlo desde nuestro servidor esclavo ya que desde neustro cliente no nos mostrar informacion sobre las zonas, como podemos ver aqui:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Desde el cliente ####</span>
+francisco@debian10:~$ dig @192.168.100.100 iesgn.org. axfr
+
+; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1+deb10u2-Debian &lt;&lt;&gt;&gt; @192.168.100.100 iesgn.org. axfr
+; <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> server found<span style="color:#f92672">)</span>
+;; global options: +cmd
+; Transfer failed.
+
+<span style="color:#75715e">#### Desde el esclavo ####</span>
+vagrant@esclavodns:~$ dig @192.168.100.100 iesgn.org. axfr
+
+; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1+deb10u2-Debian &lt;&lt;&gt;&gt; @192.168.100.100 iesgn.org. axfr
+; <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> server found<span style="color:#f92672">)</span>
+;; global options: +cmd
+iesgn.org.		86400	IN	SOA	francisco.iesgn.org. root.localhost. <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">604800</span> <span style="color:#ae81ff">86400</span> <span style="color:#ae81ff">2419200</span> <span style="color:#ae81ff">86400</span>
+iesgn.org.		86400	IN	NS	esclavo.iesgn.org.
+iesgn.org.		86400	IN	NS	francisco.iesgn.org.
+iesgn.org.		86400	IN	MX	<span style="color:#ae81ff">10</span> correo.iesgn.org.
+cliente.iesgn.org.	86400	IN	A	192.168.100.202
+correo.iesgn.org.	86400	IN	A	192.168.100.200
+departamentos.iesgn.org. 86400	IN	CNAME	francisco.iesgn.org.
+esclavo.iesgn.org.	86400	IN	A	192.168.100.101
+francisco.iesgn.org.	86400	IN	A	192.168.100.100
+ftp.iesgn.org.		86400	IN	A	192.168.100.201
+www.iesgn.org.		86400	IN	CNAME	francisco.iesgn.org.
+iesgn.org.		86400	IN	SOA	francisco.iesgn.org. root.localhost. <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">604800</span> <span style="color:#ae81ff">86400</span> <span style="color:#ae81ff">2419200</span> <span style="color:#ae81ff">86400</span>
+;; Query time: <span style="color:#ae81ff">3</span> msec
+;; SERVER: 192.168.100.100#53<span style="color:#f92672">(</span>192.168.100.100<span style="color:#f92672">)</span>
+;; WHEN: Wed Nov <span style="color:#ae81ff">25</span> 16:46:24 GMT <span style="color:#ae81ff">2020</span>
+;; XFR size: <span style="color:#ae81ff">12</span> records <span style="color:#f92672">(</span>messages 1, bytes 359<span style="color:#f92672">)</span>
+</code></pre></div><p>Ahora, si nosotros nos dirigimos al servidor maestro y paramos el servicio de dns y, posteriormente realizamos una consulta desde nuestro cliente debe de respondernos nuestro servidor esclavo en vez de nuestro servidor maestro:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Paramos el servicio en el servidor maestro ####</span>
+vagrant@maquinaDNS:~$ sudo systemctl stop bind9
+
+<span style="color:#75715e">#### Realizamos una consulta desde nuestro cliente ####</span>
+francisco@debian10:~$ dig mx iesgn.org
+
+; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1+deb10u2-Debian &lt;&lt;&gt;&gt; mx iesgn.org
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER<span style="color:#e6db74">&lt;&lt;- opco</span>de: QUERY, status: NOERROR, id: <span style="color:#ae81ff">48922</span>
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 2, ADDITIONAL: <span style="color:#ae81ff">4</span>
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: <span style="color:#ae81ff">4096</span>
+; COOKIE: 9c699f7a658d083de7104ac35fbf60f070acdd571678eb82 <span style="color:#f92672">(</span>good<span style="color:#f92672">)</span>
+;; QUESTION SECTION:
+;iesgn.org.			IN	MX
+
+;; ANSWER SECTION:
+iesgn.org.		86400	IN	MX	<span style="color:#ae81ff">10</span> correo.iesgn.org.
+
+;; AUTHORITY SECTION:
+iesgn.org.		86400	IN	NS	esclavo.iesgn.org.
+iesgn.org.		86400	IN	NS	francisco.iesgn.org.
+
+;; ADDITIONAL SECTION:
+correo.iesgn.org.	86400	IN	A	192.168.100.200
+esclavo.iesgn.org.	86400	IN	A	192.168.100.101
+francisco.iesgn.org.	86400	IN	A	192.168.100.100
+
+;; Query time: <span style="color:#ae81ff">0</span> msec
+;; SERVER: 192.168.100.101#53<span style="color:#f92672">(</span>192.168.100.101<span style="color:#f92672">)</span>
+;; WHEN: jue nov <span style="color:#ae81ff">26</span> 09:01:52 CET <span style="color:#ae81ff">2020</span>
+;; MSG SIZE  rcvd: <span style="color:#ae81ff">183</span>
+</code></pre></div><p>Y como podemos ver nos esta contestando el servidor con ip <strong>192.168.100.101</strong> que es nuestro dns esclavo.</p>
+<h2 id="tarea-5">Tarea 5</h2>
+<p>Tenemos un servidor DNS que gestiona la zona correspondiente al nombre de dominio iesgn.org, en esta ocasión queremos delegar el subdominio informatica.iesgn.org para que lo gestione otro servidor DNS. Por lo tanto tenemos un escenario con dos servidores DNS:</p>
+<ul>
+<li>
+<p>pandora.iesgn.org, es servidor DNS autorizado para la zona iesgn.org.</p>
+</li>
+<li>
+<p>ns.informatica.iesgn.org, es el servidor DNS para la zona informatica.iesgn.org y, está instalado en otra máquina.</p>
+</li>
+</ul>
+<p>Los nombres que vamos a tener en ese subdominio son los siguientes:</p>
+<ul>
+<li>
+<p><a href="http://www.informatica.iesgn.org">www.informatica.iesgn.org</a> corresponde a un sitio web que está alojado en el servidor web del departamento de informática.</p>
+</li>
+<li>
+<p>Vamos a suponer que tenemos un servidor ftp que se llame ftp.informatica.iesgn.org y que está en la misma máquina.</p>
+</li>
+<li>
+<p>Vamos a suponer que tenemos un servidor para recibir los correos que se llame correo.informatica.iesgn.org.</p>
+</li>
+</ul>
+<h2 id="tarea-6">Tarea 6</h2>
+<p>Realiza la instalación y configuración del nuevo servidor dns con las características anteriormente señaladas. Muestra el resultado al profesor.</p>
+<p>Para ello lo que debemos de hacer es añadir el subdominio a nuestras zonas del dns maestro, para ello debemos de tener la siguiente linea añadida al fichero db.iesgn.org:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Lineas a añadir en el fichero db.iesgn.org del servidor maestro ####</span>
+...
+$ORIGIN informatica.iesgn.org.
+@       IN      NS      francisco2
+www     IN      CNAME   francisco2
+francisco2      IN      A       192.168.100.102
+</code></pre></div><p>Como vemos mi nueva maquina tiene una ip la cual es <strong>192.168.100.102</strong> y es donde vamos a tener nuestro servidor dns el cual sera el servidor con autoridad sobre la zona <strong>informatica.iesgn.org.</strong>.</p>
+<p>Por esto debemos de crear una nueva maquina en nuestro fichero vagrant y añadirle la ip <strong>192.168.100.102</strong>, en esta maquina debemos de isntalar un servidor dns bind9 en el cual vamos a modificar el fichero <strong>/etc/bind/named.conf.local</strong> vamos a añadir la zona que vamos a usar, en mi caso es la siguiente zona:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">zone <span style="color:#e6db74">&#34;informatica.iesgn.org&#34;</span> <span style="color:#f92672">{</span>
+        type master;
+        file <span style="color:#e6db74">&#34;db.informatica.iesgn.org&#34;</span>;
+<span style="color:#f92672">}</span>;
+</code></pre></div><p>Y debemos de crear un fichero llamado <strong>/var/cache/bind/db.informatica.iesgn.org</strong> en el cual vamos a dar las caracteristicas que va a tener la zona que controla nuestro servidor dns, en mi caso sera el siguiente:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$TTL    <span style="color:#ae81ff">86400</span>
+@       IN      SOA     francisco2.informatica.iesgn.org. root.informatic$
+                              <span style="color:#ae81ff">1</span>         ; Serial
+                         <span style="color:#ae81ff">604800</span>         ; Refresh
+                          <span style="color:#ae81ff">86400</span>         ; Retry
+                        <span style="color:#ae81ff">2419200</span>         ; Expire
+                          <span style="color:#ae81ff">86400</span> <span style="color:#f92672">)</span>       ; Negative Cache TTL
+;
+@       IN      NS      francisco2.informatica.iesgn.org.
+@       IN      MX      <span style="color:#ae81ff">10</span> correo.informatica.iesgn.org.
+
+$ORIGIN informatica.iesgn.org.
+francisco2      IN      A       192.168.100.102
+www     IN      CNAME   francisco2
+ftp     IN      A       192.168.100.110
+correo  IN      A       192.168.100.130
+</code></pre></div><p>Una vez hecho esto reiniciamos los servicios de bind9 en las dos maquinas y en nuestra maquina cliente debemos de añadir a nuestro fichero <strong>/etc/resolv.conf</strong> la ip de nuestro servidor maestro y no de nuestro servidor con dominio sobre la zona <strong>informatica.iesgn.org</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero /etc/resolv.conf ####</span>
+nameserver 192.168.100.100
+</code></pre></div><p>Ahora ya podemos hacer consultas sobre la nueva zona a nuestro servidor y nos respondera con lo siguiente:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Preguntamos por el servidor con dominio sobre la zona www.informatica.iesgn.org</span>
+francisco@debian10:~$ dig @192.168.100.100 www.informatica.iesgn.org
+
+; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1+deb10u2-Debian &lt;&lt;&gt;&gt; @192.168.100.100 www.informatica.iesgn.org
+; <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> server found<span style="color:#f92672">)</span>
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER<span style="color:#e6db74">&lt;&lt;- opco</span>de: QUERY, status: NOERROR, id: <span style="color:#ae81ff">20384</span>
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 2, ADDITIONAL: <span style="color:#ae81ff">3</span>
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: <span style="color:#ae81ff">4096</span>
+; COOKIE: c7d7bdffcab31bda512a6b855fc676504cfdc61b8e2a8971 <span style="color:#f92672">(</span>good<span style="color:#f92672">)</span>
+;; QUESTION SECTION:
+;www.informatica.iesgn.org.	IN	A
+
+;; ANSWER SECTION:
+www.informatica.iesgn.org. <span style="color:#ae81ff">86400</span> IN	CNAME	francisco2.informatica.iesgn.org.
+francisco2.informatica.iesgn.org. 86400	IN A	192.168.100.102
+
+;; AUTHORITY SECTION:
+iesgn.org.		86400	IN	NS	esclavo.iesgn.org.
+iesgn.org.		86400	IN	NS	francisco.iesgn.org.
+
+;; ADDITIONAL SECTION:
+esclavo.iesgn.org.	86400	IN	A	192.168.100.101
+francisco.iesgn.org.	86400	IN	A	192.168.100.100
+
+;; Query time: <span style="color:#ae81ff">0</span> msec
+;; SERVER: 192.168.100.100#53<span style="color:#f92672">(</span>192.168.100.100<span style="color:#f92672">)</span>
+;; WHEN: mar dic <span style="color:#ae81ff">01</span> 17:58:56 CET <span style="color:#ae81ff">2020</span>
+;; MSG SIZE  rcvd: <span style="color:#ae81ff">201</span>
+</code></pre></div>
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2020  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+         
+        <li><a href="/servicios">Servicios</a></li>
+         
+        <li><a href="/implantacion">Implantacion</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>
