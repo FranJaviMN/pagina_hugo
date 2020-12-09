@@ -29,6 +29,11 @@ theme = "cactus"
   url = "/Implantacion"
   weight = 5
 
+[[menu.main]]
+  name = "BBDD"
+  url = "/BBDD"
+  weight = 6
+
 
 
 
