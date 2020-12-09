@@ -7,7 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Thu, 03 Dec 2020 13:47:57 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 09 Dec 2020 13:46:40 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mongodb</title>
+      <link>https://franjavimn.onrender.com/bbdd/mongodb/</link>
+      <pubDate>Wed, 09 Dec 2020 13:46:40 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/bbdd/mongodb/</guid>
+      <description>Instalar mongodb en una maquina debian 10 En mi caso vamos a instalar debian 10 en una maquina virtual con vagrant, el codigo de vagrant que he usado es el siguiente:
+Vagrant.configure(&amp;#34;2&amp;#34;) do |config| config.vm.define :mongodb do |mongodb| mongodb.vm.box = &amp;#34;debian/buster64&amp;#34; mongodb.vm.hostname = &amp;#34;mongodb&amp;#34; mongodb.vm.network :public_network, :bridge=&amp;gt;&amp;#34;wlp2s0&amp;#34; end end Cuando tengamos la maquina lista lo que vamos a hacer es instalar unas herramientas antes de empezar:
+#### Actualizamos las listas de repositorios #### vagrant@mongodb:~$ sudo apt update #### Instalamos las herramientas necesarias #### vagrant@mongodb:~$ sudo apt install gnupg -y Descargar mongodb para debian 10 AHora que ya tenemos las herramientas anteriores lo que debemos de hacer es añadir un nuevo repositorio a nuestra maquina ya que los paquetes de mongodb no se encuentran en los repositorios de debian, por lo que ejecutamos los siguientes comandos:</description>
+    </item>
+    
+    <item>
+      <title>Postgres Debian</title>
+      <link>https://franjavimn.onrender.com/bbdd/postgres-debian/</link>
+      <pubDate>Wed, 09 Dec 2020 13:45:06 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/bbdd/postgres-debian/</guid>
+      <description>Instalacion de un servidor Postgres Lo primero que debemos de tener es una maquina virtual en la cual vamos a realizar esta instalacion, en mi caso voy a usar una maquina con un sistema debian 10, creada mediante vagrant:
+# Fichero vagrant Vagrant.configure(&amp;#34;2&amp;#34;) do |config| config.vm.define :postgres do |postgres| postgres.vm.box = &amp;#34;debian/buster64&amp;#34; postgres.vm.hostname = &amp;#34;postgres&amp;#34; postgres.vm.network :public_network, :bridge=&amp;gt;&amp;#34;wlp2s0&amp;#34; end end Para poder instalar el servidor de postgreSQL vamos a instalar el paquete llamado postgresql el cual, al instalarlo y ver su version vemos que actualmente tenemos la version 11.</description>
+    </item>
+    
     <item>
       <title>Practica Dns</title>
       <link>https://franjavimn.onrender.com/servicios/practica-dns/</link>

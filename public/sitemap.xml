@@ -3,8 +3,23 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://franjavimn.onrender.com/bbdd/</loc>
+    <lastmod>2020-12-09T13:46:40+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://franjavimn.onrender.com/</loc>
-    <lastmod>2020-12-03T13:47:57+01:00</lastmod>
+    <lastmod>2020-12-09T13:46:40+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://franjavimn.onrender.com/bbdd/mongodb/</loc>
+    <lastmod>2020-12-09T13:46:40+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://franjavimn.onrender.com/bbdd/postgres-debian/</loc>
+    <lastmod>2020-12-09T13:45:06+01:00</lastmod>
   </url>
   
   <url>
