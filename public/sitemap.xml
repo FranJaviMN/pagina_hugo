@@ -3,12 +3,22 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://franjavimn.onrender.com/bbdd/</loc>
-    <lastmod>2020-12-09T13:46:40+01:00</lastmod>
+    <loc>https://franjavimn.onrender.com/</loc>
+    <lastmod>2020-12-10T14:08:25+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://franjavimn.onrender.com/</loc>
+    <loc>https://franjavimn.onrender.com/implantacion/</loc>
+    <lastmod>2020-12-10T14:08:25+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://franjavimn.onrender.com/implantacion/prueba-django/</loc>
+    <lastmod>2020-12-10T14:08:25+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://franjavimn.onrender.com/bbdd/</loc>
     <lastmod>2020-12-09T13:46:40+01:00</lastmod>
   </url>
   
@@ -55,11 +65,6 @@
   <url>
     <loc>https://franjavimn.onrender.com/sistemas/</loc>
     <lastmod>2020-11-19T13:23:35+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://franjavimn.onrender.com/implantacion/</loc>
-    <lastmod>2020-11-18T18:21:55+01:00</lastmod>
   </url>
   
   <url>

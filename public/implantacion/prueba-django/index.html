@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Prueba Django | Blog</title>
+  <meta name="description" content="En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Prueba Django" />
+<meta property="og:description" content="Despliegue de aplicaciones python Tarea 1 Entorno de desarrollo Vamos a desarrollar la aplicación del tutorial de django 3.1. Vamos a configurar tu equipo como entorno de desarrollo para trabajar con la aplicación, para ello:
+ Vamos a desarrollar la aplicación del tutorial de django 3.1. Vamos a configurar tu equipo como entorno de desarrollo para trabajar con la aplicación, para ello: https://github.com/josedom24/django_tutorial.  Por lo que nos vamos a ese repositorio y lo que vamos a hacer es crear un fork a nuestro repositorio para posteriormente clonarlo en nuestra maquina:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://franjavimn.onrender.com/implantacion/prueba-django/" />
+<meta property="article:published_time" content="2020-12-10T14:08:25+01:00" />
+<meta property="article:modified_time" content="2020-12-10T14:08:25+01:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Prueba Django"/>
+<meta name="twitter:description" content="Despliegue de aplicaciones python Tarea 1 Entorno de desarrollo Vamos a desarrollar la aplicación del tutorial de django 3.1. Vamos a configurar tu equipo como entorno de desarrollo para trabajar con la aplicación, para ello:
+ Vamos a desarrollar la aplicación del tutorial de django 3.1. Vamos a configurar tu equipo como entorno de desarrollo para trabajar con la aplicación, para ello: https://github.com/josedom24/django_tutorial.  Por lo que nos vamos a ese repositorio y lo que vamos a hacer es crear un fork a nuestro repositorio para posteriormente clonarlo en nuestra maquina:"/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://franjavimn.onrender.com/images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://franjavimn.onrender.com">
+  
+    <div id="logo" style="background-image: url(https://franjavimn.onrender.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/">Home</a></li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+       
+        <li><a href="/servicios">Servicios</a></li>
+       
+        <li><a href="/implantacion">Implantacion</a></li>
+       
+        <li><a href="/bbdd">BBDD</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h1 id="despliegue-de-aplicaciones-python">Despliegue de aplicaciones python</h1>
+<h2 id="tarea-1-entorno-de-desarrollo">Tarea 1 Entorno de desarrollo</h2>
+<p>Vamos a desarrollar la aplicación del tutorial de django 3.1. Vamos a configurar tu equipo como entorno de desarrollo para trabajar con la aplicación, para ello:</p>
+<ol>
+<li>Vamos a desarrollar la aplicación del tutorial de django 3.1. Vamos a configurar tu equipo como entorno de desarrollo para trabajar con la aplicación, para ello: <a href="https://github.com/josedom24/django_tutorial">https://github.com/josedom24/django_tutorial</a>.</li>
+</ol>
+<p>Por lo que nos vamos a ese repositorio y lo que vamos a hacer es crear un <strong>fork</strong> a nuestro repositorio para posteriormente clonarlo en nuestra maquina:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">francisco@debian10:~/Documentos/Implantacion/Python/Django tutorial$ git clone git@github.com:FranJaviMN/django_tutorial.git
+</code></pre></div><ol start="2">
+<li>Crea un entorno virtual de python3 e instala las dependencias necesarias para que funcione el proyecto (fichero requirements.txt).</li>
+</ol>
+<p>Para ello necesitamos un entorno virtual, solo seguimos los siguientes pasos:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el entorno virtual llamado trabajo-despliegue ####</span>
+francisco@debian10:~/Documentos/Implantacion/Python/Django tutorial$ python3 -m venv ./trabajo-despliegue
+
+<span style="color:#75715e">#### Ahora iniciamos nuestro entorno virtual e instalamos todas las dependencias del fichero requirements.txt ####</span>
+francisco@debian10:~/Documentos/Implantacion/Python/Django tutorial$ source trabajo-despliegue/bin/activate
+
+<span style="color:#75715e">#### Clonamos las dependencias ####</span>
+<span style="color:#f92672">(</span>trabajo-despliegue<span style="color:#f92672">)</span> francisco@debian10:~/Documentos/Implantacion/Python/Django tutorial/django_tutorial$ pip install -r requirements.txt
+
+<span style="color:#75715e">#### Comprobamos que son las mismas ####</span>
+<span style="color:#f92672">(</span>trabajo-despliegue<span style="color:#f92672">)</span> francisco@debian10:~/Documentos/Implantacion/Python/Django tutorial/django_tutorial$ pip list
+Package       Version
+------------- -------
+asgiref       3.3.0  
+Django        3.1.3  
+pip           18.1   
+pkg-resources 0.0.0  
+pytz          2020.4 
+setuptools    40.8.0 
+sqlparse      0.4.1  
+</code></pre></div><ol start="3">
+<li>Comprueba que vamos a trabajar con una base de datos sqlite (django_tutorial/settings.py). ¿Cómo se llama la base de datos que vamos a crear?</li>
+</ol>
+<p>Solo debemos de visualizar el fichero y buscar el nombre de la base de datos, en este caso su nombre es <strong>db.sqlite3</strong></p>
+<ol start="4">
+<li>Crea la base de datos: python3 manage.py migrate. A partir del modelo de datos se crean las tablas de la base de datos.</li>
+</ol>
+<p>Para ello solo debemos de ejecutar el siguiente comando: <em>python3 manage.py migrate</em> que nos creara la base de datos a partir del fichero llamado <strong>manage.py</strong></p>
+<ol start="5">
+<li>Crea un usuario administrador:</li>
+</ol>
+<p>Para ello debemos de usar el comando <em>python3 manage.py createsuperuser</em> y ya lo creamos con un nombre y una contraseña.</p>
+<ol start="6">
+<li>Ejecuta el servidor web de desarrollo y entra en la zona de administración (\admin) para comprobar que los datos se han añadido correctamente.</li>
+</ol>
+<p>Para ello nos dirijimos a donde esta el fichero llamado <em>app.py</em> y ejecutamos el fichero:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">(</span>trabajo-despliegue<span style="color:#f92672">)</span> francisco@debian10:~/Documentos/Implantacion/Python/Django tutorial/django_tutorial$ python3 manage.py runserver
+Watching <span style="color:#66d9ef">for</span> file changes with StatReloader
+Performing system checks...
+
+System check identified no issues <span style="color:#f92672">(</span><span style="color:#ae81ff">0</span> silenced<span style="color:#f92672">)</span>.
+November 12, <span style="color:#ae81ff">2020</span> - 17:34:54
+Django version 3.1.3, using settings <span style="color:#e6db74">&#39;django_tutorial.settings&#39;</span>
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+</code></pre></div><p>Al entrar en la url http://127.0.0.1:8000/admin tendremos un login y luego entraremos en la zona de administracion:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Implantacion/tutorial_django/admin-zone-dj.png" alt="Zona admin"></p>
+<ol start="7">
+<li>Crea dos preguntas, con posibles respuestas.</li>
+</ol>
+<p>Para ello solo debemos de dirigirnos hacia la ventana donde dice <em>Questions</em> y ahi debemos de añadir 2 preguntas con sus posibles respuestas.</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Implantacion/tutorial_django/pregunta-admin.png" alt="Zona de preguntas creadas"></p>
+<ol start="8">
+<li>Comprueba en el navegador que la aplicación está funcionando, accede a la url \polls.</li>
+</ol>
+<p>Para ello entramos, con el servidor activado, a la url llamada http://127.0.0.1:8000/polls y nos saldra una pagina con las preguntas que hemos creado en la zona admin, si entramos en ellas veremos que podemos votar por las respuestas que nosotros consideremos.</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Implantacion/tutorial_django/preguntas-polls.png" alt="polls de djnago"></p>
+<h2 id="tarea-2-entorno-de-producción">Tarea 2: Entorno de producción</h2>
+<p>Vamos a realizar el despliegue de nuestra aplicación en un entorno de producción, para ello vamos a utilizar una instancia del cloud, sigue los siguientes pasos:</p>
+<ol>
+<li>Instala en el servidor los servicios necesarios (apache2). Instala el módulo de apache2 para ejecutar código python.</li>
+</ol>
+<p>Para ello debemos de instalar los paquetes de <strong>apache2</strong> y el paquete llamado <strong>libapache2-mod-wsgi-py3</strong> que es el modulo que vamos a usar para que apache2 pueda ejecutar el codigo python:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos los paquetes necesarios ####</span>
+debian@practica-django:~$ sudo apt install apache2 libapache2-mod-wsgi-py3
+</code></pre></div><ol start="2">
+<li>Clona el repositorio en el DocumentRoot de tu virtualhost.</li>
+</ol>
+<p>Nosotros vamos a usar como documentroot el directorio <strong>/srv/</strong>, por lo que si queremos clonar necesitaremos el paquete de <strong>git</strong> asi que procedemos a instalarlo:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos git ####</span>
+debian@practica-django:~$ sudo apt install git
+
+<span style="color:#75715e">#### Clonamos el repositorio ####</span>
+debian@practica-django:/srv$ sudo git clone https://github.com/FranJaviMN/django_tutorial.git
+</code></pre></div><ol start="3">
+<li>Crea un entorno virtual e instala las dependencias de tu aplicación</li>
+</ol>
+<p>Para ello necesitamos los paquetes para poder crear entornos virtuales python, por lo que debemos de instalar el siguiente paquete:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos los paquetes necesarios ####</span>
+debian@practica-django:~$ sudo apt install python3-venv
+
+<span style="color:#75715e">#### Creamos el entorno virtual ####</span>
+debian@practica-django:~$ python3 -m venv ./trabajo-despliegue
+
+<span style="color:#75715e">#### Instalamos las dependencias del programa en el entorno virtual ####</span>
+<span style="color:#f92672">(</span>trabajo-despliegue<span style="color:#f92672">)</span> debian@practica-django:~$ pip install -r /srv/django_tutorial/requirements.txt
+</code></pre></div><ol start="4">
+<li>Instala el módulo que permite que python trabaje con mysql:</li>
+</ol>
+<p>Para ello debemos de instalar el paquete llamado <strong>python3-mysqldb</strong>(lo instalamos en la maquina de prueba, no en el entorno virtual)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### En la maquina de prueba ####</span>
+debian@practica-django:~$ sudo apt install python3-mysqldb
+
+<span style="color:#75715e">#### En nuestro entorno virtual instalamos el paquete para conectar con mysql ####</span>
+<span style="color:#f92672">(</span>trabajo-despliegue<span style="color:#f92672">)</span> debian@practica-django:~$ pip install mysql-connector-python
+</code></pre></div><ol start="5">
+<li>Crea una base de datos y un usuario en mysql.</li>
+</ol>
+<p>Para ello entramos como root en mysql y ahi creamos un usuario llamado <em>fran</em> con una contraseña <em>usuario</em> y tambien creamos la base de datos a la que llamaremos django:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos mariadb ####</span>
+debian@practica-django:~$ sudo apt install mariadb-server mariadb-client
+
+<span style="color:#75715e">#### Entramos como superusuario ####</span>
+debian@practica-django:~$ sudo mysql -u root -p
+
+<span style="color:#75715e">#### Creamos la base de datos django ####</span>
+MariaDB <span style="color:#f92672">[(</span>none<span style="color:#f92672">)]</span>&gt; create database django;
+
+<span style="color:#75715e">#### Creamos un usuario llamado fran de contraseña usuario ####</span>
+MariaDB <span style="color:#f92672">[(</span>none<span style="color:#f92672">)]</span>&gt; create user <span style="color:#e6db74">&#39;fran&#39;</span>@<span style="color:#e6db74">&#39;localhost&#39;</span> identified by <span style="color:#e6db74">&#39;usuario&#39;</span>;
+
+<span style="color:#75715e">#### Le damos todos los privilegios sobre la base de datos django ####</span>
+MariaDB <span style="color:#f92672">[(</span>none<span style="color:#f92672">)]</span>&gt; GRANT ALL PRIVILEGES ON django.* to <span style="color:#e6db74">&#39;fran&#39;</span>@<span style="color:#e6db74">&#39;localhost&#39;</span>;
+</code></pre></div><p>De esta forma ya tendremos nuestra base de datos con usuario <em>fran</em>.</p>
+<ol start="6">
+<li>Configura la aplicación para trabajar con mysql, para ello modifica la configuración de la base de datos en el archivo settings.py:</li>
+</ol>
+<p>Para ello nos debe de quedar una sintaxis como la siguiente:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">DATABASES <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74">&#39;default&#39;</span>: {
+        <span style="color:#e6db74">&#39;ENGINE&#39;</span>: <span style="color:#e6db74">&#39;mysql.connector.django&#39;</span>,
+        <span style="color:#e6db74">&#39;NAME&#39;</span>: <span style="color:#e6db74">&#39;django&#39;</span>,
+        <span style="color:#e6db74">&#39;USER&#39;</span>: <span style="color:#e6db74">&#39;fran&#39;</span>,
+        <span style="color:#e6db74">&#39;PASSWORD&#39;</span>: <span style="color:#e6db74">&#39;usuario&#39;</span>,
+        <span style="color:#e6db74">&#39;HOST&#39;</span>: <span style="color:#e6db74">&#39;localhost&#39;</span>,
+        <span style="color:#e6db74">&#39;PORT&#39;</span>: <span style="color:#e6db74">&#39;&#39;</span>,         
+    }
+}
+</code></pre></div><p>Ahora solo debemos de migrar la base de datos como hicimos anteriormente, pero esta vez se migrara a la base de datos de mysql:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Entramos en el entorno virtual python ####</span>
+debian@practica-django:~$ source trabajo-despliegue/bin/activate
+
+<span style="color:#75715e">#### Migramos la base de datos ####</span>
+<span style="color:#f92672">(</span>trabajo-despliegue<span style="color:#f92672">)</span> debian@practica-django:~$ python3 /srv/django_tutorial/manage.py migrate
+
+<span style="color:#75715e">#### Comprobamos en nuestra base de datos si esta migrada correctamente ####</span>
+MariaDB <span style="color:#f92672">[</span>django<span style="color:#f92672">]</span>&gt; show tables;
++----------------------------+
+| Tables_in_django           |
++----------------------------+
+| auth_group                 |
+| auth_group_permissions     |
+| auth_permission            |
+| auth_user                  |
+| auth_user_groups           |
+| auth_user_user_permissions |
+| django_admin_log           |
+| django_content_type        |
+| django_migrations          |
+| django_session             |
+| polls_choice               |
+| polls_question             |
++----------------------------+
+<span style="color:#ae81ff">12</span> rows in set <span style="color:#f92672">(</span>0.001 sec<span style="color:#f92672">)</span>
+</code></pre></div><ol start="7">
+<li>Crea un usuario administrador: python3 manage.py createsuperuser.</li>
+</ol>
+<p>Ahora, como en el ejercicio anterior, vamos a proceder a crear un usuario administrador, para ello usamos el entorno virtual de python y usamos el siguiente comando:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">(</span>trabajo-despliegue<span style="color:#f92672">)</span> debian@practica-django:~$ python3 /srv/django_tutorial/manage.py createsuperuser
+
+Username <span style="color:#f92672">(</span>leave blank to use <span style="color:#e6db74">&#39;debian&#39;</span><span style="color:#f92672">)</span>: fran
+Email address: 
+Password: 
+Password <span style="color:#f92672">(</span>again<span style="color:#f92672">)</span>: 
+</code></pre></div><p>De esta forma ya tendremos creado nuestro superusuerio con nombre fran.</p>
+<ol start="8">
+<li>Configura un virtualhost en apache2 con la configuración adecuada para que funcione la aplicación. El punto de entrada de nuestro servidor será django_tutorial/django_tutorial/wsgi.py.</li>
+</ol>
+<p>Para ello vamos a usar el virtualhost por defecto que viene creado en apache2, partiendo de esa base nuestro fichero de configuracion debe de tener el siguiente contenido:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Contenido del fichero 000-default.conf</span>
+&lt;VirtualHost *:80&gt;
+
+        ServerName www.prueba-django.org
+        ServerAdmin webmaster@localhost
+        DocumentRoot /srv/django_tutorial
+
+        WSGIDaemonProcess prueba_django user<span style="color:#f92672">=</span>www-data group<span style="color:#f92672">=</span>www-data processes<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> threads<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> python-path<span style="color:#f92672">=</span>/srv/django_tutorial:/home/debian/trabajo-despliegue/lib/python3.7/site-packages
+        WSGIScriptAlias / /srv/django_tutorial/django_tutorial/wsgi.py
+
+        &lt;Directory /srv/django_tutorial&gt;
+        WSGIProcessGroup prueba_django
+        WSGIApplicationGroup %<span style="color:#f92672">{</span>GLOBAL<span style="color:#f92672">}</span>
+        Require all granted
+        &lt;/Directory&gt;
+        ErrorLog <span style="color:#e6db74">${</span>APACHE_LOG_DIR<span style="color:#e6db74">}</span>/error.log
+        CustomLog <span style="color:#e6db74">${</span>APACHE_LOG_DIR<span style="color:#e6db74">}</span>/access.log combined
+
+&lt;/VirtualHost&gt;
+
+<span style="color:#75715e">#### Para entrar dejamos que cualquier host pueda acceder a la pagina ####</span>
+debian@practica-django:/srv/django_tutorial/django_tutorial$ sudo nano settings.py
+
+y aqui debemos de tener lo siguiente:
+
+...
+ALLOWED_HOSTS <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;*&#39;</span><span style="color:#f92672">]</span>
+...
+</code></pre></div><p>De esta forma si entramos en la pagina desde nuestro cliente veremos que nos sale ya la zona de login y polls pero sin su oja de estilos, este problema lo vamos a solucionar en el siguiente apartado.</p>
+<ol start="9">
+<li>asegurarte que el contenido estático se está sirviendo: ¿Se muestra la imagen de fondo de la aplicación? ¿Se ve de forma adecuada la hoja de estilo de la zona de administración?</li>
+</ol>
+<p>Para poder servir el contenido estatico para la url <strong>/polls</strong>, en nuestro fichero de configuracion de nuestro virtualhost y crear un alias como el siguiente para poder servir el contenido estatico:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### COntenido en el fichero del virtualhost ####</span>
+...
+            Alias /static/ /srv/django_tutorial/polls/static/
+
+                &lt;Directory /srv/django_tutorial/polls/static&gt;
+                Require all granted
+                &lt;/Directory&gt;
+...
+</code></pre></div><p>Ahora si nosotros entramos en <strong>/polls</strong> veremos que se estará sirviendo el contenido estatico correctamente. Ahora debemos de hacer lo mismo pero para <strong>/admin</strong>, para ello, vamos a copiar el contenido del directorio <strong>trabajo-despliegue/lib/python3.7/site-packages/django/contrib/admin/static/admin</strong> al directorio <strong>/srv/django_tutorial/polls/static</strong> por lo que, al entrar en la pagina /admin vamos a ver la hoja de estilos correspondiente a la pagina admin y pagina polls.</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Implantacion/tutorial_django/admin-estilos.png" alt="hoja de estilos admin"></p>
+<ol start="10">
+<li>Desactiva en la configuración (fichero settings.py) el modo debug a False. Para que los errores de ejecución no den información sensible de la aplicación.</li>
+</ol>
+<p>Para ello nos vamos al fichero <strong>/srv/django_tutorial/django_tutorial/settings.py</strong> y dentro buscamos una linea que se llama de la siguiente forma:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">...</span>
+<span style="color:#75715e"># SECURITY WARNING: don&#39;t run with debug turned on in production!</span>
+DEBUG <span style="color:#f92672">=</span> False
+<span style="color:#f92672">...</span>
+</code></pre></div><p>De tal forma ya tendremos nuestra pagina funcionando perfectamente.</p>
+<h2 id="tarea-3-modificación-de-nuestra-aplicación">Tarea 3: Modificación de nuestra aplicación</h2>
+<p>Vamos a realizar cambios en el entorno de desarrollo y posteriormente vamos a subirlas a producción. Vamos a realizar tres modificaciones (entrega una captura de pantalla donde se ven cada una de ellas). Recuerda que primero lo haces en el entrono de desarrollo, y luego tendrás que llevar los cambios a producción:</p>
+<ol>
+<li>Modifica la página inicial donde se ven las encuestas para que aparezca tu nombre: Para ello modifica el archivo django_tutorial/polls/templates/polls/index.html.</li>
+</ol>
+<p>Para ello, en nuestro entorno de desarrollo hemos añadido la siguiente linea:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">...</span>
+{<span style="color:#f92672">%</span> <span style="color:#66d9ef">if</span> latest_question_list <span style="color:#f92672">%</span>}
+    <span style="color:#f92672">&lt;</span>p<span style="color:#f92672">&gt;</span>Esta pagina de preguntas es de Fran<span style="color:#f92672">&lt;/</span>p<span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span>ul<span style="color:#f92672">&gt;</span>
+    {<span style="color:#f92672">%</span> <span style="color:#66d9ef">for</span> question <span style="color:#f92672">in</span> latest_question_list <span style="color:#f92672">%</span>}
+<span style="color:#f92672">...</span>
+</code></pre></div><p>Entonces al entrar en nuestra pagina en desarrollo tendremos el siguiente contenido en polls:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Implantacion/tutorial_django/fran-polls-desarrollo.png" alt="pagina polls modificada"></p>
+<p>Ahora debemos de llevarnos lo que hemos modificado a nuestro entorno de produccion, para ello debemos de subir los cambios a git y desde el entorno de produccion debemos de hacer un pull de los cambios:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Subimos los cambios ####</span>
+francisco@debian10:~/Documentos/Implantacion/Python/Django tutorial/django_tutorial$ git commit -am <span style="color:#e6db74">&#34;Cambio en polls&#34;</span>
+
+francisco@debian10:~/Documentos/Implantacion/Python/Django tutorial/django_tutorial$ git push
+
+<span style="color:#75715e">#### Añadimos los cambios en nuestro entorno de produccion ####</span>
+debian@practica-django:/srv/django_tutorial$ git pull
+</code></pre></div><p>Si entramos en nuestra pagina de prueba veremos que el cambio se ha añadido:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Implantacion/tutorial_django/prueba-produccion.png" alt="cambio en produccion"></p>
+<ol start="2">
+<li>Modifica la imagen de fondo que se ve la aplicación.</li>
+</ol>
+<p>Para ello vamos a escoger una imagen para nuestro fondo, da igual cual sea, pero cuando la tengamos tenemos que reemplazarla por <strong>django_tutorial/polls/static/polls/images/background.jpg</strong> con el mismo nombre, de tal forma que al iniciar el servidor en desarrollo veremos la pagina cambiada con un fonco distinto:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Implantacion/tutorial_django/cambio-fondo-desarrollo.png" alt="cambio de fondo"></p>
+<p>Una vez lo tengamos nos llevamos los cambios a produccion mediante git:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Añadimos la imagen nueva ####</span>
+francisco@debian10:~/Documentos/Implantacion/Python/Django tutorial/django_tutorial$ git add polls/
+
+<span style="color:#75715e">#### Nuevo commit ####</span>
+francisco@debian10:~/Documentos/Implantacion/Python/Django tutorial/django_tutorial$ git commit -am <span style="color:#e6db74">&#34;Nuevo fondo&#34;</span>
+
+francisco@debian10:~/Documentos/Implantacion/Python/Django tutorial/django_tutorial$ git push
+</code></pre></div><p>En nuestro entorno de produccion debemos de traernos los cambios que hemos hecho en desarrollo con <strong>git pull</strong> para poder ver los cambios en la pagina:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Implantacion/tutorial_django/fondo-produccion.png" alt="fondo produccion"></p>
+<ol start="3">
+<li>
+<p>Vamos a crear una nueva tabla en la base de datos, para ello sigue los siguientes pasos:</p>
+<ul>
+<li>Añade un nuevo modelo al fichero polls/models.py:</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Categoria</span>(models<span style="color:#f92672">.</span>Model):	
+    Abr <span style="color:#f92672">=</span> models<span style="color:#f92672">.</span>CharField(max_length<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>)
+    Nombre <span style="color:#f92672">=</span> models<span style="color:#f92672">.</span>CharField(max_length<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>)
+
+<span style="color:#66d9ef">def</span> __str__(self):
+    <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>Abr<span style="color:#f92672">+</span><span style="color:#e6db74">&#34; - &#34;</span><span style="color:#f92672">+</span>self<span style="color:#f92672">.</span>Nombre 		
+</code></pre></div><ul>
+<li>Crea una nueva migración: python3 manage.py makemigrations.</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">(</span>trabajo-despliegue<span style="color:#f92672">)</span> francisco@debian10:~/Documentos/Implantacion/Python/Django tutorial/django_tutorial$ python3 manage.py makemigrations
+</code></pre></div><ul>
+<li>En la maquina, hacemos un pull y hacemos la nueva migracion:</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">(</span>trabajo-despliegue<span style="color:#f92672">)</span> debian@django-prueba:/srv/django_tutorial$ python3 manage.py migrate
+</code></pre></div></li>
+</ol>
+<p>De tal forma que, si entramos en la pagiande /admin veremos una nueva pestaña llamada <strong>Categorias</strong>:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Implantacion/tutorial_django/categorias-admin.png" alt="imagen categorias"></p>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2020  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+         
+        <li><a href="/servicios">Servicios</a></li>
+         
+        <li><a href="/implantacion">Implantacion</a></li>
+         
+        <li><a href="/bbdd">BBDD</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>

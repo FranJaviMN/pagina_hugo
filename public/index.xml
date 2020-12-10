@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Wed, 09 Dec 2020 13:46:40 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 10 Dec 2020 14:08:25 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Prueba Django</title>
+      <link>https://franjavimn.onrender.com/implantacion/prueba-django/</link>
+      <pubDate>Thu, 10 Dec 2020 14:08:25 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/implantacion/prueba-django/</guid>
+      <description>Despliegue de aplicaciones python Tarea 1 Entorno de desarrollo Vamos a desarrollar la aplicación del tutorial de django 3.1. Vamos a configurar tu equipo como entorno de desarrollo para trabajar con la aplicación, para ello:
+ Vamos a desarrollar la aplicación del tutorial de django 3.1. Vamos a configurar tu equipo como entorno de desarrollo para trabajar con la aplicación, para ello: https://github.com/josedom24/django_tutorial.  Por lo que nos vamos a ese repositorio y lo que vamos a hacer es crear un fork a nuestro repositorio para posteriormente clonarlo en nuestra maquina:</description>
+    </item>
+    
     <item>
       <title>Mongodb</title>
       <link>https://franjavimn.onrender.com/bbdd/mongodb/</link>
