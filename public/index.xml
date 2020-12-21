@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Mon, 21 Dec 2020 13:18:45 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 21 Dec 2020 13:21:30 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Usuarios ACL Grupos</title>
+      <link>https://franjavimn.onrender.com/sistemas/usuarios-acl-grupos/</link>
+      <pubDate>Mon, 21 Dec 2020 13:21:30 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/sistemas/usuarios-acl-grupos/</guid>
+      <description>Usuarios, grupos y ACLs en LDAP En este documento vamos a proceder a la creacion de un escenario de ldap en el que vamos a tener los siguientes puntos a completar:
+  Crea 10 usuarios con los nombres que prefieras en LDAP, esos usuarios deben ser objetos de los tipos posixAccount e inetOrgPerson. Estos usuarios tendrán un atributo userPassword.
+  Crea 3 grupos en LDAP dentro de una unidad organizativa diferente que sean objetos del tipo groupOfNames.</description>
+    </item>
+    
     <item>
       <title>Ldaps</title>
       <link>https://franjavimn.onrender.com/sistemas/ldaps/</link>
