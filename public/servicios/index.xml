@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Thu, 03 Dec 2020 13:47:57 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/servicios/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 30 Dec 2020 16:33:01 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/servicios/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Trabajo Openstack</title>
+      <link>https://franjavimn.onrender.com/servicios/trabajo-openstack/</link>
+      <pubDate>Wed, 30 Dec 2020 16:33:01 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/servicios/trabajo-openstack/</guid>
+      <description>Servidores Web, Base de Datos y DNS En esta practica vamos a tener un servidor dns con bidn9 en la maquina de la red interna llamada Frestón, en ella vamos a tener nuestro servidor dns activo en el cual vamos a tener que activar 3 vistas para las distintas consultas que le vamos a realizar, estas vistas seran las siguiente:
+ Vista para la red externa (172.22.0.0/15 y 192.168.202.2) Vista para la red interna (10.</description>
+    </item>
+    
     <item>
       <title>Practica Dns</title>
       <link>https://franjavimn.onrender.com/servicios/practica-dns/</link>
