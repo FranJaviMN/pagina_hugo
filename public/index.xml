@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Mon, 21 Dec 2020 13:21:30 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 30 Dec 2020 16:13:32 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Instalar Guacamole</title>
+      <link>https://franjavimn.onrender.com/implantacion/instalar-guacamole/</link>
+      <pubDate>Wed, 30 Dec 2020 16:13:32 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/implantacion/instalar-guacamole/</guid>
+      <description>Instalcion de Guacamole En mi caso, en la practica sobre el despliegue de una aplicacion hecha en java con Tomcar vamos a elegir el cms llamado Guacamole.
+¿Qué es Guacamole apache? Guacamole es un proyecto de escritorio remoto desarrollado por la Apache Software Foundation. Es un sistema compuesto por una parte cliente y una parte servidor. La aplicación servidor es la que se encarga de la autenticación y precisa de la instalación en infraestructura propia o acogerse la un servicio de terceros y estar accesible desde la parte cliente.</description>
+    </item>
+    
     <item>
       <title>Usuarios ACL Grupos</title>
       <link>https://franjavimn.onrender.com/sistemas/usuarios-acl-grupos/</link>
