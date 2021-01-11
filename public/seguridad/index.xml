@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Fri, 27 Nov 2020 11:04:59 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/seguridad/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 11 Jan 2021 18:00:52 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/seguridad/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Https Quijote</title>
+      <link>https://franjavimn.onrender.com/seguridad/https-quijote/</link>
+      <pubDate>Mon, 11 Jan 2021 18:00:52 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/seguridad/https-quijote/</guid>
+      <description>Solicitar certificado wildcard con openssl Para esta practica vamos a solicitar un certificado wildcard para nuestra dominio llamado *franjavier.gonzalonazareno.org en el que vamos a tener nuestro escenario de openstack.
+Creacion de clave privada y certificado Para poder realizar esta practica vamos a irnos a nuestra maquina llamada freston que es donde vamos a usar nuestro certificado wildcard principalmente, en esta maquina vamos a crear una clave privada y luego generamos el certificado indicandole el directorio donde esta la clave:</description>
+    </item>
+    
     <item>
       <title>Https Ovh</title>
       <link>https://franjavimn.onrender.com/seguridad/https-ovh/</link>
