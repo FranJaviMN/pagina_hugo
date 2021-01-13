@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Fs Avanzados | Blog</title>
+  <meta name="description" content="En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Fs Avanzados" />
+<meta property="og:description" content="Sistemas de ficheros avanzados En este ejercicio vamos a realizar pruebas con los sistemas de ficheros &ldquo;avanzados&rdquo; como pueden ser Btrfs o ZFS, para ello debemos de elegir uno de ellos pero primero vamos a ver un poco de la historia de ambos sistemas de ficheros y, posteriormente, veremos ejemplos de uso de estos sistemas de ficheros y de sus avanzadas caracteristicas.
+Btrfs Btrfs es un sistema de ficheros copy-on-write (CoW) para Linux enfocado a implementar características novedosas y avanzadas y, a la vez, centrado en la tolerancia a fallos, reparación y facilidad de administración." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://franjavimn.onrender.com/hlc/fs-avanzados/" />
+<meta property="article:published_time" content="2021-01-13T09:50:19+01:00" />
+<meta property="article:modified_time" content="2021-01-13T09:50:19+01:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Fs Avanzados"/>
+<meta name="twitter:description" content="Sistemas de ficheros avanzados En este ejercicio vamos a realizar pruebas con los sistemas de ficheros &ldquo;avanzados&rdquo; como pueden ser Btrfs o ZFS, para ello debemos de elegir uno de ellos pero primero vamos a ver un poco de la historia de ambos sistemas de ficheros y, posteriormente, veremos ejemplos de uso de estos sistemas de ficheros y de sus avanzadas caracteristicas.
+Btrfs Btrfs es un sistema de ficheros copy-on-write (CoW) para Linux enfocado a implementar características novedosas y avanzadas y, a la vez, centrado en la tolerancia a fallos, reparación y facilidad de administración."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://franjavimn.onrender.com/images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://franjavimn.onrender.com">
+  
+    <div id="logo" style="background-image: url(https://franjavimn.onrender.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/">Home</a></li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+       
+        <li><a href="/servicios">Servicios</a></li>
+       
+        <li><a href="/implantacion">Implantacion</a></li>
+       
+        <li><a href="/bbdd">BBDD</a></li>
+       
+        <li><a href="/hlc">HLC</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h1 id="sistemas-de-ficheros-avanzados">Sistemas de ficheros avanzados</h1>
+<p>En este ejercicio vamos a realizar pruebas con los sistemas de ficheros &ldquo;avanzados&rdquo; como pueden ser <strong>Btrfs</strong> o <strong>ZFS</strong>, para ello debemos de elegir uno de ellos pero primero vamos a ver un poco de la historia de ambos sistemas de ficheros y, posteriormente, veremos ejemplos de uso de estos sistemas de ficheros y de sus avanzadas caracteristicas.</p>
+<h2 id="btrfs">Btrfs</h2>
+<p><strong>Btrfs</strong> es un sistema de ficheros copy-on-write (CoW) para Linux enfocado a implementar características novedosas y avanzadas y, a la vez, centrado en la tolerancia a fallos, reparación y facilidad de administración. Desarrollado conjuntamente por Oracle, Red Hat, Fujitsu, Intel, SUSE, STRATO, y muchos más, Btrfs está publicado bajo la licencia GPL y se encuentra abierto a contribuciones por parte de cualquier persona.</p>
+<p>Algunas distribuciones ya han comenzado a cambiar en sus últimos lanzamientos y han empezado a incluir este sistema de ficheros. Btrfs tiene un gran número de características avanzadas en común con ZFS, las cuales hicieron que ZFS fuera tan popular entre las distribuciones de BSD y los dispositivos NAT. A continuacion podemos ver algunas de las caracteristicas avanzadas que tiene este sistema de ficheros:</p>
+<ul>
+<li>
+<p>Copy on Write (CoW) y snapshotting: Facilitar la creación de backups incluso desde un sistema de ficheros &ldquo;en caliente&rdquo; o de una máquina virtual</p>
+</li>
+<li>
+<p>Checksums a nivel de fichero: Los metadatos de cada fichero incluyen un checksum que es usado para detectar y reparar errores.</p>
+</li>
+<li>
+<p>Compresión: Los ficheros pueden estar comprimidos o descomprimidos en vuelo, lo que aumenta la velocidad de lectura.</p>
+</li>
+<li>
+<p>Subvolumenes: Los sistemas de ficheros pueden compartir un determinado espacio en vez de tener que utilizar sus propias particiones.</p>
+</li>
+<li>
+<p>RAID: Btrfs tiene sus propias implementaciones de RAID de manera que LVM o mdadm no son necesarios para tener un RAID. De momento RAID 0 y 1 están soportados; RAID 5 y 6 están de camino.</p>
+</li>
+<li>
+<p>Deduplicación de datos: El soporte de deduplicación de datos es limitado; sin embargo, eventualmente se convertirá en una característica estándar en Btrfs. Ésto permite reducir el espacio ocupado mediante la comparación binaria de ficheros.</p>
+</li>
+</ul>
+<h3 id="instalacion-en-debian-10">Instalacion en Debian 10</h3>
+<p>Para la instalacion de este sistema de ficheros en un sistema Debian 10, lo unico que debemos de hacer es instalar el paquete <strong>btrfs-tools</strong> y de esta forma ya tendremos disponibles sus distintas caracteristicas y podremos usarlo:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalacion del paquete ####</span>
+debian@fs-avanzado:~$ sudo apt install btrfs-tools
+</code></pre></div><h2 id="zfs">ZFS</h2>
+<p><strong>ZFS</strong> es un sistema de archivos y administrador de volúmenes desarrollado originalmente por Sun Microsystems para su sistema operativo Solaris. El significado original era &lsquo;Zettabyte File System&rsquo;.</p>
+<p>El anuncio oficial de ZFS se produjo en septiembre de 2004. El código fuente del producto final se integró en la rama principal de desarrollo de Solaris el 31 de octubre de 2005 y fue lanzado el 16 de noviembre de 2005 como parte de la compilación 27 de OpenSolaris.</p>
+<p>El sistema de archivos ZFS se utiliza de forma nativa en sistemas operativos basados en FreeBSD, como los populares FreeNAS o XigmaNAS, dos sistemas operativos que están orientados específicamente para servidores NAS.</p>
+<p>EL sistema de ficheros de ZFS incluye algunas caracteristicas muy interesantes que, si bien muchas de ellas las comprarte con Btrfs, es buen mencionarlas tambien aqui:</p>
+<ul>
+<li>
+<p>Copy on Write (CoW) y Snapshots: Facilitar la creación de backups incluso desde un sistema de ficheros &ldquo;en caliente&rdquo; o de una máquina virtual</p>
+</li>
+<li>
+<p>Verificar la integridad de los ficheros y autoreparacion: Esta función hace que, a la hora de escribir nuevos datos en el sistema de ficheros de ZFS, se guarda una suma de comprobacion para esos nuevos datos. Cuando estos datos son leidos, se verifica la suma de comprobacion, en caso de que esta se erronea, ZFS detectara el error e intentara corregirlo.</p>
+</li>
+<li>
+<p>RAID-Z: ZFS puede manejar RAID sin requerir ningún software o hardware adicional. Como era de esperar, ZFS tiene su propia implementación de RAID: RAID-Z. Para utilizar el nivel básico de RAID-Z necesitamos lo siguiente:</p>
+<ul>
+<li>RAID-Z1: Necesita al menos dos discos para almacenamiento y uno para paridad.</li>
+<li>RAID-Z2: Requería al menos dos unidades de almacenamiento y dos unidades para la paridad.</li>
+<li>RAID-Z3: Requiere al menos dos unidades de almacenamiento y tres unidades para la paridad.</li>
+</ul>
+</li>
+<li>
+<p>Compresión: Los ficheros pueden estar comprimidos o descomprimidos en vuelo, lo que aumenta la velocidad de lectura.</p>
+</li>
+</ul>
+<p>##3 Instalacion en Debian 10</p>
+<p>Para realizar la instalacion del sistema de ficheros de ZFS en nuestro sistema Debian 10 lo que debemos de hacer es instalar el paquete llamado <strong>zfs-dkms</strong>, para ello lo que vamos a hacer es añadir a nuestros repositorios la rama llamada <strong>contrib non-free</strong> ya que ZFS tiene una licencia distinta a la que tiene linux, por lo que debemos descargarlo desde esa rama:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero /etc/apt/source.list ####</span>
+deb http://deb.debian.org/debian/ buster main contrib non-free
+<span style="color:#75715e">#deb-src http://deb.debian.org/debian/ buster main</span>
+deb http://deb.debian.org/debian/ buster-updates main
+<span style="color:#75715e">#deb-src http://deb.debian.org/debian/ buster-updates main</span>
+deb http://security.debian.org/debian-security buster/updates main
+<span style="color:#75715e">#deb-src http://security.debian.org/debian-security buster/updates main</span>
+</code></pre></div><p>Despues de añadir la rama <strong>contrib non-free</strong> debemos de instalar los paquetes de los encabezados del núcleo:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos los paquetes que necesitamos ####</span>
+sudo apt install linux-headers-<span style="color:#e6db74">`</span>uname -r<span style="color:#e6db74">`</span>
+</code></pre></div><p>Una vez hecho esto ahora si instalamos los paquetes relacionados con el sistema de ficheros ZFS, para ello instalamos el paquete llamado <strong>zfsutils-linux</strong> y apt instalará las dependencias necesarias, debemos de tener en cuenta de que construir el módulo del núcleo DKMS puede llevar un poco de tiempo. Cuando se completa, el sistema de archivos ZFS está listo para usar.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos los paquetes necesarios ####</span>
+debian@fs-avanzado:~$ sudo apt install zfs-dkms
+
+<span style="color:#75715e">#### Una vez instalado activamos el modulo del kernel zfs ####</span>
+debian@fs-avanzado:~$ sudo modprobe zfs
+
+debian@fs-avanzado:~$ sudo lsmod | grep zfs
+zfs                  <span style="color:#ae81ff">3293184</span>  <span style="color:#ae81ff">0</span>
+...
+
+<span style="color:#75715e">#### Ahora reiniciamos todos los servicios de zfs para empezar a usarlo ####</span>
+debian@fs-avanzado:~$ sudo systemctl restart zfs-import-cache
+debian@fs-avanzado:~$ sudo systemctl restart zfs-import-scan
+debian@fs-avanzado:~$ sudo systemctl restart zfs-mount
+debian@fs-avanzado:~$ sudo systemctl restart zfs-share
+</code></pre></div><p>Una vez hecho esto ya tendremos listo nuestro sistema de ficheros ZFS para poder usarlo.</p>
+<h1 id="ejercicios-a-realizar">Ejercicios a realizar</h1>
+<p>De estos de sistemas de ficheros debemos de elegir uno con el que vamos a hacer las pruebas de su funcionalidad en un sistema debian 10, en mi caso voy a elegir el sistema de ficheros <strong>ZFS</strong> del cual hemos visto los pasos para su instalación en los pasos de arriba.</p>
+<p>Para este ejercicio vamos a usar una maquina debian 10 en openstack a la cual le vamos a añadir 4 discos adicionales de 2GB cada uno, de tal forma que al realizar el comando <strong>lsblk</strong> nos debe de salir algo como lo siguiente:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Salida del comando lsblk ####</span>
+debian@fs-avanzado:~$ lsblk
+NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+vda    254:0    <span style="color:#ae81ff">0</span>  10G  <span style="color:#ae81ff">0</span> disk 
+└─vda1 254:1    <span style="color:#ae81ff">0</span>  10G  <span style="color:#ae81ff">0</span> part /
+vdb    254:16   <span style="color:#ae81ff">0</span>   2G  <span style="color:#ae81ff">0</span> disk 
+vdc    254:32   <span style="color:#ae81ff">0</span>   2G  <span style="color:#ae81ff">0</span> disk 
+vdd    254:48   <span style="color:#ae81ff">0</span>   2G  <span style="color:#ae81ff">0</span> disk 
+vde    254:64   <span style="color:#ae81ff">0</span>   2G  <span style="color:#ae81ff">0</span> disk
+</code></pre></div><p>Una vez tengamos nuestros 4 discos asociados a nuestra maquina ya estamos listo para empezar a probar las funcionalidades que tiene ZFS.</p>
+<h2 id="creacion-de-pool-en-zfs">Creacion de POOL en ZFS</h2>
+<p>En el sistema de ficheros ZFS no es necesario que nuestros volumenes tengan particiones antes de crear nuestros sistema de ficheros ZFS ya que lo recomendado es poner el disco entero ya que este, automaticamente es capaz de crear una <strong>tabla de particiones GPT</strong></p>
+<p>A continuacion vamos a ver como crear los distintos pools de almacenamiento que nos permite crear ZFS con el comando llamado <strong>zpool</strong>, para ello vamos a seguir la siguiente estructura:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Comando de creacion de pools en ZFS ####</span>
+zpool create -m &lt;punto-de-montaje&gt; &lt;nombre-del-pool&gt; <span style="color:#f92672">[</span>raidz<span style="color:#f92672">(</span>2|3<span style="color:#f92672">)</span>|mirror<span style="color:#f92672">]</span> &lt;discos-para-los-pools&gt;
+
+Donde podemos ver:
+    * create: Es el comando con el cual le indicamos la creacion de un nuevo pool
+    * -m: Le indicamos el punto de montaje, por defecto lo montara en la raiz /
+    * <span style="color:#f92672">[</span>raidz<span style="color:#f92672">(</span>2|3<span style="color:#f92672">)</span>|mirror<span style="color:#f92672">]</span>: Le indicamos el tipo de pool a crear
+    * &lt;discos-para-los-pools&gt;: Le indicamos el id de los discos que vamos a usar, ZFS recomienda el uso de los ids de los discos
+</code></pre></div><p>Para poder sacar el id de los discos que tenemos en nuestro sistema vamos a usar el siguiente comando:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@fs-avanzado:~$ ls -lh /dev/disk/by-id/
+</code></pre></div><p>En mi caso voy a usar el directorio donde se encuentra cada uno para asi tenerlos bien diferenciados.</p>
+<h3 id="creacion-de-un-raid-1">Creacion de un raid 1</h3>
+<p>Para crearlo debemos de seleccionar el tipo de pool llamado <strong>mirror</strong> el cual es similar a un raid1, para poder crearlo necesitamos como minimo 2 discos, uno de ellos usado como redundante, en mi caso usare los disco <strong>vdb</strong> y <strong>vdc</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el pool mirror con el nombre raid1 ####</span>
+debian@fs-avanzado:~$ sudo zpool create -m /mnt/ raid1 mirror /dev/vdb /dev/vdc
+
+<span style="color:#75715e">#### Comprobamos el estatus del pool ####</span>
+debian@fs-avanzado:~$ sudo zpool status -v
+  pool: raid1
+ state: ONLINE
+  scan: none requested
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	raid1       ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	  mirror-0  ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	    vdb     ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	    vdc     ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+
+<span style="color:#75715e">#### Comprobamos que este montado en /mnt/ ####</span>
+debian@fs-avanzado:~$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+udev            235M     <span style="color:#ae81ff">0</span>  235M   0% /dev
+tmpfs            49M  2.3M   47M   5% /run
+/dev/vda1       9.9G  1.5G  7.9G  16% /
+tmpfs           243M     <span style="color:#ae81ff">0</span>  243M   0% /dev/shm
+tmpfs           5.0M     <span style="color:#ae81ff">0</span>  5.0M   0% /run/lock
+tmpfs           243M     <span style="color:#ae81ff">0</span>  243M   0% /sys/fs/cgroup
+tmpfs            49M     <span style="color:#ae81ff">0</span>   49M   0% /run/user/1000
+raid1           1.9G     <span style="color:#ae81ff">0</span>  1.9G   0% /mnt
+
+<span style="color:#75715e">#### Borramos el pool que hemos creado para seguir con las pruebas ####</span>
+debian@fs-avanzado:~$ sudo zpool destroy raid1
+</code></pre></div><h3 id="creacion-de-un-raid-5">Creacion de un raid 5</h3>
+<p>Para ello necesitamos usar el pool de tipo <strong>raidz1</strong> y para este necesitamos como minimo 4 discos, uno de ellos usado como redundante, para ello usaremos los 4 discos, el ultimo que pongamos es el que quedara como redundante:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el pool con el raidz1 ####</span>
+debian@fs-avanzado:~$ sudo zpool create -m /mnt/ raid5 raidz1 /dev/vdb /dev/vdc /dev/vdd /dev/vde
+
+<span style="color:#75715e">#### Comprobamos el estado del pool ####</span>
+debian@fs-avanzado:~$ sudo zpool status -v
+  pool: raid5
+ state: ONLINE
+  scan: none requested
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	raid5       ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	  raidz1-0  ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	    vdb     ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	    vdc     ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	    vdd     ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	    vde     ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+</code></pre></div><h3 id="creacion-de-un-raid-0">Creacion de un raid 0</h3>
+<p>Para ello solo necesitamos los discos que nosotros queramos añadirle, en este caso no hace falta indicarle el tipo de pool, en mi caso vamos a ponerle 3 discos, que son vdb, vdc y vdd:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creacion del raid0 ####</span>
+debian@fs-avanzado:~$ sudo zpool create -m /mnt/ raid0 /dev/vdb /dev/vdc /dev/vdd
+
+<span style="color:#75715e">#### Comprobamos el estado del pool ####</span>
+debian@fs-avanzado:~$ sudo zpool status -v
+  pool: raid0
+ state: ONLINE
+  scan: none requested
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	raid0       ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	  vdb       ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	  vdc       ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	  vdd       ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+</code></pre></div><h2 id="creacion-de-datasets">Creacion de datasets</h2>
+<p>Para ello podemos usar los pools que hemos estado creando, yo creare uno desde el principio y lo voy a llamar prueba1 y va a ser de tipo <strong>mirror</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el pool ####</span>
+debian@fs-avanzado:~$ sudo zpool create prueba1 mirror /dev/vdb /dev/vdc
+
+<span style="color:#75715e">#### Creamos el nuevo dataset llamado prueba1/pruebaVOL ####</span>
+debian@fs-avanzado:~$ sudo zfs create -o mountpoint<span style="color:#f92672">=</span>/home/debian/pruebaVOL prueba1/pruebaVOL
+
+<span style="color:#75715e">#### Comprobamos que esta montado y funcional ####</span>
+debian@fs-avanzado:~$ df -h
+Filesystem         Size  Used Avail Use% Mounted on
+udev               235M     <span style="color:#ae81ff">0</span>  235M   0% /dev
+tmpfs               49M  2.3M   47M   5% /run
+/dev/vda1          9.9G  1.5G  7.9G  16% /
+tmpfs              243M     <span style="color:#ae81ff">0</span>  243M   0% /dev/shm
+tmpfs              5.0M     <span style="color:#ae81ff">0</span>  5.0M   0% /run/lock
+tmpfs              243M     <span style="color:#ae81ff">0</span>  243M   0% /sys/fs/cgroup
+tmpfs               49M     <span style="color:#ae81ff">0</span>   49M   0% /run/user/1000
+prueba1            1.9G     <span style="color:#ae81ff">0</span>  1.9G   0% /prueba1
+prueba1/pruebaVOL  1.9G     <span style="color:#ae81ff">0</span>  1.9G   0% /home/debian/pruebaVOL
+
+debian@fs-avanzado:~$ sudo zfs list 
+NAME                USED  AVAIL  REFER  MOUNTPOINT
+prueba1             122K  1.86G    24K  /prueba1
+prueba1/pruebaVOL    24K  1.86G    24K  /home/debian/pruebaVOL
+</code></pre></div><p>Ahora vamos a crear otro dataset, pero esta vez con un tamaño de 1GB y lo vamos a formatearlo con ext4, para ello usamos los siguientes comandos:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el dataset llamado prueba1/pruebaEXT4 ####</span>
+debian@fs-avanzado:~$ sudo zfs create -s -V 1GB prueba1/pruebaEXT4
+
+<span style="color:#75715e">#### Lo formateamos con ext4 ####</span>
+debian@fs-avanzado:~$ sudo mkfs.ext4 /dev/zvol/prueba1/pruebaEXT4
+
+<span style="color:#75715e">#### Lo montamos en /mnt ####</span>
+debian@fs-avanzado:~$ sudo mount /dev/zvol/prueba1/pruebaEXT4 /mnt
+
+<span style="color:#75715e">#### Lo comprobamos y copiamos algo en el ####</span>
+debian@fs-avanzado:~$ df -h
+Filesystem         Size  Used Avail Use% Mounted on
+udev               235M     <span style="color:#ae81ff">0</span>  235M   0% /dev
+tmpfs               49M  2.3M   47M   5% /run
+/dev/vda1          9.9G  1.5G  7.9G  16% /
+tmpfs              243M     <span style="color:#ae81ff">0</span>  243M   0% /dev/shm
+tmpfs              5.0M     <span style="color:#ae81ff">0</span>  5.0M   0% /run/lock
+tmpfs              243M     <span style="color:#ae81ff">0</span>  243M   0% /sys/fs/cgroup
+tmpfs               49M     <span style="color:#ae81ff">0</span>   49M   0% /run/user/1000
+prueba1            1.9G     <span style="color:#ae81ff">0</span>  1.9G   0% /prueba1
+prueba1/pruebaVOL  1.9G     <span style="color:#ae81ff">0</span>  1.9G   0% /home/debian/pruebaVOL
+/dev/zd0           976M  2.6M  907M   1% /mnt
+
+<span style="color:#75715e">#### Comprobamos el estado del pool con zfs ####</span>
+debian@fs-avanzado:~$ sudo zfs list
+NAME                 USED  AVAIL  REFER  MOUNTPOINT
+prueba1              297M  1.57G    24K  /prueba1
+prueba1/pruebaEXT4   297M  1.57G   297M  -
+prueba1/pruebaVOL     24K  1.57G    24K  /home/debian/pruebaVOL
+</code></pre></div><h2 id="snapshots">Snapshots</h2>
+<p>Como un buen sistema de ficheros avanzados que es ZFS, este tambien tiene soporte para <strong>Snapshots</strong> y para la gestion de estas, para ello, partiendo del anterior apartado que hemos hecho, vamos a crear una snapshot del dataset formateado en <strong>ext4</strong> que hemos creado y montado en /mnt, para ello vamos a usar el siguiente comando:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos la Snapshot del volumen ####</span>
+debian@fs-avanzado:~$ sudo zfs snapshot prueba1/pruebaEXT4@2020-01-13
+
+Nota: Debemos de ponerle un nombre despues de @, en mi caso la fecha de creacion.
+
+<span style="color:#75715e">#### Si queremos destruir la snapshot solo debemos de usar el siguiente comando ####</span>
+debian@fs-avanzado:~$ sudo zfs destroy prueba1/pruebaEXT4@2020-01-13
+</code></pre></div><h2 id="añadiendo-un-nuevo-volumen-a-un-pool-ya-creado">Añadiendo un nuevo volumen a un pool ya creado</h2>
+<p>Tambien podemos incrementar el tamaño de un pool que tengamos ya creado si tenemos otro disco al que se lo podamos añadir, en mi caso vamos a crear un pool de tipo :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Buscamos el disco que queremos usar, en mi caso vdd ####</span>
+debian@fs-avanzado:~$ lsblk | grep vdd
+vdd    254:48   <span style="color:#ae81ff">0</span>   2G  <span style="color:#ae81ff">0</span> disk 
+
+<span style="color:#75715e">#### Lo añadimos al pool llamado prueba1 ####</span>
+debian@fs-avanzado:~$ sudo zpool add prueba1 /dev/vdd -f
+
+<span style="color:#75715e">#### Comprobamos que tenemos otro disco mas añadido ####</span>
+debian@fs-avanzado:~$ sudo zpool status 
+  pool: prueba1
+ state: ONLINE
+  scan: none requested
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	prueba1     ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	  mirror-0  ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	    vdb     ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	    vdc     ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	  vdd       ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+</code></pre></div><h2 id="renombrar-un-pool-ya-existente">Renombrar un pool ya existente</h2>
+<p>Para ello solo debemos de usar el siguiente comando, en mi caso vamos a ponerle el nombre de <em>rename1</em>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Seleccionamos el pool que queremos cambiarle el nombre ####</span>
+debian@fs-avanzado:~$ sudo zpool status | grep pool
+  pool: prueba1
+
+<span style="color:#75715e">#### Le cambiamos el nombre a rename1 ####</span>
+debian@fs-avanzado:~$ sudo zpool export prueba1
+
+debian@fs-avanzado:~$ sudo zpool import prueba1 rename1
+</code></pre></div><h2 id="reemplazar-un-disco-en-un-pool-ya-existente">Reemplazar un disco en un pool ya existente</h2>
+<p>Al igual que el uso de raid software de marcar los discos que estan fallando, con ZFS podemos hacer lo mismo y podemos reemplazarlo de forma manual, para ello vamos a marcar como no funcional el disco <strong>vdb</strong> y lo vamos a reemplazar por el disco <strong>vde</strong>, para ello vamos a seguir los siguientes pasos:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Marcamos como no disponible el disco vdb ####</span>
+debian@fs-avanzado:~$ sudo zpool offline prueba1 /dev/vdb
+
+<span style="color:#75715e">#### Comprobamos el pool ####</span>
+debian@fs-avanzado:~$ sudo zpool status 
+  pool: prueba1
+ state: DEGRADED
+status: One or more devices has been taken offline by the administrator.
+	Sufficient replicas exist <span style="color:#66d9ef">for</span> the pool to <span style="color:#66d9ef">continue</span> functioning in a
+	degraded state.
+action: Online the device using <span style="color:#e6db74">&#39;zpool online&#39;</span> or replace the device with
+	<span style="color:#e6db74">&#39;zpool replace&#39;</span>.
+  scan: resilvered 297M in 0h0m with <span style="color:#ae81ff">0</span> errors on Wed Jan <span style="color:#ae81ff">13</span> 08:03:32 <span style="color:#ae81ff">2021</span>
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	prueba1     DEGRADED     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	  mirror-0  DEGRADED     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	    vdb     OFFLINE      <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	    vdc     ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	  vdd       ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+
+<span style="color:#75715e">#### Reemplazamos el disco por vde ####</span>
+debian@fs-avanzado:~$ sudo zpool replace prueba1 /dev/vdb /dev/vde
+
+<span style="color:#75715e">#### Comprobamos el proceso ####</span>
+debian@fs-avanzado:~$ sudo zpool status 
+  pool: prueba1
+ state: DEGRADED
+status: One or more devices is currently being resilvered.  The pool will
+	<span style="color:#66d9ef">continue</span> to <span style="color:#66d9ef">function</span>, possibly in a degraded state.
+action: Wait <span style="color:#66d9ef">for</span> the resilver to complete.
+  scan: resilver in progress since Wed Jan <span style="color:#ae81ff">13</span> 08:06:44 <span style="color:#ae81ff">2021</span>
+	297M scanned out of 297M at 42.4M/s, 0h0m to go
+	297M resilvered, 99.84% <span style="color:#66d9ef">done</span>
+config:
+
+	NAME             STATE     READ WRITE CKSUM
+	prueba1          DEGRADED     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	  mirror-0       DEGRADED     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	    replacing-0  DEGRADED     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	      vdb        OFFLINE      <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	      vde        ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>  <span style="color:#f92672">(</span>resilvering<span style="color:#f92672">)</span>
+	    vdc          ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	  vdd            ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+
+<span style="color:#75715e">#### Comprobamos el resultado final ####</span>
+debian@fs-avanzado:~$ sudo zpool status 
+  pool: prueba1
+ state: ONLINE
+  scan: resilvered 297M in 0h0m with <span style="color:#ae81ff">0</span> errors on Wed Jan <span style="color:#ae81ff">13</span> 08:06:52 <span style="color:#ae81ff">2021</span>
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	prueba1     ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	  mirror-0  ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	    vde     ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	    vdc     ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	  vdd       ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+
+errors: No known data errors
+</code></pre></div><h2 id="cambiando-el-punto-de-montaje-de-un-pool">Cambiando el punto de montaje de un pool</h2>
+<p>Para ello, vemos que nuestro pool <strong>prueba1</strong> esta montado en un directorio en <strong>/prueba1</strong> pero lo vamos a querer montado en un directorio que vamos a crear en neustra carpeta de usuario, para ello debemos de usar el siguiente comando:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos la nueva carpeta llamada nuevoMontaje ####</span>
+debian@fs-avanzado:~$ mkdir nuevoMontaje
+
+<span style="color:#75715e">#### Cambiamos el punto de montaje de el pool prueba1 ####</span>
+debian@fs-avanzado:~$ sudo zfs set mountpoint<span style="color:#f92672">=</span>/home/debian/nuevoMontaje prueba1
+
+<span style="color:#75715e">#### Comprobamos que se haya cambiado correctamente ####</span>
+debian@fs-avanzado:~$ sudo zfs list
+NAME                 USED  AVAIL  REFER  MOUNTPOINT
+prueba1              297M  3.55G    24K  /home/debian/nuevoMontaje
+</code></pre></div><h2 id="crear-un-nuevo-volumen-a-partir-del-pool-con-encriptacion-por-contraseña">Crear un nuevo volumen a partir del pool con encriptacion por contraseña</h2>
+<p>Para ello nosotros vamos a seguir usando el pool <strong>prueba1</strong>, pero esta vez vamos a crear un nuevo <em>dataset</em> el cual se va a llamar <strong>prueba1/encriptado</strong>, por lo que vamos a crearlo ya encriptado con una contraseña:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el dataset encriptado ####</span>
+sudo zfs create -o encryption<span style="color:#f92672">=</span>on -o keyformat<span style="color:#f92672">=</span>passphrase prueba1/encriptado
+
+<span style="color:#75715e">#### Comprobamos la encriptacion ####</span>
+</code></pre></div><h2 id="ver-informacion-completa-respecto-a-los-pools-y-datasets">Ver informacion completa respecto a los pools y datasets</h2>
+<p>Si nosotros quisieramos ver toda la informacion respecto a algun pool o algun dataset en concreto para poder ver las opciones que tiene habilitada solo debemos de usar la opcion <strong>get all</strong> con la cual obtendremos toda la informacion del pool o el dataset que queramos:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Ver la informacion del pool prueba1 ####</span>
+debian@fs-avanzado:~$ sudo zfs get all prueba1
+NAME     PROPERTY              VALUE                      SOURCE
+prueba1  type                  filesystem                 -
+prueba1  creation              Tue Jan <span style="color:#ae81ff">12</span> 18:10 <span style="color:#ae81ff">2021</span>      -
+prueba1  used                  297M                       -
+prueba1  available             3.55G                      -
+prueba1  referenced            24K                        -
+prueba1  compressratio         1.00x                      -
+...
+prueba1  relatime              off                        default
+prueba1  redundant_metadata    all                        default
+prueba1  overlay               off                        default
+
+<span style="color:#75715e">#### Ver la informacion de un dataset en concreto ####</span>
+debian@fs-avanzado:~$ sudo zfs get all prueba1/pruebaEXT4 
+NAME                PROPERTY              VALUE                  SOURCE
+prueba1/pruebaEXT4  type                  volume                 -
+prueba1/pruebaEXT4  creation              Tue Jan <span style="color:#ae81ff">12</span> 18:21 <span style="color:#ae81ff">2021</span>  -
+prueba1/pruebaEXT4  used                  297M                   -
+prueba1/pruebaEXT4  available             3.55G                  -
+prueba1/pruebaEXT4  referenced            297M                   -
+prueba1/pruebaEXT4  compressratio         1.00x                  -
+...
+prueba1/pruebaEXT4  defcontext            none                   default
+prueba1/pruebaEXT4  rootcontext           none                   default
+prueba1/pruebaEXT4  redundant_metadata    all                    default
+
+<span style="color:#75715e">#### Si queremos ver el estado de los pools de forma rapida usamos lo siguiente ####</span>
+debian@fs-avanzado:~$ sudo zpool status -x
+all pools are healthy
+</code></pre></div><h2 id="habilitar-la-compresion">Habilitar la compresion</h2>
+<p>Por defecto en los sistemas de ficheros ZFS la compresion viene deshabilitada por defecto, por lo que nosotros, manualmente, debemos de habilitar, para ello debemos de usar la opcion <strong>set compression=on</strong> en el pool que nosotros queramos:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Habilitamos la compresion en el pool prueba1 ####</span>
+debian@fs-avanzado:~$ sudo zfs set compression<span style="color:#f92672">=</span>on prueba1
+
+<span style="color:#75715e">#### Comprobamos que esta habilitado ####</span>
+debian@fs-avanzado:~$ sudo zfs get all prueba1 | grep compression
+prueba1  compression           on                         local
+
+<span style="color:#75715e">#### Habilitamos la compresion en un dataset ####</span>
+debian@fs-avanzado:~$ sudo zfs set compression<span style="color:#f92672">=</span>on prueba1/pruebaEXT4
+
+<span style="color:#75715e">#### Comprobamos que esta habilitado ####</span>
+debian@fs-avanzado:~$ sudo zfs get all prueba1/pruebaEXT4 | grep compression
+prueba1/pruebaEXT4  compression           on                     local
+</code></pre></div><p>Para comprobar como funciona la compresion en ZFS, vamos a crear un fichero ya comprimido el cual lo vamos a crear en el dataset <strong>prueba1/pruebaVOL</strong> que debemos de recordad que ahora esta montado en el directorio <strong>/home/debian/pruebaVOL</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos un fichero comprimido de /var/log y de /etc/ ####</span>
+debian@fs-avanzado:~$ sudo tar -cf /home/debian/pruebaVOL/prueba.tar /var/log/ /etc/
+
+<span style="color:#75715e">#### Comprobamos el tamaño del fichero .tar que hemos creado ####</span>
+debian@fs-avanzado:~$ ls -lh pruebaVOL/
+total 923K
+-rw-r--r-- <span style="color:#ae81ff">1</span> root root 3.9M Jan <span style="color:#ae81ff">13</span> 09:52 prueba.tar
+
+<span style="color:#75715e">#### Ahora vemos lo que realmente ocupa con la compresion activada ####</span>
+debian@fs-avanzado:~$ sudo zfs list | grep pruebaVOL
+prueba1/pruebaVOL    946K  3.55G   946K  /home/debian/pruebaVOL
+
+<span style="color:#75715e">#### Comprobamos la compresion que tiene ####</span>
+debian@fs-avanzado:~$ sudo zfs get compressratio prueba1/pruebaVOL 
+NAME               PROPERTY       VALUE  SOURCE
+prueba1/pruebaVOL  compressratio  4.27x  -
+</code></pre></div><p>Como vemos el fichero que he creado pesa originalmente 4MB aproximadamente pero, con la compresion activada en el dataset, el espacio que ocupa en este es de solo 946K de espacion. Ademas con la opcion <strong>compressratio</strong> nos da el espacio que hemos salvado con la compresion.</p>
+<h2 id="habilitar-la-deduplicación">Habilitar la deduplicación</h2>
+<p>la deduplicación de datos es una técnica especializada de compresión de datos para eliminar copias duplicadas de datos repetidos. Como buen sistemas de ficheros &ldquo;avanzados&rdquo; que es ZFS, tambien incluye dicha opcion en los pools que, por defecto, viene desactivado. Para poder activar dicha opcion debemos de usar el siguiente comando:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Activamos la deduplicacion en prueba1 ####</span>
+debian@fs-avanzado:~$ sudo zfs set dedup<span style="color:#f92672">=</span>on prueba1
+
+<span style="color:#75715e">#### Comprobamos que esta habilitada ####</span>
+debian@fs-avanzado:~$ sudo zfs get all prueba1 | grep dedup
+prueba1  dedup                 on                         local
+</code></pre></div><h2 id="scrubbing">Scrubbing</h2>
+<p>La depuración de datos es una técnica de corrección de errores que utiliza una tarea en segundo plano para inspeccionar periódicamente la memoria principal o el almacenamiento en busca de errores, y luego corregir los errores detectados utilizando datos redundantes en forma de diferentes sumas de comprobación o copias de datos. La limpieza de datos reduce la probabilidad de que se acumulen errores corregibles únicos, lo que reduce los riesgos de errores incorregibles.</p>
+<p>Las características de ZFS incluyen la verificación contra los modos de corrupción de datos, la verificación continua de la integridad y la reparación automática. Sun Microsystems diseñó ZFS desde cero con un enfoque en la integridad de los datos y para proteger los datos en discos contra problemas como los errores de firmware del disco y las escrituras fantasma.</p>
+<p>Para poder depurar los datos que tenemos en un pool o un dataset solo debemos de usar la opción <strong>scrub</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Scrubbing en un pool ####</span>
+debian@fs-avanzado:~$ sudo zpool scrub prueba1
+
+<span style="color:#75715e">#### Vemos el proceso de scrub ####</span>
+debian@fs-avanzado:~$ sudo zpool status 
+  pool: prueba1
+ state: ONLINE
+  scan: scrub in progress since Wed Jan <span style="color:#ae81ff">13</span> 09:26:43 <span style="color:#ae81ff">2021</span>
+	298M scanned out of 300M at 59.7M/s, 0h0m to go
+	0B repaired, 99.53% <span style="color:#66d9ef">done</span>
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	prueba1     ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	  mirror-0  ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	    vde     ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	    vdc     ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	  vdd       ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+</code></pre></div><p>Esta tecnica tambien la podemos usar con los distintos datasets que tengamos.</p>
+<h1 id="fuentes">FUENTES</h1>
+<h2 id="btrfs-1">Btrfs</h2>
+<ul>
+<li>
+<p>Btrfs - <a href="https://wiki.gentoo.org/wiki/Btrfs/es#Caracter.C3.ADsticas">https://wiki.gentoo.org/wiki/Btrfs/es#Caracter.C3.ADsticas</a></p>
+</li>
+<li>
+<p>Btrfs - <a href="https://es.wikipedia.org/wiki/Btrfs">https://es.wikipedia.org/wiki/Btrfs</a></p>
+</li>
+<li>
+<p>Btrfs Wiki - <a href="https://btrfs.wiki.kernel.org/index.php/Main_Page">https://btrfs.wiki.kernel.org/index.php/Main_Page</a></p>
+</li>
+</ul>
+<h2 id="zfs-1">ZFS</h2>
+<ul>
+<li>
+<p>What is ZFS? Why are People Crazy About it? - <a href="https://itsfoss.com/what-is-zfs/">https://itsfoss.com/what-is-zfs/</a></p>
+</li>
+<li>
+<p>Install and Setup ZFS on Debian 9 - <a href="https://linuxhint.com/install-zfs-debian/">https://linuxhint.com/install-zfs-debian/</a></p>
+</li>
+<li>
+<p>ZFS - <a href="https://wiki.debian.org/ZFS#Installation">https://wiki.debian.org/ZFS#Installation</a></p>
+</li>
+<li>
+<p>Cómo instalar ZFS en Linux - <a href="https://mundo-tips.com/como-instalar-zfs-en-linux/">https://mundo-tips.com/como-instalar-zfs-en-linux/</a></p>
+</li>
+<li>
+<p>ZFS-ArchWiki - <a href="https://wiki.archlinux.org/index.php/ZFS#Storage_pools">https://wiki.archlinux.org/index.php/ZFS#Storage_pools</a></p>
+</li>
+<li>
+<p>Sistema de archivos ZFS de Oracle Solaris - <a href="https://docs.oracle.com/cd/E26921_01/html/E25823/zfsover-1.html#scrolltoc">https://docs.oracle.com/cd/E26921_01/html/E25823/zfsover-1.html#scrolltoc</a></p>
+</li>
+<li>
+<p>ZFS Administration - <a href="https://pthree.org/2012/04/17/install-zfs-on-debian-gnulinux/">https://pthree.org/2012/04/17/install-zfs-on-debian-gnulinux/</a></p>
+</li>
+</ul>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2021  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+         
+        <li><a href="/servicios">Servicios</a></li>
+         
+        <li><a href="/implantacion">Implantacion</a></li>
+         
+        <li><a href="/bbdd">BBDD</a></li>
+         
+        <li><a href="/hlc">HLC</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>

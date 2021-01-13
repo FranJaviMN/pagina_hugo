@@ -34,7 +34,10 @@ theme = "cactus"
   url = "/BBDD"
   weight = 6
 
-
+[[menu.main]]
+  name = "HLC"
+  url = "/HLC"
+  weight = 7
 
 
 

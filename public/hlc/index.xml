@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>HLCs on Blog</title>
+    <link>https://franjavimn.onrender.com/hlc/</link>
+    <description>Recent content in HLCs on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>es-ES</language>
+    <copyright>Francisco Javier Martín Núñez</copyright>
+    <lastBuildDate>Wed, 13 Jan 2021 09:50:19 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/hlc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fs Avanzados</title>
+      <link>https://franjavimn.onrender.com/hlc/fs-avanzados/</link>
+      <pubDate>Wed, 13 Jan 2021 09:50:19 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/hlc/fs-avanzados/</guid>
+      <description>Sistemas de ficheros avanzados En este ejercicio vamos a realizar pruebas con los sistemas de ficheros &amp;ldquo;avanzados&amp;rdquo; como pueden ser Btrfs o ZFS, para ello debemos de elegir uno de ellos pero primero vamos a ver un poco de la historia de ambos sistemas de ficheros y, posteriormente, veremos ejemplos de uso de estos sistemas de ficheros y de sus avanzadas caracteristicas.
+Btrfs Btrfs es un sistema de ficheros copy-on-write (CoW) para Linux enfocado a implementar características novedosas y avanzadas y, a la vez, centrado en la tolerancia a fallos, reparación y facilidad de administración.</description>
+    </item>
+    
+  </channel>
+</rss>
