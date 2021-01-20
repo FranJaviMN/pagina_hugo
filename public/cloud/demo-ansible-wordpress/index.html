@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Demo Ansible Wordpress | Blog</title>
+  <meta name="description" content="En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Demo Ansible Wordpress" />
+<meta property="og:description" content="Ansible Ansible es un software que automatiza el aprovisionamiento de software, la gestión de configuraciones y el despliegue de aplicaciones. Está categorizado como una herramienta de orquestación, muy útil para los administradores de sistema y DevOps.
+En otras palabras, Ansible permite a los DevOps gestionar sus servidores, configuraciones y aplicaciones de forma sencilla, robusta y paralela.
+Ansible gestiona sus diferentes nodos a través de SSH y únicamente requiere Python en el servidor remoto en el que se vaya a ejecutar para poder utilizarlo." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://franjavimn.onrender.com/cloud/demo-ansible-wordpress/" />
+<meta property="article:published_time" content="2021-01-20T20:18:39+01:00" />
+<meta property="article:modified_time" content="2021-01-20T20:18:39+01:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Demo Ansible Wordpress"/>
+<meta name="twitter:description" content="Ansible Ansible es un software que automatiza el aprovisionamiento de software, la gestión de configuraciones y el despliegue de aplicaciones. Está categorizado como una herramienta de orquestación, muy útil para los administradores de sistema y DevOps.
+En otras palabras, Ansible permite a los DevOps gestionar sus servidores, configuraciones y aplicaciones de forma sencilla, robusta y paralela.
+Ansible gestiona sus diferentes nodos a través de SSH y únicamente requiere Python en el servidor remoto en el que se vaya a ejecutar para poder utilizarlo."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://franjavimn.onrender.com/images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://franjavimn.onrender.com">
+  
+    <div id="logo" style="background-image: url(https://franjavimn.onrender.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+       
+        <li><a href="/servicios">Servicios</a></li>
+       
+        <li><a href="/implantacion">Implantacion</a></li>
+       
+        <li><a href="/bbdd">BBDD</a></li>
+       
+        <li><a href="/hlc">HLC</a></li>
+       
+        <li><a href="/cloud">Cloud</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h1 id="ansible">Ansible</h1>
+<p><strong>Ansible</strong> es un software que automatiza el aprovisionamiento de software, la gestión de configuraciones y el despliegue de aplicaciones. Está categorizado como una herramienta de <strong>orquestación</strong>, muy útil para los administradores de sistema y <em>DevOps</em>.</p>
+<p>En otras palabras, Ansible permite a los <em>DevOps</em> gestionar sus servidores, configuraciones y aplicaciones de forma sencilla, robusta y paralela.</p>
+<p><strong>Ansible</strong> gestiona sus diferentes nodos a través de SSH y únicamente requiere Python en el servidor remoto en el que se vaya a ejecutar para poder utilizarlo. Usa YAML para describir acciones a realizar y las configuraciones que se deben propagar a los diferentes nodos.</p>
+<h2 id="demo-practica-sobre-despliegue-con-ansible">Demo practica sobre despliegue con Ansible</h2>
+<p>Para ello vamos a usar el escenario que nos propone nuestro profesor en el <a href="https://github.com/josedom24/automatizacion_iaw">repositorio siguiente</a>.</p>
+<p>Le hemos realizado un fork a nuestros repositorios y lo hemos clonado en nuestra maquina con el fin de realizar este escenario ya que se necesita de unas modificaciones para su funcionamiento.</p>
+<p>El escenario consiste en el despliegue de una maquina en nuestro entorno de openstack la cual tenga un servidor web corriendo wordpress, esto implica la instalacion de un servidor web como es apache2, una base de datos que sera una mariadb y la instalacion de wordpress.</p>
+<h3 id="instalamos-ansible">Instalamos ansible</h3>
+<p>Para ello y para que no interfiera con la paqueteria de nuestra maquina, vamos a crear en un entorno virtual de python ya que ansible esta escrito en ese lenguaje, para ello vamos a necesitar el paquete llamado <strong>python3-venv</strong>. He de recalcar que lo estamos haciendo en una maquina con un sistema Debian 10 buster.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos el paquete de python3-venv ####</span>
+francisco@debian10:~$ sudo apt install python3-venv
+
+<span style="color:#75715e">#### Creamos el entorno virtual que lo llamaremos ansible ####</span>
+francisco@debian10:~/Documentos/Cloud-computing/Ansible$ python3 -m venv ansible
+
+<span style="color:#75715e">#### Ejecutamos el entorno virtual e instalamos ansible ####</span>
+<span style="color:#f92672">(</span>ansible<span style="color:#f92672">)</span> francisco@debian10:~/Documentos/Cloud-computing/Ansible$ pip install ansible
+</code></pre></div><p>De esta forma ya tendremos instalado lo que necesitamos, ahora vamos a necesitar nuestro nuevo repositorio clonado en nuestra maquina.</p>
+<h3 id="modificacion-del-escenario">Modificacion del escenario</h3>
+<p>Lo primero que debemos de modificar de nuestro escenario es al host al que este va dirigido, esto lo encontraremos en el fichero llamado <strong>host</strong> que, como vemos en el fichero <strong>ansible.cfg</strong>, es un inventario donde vamos a tener las maquinas que vamos a usar, en nuestro caso solo vamos a usar una sola maquina por lo que debemos de ponerle la ip de la maquina a la que vamos a aprovisionar, en mi caso la ip es <strong>172.22.200.145</strong></p>
+<pre><code>[servidores_web]
+nodo1 ansible_ssh_host=172.22.200.145 ansible_python_interpreter=/usr/bin/python3
+</code></pre><p>Una vez hecho este cambio debemos de tener en cuenta que debemos de tener conectividad ssh a la maquina en cuestion y sobretodo que sea mediante claves ssh, por lo que debemos de asegurarnos la conexion a la maquina antes de empezar:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Probamos el ssh ####</span>
+francisco@debian10:~/.ssh$ ssh debian@172.22.200.145
+...
+debian@prueba-ansible:~$
+</code></pre></div><h3 id="empezamos-el-escenario">Empezamos el escenario</h3>
+<p>Lo primero que vamos a hacer es, mediante las herramientas de ansible, es instalar en la maquina destino un paquete llamado <strong>python3-apt</strong> ya que es una dependencia importante que debemos de tener si queremos usar este escenario de ansible:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Desde el entorno virtual, instalamos el paquete ####</span>
+<span style="color:#f92672">(</span>ansible<span style="color:#f92672">)</span> francisco@debian10:~/Documentos/Cloud-computing/Ansible/automatizacion_iaw$ ansible all -m apt -a <span style="color:#e6db74">&#34;pkg=python3-apt&#34;</span> -b
+
+<span style="color:#75715e">#### Iniciamos el playbook ####</span>
+<span style="color:#f92672">(</span>ansible<span style="color:#f92672">)</span> francisco@debian10:~/Documentos/Cloud-computing/Ansible/automatizacion_iaw$ ansible-playbook site.yaml
+</code></pre></div><p>Este proceso puede tardar un tiempo pero deberia de ir como la seda y no dar ningun problema. Cuando acabe, solo debemos de irnos al navegador y poner la ip del servidor al cual hemos aprovisionado y veremos un mensaje como el siguiente:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/ansible/prueba-ansible-hola.png" alt="mensaje hola ansible"></p>
+<p>Ahora vamos a añadirle a este inicio un enlace a la zona donde instalaremos wordpress, para ello solo nos debemos de ir al fichero que se encuentra en <strong>roles/apache2/templates</strong> y añadirle el enlace hacia <strong>/wordpress</strong> y volvemos a ejecutar el playbook:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Ejecutamos de nuevo el playbook ####</span>
+<span style="color:#f92672">(</span>ansible<span style="color:#f92672">)</span> francisco@debian10:~/Documentos/Cloud-computing/Ansible/automatizacion_iaw$ ansible-playbook site.yaml
+</code></pre></div><p>Si nos fijamos es mucho mas rapido que la primera vez y esto se debe a algo evidente, ansible, al intentar realizar las acciones que le decimos en los roles que, cuando instala algo ya ve que esta instalado por lo que directamente pasa a la siguiente accion, por eso solo vemos que ha cambiado una cosa al ejecutar el playbook, el fichero .html:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">PLAY RECAP ******************************************************************************************************************************************
+nodo1                      : ok<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span>   changed<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>    unreachable<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    failed<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    skipped<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    rescued<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    ignored<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>   
+</code></pre></div><p>Por eso ahora al entrar en la ip veremos que tenemos el enlace hacia la instalacion de wordpress:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/ansible/wordpress-ansible.png" alt="ansible cambiado wordpress"></p>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2021  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+         
+        <li><a href="/servicios">Servicios</a></li>
+         
+        <li><a href="/implantacion">Implantacion</a></li>
+         
+        <li><a href="/bbdd">BBDD</a></li>
+         
+        <li><a href="/hlc">HLC</a></li>
+         
+        <li><a href="/cloud">Cloud</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>

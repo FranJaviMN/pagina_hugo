@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Wed, 13 Jan 2021 09:50:19 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 20 Jan 2021 20:18:39 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Demo Ansible Wordpress</title>
+      <link>https://franjavimn.onrender.com/cloud/demo-ansible-wordpress/</link>
+      <pubDate>Wed, 20 Jan 2021 20:18:39 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/cloud/demo-ansible-wordpress/</guid>
+      <description>Ansible Ansible es un software que automatiza el aprovisionamiento de software, la gestión de configuraciones y el despliegue de aplicaciones. Está categorizado como una herramienta de orquestación, muy útil para los administradores de sistema y DevOps.
+En otras palabras, Ansible permite a los DevOps gestionar sus servidores, configuraciones y aplicaciones de forma sencilla, robusta y paralela.
+Ansible gestiona sus diferentes nodos a través de SSH y únicamente requiere Python en el servidor remoto en el que se vaya a ejecutar para poder utilizarlo.</description>
+    </item>
+    
     <item>
       <title>Fs Avanzados</title>
       <link>https://franjavimn.onrender.com/hlc/fs-avanzados/</link>
