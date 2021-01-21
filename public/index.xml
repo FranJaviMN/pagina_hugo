@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Wed, 20 Jan 2021 20:18:39 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 21 Jan 2021 17:34:08 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Integracion Continua</title>
+      <link>https://franjavimn.onrender.com/implantacion/integracion-continua/</link>
+      <pubDate>Thu, 21 Jan 2021 17:34:08 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/implantacion/integracion-continua/</guid>
+      <description>Práctica: Introducción a la integración continua Debes realizar una de las siguientes tareas, utilizando una herramienta de CI/CD: GitHub Actions, GiLab CI/CD, CircleCI, Jenkins, … (No uses Travis CI).
+En mi caso vamos a usar CodeShip, codeship es una plataforma alojada de integración y entrega continua. Se encuentra entre tu repositorio de código fuente (por ejemplo, GitHub, GitLab o Bitbucket) y el entorno de alojamiento (por ejemplo, Amazon Web Services) y prueba e implementa automáticamente cada cambio en tu plataforma.</description>
+    </item>
+    
     <item>
       <title>Demo Ansible Wordpress</title>
       <link>https://franjavimn.onrender.com/cloud/demo-ansible-wordpress/</link>

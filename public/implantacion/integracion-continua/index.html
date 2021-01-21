@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Integracion Continua | Blog</title>
+  <meta name="description" content="En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Integracion Continua" />
+<meta property="og:description" content="Práctica: Introducción a la integración continua Debes realizar una de las siguientes tareas, utilizando una herramienta de CI/CD: GitHub Actions, GiLab CI/CD, CircleCI, Jenkins, … (No uses Travis CI).
+En mi caso vamos a usar CodeShip, codeship es una plataforma alojada de integración y entrega continua. Se encuentra entre tu repositorio de código fuente (por ejemplo, GitHub, GitLab o Bitbucket) y el entorno de alojamiento (por ejemplo, Amazon Web Services) y prueba e implementa automáticamente cada cambio en tu plataforma." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://franjavimn.onrender.com/implantacion/integracion-continua/" />
+<meta property="article:published_time" content="2021-01-21T17:34:08+01:00" />
+<meta property="article:modified_time" content="2021-01-21T17:34:08+01:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Integracion Continua"/>
+<meta name="twitter:description" content="Práctica: Introducción a la integración continua Debes realizar una de las siguientes tareas, utilizando una herramienta de CI/CD: GitHub Actions, GiLab CI/CD, CircleCI, Jenkins, … (No uses Travis CI).
+En mi caso vamos a usar CodeShip, codeship es una plataforma alojada de integración y entrega continua. Se encuentra entre tu repositorio de código fuente (por ejemplo, GitHub, GitLab o Bitbucket) y el entorno de alojamiento (por ejemplo, Amazon Web Services) y prueba e implementa automáticamente cada cambio en tu plataforma."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://franjavimn.onrender.com/images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://franjavimn.onrender.com">
+  
+    <div id="logo" style="background-image: url(https://franjavimn.onrender.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+       
+        <li><a href="/servicios">Servicios</a></li>
+       
+        <li><a href="/implantacion">Implantacion</a></li>
+       
+        <li><a href="/bbdd">BBDD</a></li>
+       
+        <li><a href="/hlc">HLC</a></li>
+       
+        <li><a href="/cloud">Cloud</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h1 id="práctica-introducción-a-la-integración-continua">Práctica: Introducción a la integración continua</h1>
+<p>Debes realizar una de las siguientes tareas, utilizando una herramienta de CI/CD: GitHub Actions, GiLab CI/CD, CircleCI, Jenkins, … (No uses Travis CI).</p>
+<p>En mi caso vamos a usar <strong>CodeShip</strong>, codeship es una plataforma alojada de integración y entrega continua. Se encuentra entre tu repositorio de código fuente (por ejemplo, GitHub, GitLab o Bitbucket) y el entorno de alojamiento (por ejemplo, Amazon Web Services) y prueba e implementa automáticamente cada cambio en tu plataforma.</p>
+<h1 id="primeros-pasos">Primeros pasos</h1>
+<p>Lo primero que debemos de hacer es generar con nuestro generador de paginas estaticas, un nuevo proyecto en el cual solo vamos a añadir unos cuantos ficheros markdown. Este proyecto debemos de subirlo a nuestro github, en mi caso el nombre del repositorio es <strong><a href="https://github.com/FranJaviMN/pagina_hugo_2">https://github.com/FranJaviMN/pagina_hugo_2</a></strong>.</p>
+<p>Una vez ya lo tengamos aqui debemos de irnos a nuestra pagina de surge y crearnos una cuenta.</p>
+<p>En mi caso el generador que voy a usar es <strong>hugo</strong> del cual tengo un post en este blog donde hablo un poco sobre este generador y la forma de instalarlo en nuestra maquina y empezar a usar nuestra pagina estática. <a href="https://franjavimn.onrender.com/implantacion/guia-hugo/">Enlace hacia post</a></p>
+<h2 id="instalamos-surge">Instalamos surge</h2>
+<p>En nuestra maquina debemos de tener instalado <strong>surge</strong> para poder seguir con el ejercicio, para ello debemos de tener instalado el gestor de paquetes llamado <strong>npm</strong> y una vez tengamos ya instalado el gestor de paquete <strong>npm</strong> instalamos surge que va a ser donde vamos a tener nuestra pagina estatica que vamos a crear con integracion continua:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos surge ####</span>
+francisco@debian10:~$ sudo npm install --global surge
+
+<span style="color:#75715e">#### Iniciamos surge y nos registramos ####</span>
+francisco@debian10:~/.ssh$ surge 
+
+   Welcome to surge! <span style="color:#f92672">(</span>surge.sh<span style="color:#f92672">)</span>
+   Login <span style="color:#f92672">(</span>or create surge account<span style="color:#f92672">)</span> by entering email &amp; password.
+
+          email: franjaviermn17100@gmail.com
+       password: 
+
+   Running as franjaviermn17100@gmail.com <span style="color:#f92672">(</span>Student<span style="color:#f92672">)</span>
+</code></pre></div><p>Una vez lo tengamos podemos desplegar el proyecto para que asi nos de una url o le podemos poner la que queramos. Cuando ya tengamos esto debemos de irnos a la pagina de <a href="https://www.cloudbees.com/">CodeShip</a>. Cuando lo tengamos solo debemos de seleccionar nuestro repositorio en que queremos realizar la integracion. y ya podemos empezar con los pasos que debemos de seguir en la integración</p>
+<h2 id="pasos-en-codeship">Pasos en CodeShip</h2>
+<h3 id="test-de-comprobación">Test de comprobación</h3>
+<p>Lo primero que debemos de hacer es irnos a la configuración de nuestro proyecto de CodeShip, cuando estemos debemos de añadir un nuevo test a este el cual verifica si en la maquina en la que se va a realizar nuestra integracion cuenta con el software apropiado y con una apropiada version para que asi pueda funcionar sin problemas. Como nuestro generador de paginas estatica esta escrito en el lenguaje <strong>Go</strong>, necesitamos una versión en la que sepamos que el generador de paginas estaticas funcione por lo que usamos este test:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Install a custom Go version, https://golang.org/</span>
+<span style="color:#75715e">#</span>
+<span style="color:#75715e"># Add at least the following environment variables to your project configuration</span>
+<span style="color:#75715e"># (otherwise the defaults below will be used).</span>
+<span style="color:#75715e"># * GO_VERSION</span>
+<span style="color:#75715e">#</span>
+<span style="color:#75715e"># Include in your builds via</span>
+<span style="color:#75715e"># source /dev/stdin &lt;&lt;&lt; &#34;$(curl -sSL https://raw.githubusercontent.com/codeship/scripts/master/languages/go.sh)&#34;</span>
+GO_VERSION<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>GO_VERSION:=<span style="color:#e6db74">&#34;1.6.2&#34;</span><span style="color:#e6db74">}</span>
+<span style="color:#75715e"># strip all components from PATH which point toa GO installation and configure the</span>
+<span style="color:#75715e"># download location</span>
+CLEANED_PATH<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>echo $PATH | sed -r <span style="color:#e6db74">&#39;s|/(usr/local\|tmp)/go(/([0-9]\.)+[0-9])?/bin:||g&#39;</span><span style="color:#66d9ef">)</span>
+CACHED_DOWNLOAD<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>HOME<span style="color:#e6db74">}</span><span style="color:#e6db74">/cache/go</span><span style="color:#e6db74">${</span>GO_VERSION<span style="color:#e6db74">}</span><span style="color:#e6db74">.linux-amd64.tar.gz&#34;</span>
+<span style="color:#75715e"># configure the new GOROOT and PATH</span>
+export GOROOT<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/tmp/go/</span><span style="color:#e6db74">${</span>GO_VERSION<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+export PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>GOROOT<span style="color:#e6db74">}</span><span style="color:#e6db74">/bin:</span><span style="color:#e6db74">${</span>CLEANED_PATH<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+<span style="color:#75715e"># no set -e because this file is sourced and with the option set a failing command</span>
+<span style="color:#75715e"># would cause an infrastructure error message on Codeship.</span>
+mkdir -p <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>GOROOT<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+wget --continue --output-document <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>CACHED_DOWNLOAD<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#e6db74">&#34;https://storage.googleapis.com/golang/go</span><span style="color:#e6db74">${</span>GO_VERSION<span style="color:#e6db74">}</span><span style="color:#e6db74">.linux-amd64.tar.gz&#34;</span>
+tar -xaf <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>CACHED_DOWNLOAD<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> --strip-components<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> --directory <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>GOROOT<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+<span style="color:#75715e"># check the correct version is used</span>
+go version | grep <span style="color:#e6db74">${</span>GO_VERSION<span style="color:#e6db74">}</span>
+</code></pre></div><h3 id="añadir-las-variables-de-entorno-necesarias">Añadir las variables de entorno necesarias</h3>
+<p>Despues de haber agregado el test que comprueba la version de <strong>go</strong> que tiene es la adecuada, debemos de irnos a nuestra maquina y generar un token de surge para asi poder crear nuestra pagina estatica, para ello solo debemos de poner <strong>surge token</strong> y de esta forma nos genera un token que debemos de meter en las variables de entorno de CodeShip.</p>
+<p>Para poder meter variables de entorno en CodeShip debemos de irnos a la pestaña de <strong>Environment</strong> y ahi debemos de añadir dos nuevas variables, una para nuestro correo electronico con el que hemos ingresado en surge.sh y otra con el token que nos a generado surge.</p>
+<p>Debemos de tener en cuenta que las variables deben de tener un nombre en especifico ya que, como podemos ver mas adelante en el fichero de deploy, en ningun momento indicamos las variables de entorno a la hora de desplegar nuestra pagiana, asi pues la variable de entorno del email debe llamarse <strong>SURGE_LOGIN</strong> y la variable de entorno del token debe de llamarse <strong>SURGE_TOKEN</strong>.</p>
+<h3 id="fichero-de-deploy">Fichero de Deploy</h3>
+<p>Cuando tengamos esto debemos de añadir un nuevo deploy en la pestaña con el mismo nombre, en este deploy vamos a instalar los paquetes necesarios para poder hacer el despliegue de forma automatica, para ello debemos de irnos a la pestaña <strong>deploy</strong> y añadir el siguiente script con el cual vamos a aprovisionar de forma adecuada la maquina que se va a encargar de desplegar la pagina estatica por lo que tenemos que instalarle ciertos paquetes que no tiene la maquina por defecto como son surge o hugo, que lo instalamos mediante un paquete <strong>.deb</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Install pygments for syntax highlighting</span>
+pip install Pygments
+
+<span style="color:#75715e"># Instalamos surge</span>
+npm install -g surge
+
+<span style="color:#75715e"># Instalamos el paquete de hugo desde el fichero .deb descargado</span>
+wget https://github.com/gohugoio/hugo/releases/download/v0.75.1/hugo_0.75.1_Linux-64bit.deb
+sudo dpkg -i hugo_0.75.1_Linux-64bit.deb
+
+<span style="color:#75715e"># Usamos el repositorio que hemos clonado y, si tuviera el directorio ./public lo borra</span>
+cd ~/clone/
+rm -rf ./public
+
+<span style="color:#75715e"># Construimos el sitio con el comando hugo</span>
+hugo -D
+
+<span style="color:#75715e"># Desplegamos en surge</span>
+surge --project ./public/ --domain <span style="color:#f92672">{</span>nuestro dominio<span style="color:#f92672">}</span>
+
+Donde mi dominio es: franjmn.surge.sh
+</code></pre></div><p>Donde tenemos el apartado del despliegue, la opcion <strong>&ndash;domain</strong> es donde indicamos el dominio que hemos elegido o nos ha dado surge.</p>
+<p>Hecho esto nos vamos a nuestro proyecto de CodeShip y ahi realizamos el <em>build</em> de la integración y esta empezará con el contenido de nuestro repositorio y, si todo ha ido bien, veremos que en nuestro repositorio tendremos un <em>tic</em> verde y el <em>build</em> de la integracion a terminado correctamente ya tendremos todo desplegado y en funcionamiento.</p>
+<p>Aqui vemos como seria la integración cuando ha funcionado:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Implantacion/pagina-estatica/deploy-bien.png" alt="integracion bien"></p>
+<p>Y aqui vemos que en nuestro repositorio aparece el tic verde:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Implantacion/pagina-estatica/tic-verde.png" alt="tic verde"></p>
+<p>Asi quedaria el despliegue mediante surge y usando integración continua con CodeShip.</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Implantacion/pagina-estatica/surge-pagina.png" alt="pagina surge"></p>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2021  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+         
+        <li><a href="/servicios">Servicios</a></li>
+         
+        <li><a href="/implantacion">Implantacion</a></li>
+         
+        <li><a href="/bbdd">BBDD</a></li>
+         
+        <li><a href="/hlc">HLC</a></li>
+         
+        <li><a href="/cloud">Cloud</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>
