@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Thu, 21 Jan 2021 17:34:08 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 22 Jan 2021 20:22:10 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cms Python</title>
+      <link>https://franjavimn.onrender.com/implantacion/cms-python/</link>
+      <pubDate>Fri, 22 Jan 2021 20:22:10 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/implantacion/cms-python/</guid>
+      <description>Instalación de aplicación web python En esta tarea vamos a desplegar un CMS python. Para ello he elegido de la pagina https://djangopackages.org/grids/g/cms/ el cms llamado Mezzanine y lo vamos a desplegar en el entorno de produccion con uwsgi.
+Creacion en el entorno de desarrollo Lo primero que debemos de hacer es desplegar nuestra aplicacion en nuestro entorno de desarrollo para asi, mediante un repositorio en github, podamos llevarnos todo el despliegue a nuestra maquina en desarrollo, en este caso va a ser la maquina Quijote.</description>
+    </item>
+    
     <item>
       <title>Integracion Continua</title>
       <link>https://franjavimn.onrender.com/implantacion/integracion-continua/</link>
