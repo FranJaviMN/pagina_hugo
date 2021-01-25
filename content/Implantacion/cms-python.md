@@ -277,4 +277,109 @@ Para ello debemos de tener ya instalado apache2 en nuestra maquina, recalco que 
 
 Cuadno lo tengamos instalado lo que vamos a hacer es formar un nuevo virtualhost el cual vamos a llamar **mezzanine.conf** el cual va a tener solo la siguiente información:
 ```shell
+<VirtualHost *:80>
+    ServerName python.franjavier.gonzalonazareno.org
+    DocumentRoot /var/www/python-cms-mezzanine/mezzanine_openstack
+    ErrorLog /var/www/python-cms-mezzanine/log/error.log
+    CustomLog /var/www/python-cms-mezzanine/log/requests.log combined
+	
+    <Proxy "unix:/run/php-fpm/www.sock|fcgi://php-fpm">
+    ProxySet disablereuse=off
+    </Proxy>
+
+    <FilesMatch \.php$>
+           SetHandler proxy:fcgi://php-fpm
+    </FilesMatch>
+
+    Redirect permanent / https://python.franjavier.gonzalonazareno.org
 ```
+
+Donde vamos a tener nuestro fichero con la redireccion hacia **https**, por lo que tendremos un fichero llamado **mezzanine-https.conf** con la siguiente configuración:
+```shell
+<VirtualHost *:443>
+    ServerName python.franjavier.gonzalonazareno.org
+    DocumentRoot /var/www/python-cms-mezzanine/mezzanine_openstack
+    ErrorLog /var/www/python-cms-mezzanine/log/error.log
+    CustomLog /var/www/python-cms-mezzanine/log/requests.log combined
+	
+    <Proxy "unix:/run/php-fpm/www.sock|fcgi://php-fpm">
+    ProxySet disablereuse=off
+    </Proxy>
+
+    <FilesMatch \.php$>
+           SetHandler proxy:fcgi://php-fpm
+    </FilesMatch>
+
+    Alias /static "/var/www/python-cms-mezzanine/mezzanine_openstack/static"
+    
+    <Directory /var/www/python-cms-mezzanine/mezzanine_openstack/static>
+    Require all granted
+    Options FollowSymlinks
+    </Directory> 
+    ProxyPass /static !
+    ProxyPass / http://127.0.0.1:8080/
+
+    SSLEngine on
+    SSLCertificateFile /etc/pki/tls/certs/wildcard-franjavier.crt
+    SSLCertificateKeyFile /etc/pki/tls/private/wildcard.key
+
+</VirtualHost>
+```
+
+Donde vemos que vamos a usar como proxy nuestro apache como proxy inverso, por lo que vamos a usar uwsgi y vamos a usar el puerto **http :8080**, por lo que le indicamos como va a hacer el proxy y en que puerto. La opcion que estamos añadiendo de **ProxyPass /static !** nos sirve para que, la carpeta de static no pase por el proxy para asi poder servir adecuadamente los ficheros estaticos. De tal forma que si reinciamos el servicio de apache debe de ir bien.
+
+Ahora necesitamos iniciar el proxy con uwsgi, para ell podemos, o bien usar un fichero **.ini** o un comando, para este vamos a usar un fichero .ini:
+```shell
+#### Fichero uwsgi.ini ####
+[uwsgi]
+http = :8080
+chdir = /var/www/python-cms-mezzanine/mezzanine_openstack 
+wsgi-file = /var/www/python-cms-mezzanine/mezzanine_openstack/mezzanine_openstack/wsgi.py
+master
+```
+
+Lo inciamos y veremos lo siguiente:
+```shell
+(mezzanine) [centos@quijote ~]$ uwsgi uwsgi.ini 
+[uWSGI] getting INI configuration from uwsgi.ini
+*** Starting uWSGI 2.0.19.1 (64bit) on [Mon Jan 25 10:37:57 2021] ***
+compiled with version: 8.3.1 20191121 (Red Hat 8.3.1-5) on 19 January 2021 11:18:26
+os: Linux-4.18.0-240.1.1.el8_3.x86_64 #1 SMP Thu Nov 19 17:20:08 UTC 2020
+nodename: quijote
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 1
+current working directory: /home/centos
+detected binary path: /home/centos/mezzanine/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+chdir() to /var/www/python-cms-mezzanine/mezzanine_openstack
+your processes number limit is 1647
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uWSGI http bound on :8080 fd 4
+uwsgi socket 0 bound to TCP address 127.0.0.1:35777 (port auto-assigned) fd 3
+Python version: 3.6.8 (default, Aug 24 2020, 17:57:11)  [GCC 8.3.1 20191121 (Red Hat 8.3.1-5)]
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0x139f470
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 145808 bytes (142 KB) for 1 cores
+*** Operational MODE: single process ***
+WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0x139f470 pid: 44150 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 44150)
+spawned uWSGI worker 1 (pid: 44152, cores: 1)
+spawned uWSGI http 1 (pid: 44153)
+```
+
+## Entrando en nuestro sitio web
+
+Para ello debemos de irnos a nuestro servidor DNS para poder añadirle nuestro nuevo virtualhost, por lo que en la vista externa de nuestro servidor DNS debemos de poner una opcion **CNAME** de python hacia nuestra maquina **Dulcinea**, una vez hecho si nos dirigimos a nuestro navegador y entramos en **python.franjavier.gonzalonazareno.org** y debe de salirnos la siguiente pagina:
+
+![pagina mezzanine](https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Implantacion/mezzanine/mezzanine-pagina.png)
+
+Y esta en nuestra pagina de admin, que vemos que se sirven bien los ficheros:
+
+![pagina admin mezzanine](https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Implantacion/mezzanine/mezzanine-pagina-admin.png)
