@@ -104,7 +104,7 @@ francisco@debian10:~$ sudo apt install docker.io
 </code></pre></div><p>Si con un usuario que no sea root queremos usar docker, debemos de añadir a ese usuario al grupo de <strong>docker</strong>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@debian10:~# usermod -aG docker usuario
 </code></pre></div><h1 id="primer-contenedor-hola-mundo">Primer contenedor: Hola mundo</h1>
-<p>Para la primera prueba con docker vamos a usar una imagen que tenemos en los repositorio de DockerHub que se llama <strong>hello-world</strong> con la que vamos a comprobar si funciona docker correctamente, para ell usaremos el comando <strong>run</strong> que nos permite ejecutar un contenedor seguido del nombre de la imagen que vamos a usar, en este caso vamos a usar la imagen <strong>hello-world</strong>:</p>
+<p>Para la primera prueba con docker vamos a usar una imagen que tenemos en los repositorio de DockerHub que se llama <strong>hello-world</strong> con la que vamos a comprobar si funciona docker correctamente, para ello usaremos el comando <strong>run</strong> que nos permite ejecutar un contenedor seguido del nombre de la imagen que vamos a usar, en este caso vamos a usar la imagen <strong>hello-world</strong>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Ejecutamos el contenedor con la imagen hello-world ####</span>
 francisco@debian10:~$ docker run hello-world
 Unable to find image <span style="color:#e6db74">&#39;hello-world:latest&#39;</span> locally
@@ -126,7 +126,7 @@ To generate this message, Docker took the following steps:
     to your terminal.
 ...
 </code></pre></div><p>Como vemos, al no tener la imagen que le estamos diciendo a docker, este busca la imagen en los repositorios de DockerHub y la descarga y muestra el mensaje de bienvenida que es la consecuencia de crear y arrancar un contenedor basado en esa imagen.</p>
-<p>Ahora podemos listar los contenedores que tenemos activos con el comando <strong>ps</strong> y si le añadimos la opcion <strong>-a</strong> nos muestra los contenedores que tenemos parados:</p>
+<p>Ahora podemos listar los contenedores que tenemos activos con el comando <strong>ps</strong> y si le añadimos la opcion <strong>-a</strong> nos muestra los contenedores que tenemos inactivos:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Listamos los contenedores que se estan ejecutando ####</span>
 francisco@debian10:~$ sudo docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
@@ -136,7 +136,7 @@ francisco@debian10:~$ sudo docker ps -a
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                      PORTS               NAMES
 9ba7ea0d8fc2        hello-world         <span style="color:#e6db74">&#34;/hello&#34;</span>            <span style="color:#ae81ff">13</span> minutes ago      Exited <span style="color:#f92672">(</span>0<span style="color:#f92672">)</span> <span style="color:#ae81ff">13</span> minutes ago                       objective_carson
 </code></pre></div><p>Comprobamos que este contenedor no se está ejecutando. <strong>Un contenedor ejecuta un proceso y cuando termina la ejecución, el contenedor se para</strong>.</p>
-<p>Si queremos eliminar un contenedor que tenemos creado, <strong>es importante saber que debe de estar parado antes de poder eliminarlo</strong>, de lo contrario no nos dejara eliminar dicho contenedor:</p>
+<p>Si queremos eliminar un contenedor que tenemos creado, <strong>es importante saber que debe de estar inactivo antes de poder eliminarlo</strong>, de lo contrario no nos dejara eliminar dicho contenedor:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Paramos el contenedor si estuviera en ejecución ####</span>
 francisco@debian10:~$ docker stop nombre-contenedor
 
@@ -146,7 +146,7 @@ objective_carson
 </code></pre></div><p>Como vemos si no le indicamos un nombre al contenedor, docker le da uno aleatorio.</p>
 <h1 id="contenedor-interactivo">Contenedor interactivo</h1>
 <p>En este caso usamos la opción <strong>-i</strong> para abrir una sesión interactiva, <strong>-t</strong> nos permite crear un pseudo-terminal que nos va a permitir interaccionar con el contenedor, indicamos un nombre del contenedor con la opción <strong>&ndash;name</strong>, y la imagen que vamos a utilizar para crearlo, en este caso se va a llamar prueba-debian y va a ejecutar comoi comando <strong>/bin/bash</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Iniciamos el contenedor con interactivo ####</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Iniciamos el contenedor interactivo ####</span>
 francisco@debian10:~$ docker run -it --name prueba-debian debian /bin/bash
 Unable to find image <span style="color:#e6db74">&#39;debian:latest&#39;</span> locally
 latest: Pulling from library/debian

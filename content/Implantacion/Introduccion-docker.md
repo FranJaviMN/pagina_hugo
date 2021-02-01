@@ -31,7 +31,7 @@ root@debian10:~# usermod -aG docker usuario
 
 # Primer contenedor: Hola mundo
 
-Para la primera prueba con docker vamos a usar una imagen que tenemos en los repositorio de DockerHub que se llama **hello-world** con la que vamos a comprobar si funciona docker correctamente, para ell usaremos el comando **run** que nos permite ejecutar un contenedor seguido del nombre de la imagen que vamos a usar, en este caso vamos a usar la imagen **hello-world**:
+Para la primera prueba con docker vamos a usar una imagen que tenemos en los repositorio de DockerHub que se llama **hello-world** con la que vamos a comprobar si funciona docker correctamente, para ello usaremos el comando **run** que nos permite ejecutar un contenedor seguido del nombre de la imagen que vamos a usar, en este caso vamos a usar la imagen **hello-world**:
 ```shell
 #### Ejecutamos el contenedor con la imagen hello-world ####
 francisco@debian10:~$ docker run hello-world
@@ -57,7 +57,7 @@ To generate this message, Docker took the following steps:
 
 Como vemos, al no tener la imagen que le estamos diciendo a docker, este busca la imagen en los repositorios de DockerHub y la descarga y muestra el mensaje de bienvenida que es la consecuencia de crear y arrancar un contenedor basado en esa imagen.
 
-Ahora podemos listar los contenedores que tenemos activos con el comando **ps** y si le añadimos la opcion **-a** nos muestra los contenedores que tenemos parados:
+Ahora podemos listar los contenedores que tenemos activos con el comando **ps** y si le añadimos la opcion **-a** nos muestra los contenedores que tenemos inactivos:
 ```shell
 #### Listamos los contenedores que se estan ejecutando ####
 francisco@debian10:~$ sudo docker ps
@@ -71,7 +71,7 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 
 Comprobamos que este contenedor no se está ejecutando. **Un contenedor ejecuta un proceso y cuando termina la ejecución, el contenedor se para**.
 
-Si queremos eliminar un contenedor que tenemos creado, **es importante saber que debe de estar parado antes de poder eliminarlo**, de lo contrario no nos dejara eliminar dicho contenedor:
+Si queremos eliminar un contenedor que tenemos creado, **es importante saber que debe de estar inactivo antes de poder eliminarlo**, de lo contrario no nos dejara eliminar dicho contenedor:
 ```shell
 #### Paramos el contenedor si estuviera en ejecución ####
 francisco@debian10:~$ docker stop nombre-contenedor
@@ -88,7 +88,7 @@ Como vemos si no le indicamos un nombre al contenedor, docker le da uno aleatori
 
 En este caso usamos la opción **-i** para abrir una sesión interactiva, **-t** nos permite crear un pseudo-terminal que nos va a permitir interaccionar con el contenedor, indicamos un nombre del contenedor con la opción **--name**, y la imagen que vamos a utilizar para crearlo, en este caso se va a llamar prueba-debian y va a ejecutar comoi comando **/bin/bash**
 ```shell
-#### Iniciamos el contenedor con interactivo ####
+#### Iniciamos el contenedor interactivo ####
 francisco@debian10:~$ docker run -it --name prueba-debian debian /bin/bash
 Unable to find image 'debian:latest' locally
 latest: Pulling from library/debian
