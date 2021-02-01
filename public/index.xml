@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Fri, 22 Jan 2021 20:22:10 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 01 Feb 2021 13:22:55 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Introduccion Docker</title>
+      <link>https://franjavimn.onrender.com/implantacion/introduccion-docker/</link>
+      <pubDate>Mon, 01 Feb 2021 13:22:55 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/implantacion/introduccion-docker/</guid>
+      <description>Intrducción a Docker Docker es una tecnología de virtualización “ligera” cuyo elemento básico es la utilización de contenedores en vez de máquinas virtuales y cuyo objetivo principal es el despliegue de aplicaciones encapsuladas en dichos contenedores.
+Docker está formado por varios componentes:
+  Docker Engine: Es un demonio que corre sobre cualquier distribución de Linux y que expone una API externa para la gestión de imágenes y contenedores. Con ella podemos crear imágnenes, subirlas y bajarla de un registro de docker y ejecutar y gestionar contenedores.</description>
+    </item>
+    
     <item>
       <title>Cms Python</title>
       <link>https://franjavimn.onrender.com/implantacion/cms-python/</link>
