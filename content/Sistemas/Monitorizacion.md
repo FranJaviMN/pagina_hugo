@@ -242,3 +242,4 @@ Hecho esto solo nos queda poner en nuestro fichero de configuración de Dulcinea
 De esta forma tendremos en nuestro *dashboard* a nuestra maquina **Quijote**:
 
 ![metricas quijote](https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/sistemas/monitorizacion/metricas-quijote.png)
+
