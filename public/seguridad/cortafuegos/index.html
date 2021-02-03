@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Cortafuegos | Blog</title>
+  <meta name="description" content="En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Cortafuegos" />
+<meta property="og:description" content="Cortafuegos Vamos a construir un cortafuegos en dulcinea que nos permita controlar el tráfico de nuestra red. El cortafuegos que vamos a construir debe funcionar tras un reinicio.
+Política por defecto La política por defecto que vamos a configurar en nuestro cortafuegos será de tipo DROP.
+Antes de activar dicha politica debemos de comprobar que nuestras reglas funcionan, si no nos quedaremos sin que funcionen algunos servicios o el ssh." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://franjavimn.onrender.com/seguridad/cortafuegos/" />
+<meta property="article:published_time" content="2021-02-03T19:30:58+01:00" />
+<meta property="article:modified_time" content="2021-02-03T19:30:58+01:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Cortafuegos"/>
+<meta name="twitter:description" content="Cortafuegos Vamos a construir un cortafuegos en dulcinea que nos permita controlar el tráfico de nuestra red. El cortafuegos que vamos a construir debe funcionar tras un reinicio.
+Política por defecto La política por defecto que vamos a configurar en nuestro cortafuegos será de tipo DROP.
+Antes de activar dicha politica debemos de comprobar que nuestras reglas funcionan, si no nos quedaremos sin que funcionen algunos servicios o el ssh."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://franjavimn.onrender.com/images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://franjavimn.onrender.com">
+  
+    <div id="logo" style="background-image: url(https://franjavimn.onrender.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+       
+        <li><a href="/servicios">Servicios</a></li>
+       
+        <li><a href="/implantacion">Implantacion</a></li>
+       
+        <li><a href="/bbdd">BBDD</a></li>
+       
+        <li><a href="/hlc">HLC</a></li>
+       
+        <li><a href="/cloud">Cloud</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h1 id="cortafuegos">Cortafuegos</h1>
+<p>Vamos a construir un cortafuegos en dulcinea que nos permita controlar el tráfico de nuestra red. El cortafuegos que vamos a construir debe funcionar tras un reinicio.</p>
+<h2 id="política-por-defecto">Política por defecto</h2>
+<p>La política por defecto que vamos a configurar en nuestro cortafuegos será de tipo DROP.</p>
+<p>Antes de activar dicha politica debemos de comprobar que nuestras reglas funcionan, si no nos quedaremos sin que funcionen algunos servicios o el ssh.</p>
+<h1 id="nat">NAT</h1>
+<ol>
+<li>Configura de manera adecuada las reglas NAT para que todas las máquinas de nuestra red tenga acceso al exterior.</li>
+</ol>
+<p>Para ello vamos a usar una regla del tipo <strong>POSTROUTING</strong> ya que el trafico de las redes internas debe de pasar por la maquina <strong>Dulcinea</strong> y salir al exterior. Como tenemos dos redes distintas que estan conectadas a interfaces de red en Dulcinea distintas, debemos de añadir dos reglas, una por cada red interna que tengamos:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Regla para la red interna 10.0.1.0/24 ####</span>
+debian@dulcinea:~$ sudo iptables -t nat -A POSTROUTING -s 10.0.1.0/24 -o eth0 -j SNAT --to 10.0.0.13
+
+<span style="color:#75715e">#### Regla para la red DMZ 10.0.2.0/24 ####</span>
+debian@dulcinea:~$ sudo iptables -t nat -A POSTROUTING -s 10.0.2.0/24 -o eth0 -j SNAT --to 10.0.0.13
+</code></pre></div><p>Asi, si nos vamos a las maquinas de las redes internas e intenamos hacer un ping a google, veremos que nos deja sin ningun tipo de problema:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Prueba para sancho ####</span>
+ubuntu@sancho:~$ ping www.google.es
+PING www.google.es <span style="color:#f92672">(</span>172.217.17.3<span style="color:#f92672">)</span> 56<span style="color:#f92672">(</span>84<span style="color:#f92672">)</span> bytes of data.
+<span style="color:#ae81ff">64</span> bytes from mad07s09-in-f3.1e100.net <span style="color:#f92672">(</span>172.217.17.3<span style="color:#f92672">)</span>: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">112</span> time<span style="color:#f92672">=</span><span style="color:#ae81ff">402</span> ms
+<span style="color:#ae81ff">64</span> bytes from mad07s09-in-f3.1e100.net <span style="color:#f92672">(</span>172.217.17.3<span style="color:#f92672">)</span>: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">112</span> time<span style="color:#f92672">=</span><span style="color:#ae81ff">172</span> ms
+--- www.google.es ping statistics ---
+<span style="color:#ae81ff">3</span> packets transmitted, <span style="color:#ae81ff">2</span> received, 33.3333% packet loss, time 5800ms
+rtt min/avg/max/mdev <span style="color:#f92672">=</span> 172.431/287.242/402.054/114.811 ms
+
+<span style="color:#75715e">#### Prueba para Freston ####</span>
+debian@freston:~$ ping www.google.es
+PING www.google.es <span style="color:#f92672">(</span>172.217.17.3<span style="color:#f92672">)</span> 56<span style="color:#f92672">(</span>84<span style="color:#f92672">)</span> bytes of data.
+<span style="color:#ae81ff">64</span> bytes from mad07s09-in-f3.1e100.net <span style="color:#f92672">(</span>172.217.17.3<span style="color:#f92672">)</span>: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">112</span> time<span style="color:#f92672">=</span><span style="color:#ae81ff">263</span> ms
+<span style="color:#ae81ff">64</span> bytes from mad07s09-in-f3.1e100.net <span style="color:#f92672">(</span>172.217.17.3<span style="color:#f92672">)</span>: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">112</span> time<span style="color:#f92672">=</span><span style="color:#ae81ff">389</span> ms
+<span style="color:#ae81ff">64</span> bytes from mad07s09-in-f3.1e100.net <span style="color:#f92672">(</span>172.217.17.3<span style="color:#f92672">)</span>: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">112</span> time<span style="color:#f92672">=</span><span style="color:#ae81ff">162</span> ms
+<span style="color:#ae81ff">64</span> bytes from mad07s09-in-f3.1e100.net <span style="color:#f92672">(</span>172.217.17.3<span style="color:#f92672">)</span>: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">112</span> time<span style="color:#f92672">=</span><span style="color:#ae81ff">194</span> ms
+--- www.google.es ping statistics ---
+<span style="color:#ae81ff">4</span> packets transmitted, <span style="color:#ae81ff">4</span> received, 0% packet loss, time 8ms
+rtt min/avg/max/mdev <span style="color:#f92672">=</span> 162.013/251.945/389.442/87.342 ms
+
+<span style="color:#75715e">#### Prueba para Quijote ####</span>
+<span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ ping www.google.es
+PING www.google.es <span style="color:#f92672">(</span>172.217.17.3<span style="color:#f92672">)</span> 56<span style="color:#f92672">(</span>84<span style="color:#f92672">)</span> bytes of data.
+<span style="color:#ae81ff">64</span> bytes from 172.217.17.3 <span style="color:#f92672">(</span>172.217.17.3<span style="color:#f92672">)</span>: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">112</span> time<span style="color:#f92672">=</span><span style="color:#ae81ff">406</span> ms
+<span style="color:#ae81ff">64</span> bytes from 172.217.17.3 <span style="color:#f92672">(</span>172.217.17.3<span style="color:#f92672">)</span>: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">112</span> time<span style="color:#f92672">=</span><span style="color:#ae81ff">190</span> ms
+<span style="color:#ae81ff">64</span> bytes from 172.217.17.3 <span style="color:#f92672">(</span>172.217.17.3<span style="color:#f92672">)</span>: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">112</span> time<span style="color:#f92672">=</span><span style="color:#ae81ff">241</span> ms
+<span style="color:#ae81ff">64</span> bytes from 172.217.17.3 <span style="color:#f92672">(</span>172.217.17.3<span style="color:#f92672">)</span>: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">112</span> time<span style="color:#f92672">=</span><span style="color:#ae81ff">439</span> ms
+--- www.google.es ping statistics ---
+<span style="color:#ae81ff">4</span> packets transmitted, <span style="color:#ae81ff">4</span> received, 0% packet loss, time 459ms
+rtt min/avg/max/mdev <span style="color:#f92672">=</span> 190.320/318.934/438.598/105.590 ms
+</code></pre></div><ol start="2">
+<li>Configura de manera adecuada todas las reglas NAT necesarias para que los servicios expuestos al exterior sean accesibles.</li>
+</ol>
+<p>Para ello, los servicios que tenemos expuestos al exterior son 2, nuestro DNS que se encuentra en la maquina Freston y nuestro sitio web, que se encuentra en la maquina Quijote por lo que tenemos que añadir de nuevo reglas del tipo <strong>PREROUTING</strong>.</p>
+<h2 id="maquina-freston">Maquina Freston</h2>
+<p>Para nuestra maquina freston, que es la que contiene el servidor DNS, vamos a añadirle 2 reglas, una que sera el LOG de la regla para ver que se cumple con exito y la otra para hacer que las maquinas puedan usar el dns de freston:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos la regla del LOG ####</span>
+debian@dulcinea:~$ sudo iptables -t nat -A PREROUTING -p udp --dport <span style="color:#ae81ff">53</span> -i eth0 -j LOG --log-prefix <span style="color:#e6db74">&#39;Regla DNS correcta &#39;</span> --log-level <span style="color:#ae81ff">4</span>
+
+<span style="color:#75715e">#### Le añadimos la regla de DNS ####</span>
+debian@dulcinea:~$ sudo iptables -t nat -A PREROUTING -p udp --dport <span style="color:#ae81ff">53</span> -i eth0 -j DNAT --to 10.0.1.11:53
+</code></pre></div><p>Si hacemos una consulta desde el exterior, es decir, por nuestra pagina web, veremos que en nuestro log de <strong>/var/log/kern.log</strong> veremos que tendremos una linea donde tendra un mensaje de exito que habiamos puesto:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Mensaje del log del kernel ####</span>
+Jan <span style="color:#ae81ff">13</span> 13:54:20 dulcinea kernel: <span style="color:#f92672">[</span>2515708.564525<span style="color:#f92672">]</span> Regla DNS correcta IN<span style="color:#f92672">=</span>eth0 OUT<span style="color:#f92672">=</span> MAC<span style="color:#f92672">=</span>fa:16:3e:88:a0:2b:fa:16:3e:c5:ac:f0:08:00 SRC<span style="color:#f92672">=</span>172.22.4.54 DST<span style="color:#f92672">=</span>10.0.0.13 LEN<span style="color:#f92672">=</span><span style="color:#ae81ff">68</span> TOS<span style="color:#f92672">=</span>0x00 PREC<span style="color:#f92672">=</span>0x00 TTL<span style="color:#f92672">=</span><span style="color:#ae81ff">63</span> ID<span style="color:#f92672">=</span><span style="color:#ae81ff">59300</span> PROTO<span style="color:#f92672">=</span>UDP SPT<span style="color:#f92672">=</span><span style="color:#ae81ff">41332</span> DPT<span style="color:#f92672">=</span><span style="color:#ae81ff">53</span> LEN<span style="color:#f92672">=</span><span style="color:#ae81ff">48</span>
+</code></pre></div><h2 id="maquina-quijote">Maquina Quijote</h2>
+<p>En nuestra maquina quijote tenemos el servidor web, que esta escuchando en el puerto 80 y en el puerto 443, por lo que tendremos que añadir 2 reglas, una por cada puerto en el que escucha nuestra maquina por lo que solo debemos de añadir una regla de log porque tenemos una redireccion hacia https que es el puerto 443:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Regla sobre el LOG ####</span>
+debian@dulcinea:~$ sudo iptables -t nat -A PREROUTING -p tcp --dport <span style="color:#ae81ff">443</span> -i eth0 -j LOG --log-prefix <span style="color:#e6db74">&#39;HTTPS EXITO &#39;</span> --log-level <span style="color:#ae81ff">4</span>
+
+<span style="color:#75715e">#### Regla sobre el puerto 80 ####</span>
+debian@dulcinea:~$ sudo iptables -t nat -A PREROUTING -p tcp --dport <span style="color:#ae81ff">80</span> -i eth0 -j DNAT --to 10.0.2.3:80
+
+<span style="color:#75715e">#### Regla sobre el puerto 443 ####</span>
+debian@dulcinea:~$ sudo iptables -t nat -A PREROUTING -p tcp --dport <span style="color:#ae81ff">443</span> -i eth0 -j DNAT --to 10.0.2.3:443
+</code></pre></div><p>Asi, si desde nuestro nevegador entramos en la pagina <a href="http://www.franjavier.gonzalonazareno.org">www.franjavier.gonzalonazareno.org</a> o a nuestra ip flotante 172.22.200.155 veremos que en el log del kernel nos aparecera el siguiente mensaje:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Mensaje de exito ####</span>
+Jan <span style="color:#ae81ff">13</span> 14:05:28 dulcinea kernel: <span style="color:#f92672">[</span>2516376.594103<span style="color:#f92672">]</span> HTTPS EXITO IN<span style="color:#f92672">=</span>eth0 OUT<span style="color:#f92672">=</span> MAC<span style="color:#f92672">=</span>fa:16:3e:88:a0:2b:fa:16:3e:c5:ac:f0:08:00 SRC<span style="color:#f92672">=</span>172.22.4.54 DST<span style="color:#f92672">=</span>10.0.0.13 LEN<span style="color:#f92672">=</span><span style="color:#ae81ff">60</span> TOS<span style="color:#f92672">=</span>0x00 PREC<span style="color:#f92672">=</span>0x00 TTL<span style="color:#f92672">=</span><span style="color:#ae81ff">63</span> ID<span style="color:#f92672">=</span><span style="color:#ae81ff">58187</span> DF PROTO<span style="color:#f92672">=</span>TCP SPT<span style="color:#f92672">=</span><span style="color:#ae81ff">33012</span> DPT<span style="color:#f92672">=</span><span style="color:#ae81ff">443</span> WINDOW<span style="color:#f92672">=</span><span style="color:#ae81ff">64240</span> RES<span style="color:#f92672">=</span>0x00 SYN URGP<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</code></pre></div><h1 id="ssh">SSH</h1>
+<ol>
+<li>Podemos acceder por ssh a todas las máquinas.</li>
+</ol>
+<p>En estas reglas, en total, seria 4 reglas que tenemos que añadir las cuales nos permitirian hacer ssh entre la red interna con la red DMZ y dulcinea con la red interna y la red DMZ</p>
+<h2 id="ssh-desde-dulcinea">SSH Desde Dulcinea</h2>
+<p>Lo primero que vamos a hacer es crear las dos reglas que necesitamos para poder conectarnos por ssh desde Dulcinea a las demas maquinas de la red interna y la red DMZ por lo que debemos de crear reglas <strong>INPUT</strong> y reglas <strong>OUTPUT</strong> para poder hacerlo. Seguimos el mismo metodo que antes, ponemos primero la regla con el LOG para comprobar que funciona correctamente y luego la regla en si:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Regla LOG para la red interna 10.0.1.0/24 ####</span>
+debian@dulcinea:~$ sudo iptables -A INPUT -i eth1 -s 10.0.1.0/24 -p tcp --sport <span style="color:#ae81ff">22</span> -j LOG --log-prefix <span style="color:#e6db74">&#39;SSH RED INTERNA EXITO &#39;</span> --log-level <span style="color:#ae81ff">4</span>
+
+<span style="color:#75715e">#### Par de reglas para ssh con la red interna 10.0.1.0/24 ####</span>
+debian@dulcinea:~$ sudo iptables -A INPUT -i eth1 -s 10.0.1.0/24 -p tcp --sport <span style="color:#ae81ff">22</span> -j ACCEPT
+
+debian@dulcinea:~$ sudo iptables -A OUTPUT -o eth1 -d 10.0.1.0/24 -p tcp --dport <span style="color:#ae81ff">22</span> -j ACCEPT
+</code></pre></div><p>Con estas reglas ya tenemos listo el acceso por ssh desde dulcinea a la red interna 10.0.1.0/24 y ademas nos guarda un log en el que nos dice que hemos tenido exito en la conexión:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Log con exito ####</span>
+Jan <span style="color:#ae81ff">13</span> 14:37:17 dulcinea kernel: <span style="color:#f92672">[</span>2518284.976984<span style="color:#f92672">]</span> SSH RED INTERNA EXITO IN<span style="color:#f92672">=</span>eth1 OUT<span style="color:#f92672">=</span> MAC<span style="color:#f92672">=</span>fa:16:3e:d7:a2:7a:fa:16:3e:1a:e5:bb:08:00 SRC<span style="color:#f92672">=</span>10.0.1.11 DST<span style="color:#f92672">=</span>10.0.1.9 LEN<span style="color:#f92672">=</span><span style="color:#ae81ff">52</span> TOS<span style="color:#f92672">=</span>0x10 PREC<span style="color:#f92672">=</span>0x00 TTL<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span> ID<span style="color:#f92672">=</span><span style="color:#ae81ff">51083</span> DF PROTO<span style="color:#f92672">=</span>TCP SPT<span style="color:#f92672">=</span><span style="color:#ae81ff">22</span> DPT<span style="color:#f92672">=</span><span style="color:#ae81ff">57006</span> WINDOW<span style="color:#f92672">=</span><span style="color:#ae81ff">1002</span> RES<span style="color:#f92672">=</span>0x00 ACK FIN URGP<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</code></pre></div><p>Una vez hecho esto hacemos lo mismo pero esta vez con la red DMZ 10.0.2.0/24:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Regla LOG para la red DMZ 10.0.2.0/24 ####</span>
+debian@dulcinea:~$ sudo iptables -A INPUT -i eth2 -s 10.0.2.0/24 -p tcp --sport <span style="color:#ae81ff">22</span> -j LOG --log-prefix <span style="color:#e6db74">&#39;SSH RED DMZ EXITO &#39;</span> --log-level <span style="color:#ae81ff">4</span>
+
+<span style="color:#75715e">#### Par de reglas para ssh con la red DMZ 10.0.2.0/24 ####</span>
+debian@dulcinea:~$ sudo iptables -A INPUT -i eth2 -s 10.0.2.0/24 -p tcp --sport <span style="color:#ae81ff">22</span> -j ACCEPT
+
+debian@dulcinea:~$ sudo iptables -A OUTPUT -o eth2 -d 10.0.2.0/24 -p tcp --dport <span style="color:#ae81ff">22</span> -j ACCEPT
+</code></pre></div><p>Con estas reglas ya tendriamos conexion hacia la red DMZ:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Log con exito ####</span>
+Jan <span style="color:#ae81ff">13</span> 18:23:29 dulcinea kernel: <span style="color:#f92672">[</span>2531858.117376<span style="color:#f92672">]</span> SSH RED DMZ EXITO IN<span style="color:#f92672">=</span>eth2 OUT<span style="color:#f92672">=</span> MAC<span style="color:#f92672">=</span>fa:16:3e:7a:bf:43:fa:16:3e:dc:d9:55:08:00 SRC<span style="color:#f92672">=</span>10.0.2.3 DST<span style="color:#f92672">=</span>10.0.2.11 LEN<span style="color:#f92672">=</span><span style="color:#ae81ff">52</span> TOS<span style="color:#f92672">=</span>0x08 PREC<span style="color:#f92672">=</span>0x40 TTL<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span> ID<span style="color:#f92672">=</span><span style="color:#ae81ff">51084</span> DF PROTO<span style="color:#f92672">=</span>TCP SPT<span style="color:#f92672">=</span><span style="color:#ae81ff">22</span> DPT<span style="color:#f92672">=</span><span style="color:#ae81ff">42602</span> WINDOW<span style="color:#f92672">=</span><span style="color:#ae81ff">826</span> RES<span style="color:#f92672">=</span>0x00 ACK FIN URGP<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</code></pre></div><h2 id="ssh-desde-la-red-interna">SSH desde la red interna</h2>
+<p>Para ello debemos de tener en cuenta que debemos de crear una regla de iptables en dulcinea del tipo <strong>PREROUTING</strong> la cual hace que el trafico pase a traves de la maquina dulcinea hasta la red DMZ, para ello vamos a usar las siguientes reglas:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Regla LOG para el trafico de la red interna a la red DMZ ####</span>
+debian@dulcinea:~$ sudo iptables -t nat -A PREROUTING -i eth1 -s 10.0.1.0/24 -p tcp --dport <span style="color:#ae81ff">22</span> -j LOG --log-prefix <span style="color:#e6db74">&#39;DE RED INTERNA A DMZ EXITO &#39;</span> --log-level <span style="color:#ae81ff">4</span>
+
+<span style="color:#75715e">#### Regla para ssh de red interna con DMZ ####</span>
+debian@dulcinea:~$ sudo iptables -t nat -A PREROUTING -i eth1 -s 10.0.1.0/24 -p tcp --dport <span style="color:#ae81ff">22</span> -j DNAT --to 10.0.2.3:22
+
+<span style="color:#75715e">#### Comprobacion de log ####</span>
+Jan <span style="color:#ae81ff">13</span> 18:41:23 dulcinea kernel: <span style="color:#f92672">[</span>2532932.166102<span style="color:#f92672">]</span> DE RED INTERNA A DMZ EXITO IN<span style="color:#f92672">=</span>eth1 OUT<span style="color:#f92672">=</span> MAC<span style="color:#f92672">=</span>fa:16:3e:d7:a2:7a:fa:16:3e:1a:e5:bb:08:00 SRC<span style="color:#f92672">=</span>10.0.1.11 DST<span style="color:#f92672">=</span>10.0.2.3 LEN<span style="color:#f92672">=</span><span style="color:#ae81ff">60</span> TOS<span style="color:#f92672">=</span>0x00 PREC<span style="color:#f92672">=</span>0x00 TTL<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span> ID<span style="color:#f92672">=</span><span style="color:#ae81ff">35702</span> DF PROTO<span style="color:#f92672">=</span>TCP SPT<span style="color:#f92672">=</span><span style="color:#ae81ff">57116</span> DPT<span style="color:#f92672">=</span><span style="color:#ae81ff">22</span> WINDOW<span style="color:#f92672">=</span><span style="color:#ae81ff">64240</span> RES<span style="color:#f92672">=</span>0x00 SYN URGP<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> 
+</code></pre></div><h2 id="shh-desde-la-red-dmz">SHH desde la red DMZ</h2>
+<p>Para ello hacemos como en el apartado anterior pero esta vez cambiando las redes y las interfaces:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Regla LOG para el trafico de la red DMZ a la red interna ####</span>
+debian@dulcinea:~$ sudo iptables -t nat -A PREROUTING -i eth2 -s 10.0.2.0/24 -p tcp --dport <span style="color:#ae81ff">22</span> -j LOG --log-prefix <span style="color:#e6db74">&#39;DE RED DMZ A RED INTERNA EXITO &#39;</span> --log-level <span style="color:#ae81ff">4</span>
+
+<span style="color:#75715e">#### Regla para ssh desde DMZ a red interna ####</span>
+debian@dulcinea:~$ sudo iptables -t nat -A PREROUTING -i eth2 -s 10.0.2.0/24 -p tcp --dport <span style="color:#ae81ff">22</span> -j DNAT --to 10.0.1.8:22
+
+debian@dulcinea:~$ sudo iptables -t nat -A PREROUTING -i eth2 -s 10.0.2.0/24 -p tcp --dport <span style="color:#ae81ff">22</span> -j DNAT --to 10.0.1.11:22
+
+<span style="color:#75715e">#### Comprobacion del log ####</span>
+Jan <span style="color:#ae81ff">13</span> 18:51:38 dulcinea kernel: <span style="color:#f92672">[</span>2533547.522213<span style="color:#f92672">]</span> DE REd DMZ A RED INTERNA EXITIN<span style="color:#f92672">=</span>eth2 OUT<span style="color:#f92672">=</span> MAC<span style="color:#f92672">=</span>fa:16:3e:7a:bf:43:fa:16:3e:dc:d9:55:08:00 SRC<span style="color:#f92672">=</span>10.0.2.3 DST<span style="color:#f92672">=</span>10.0.1.8 LEN<span style="color:#f92672">=</span><span style="color:#ae81ff">60</span> TOS<span style="color:#f92672">=</span>0x00 PREC<span style="color:#f92672">=</span>0x00 TTL<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span> ID<span style="color:#f92672">=</span><span style="color:#ae81ff">24877</span> DF PROTO<span style="color:#f92672">=</span>TCP SPT<span style="color:#f92672">=</span><span style="color:#ae81ff">55076</span> DPT<span style="color:#f92672">=</span><span style="color:#ae81ff">22</span> WINDOW<span style="color:#f92672">=</span><span style="color:#ae81ff">26730</span> RES<span style="color:#f92672">=</span>0x00 SYN URGP<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> 
+</code></pre></div><ol start="2">
+<li>Podemos hacer ssh al exterior desde todas las maquinas</li>
+</ol>
+<p>Para ello vamos a permitir el trafico por el puerto 22 de nuestra maquina Dulcinea, para ello, primero lo haremos con la maquina dulcinea y luego con las maquinas de las dos redes internas:</p>
+<h2 id="maquina-dulcinea">Maquina Dulcinea</h2>
+<p>Para ello vamos a usar el siguiente comando:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Log de ssh ####</span>
+debian@dulcinea:~$ sudo iptables -A INPUT -i eth0 -p tcp --sport <span style="color:#ae81ff">22</span> -j LOG --log-prefix <span style="color:#e6db74">&#39;DE DULCINEA A EXTERIOR &#39;</span> --log-level <span style="color:#ae81ff">4</span>
+
+<span style="color:#75715e">#### Reglas de entrada y salida para Dulcinea ####</span>
+debian@dulcinea:~$ sudo iptables -A INPUT -i eth0 -p tcp --sport <span style="color:#ae81ff">22</span> -j ACCEPT
+
+debian@dulcinea:~$ sudo iptables -A OUTPUT -o eth0 -p tcp --dport <span style="color:#ae81ff">22</span> -j ACCEPT
+
+<span style="color:#75715e">#### Resultado del log ####</span>
+Jan <span style="color:#ae81ff">28</span> 17:18:09 dulcinea kernel: <span style="color:#f92672">[</span>3824005.988438<span style="color:#f92672">]</span> DE DULCINEA A EXTERIOR IN<span style="color:#f92672">=</span>eth0 OUT<span style="color:#f92672">=</span> MAC<span style="color:#f92672">=</span>fa:16:3e:88:a0:2b:fa:16:3e:c5:ac:f0:08:00 SRC<span style="color:#f92672">=</span>172.23.0.30 DST<span style="color:#f92672">=</span>10.0.0.13 LEN<span style="color:#f92672">=</span><span style="color:#ae81ff">52</span> TOS<span style="color:#f92672">=</span>0x10 PREC<span style="color:#f92672">=</span>0x00 TTL<span style="color:#f92672">=</span><span style="color:#ae81ff">61</span> ID<span style="color:#f92672">=</span><span style="color:#ae81ff">52062</span> DF PROTO<span style="color:#f92672">=</span>TCP SPT<span style="color:#f92672">=</span><span style="color:#ae81ff">22</span> DPT<span style="color:#f92672">=</span><span style="color:#ae81ff">42510</span> WINDOW<span style="color:#f92672">=</span><span style="color:#ae81ff">501</span> RES<span style="color:#f92672">=</span>0x00 ACK URGP<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</code></pre></div><h1 id="bases-de-datos">Bases de datos</h1>
+<p>Para ello debemos de saber que el puerto que usa nuestra base de datos para conectarse es el puerto <strong>3306</strong> ya que estamos usando una base de datos mariadb. Lo primero es tener en el fichero <strong>/etc/mysql/mariadb.conf.d/50-server.cnf</strong> la linea que dice <em>port = 3306</em> descomentada, la linea <em>skip-external-locking</em> comentada y la linea *<em>bind-address  = 0.0.0.0</em>.</p>
+<p>Cuando tengamos todo listo debemos de añadir una regla que permita la conexion desde la red 10.0.2.0/24 a la ip de la maquina 10.0.1.8 por el puerto 3306</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Regla de log ####</span>
+debian@dulcinea:~$ sudo iptables -t nat -A PREROUTING -i eth2 -s 10.0.2.0/24 -p tcp --dport <span style="color:#ae81ff">3306</span> -j LOG --log-prefix <span style="color:#e6db74">&#39;CONEXION BD EXITO &#39;</span> --log-level <span style="color:#ae81ff">4</span>
+
+<span style="color:#75715e">#### Regla para lo conexion desde la red DMZ ####</span>
+debian@dulcinea:~$ sudo iptables -t nat -A PREROUTING -s 10.0.2.3 -i eth2 -p tcp --dport <span style="color:#ae81ff">3306</span> -j DNAT --to 10.0.1.8:3306
+</code></pre></div><h1 id="web">Web</h1>
+<ol>
+<li>Las páginas web de quijote (80, 443) pueden ser accedidas desde todas las máquinas de nuestra red y desde el exterior.</li>
+</ol>
+<p>Para ello vamos a usar dos reglas, una por cada puerto que deben de ser redirigidos hacia los puerto 80 y 443 de la maquina de Quijote, que es donde tenemos nuestro servidor web funcionando, por lo que vamos a realizar las siguientes reglas:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Regla para el puerto 80 ####</span>
+debian@dulcinea:~$ sudo iptables -t nat -A PREROUTING -p tcp --dport <span style="color:#ae81ff">80</span> -i eth0 -j DNAT --to 10.0.2.3:80
+
+<span style="color:#75715e">#### Reglas para control de log del puerto 443 ####</span>
+debian@dulcinea:~$ sudo iptables -t nat -A PREROUTING -p tcp --dport <span style="color:#ae81ff">443</span> -i eth0 -j LOG --log-prefix <span style="color:#e6db74">&#39;HTTPS EXITO &#39;</span> --log-level <span style="color:#ae81ff">4</span>
+
+<span style="color:#75715e">#### Regla para el puerto 443 ####</span>
+debian@dulcinea:~$ sudo iptables -t nat -A PREROUTING -p tcp --dport <span style="color:#ae81ff">443</span> -i eth0 -j DNAT --to 10.0.2.3:443
+</code></pre></div><h1 id="mas-servicios">Mas servicios</h1>
+<h2 id="correos">Correos</h2>
+<p>Para ello vamos a usar el servidor de correos llamado postfix el cual usa el puerto 25/tcp, como este servidor de correos lo vamos a tener corriendo en la maquina freston debemos de inidicarle, al igual que con los servicios web, la ip interna de la maquina junto al puerto por el que escucha por lo que usamos la siguiente regla de iptables:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Regla de iptable para correos ####</span>
+debian@dulcinea:~$ sudo iptables -t nat -A PREROUTING -p tcp --dport <span style="color:#ae81ff">25</span> -i eth0 -j DNAT --to 10.0.1.11:25
+</code></pre></div><p>Donde vemos que, todo el paquete que llegue a la maquina dulcina con el puerto 25/tcp y por la interfaz eth0, sea redirigido hacia la ip de freston junto a su puerto.</p>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2021  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+         
+        <li><a href="/servicios">Servicios</a></li>
+         
+        <li><a href="/implantacion">Implantacion</a></li>
+         
+        <li><a href="/bbdd">BBDD</a></li>
+         
+        <li><a href="/hlc">HLC</a></li>
+         
+        <li><a href="/cloud">Cloud</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>

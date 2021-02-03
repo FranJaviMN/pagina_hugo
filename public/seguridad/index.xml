@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Mon, 11 Jan 2021 18:00:52 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/seguridad/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 03 Feb 2021 19:30:58 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/seguridad/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cortafuegos</title>
+      <link>https://franjavimn.onrender.com/seguridad/cortafuegos/</link>
+      <pubDate>Wed, 03 Feb 2021 19:30:58 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/seguridad/cortafuegos/</guid>
+      <description>Cortafuegos Vamos a construir un cortafuegos en dulcinea que nos permita controlar el tráfico de nuestra red. El cortafuegos que vamos a construir debe funcionar tras un reinicio.
+Política por defecto La política por defecto que vamos a configurar en nuestro cortafuegos será de tipo DROP.
+Antes de activar dicha politica debemos de comprobar que nuestras reglas funcionan, si no nos quedaremos sin que funcionen algunos servicios o el ssh.</description>
+    </item>
+    
     <item>
       <title>Https Quijote</title>
       <link>https://franjavimn.onrender.com/seguridad/https-quijote/</link>
