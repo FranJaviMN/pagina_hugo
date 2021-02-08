@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Interconexion | Blog</title>
+  <meta name="description" content="En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Interconexion" />
+<meta property="og:description" content="Interconexión de Servidores de Bases de Datos Las interconexiones de servidores de bases de datos son operaciones que pueden ser muy útiles en diferentes contextos. Básicamente, se trata de acceder a datos que no están almacenados en nuestra base de datos, pudiendo combinarlos con los que ya tenemos.
+En esta práctica veremos varias formas de crear un enlace entre distintos servidores de bases de datos. Se pide los tres siguientes puntos:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://franjavimn.onrender.com/bbdd/interconexion/" />
+<meta property="article:published_time" content="2021-02-08T18:19:40+01:00" />
+<meta property="article:modified_time" content="2021-02-08T18:19:40+01:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Interconexion"/>
+<meta name="twitter:description" content="Interconexión de Servidores de Bases de Datos Las interconexiones de servidores de bases de datos son operaciones que pueden ser muy útiles en diferentes contextos. Básicamente, se trata de acceder a datos que no están almacenados en nuestra base de datos, pudiendo combinarlos con los que ya tenemos.
+En esta práctica veremos varias formas de crear un enlace entre distintos servidores de bases de datos. Se pide los tres siguientes puntos:"/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://franjavimn.onrender.com/images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://franjavimn.onrender.com">
+  
+    <div id="logo" style="background-image: url(https://franjavimn.onrender.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+       
+        <li><a href="/servicios">Servicios</a></li>
+       
+        <li><a href="/implantacion">Implantacion</a></li>
+       
+        <li><a href="/bbdd">BBDD</a></li>
+       
+        <li><a href="/hlc">HLC</a></li>
+       
+        <li><a href="/cloud">Cloud</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h1 id="interconexión-de-servidores-de-bases-de-datos">Interconexión de Servidores de Bases de Datos</h1>
+<p>Las interconexiones de servidores de bases de datos son operaciones que pueden ser muy útiles en diferentes contextos. Básicamente, se trata de acceder a datos que no están almacenados en nuestra base de datos, pudiendo combinarlos con los que ya tenemos.</p>
+<p>En esta práctica veremos varias formas de crear un enlace entre distintos servidores de bases de datos. Se pide los tres siguientes puntos:</p>
+<ol>
+<li>
+<p>Realizar un enlace entre dos servidores de bases de datos ORACLE, explicando la configuración necesaria en ambos extremos y demostrando su funcionamiento.</p>
+</li>
+<li>
+<p>Realizar un enlace entre dos servidores de bases de datos Postgres, explicando la configuración necesaria en ambos extremos y demostrando su funcionamiento.</p>
+</li>
+<li>
+<p>Realizar un enlace entre un servidor ORACLE y otro Postgres o MySQL empleando Heterogeneus Services, explicando la configuración necesaria en ambos extremos y demostrando su funcionamiento.</p>
+</li>
+</ol>
+<p>Los servidores que se vayan a enlacer entre si deben de estar en maquinas distintas.</p>
+<h1 id="enlace-entre-servidores-oracle">Enlace entre servidores oracle</h1>
+<p>Para ello vamos a usar dos maquinas creadas en un escenario de <strong>Vagrant</strong> en el cual hemos usado el siguiente fichero de <strong>Vagrantfile</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">Vagrant</span><span style="color:#f92672">.</span>configure(<span style="color:#e6db74">&#34;2&#34;</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>config<span style="color:#f92672">|</span>
+    config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>define <span style="color:#e6db74">&#34;oracle1&#34;</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>oracle1<span style="color:#f92672">|</span>
+        config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provider <span style="color:#e6db74">&#34;virtualbox&#34;</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>vb<span style="color:#f92672">|</span>
+            vb<span style="color:#f92672">.</span>name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;oracle1&#34;</span>
+            vb<span style="color:#f92672">.</span>memory <span style="color:#f92672">=</span> <span style="color:#ae81ff">2048</span>
+            vb<span style="color:#f92672">.</span>cpus <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+        <span style="color:#66d9ef">end</span>
+        oracle1<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>box <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;neko-neko/centos6-oracle-11g-XE&#34;</span>
+        oracle1<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>hostname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;oracle1&#34;</span>
+        oracle1<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>network <span style="color:#e6db74">&#34;public_network&#34;</span>,
+            <span style="color:#e6db74">bridge</span>: <span style="color:#e6db74">&#34;wlp2s0&#34;</span>, 
+            <span style="color:#e6db74">use_dhcp_assigned_default_route</span>: <span style="color:#66d9ef">true</span>
+    <span style="color:#66d9ef">end</span>
+    config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>define <span style="color:#e6db74">&#34;oracle2&#34;</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>oracle2<span style="color:#f92672">|</span>
+        config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provider <span style="color:#e6db74">&#34;virtualbox&#34;</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>vb<span style="color:#f92672">|</span>
+            vb<span style="color:#f92672">.</span>name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;oracle2&#34;</span>
+            vb<span style="color:#f92672">.</span>memory <span style="color:#f92672">=</span> <span style="color:#ae81ff">2048</span>
+            vb<span style="color:#f92672">.</span>cpus <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+        <span style="color:#66d9ef">end</span>
+        oracle2<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>box <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;neko-neko/centos6-oracle-11g-XE&#34;</span>
+        oracle2<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>hostname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;oracle2&#34;</span>
+        oracle2<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>network <span style="color:#e6db74">&#34;public_network&#34;</span>,
+            <span style="color:#e6db74">bridge</span>: <span style="color:#e6db74">&#34;wlp2s0&#34;</span>,
+            <span style="color:#e6db74">use_dhcp_assigned_default_route</span>: <span style="color:#66d9ef">true</span>
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Donde vemos que las maquinas estan basadas en un sistema <strong>centOS 6</strong>. Una vez tengamos el escenario nos metemos en las maquinas y vamos a empezar con la configuracion de las maquinas para la interconexión:</p>
+<p>Antes ejecutamos los siguientes comandos como <strong>root</strong> para cambiar el idioma y diversos parametros en ambas maquinas:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>root@oracle1 ~<span style="color:#f92672">]</span><span style="color:#75715e"># sed -ri &#39;s/NLS_LANG=.*/NLS_LANG=&#34;SPANISH_SPAIN.AL32UTF8&#34;/g&#39; /etc/profile.d/oracle_env.sh</span>
+<span style="color:#f92672">[</span>root@oracle1 ~<span style="color:#f92672">]</span><span style="color:#75715e"># export NLS_LANG=&#39;SPANISH_SPAIN.AL32UTF8&#39;</span>
+
+<span style="color:#f92672">[</span>root@oracle1 ~<span style="color:#f92672">]</span><span style="color:#75715e"># cat &lt;&lt;EOF&gt;&gt;$ORACLE_HOME/sqlplus/admin/glogin.sql</span>
+&gt; alter session set NLS_DATE_FORMAT <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;DD-MM-YYYY HH24:mi:ss&#39;</span>;
+&gt; set sqlprompt <span style="color:#e6db74">&#34;_DATE _USER&#39;@&#39;_CONNECT_IDENTIFIER &#39;SQL&#39;&gt; &#34;</span>
+&gt; set pagesize <span style="color:#ae81ff">2000</span> linesize <span style="color:#ae81ff">100</span>
+&gt; set serveroutput on
+&gt; EOF
+</code></pre></div><h2 id="maquina-oracle1-fichero-listenerora">Maquina oracle1: Fichero listener.ora</h2>
+<p>Lo primero será modificar el fichero de configuración listener.ora. En este fichero podremos configurar el interlocutor de oracle(listener) el cual se encarga de aceptar peticiones remotas desde la red(TCP). Este fichero se encuentra en el directorio <strong>$ORACLE_HOME/network/admin/listener.ora</strong> y debemos de tener el siguiente contenido en el fichero:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>root@oracle1 ~<span style="color:#f92672">]</span><span style="color:#75715e"># cat /u01/app/oracle/product/11.2.0/xe/network/admin/listener.ora </span>
+<span style="color:#75715e"># listener.ora Network Configuration File:</span>
+LISTENER <span style="color:#f92672">=</span>
+    <span style="color:#f92672">(</span>DESCRIPTION_LIST <span style="color:#f92672">=</span>
+        <span style="color:#f92672">(</span>DESCRIPTION <span style="color:#f92672">=</span>
+            <span style="color:#f92672">(</span>ADDRESS <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>PROTOCOL <span style="color:#f92672">=</span> TCP<span style="color:#f92672">)(</span>HOST <span style="color:#f92672">=</span> localhost<span style="color:#f92672">)(</span>PORT <span style="color:#f92672">=</span> 1521<span style="color:#f92672">))</span>
+        <span style="color:#f92672">)</span>
+    <span style="color:#f92672">)</span>
+
+SID_LIST_LISTENER <span style="color:#f92672">=</span>
+  <span style="color:#f92672">(</span>SID_LIST <span style="color:#f92672">=</span>
+    <span style="color:#f92672">(</span>SID_DESC <span style="color:#f92672">=</span>
+      <span style="color:#f92672">(</span>SID_NAME <span style="color:#f92672">=</span> XE<span style="color:#f92672">)</span>
+      <span style="color:#f92672">(</span>GLOBAL_DBNAME <span style="color:#f92672">=</span> XE<span style="color:#f92672">)</span>
+      <span style="color:#f92672">(</span>ORACLE_HOME <span style="color:#f92672">=</span> /u01/app/oracle/product/11.2.0/xe<span style="color:#f92672">)</span>
+    <span style="color:#f92672">)</span>
+  <span style="color:#f92672">)</span>
+
+DEFAULT_SERVICE_LISTENER <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>XE<span style="color:#f92672">)</span>
+</code></pre></div><p>Donde:</p>
+<ul>
+<li>LISTENER: Es dónde especificamos los protocolos,IPs o nombres(HOST), puertos y etc. desde los que se podrán conectar remotamente a este servidor. Usamos <em>localhost</em> para que cualquier maquina de la red pueda conectarse</li>
+<li>SID_LIST_LISTENER: Son los nombre de los servicios de escucha dónde especificamos los nombres de las instancias y directorio de las bases de datos.</li>
+<li>DEFAULT_SERVICE_LISTENER: Por defecto el servicio de escucha se llama &ldquo;XE&rdquo;.</li>
+</ul>
+<p>Una vez hecho reiniciamos los servicios del <strong>listener</strong> y comprobamos su estado:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Reiniciamos el servicio llamado lsnrctl ####</span>
+<span style="color:#f92672">[</span>root@oracle1 ~<span style="color:#f92672">]</span><span style="color:#75715e"># lsnrctl stop &amp;&amp; lsnrctl start</span>
+
+<span style="color:#75715e">#### Comprobamos el servicio ####</span>
+<span style="color:#f92672">[</span>root@oracle1 ~<span style="color:#f92672">]</span><span style="color:#75715e"># lsnrctl status</span>
+
+LSNRCTL <span style="color:#66d9ef">for</span> Linux: Version 11.2.0.2.0 - Production on 04-FEB-2021 18:10:51
+
+Copyright <span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> 1991, 2011, Oracle.  All rights reserved.
+
+Connecting to <span style="color:#f92672">(</span>DESCRIPTION<span style="color:#f92672">=(</span>ADDRESS<span style="color:#f92672">=(</span>PROTOCOL<span style="color:#f92672">=</span>TCP<span style="color:#f92672">)(</span>HOST<span style="color:#f92672">=</span>localhost<span style="color:#f92672">)(</span>PORT<span style="color:#f92672">=</span>1521<span style="color:#f92672">)))</span>
+STATUS of the LISTENER
+------------------------
+Alias                     LISTENER
+Version                   TNSLSNR <span style="color:#66d9ef">for</span> Linux: Version 11.2.0.2.0 - Production
+Start Date                04-FEB-2021 17:54:33
+Uptime                    <span style="color:#ae81ff">0</span> days <span style="color:#ae81ff">0</span> hr. <span style="color:#ae81ff">16</span> min. <span style="color:#ae81ff">18</span> sec
+Trace Level               off
+Security                  ON: Local OS Authentication
+SNMP                      OFF
+Default Service           XE
+Listener Parameter File   /u01/app/oracle/product/11.2.0/xe/network/admin/listener.ora
+Listener Log File         /u01/app/oracle/diag/tnslsnr/oracle1/listener/alert/log.xml
+Listening Endpoints Summary...
+  <span style="color:#f92672">(</span>DESCRIPTION<span style="color:#f92672">=(</span>ADDRESS<span style="color:#f92672">=(</span>PROTOCOL<span style="color:#f92672">=</span>tcp<span style="color:#f92672">)(</span>HOST<span style="color:#f92672">=</span>oracle1<span style="color:#f92672">)(</span>PORT<span style="color:#f92672">=</span>1521<span style="color:#f92672">)))</span>
+  <span style="color:#f92672">(</span>DESCRIPTION<span style="color:#f92672">=(</span>ADDRESS<span style="color:#f92672">=(</span>PROTOCOL<span style="color:#f92672">=</span>tcp<span style="color:#f92672">)(</span>HOST<span style="color:#f92672">=</span>oracle1<span style="color:#f92672">)(</span>PORT<span style="color:#f92672">=</span>8080<span style="color:#f92672">))(</span>Presentation<span style="color:#f92672">=</span>HTTP<span style="color:#f92672">)(</span>Session<span style="color:#f92672">=</span>RAW<span style="color:#f92672">))</span>
+Services Summary...
+Service <span style="color:#e6db74">&#34;XE&#34;</span> has <span style="color:#ae81ff">2</span> instance<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>.
+  Instance <span style="color:#e6db74">&#34;XE&#34;</span>, status UNKNOWN, has <span style="color:#ae81ff">1</span> handler<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span> <span style="color:#66d9ef">for</span> this service...
+  Instance <span style="color:#e6db74">&#34;XE&#34;</span>, status READY, has <span style="color:#ae81ff">1</span> handler<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span> <span style="color:#66d9ef">for</span> this service...
+Service <span style="color:#e6db74">&#34;XEXDB&#34;</span> has <span style="color:#ae81ff">1</span> instance<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>.
+  Instance <span style="color:#e6db74">&#34;XE&#34;</span>, status READY, has <span style="color:#ae81ff">1</span> handler<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span> <span style="color:#66d9ef">for</span> this service...
+The command completed successfully
+</code></pre></div><h2 id="maquina-oracle2-fichero-tnsnameora">Maquina oracle2: Fichero tnsname.ora</h2>
+<p>Este apartado es para el cliente desde el cual nos conectaremos.</p>
+<p>Primero haremos un ping para ver si tenemos conexion con la maquina <strong>oracle1</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Comprobamos ping ####</span>
+<span style="color:#f92672">[</span>root@oracle2 ~<span style="color:#f92672">]</span><span style="color:#75715e"># ping 192.168.1.121</span>
+PING 192.168.1.121 <span style="color:#f92672">(</span>192.168.1.121<span style="color:#f92672">)</span> 56<span style="color:#f92672">(</span>84<span style="color:#f92672">)</span> bytes of data.
+<span style="color:#ae81ff">64</span> bytes from 192.168.1.121: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span> time<span style="color:#f92672">=</span>0.476 ms
+<span style="color:#ae81ff">64</span> bytes from 192.168.1.121: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span> time<span style="color:#f92672">=</span>0.410 ms
+<span style="color:#ae81ff">64</span> bytes from 192.168.1.121: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span> time<span style="color:#f92672">=</span>0.496 ms
+<span style="color:#ae81ff">64</span> bytes from 192.168.1.121: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span> time<span style="color:#f92672">=</span>0.295 ms
+^C
+--- 192.168.1.121 ping statistics ---
+<span style="color:#ae81ff">4</span> packets transmitted, <span style="color:#ae81ff">4</span> received, 0% packet loss, time 3369ms
+</code></pre></div><p>Ahora vamos a hacer una prueba de conexion a la base de datos de nuestro maquina <strong>oracle1</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>root@oracle2 ~<span style="color:#f92672">]</span><span style="color:#75715e"># rlwrap sqlplus system/vagrant@//192.168.1.121:1521/XE</span>
+
+SQL*Plus: Release 11.2.0.2.0 Production on Jue Feb <span style="color:#ae81ff">4</span> 18:26:39 <span style="color:#ae81ff">2021</span>
+
+Copyright <span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> 1982, 2011, Oracle.  All rights reserved.
+
+ERROR:
+ORA-28002: the password will expire within <span style="color:#ae81ff">7</span> days
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+Session altered.
+
+04-02-2021 18:26:39 SYSTEM@//192.168.1.121:1521/XE SQL&gt; 
+</code></pre></div><p>Ahora para realizar la interconexión del servidor necesitamos configurar el fichero tnsnames.ora. En este fichero podemos configurar y &ldquo;mapear&rdquo; los nombres de los servicios que está escuchando el servidor. Lo encontraremos en el directorio <strong>$ORACLE_HOME/network/admin/tnsnames.ora</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># tnsnames.ora Network Configuration File:</span>
+
+tns_ora1 <span style="color:#f92672">=</span>
+  <span style="color:#f92672">(</span>DESCRIPTION <span style="color:#f92672">=</span>
+    <span style="color:#f92672">(</span>ADDRESS <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>PROTOCOL <span style="color:#f92672">=</span> TCP<span style="color:#f92672">)(</span>HOST <span style="color:#f92672">=</span> 192.168.1.121<span style="color:#f92672">)(</span>PORT <span style="color:#f92672">=</span> 1521<span style="color:#f92672">))</span>
+    <span style="color:#f92672">(</span>CONNECT_DATA <span style="color:#f92672">=</span>
+      <span style="color:#f92672">(</span>SERVER <span style="color:#f92672">=</span> DEDICATED<span style="color:#f92672">)</span>
+      <span style="color:#f92672">(</span>SERVICE_NAME <span style="color:#f92672">=</span> XE<span style="color:#f92672">)</span>
+    <span style="color:#f92672">)</span>
+  <span style="color:#f92672">)</span>
+</code></pre></div><p>Y comprobamos mediante el comando <strong>tnsping</strong> si tenemos conexion mediante el siguiente comando:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>root@oracle2 ~<span style="color:#f92672">]</span><span style="color:#75715e"># tnsping tns_ora1</span>
+
+TNS Ping Utility <span style="color:#66d9ef">for</span> Linux: Version 11.2.0.2.0 - Production on 04-FEB-2021 18:30:27
+
+Copyright <span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> 1997, 2011, Oracle.  All rights reserved.
+
+Used parameter files:
+
+Used TNSNAMES adapter to resolve the alias
+Attempting to contact <span style="color:#f92672">(</span>DESCRIPTION <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>ADDRESS <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>PROTOCOL <span style="color:#f92672">=</span> TCP<span style="color:#f92672">)(</span>HOST <span style="color:#f92672">=</span> 192.168.1.121<span style="color:#f92672">)(</span>PORT <span style="color:#f92672">=</span> 1521<span style="color:#f92672">))</span> <span style="color:#f92672">(</span>CONNECT_DATA <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>SERVER <span style="color:#f92672">=</span> DEDICATED<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SERVICE_NAME <span style="color:#f92672">=</span> XE<span style="color:#f92672">)))</span>
+OK <span style="color:#f92672">(</span><span style="color:#ae81ff">10</span> msec<span style="color:#f92672">)</span>
+</code></pre></div><h2 id="configuración-de-interconexión-mediante-enlace-de-base-de-datos">Configuración de interconexión mediante enlace de base de datos</h2>
+<p>Ahora necesitamos configurar dicho enlace en el cliente desde &ldquo;sqlplus&rdquo;.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el link de la base de datos ####</span>
+04-02-2021 18:35:51 SYSTEM@XE SQL&gt; CREATE DATABASE LINK link_ora1 CONNECT TO scott IDENTIFIED BY tiger USING <span style="color:#e6db74">&#39;tns_ora1&#39;</span>;
+
+Database link created.
+
+<span style="color:#75715e">#### Consultamos la base de datos de oracle1 ####</span>
+
+04-02-2021 18:47:07 SYSTEM@XE SQL&gt; <span style="color:#66d9ef">select</span> * from scott.emp@link_ora1;
+
+     EMPNO ENAME      JOB	       MGR HIREDATE		      SAL	COMM	 DEPTNO
+---------- ---------- --------- ---------- ------------------- ---------- ---------- ----------
+      <span style="color:#ae81ff">7369</span> SMITH      CLERK	      <span style="color:#ae81ff">7902</span> 17-12-1980 00:00:00	      800		     <span style="color:#ae81ff">20</span>
+      <span style="color:#ae81ff">7499</span> ALLEN      SALESMAN	      <span style="color:#ae81ff">7698</span> 20-02-1981 00:00:00	     1600	 300	     <span style="color:#ae81ff">30</span>
+      <span style="color:#ae81ff">7521</span> WARD       SALESMAN	      <span style="color:#ae81ff">7698</span> 22-02-1981 00:00:00	     1250	 500	     <span style="color:#ae81ff">30</span>
+</code></pre></div><h1 id="enlace-entre-servidores-postgres">Enlace entre servidores Postgres</h1>
+<p>Para ello vamos a tener a nuestra disposición des maquinas en <strong>openstack</strong> que las vamos a llamas <strong>interconexion1 e interconexion2</strong> en las cuales vamos a realizar las pruebas de enlace entre dos bases de datos postgres, para ello, lo primero que debemos de hacer es instalar en ambas maquinas la base de datos postgres:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Maquina de interconexion1 ####</span>
+debian@interconexion-1:~$ sudo apt update <span style="color:#f92672">&amp;&amp;</span> sudo apt install postgresql -y
+
+<span style="color:#75715e">#### Maquina de interconexion2 ####</span>
+debian@interconexion-2:~$ sudo apt update <span style="color:#f92672">&amp;&amp;</span> sudo apt install postgresql -y
+</code></pre></div><p>Ahora que tenemos ambas maquinas con postgresql instalado, vamos a proceder a realizar los cambios pertinentes para poder hacer que ambas bases de datos esten enlazadas entre si. Asi que ahora vamos a configurar los servidores para que permitan las conexiones remotas, debemos de tener en cuenta que esta configuración se debe de hacer en ambas maquinas.</p>
+<p>Primero vamos al fichero <strong>/etc/postgresql/11/main/postgresql.conf</strong> en el cual debemos de indicar que debe de escuchar en un rango de red que nosotros le indiquemos, en nuestro caso vamos a permitir cualquier rango de red, asi debe de quedar dicho fichero en <strong>AMBAS MAQUINAS</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero postgresql.conf en la maquina interconexion1 ####</span>
+<span style="color:#75715e"># - Connection Settings -</span>
+
+listen_addresses <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;*&#39;</span>
+
+<span style="color:#75715e">#### Fichero postgresql.conf en la maquina interconexion2 ####</span>
+<span style="color:#75715e"># - Connection Settings -</span>
+
+listen_addresses <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;*&#39;</span>
+</code></pre></div><p>Despues de esta modificacion debemos de dirigirnos al fichero <strong>/etc/postgresql/11/main/pg_hba.conf</strong> en el cual vamos a indicar que permita la conexión remota desde cualquier dirección ip de la red, introduciendo la siguiente línea que aparece a continuación en <strong>AMBAS MAQUINAS</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero pg_hba.conf en interconexion1 ####</span>
+<span style="color:#75715e"># Permitimos la conexion remota</span>
+host    all             all             0.0.0.0/0               md5
+
+<span style="color:#75715e">#### Fichero pg_hba.conf en interconexion2 ####</span>
+<span style="color:#75715e"># Permitimos la conexion remota</span>
+host    all             all             0.0.0.0/0               md5
+</code></pre></div><p>Una vez hecho estos dos pasos en <strong>AMBAS MAQUINAS</strong> debemos de reiniciar los servicios de postgresql en nuestra maquina mediante el siguiente comando:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Reiniciamos en ambas maquinas ####</span>
+debian@interconexion-1:~$ sudo systemctl restart postgresql
+
+debian@interconexion-2:~$ sudo systemctl restart postgresql
+</code></pre></div><h1 id="poblando-ambas-bases-de-datos">Poblando ambas bases de datos</h1>
+<p>Ahora que tenemos habilitado la conexion remota, debemos de poblar nuestras bases de datos con algunos datos para poder realizar las pruebas de enlace entre las bases de datos mas adelante, por ello, en cada maquina vamos a crear un nuevo usuario, una base de datos y le daremos todos los privilegios a dicho usuario sobre la base de datos que hayamos creado, por lo que vamos a proceder a su creacion:</p>
+<h2 id="maquina-interconexion1">Maquina interconexion1</h2>
+<p>En esta maquina vamos a tener creado un usuario llamado <strong>usuario1</strong> el cual va a tener todos los privilegios sobre la base de datos llamada <strong>base_prueba1</strong>, para ello debemos de seguir los siguientes pasos:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Nos conectamos a la base de datos postgresql ####</span>
+debian@interconexion-1:~$ sudo su - postgres
+postgres@interconexion-1:~$ psql
+
+<span style="color:#75715e">#### Creamos el nuevo usuario ####</span>
+postgres<span style="color:#f92672">=</span><span style="color:#75715e"># create user usuario1 with password &#39;usuario1&#39;;</span>
+CREATE ROLE
+
+<span style="color:#75715e">#### Creamos la nueva base de datos ####</span>
+postgres<span style="color:#f92672">=</span><span style="color:#75715e"># create database base_prueba1;</span>
+CREATE DATABASE
+
+<span style="color:#75715e">#### Le damos a usuario1 los privilegios sobre base_prueba1 ####</span>
+postgres<span style="color:#f92672">=</span><span style="color:#75715e"># grant all privileges on database base_prueba1 to usuario1;</span>
+GRANT
+</code></pre></div><p>Una vez hayamos realizado estos pasos, salimos y nos conectamos con el usuario que hemos creado para asi poder crear una tabla nueva en la base de datos nueva:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Nos conectamos con el usuario creado ####</span>
+postgres@interconexion-1:~$ psql -h localhost -U usuario1 -W -d base_prueba1
+Password: 
+...
+base_prueba1<span style="color:#f92672">=</span>&gt;
+
+<span style="color:#75715e">#### Creamos la siguiente tabla ####</span>
+create table depart
+<span style="color:#f92672">(</span>
+    dept_no integer,
+    dnombre varchar<span style="color:#f92672">(</span>20<span style="color:#f92672">)</span>,
+    loc     varchar<span style="color:#f92672">(</span>20<span style="color:#f92672">)</span>,
+    primary key <span style="color:#f92672">(</span>dept_no<span style="color:#f92672">)</span>
+<span style="color:#f92672">)</span>;
+
+<span style="color:#75715e">#### Le insertamos los valores a la tabla ####</span>
+insert into depart
+values <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;10&#39;</span>,<span style="color:#e6db74">&#39;CONTABILIDAD&#39;</span>,<span style="color:#e6db74">&#39;SEVILLA&#39;</span><span style="color:#f92672">)</span>;
+insert into depart
+values <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;20&#39;</span>,<span style="color:#e6db74">&#39;INVESTIGACION&#39;</span>,<span style="color:#e6db74">&#39;MADRID&#39;</span><span style="color:#f92672">)</span>;
+insert into depart
+values <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;30&#39;</span>,<span style="color:#e6db74">&#39;VENTAS&#39;</span>,<span style="color:#e6db74">&#39;BARCELONA&#39;</span><span style="color:#f92672">)</span>;
+insert into depart
+values <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;40&#39;</span>,<span style="color:#e6db74">&#39;PRODUCCION&#39;</span>,<span style="color:#e6db74">&#39;BILBAO&#39;</span><span style="color:#f92672">)</span>;
+
+<span style="color:#75715e">#### Comprobamos la tabla ####</span>
+base_prueba1<span style="color:#f92672">=</span>&gt; <span style="color:#66d9ef">select</span> * from depart;
+ dept_no |    dnombre    |    loc    
+---------+---------------+-----------
+      <span style="color:#ae81ff">10</span> | CONTABILIDAD  | SEVILLA
+      <span style="color:#ae81ff">20</span> | INVESTIGACION | MADRID
+      <span style="color:#ae81ff">30</span> | VENTAS        | BARCELONA
+      <span style="color:#ae81ff">40</span> | PRODUCCION    | BILBAO
+<span style="color:#f92672">(</span><span style="color:#ae81ff">4</span> rows<span style="color:#f92672">)</span>
+</code></pre></div><p>Ya tenemos nuestra maquina <strong>interconexion1</strong> configurada, ahora debemos de hacer la misma configuracion pero para la maquina <strong>interconexion2</strong></p>
+<h2 id="maquina-interconexion2">Maquina interconexion2</h2>
+<p>En esta maquina vamos a seguir el mismo procedimiento que hemos hecho en la maquina <strong>interconexion1</strong> y es el de crear un nuevo usuario, una nueva base de datos y en ella crear una tabla y poblarla:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el nuevo usuario ####</span>
+postgres<span style="color:#f92672">=</span><span style="color:#75715e"># create user usuario2 with password &#39;usuario2&#39;;</span>
+CREATE ROLE
+
+<span style="color:#75715e">#### Creamos la nueva base de datos ####</span>
+postgres<span style="color:#f92672">=</span><span style="color:#75715e"># create database base_prueba2;</span>
+CREATE DATABASE
+
+<span style="color:#75715e">#### Le damos a usuario2 los privilegios en la base de datos base_prueba2 ####</span>
+postgres<span style="color:#f92672">=</span><span style="color:#75715e"># grant all privileges on database base_prueba2 to usuario2;</span>
+GRANT
+</code></pre></div><p>Una vez hayamos realizado estos pasos, salimos y nos conectamos con el usuario que hemos creado para asi poder crear una tabla nueva en la base de datos nueva:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Nos conectamos a la nueva base de datos con el nuevo usuario ####</span>
+postgres@interconexion-2:~$ psql -h localhost -U usuario2 -W -d base_prueba2
+Password:
+...
+base_prueba2<span style="color:#f92672">=</span>&gt;
+
+<span style="color:#75715e">#### Creamos la siguiente tabla ####</span>
+create table herramientas
+<span style="color:#f92672">(</span>
+    descripcion	varchar<span style="color:#f92672">(</span>20<span style="color:#f92672">)</span>,
+    estanteria	int,
+    unidades	int,
+    constraint pk_herramientas primary key <span style="color:#f92672">(</span>descripcion<span style="color:#f92672">)</span>
+<span style="color:#f92672">)</span>;
+
+<span style="color:#75715e">#### Le insertamos los siguiente valores ####</span>
+insert into herramientas
+values<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Alicates&#39;</span>,1,10<span style="color:#f92672">)</span>;
+insert into herramientas
+values<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Cortador&#39;</span>,4,5<span style="color:#f92672">)</span>;
+insert into herramientas
+values<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Destornillador&#39;</span>,3,7<span style="color:#f92672">)</span>;
+insert into herramientas
+values<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Escafina&#39;</span>,6,5<span style="color:#f92672">)</span>;
+insert into herramientas
+values<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Guantes&#39;</span>,2,7<span style="color:#f92672">)</span>;
+insert into herramientas
+values<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Lima&#39;</span>,6,10<span style="color:#f92672">)</span>;
+insert into herramientas
+values<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Martillo&#39;</span>,3,10<span style="color:#f92672">)</span>;
+insert into herramientas
+values<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Metro&#39;</span>,5,15<span style="color:#f92672">)</span>;
+insert into herramientas
+values<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Sierra&#39;</span>,4,5<span style="color:#f92672">)</span>;
+insert into herramientas
+values<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Soldador&#39;</span>,1,15<span style="color:#f92672">)</span>;
+
+<span style="color:#75715e">#### Realizamoz una consulta para comprobarlo ####</span>
+base_prueba2<span style="color:#f92672">=</span>&gt; <span style="color:#66d9ef">select</span> * from herramientas;
+  descripcion   | estanteria | unidades 
+----------------+------------+----------
+ Alicates       |          <span style="color:#ae81ff">1</span> |       <span style="color:#ae81ff">10</span>
+ Cortador       |          <span style="color:#ae81ff">4</span> |        <span style="color:#ae81ff">5</span>
+ Destornillador |          <span style="color:#ae81ff">3</span> |        <span style="color:#ae81ff">7</span>
+ Escafina       |          <span style="color:#ae81ff">6</span> |        <span style="color:#ae81ff">5</span>
+ Guantes        |          <span style="color:#ae81ff">2</span> |        <span style="color:#ae81ff">7</span>
+ Lima           |          <span style="color:#ae81ff">6</span> |       <span style="color:#ae81ff">10</span>
+ Martillo       |          <span style="color:#ae81ff">3</span> |       <span style="color:#ae81ff">10</span>
+ Metro          |          <span style="color:#ae81ff">5</span> |       <span style="color:#ae81ff">15</span>
+ Sierra         |          <span style="color:#ae81ff">4</span> |        <span style="color:#ae81ff">5</span>
+ Soldador       |          <span style="color:#ae81ff">1</span> |       <span style="color:#ae81ff">15</span>
+<span style="color:#f92672">(</span><span style="color:#ae81ff">10</span> rows<span style="color:#f92672">)</span>
+</code></pre></div><p>Cuando tengamos estos pasos ya realizados vamos a proceder a la interconexion entre la maquina1 entre la maquina2 y luego entre la maquina2 y la maquina1.</p>
+<h1 id="enlace-entre-maquina1-y-maquina2">Enlace entre maquina1 y maquina2</h1>
+<p>Para conectar la máquina1 con la máquina2 tendremos que dirigirnos primero a la máquina1 y estando en ella nos conectaremos con un usuario que tenga privilegios de crear un link (enlace) y procederemos a crearlo. Nos conectamos a la base de datos con el usuario con privilegios y creamos el link.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Nos conectamos al usuario postgres ####</span>
+postgres@interconexion-1:~$ psql -d base_prueba1
+psql <span style="color:#f92672">(</span>11.9 <span style="color:#f92672">(</span>Debian 11.9-0+deb10u1<span style="color:#f92672">))</span>
+Type <span style="color:#e6db74">&#34;help&#34;</span> <span style="color:#66d9ef">for</span> help.
+
+base_prueba1<span style="color:#f92672">=</span><span style="color:#75715e"># </span>
+
+<span style="color:#75715e">#### Creamos un link que lo llamaremos dblink ####</span>
+base_prueba1<span style="color:#f92672">=</span><span style="color:#75715e"># create extension dblink;</span>
+CREATE EXTENSION
+</code></pre></div><p>Una vez hecho esto, nos conectamos con el usuario <strong>usuario1</strong>, cuando estemos conectados lo que realizaremos es una consulta al link creado anteriormente al cual vamos a indicarle los parametros para poder acceder a la base de datos de la otra máquina, datos como el nombre de la base de datos, la ip de la máquina, el nombre de usuario con su contraseña, seguido de la consulta select que se le realiza a una tabla y ademas de ello le asignamos los nombres a los campos a mostrar.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Hacemos la consulta a la base de datos remota ####</span>
+base_prueba1<span style="color:#f92672">=</span>&gt; <span style="color:#66d9ef">select</span> * from dblink
+<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;dbname=base_prueba2 host=10.0.0.15 user=usuario2 password=usuario2&#39;</span>, <span style="color:#e6db74">&#39;select * from herramientas&#39;</span><span style="color:#f92672">)</span> as herramientas
+<span style="color:#f92672">(</span>descripcion varchar, estanteria int, unidades int<span style="color:#f92672">)</span>;
+
+descripcion   | estanteria | unidades 
+----------------+------------+----------
+ Alicates       |          <span style="color:#ae81ff">1</span> |       <span style="color:#ae81ff">10</span>
+ Cortador       |          <span style="color:#ae81ff">4</span> |        <span style="color:#ae81ff">5</span>
+ Destornillador |          <span style="color:#ae81ff">3</span> |        <span style="color:#ae81ff">7</span>
+ Escafina       |          <span style="color:#ae81ff">6</span> |        <span style="color:#ae81ff">5</span>
+ Guantes        |          <span style="color:#ae81ff">2</span> |        <span style="color:#ae81ff">7</span>
+ Lima           |          <span style="color:#ae81ff">6</span> |       <span style="color:#ae81ff">10</span>
+ Martillo       |          <span style="color:#ae81ff">3</span> |       <span style="color:#ae81ff">10</span>
+ Metro          |          <span style="color:#ae81ff">5</span> |       <span style="color:#ae81ff">15</span>
+ Sierra         |          <span style="color:#ae81ff">4</span> |        <span style="color:#ae81ff">5</span>
+ Soldador       |          <span style="color:#ae81ff">1</span> |       <span style="color:#ae81ff">15</span>
+<span style="color:#f92672">(</span><span style="color:#ae81ff">10</span> rows<span style="color:#f92672">)</span>
+</code></pre></div><h1 id="enlace-entre-maquina2-y-maquina1">Enlace entre maquina2 y maquina1</h1>
+<p>Ahora debemos de hacer lo mismo pero a la inversa, es decir, debemos de crear link de la maquina2 a la maquina1:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Con el usuario postgres creamos el link ####</span>
+postgres@interconexion-2:~$ psql -d base_prueba2
+psql <span style="color:#f92672">(</span>11.9 <span style="color:#f92672">(</span>Debian 11.9-0+deb10u1<span style="color:#f92672">))</span>
+Type <span style="color:#e6db74">&#34;help&#34;</span> <span style="color:#66d9ef">for</span> help.
+
+base_prueba2<span style="color:#f92672">=</span><span style="color:#75715e"># </span>
+
+<span style="color:#75715e">#### Creamos el link que lo llamaremos dblink ####</span>
+base_prueba2<span style="color:#f92672">=</span><span style="color:#75715e"># create extension dblink;</span>
+CREATE EXTENSION
+</code></pre></div><p>Nos conectaremos con el usuario que hemos creado anteriormente y conectados a el, podremos realizar una consulta a la tabla de la máquina1 introduciendo el mismo comando introducido anteriormente pero adaptandolo a este caso.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Hacemos la consulta a la base de datos remota ####</span>
+base_prueba2<span style="color:#f92672">=</span><span style="color:#75715e"># select * from dblink</span>
+<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;dbname=base_prueba1 host=10.0.0.11 user=usuario1 password=usuario1&#39;</span>, <span style="color:#e6db74">&#39;select * from depart&#39;</span><span style="color:#f92672">)</span> as depart
+<span style="color:#f92672">(</span>dept_no integer, dnombre varchar, loc varchar<span style="color:#f92672">)</span>;
+ dept_no |    dnombre    |    loc    
+---------+---------------+-----------
+      <span style="color:#ae81ff">10</span> | CONTABILIDAD  | SEVILLA
+      <span style="color:#ae81ff">20</span> | INVESTIGACION | MADRID
+      <span style="color:#ae81ff">30</span> | VENTAS        | BARCELONA
+      <span style="color:#ae81ff">40</span> | PRODUCCION    | BILBAO
+<span style="color:#f92672">(</span><span style="color:#ae81ff">4</span> rows<span style="color:#f92672">)</span>
+</code></pre></div>
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2021  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+         
+        <li><a href="/servicios">Servicios</a></li>
+         
+        <li><a href="/implantacion">Implantacion</a></li>
+         
+        <li><a href="/bbdd">BBDD</a></li>
+         
+        <li><a href="/hlc">HLC</a></li>
+         
+        <li><a href="/cloud">Cloud</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>

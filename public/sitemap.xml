@@ -3,8 +3,18 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://franjavimn.onrender.com/bbdd/</loc>
+    <lastmod>2021-02-08T18:19:40+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://franjavimn.onrender.com/</loc>
-    <lastmod>2021-02-03T19:30:58+01:00</lastmod>
+    <lastmod>2021-02-08T18:19:40+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://franjavimn.onrender.com/bbdd/interconexion/</loc>
+    <lastmod>2021-02-08T18:19:40+01:00</lastmod>
   </url>
   
   <url>
@@ -105,11 +115,6 @@
   <url>
     <loc>https://franjavimn.onrender.com/implantacion/prueba-django/</loc>
     <lastmod>2020-12-10T14:08:25+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://franjavimn.onrender.com/bbdd/</loc>
-    <lastmod>2020-12-09T13:46:40+01:00</lastmod>
   </url>
   
   <url>
