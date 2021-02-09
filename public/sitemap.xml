@@ -3,12 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://franjavimn.onrender.com/bbdd/</loc>
-    <lastmod>2021-02-08T18:19:40+01:00</lastmod>
+    <loc>https://franjavimn.onrender.com/</loc>
+    <lastmod>2021-02-09T13:22:13+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://franjavimn.onrender.com/</loc>
+    <loc>https://franjavimn.onrender.com/implantacion/</loc>
+    <lastmod>2021-02-09T13:22:13+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://franjavimn.onrender.com/implantacion/redes-docker/</loc>
+    <lastmod>2021-02-09T13:22:13+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://franjavimn.onrender.com/implantacion/almacenamiento-docker/</loc>
+    <lastmod>2021-02-09T13:22:05+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://franjavimn.onrender.com/bbdd/</loc>
     <lastmod>2021-02-08T18:19:40+01:00</lastmod>
   </url>
   
@@ -35,11 +50,6 @@
   <url>
     <loc>https://franjavimn.onrender.com/sistemas/</loc>
     <lastmod>2021-02-01T19:22:06+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://franjavimn.onrender.com/implantacion/</loc>
-    <lastmod>2021-02-01T13:22:55+01:00</lastmod>
   </url>
   
   <url>

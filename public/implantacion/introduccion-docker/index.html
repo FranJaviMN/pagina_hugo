@@ -97,6 +97,12 @@ Docker está formado por varios componentes:
 <p>Docker Registry: La finalidad de este componente es almacenar las imágenes generadas por el Docker Engine. Puede estar instalada en un servidor independiente y es un componente fundamental, ya que nos permite distribuir nuestras aplicaciones. Es un proyecto open source que puede ser instalado gratuitamente en cualquier servidor, pero, como hemos comentado, el proyecto nos ofrece DockerHub.</p>
 </li>
 </ul>
+<h2 id="indice">Indice</h2>
+<ul>
+<li><a href="">Introducción a Docker</a></li>
+<li><a href="">Almacenamiento en Docker</a></li>
+<li><a href="">Redes en Docker</a></li>
+</ul>
 <h1 id="instalando-docker">Instalando docker</h1>
 <p>En Debian 10 el paquete que debemos de instalar se llama <strong>docker.io</strong> que es la version de la comunidad y esta en repositorios de Debian:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalar docker.io ####</span>
@@ -318,157 +324,6 @@ AH00558: apache2: Could not reliably determine the server<span style="color:#e6d
 <span style="color:#f92672">[</span>Mon Feb <span style="color:#ae81ff">01</span> 09:02:22.356848 2021<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>core:notice<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>pid 1<span style="color:#f92672">]</span> AH00094: Command line: <span style="color:#e6db74">&#39;apache2 -D FOREGROUND&#39;</span>
 </code></pre></div><p>Asi, si entramos en http://localhost:8081 podemos ver que tenemos una aplicacion de nextcloud corriendo:</p>
 <p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Implantacion/docker/nextcloud-docker.png" alt="docker nextcloud"></p>
-<h1 id="almacenamiento">Almacenamiento</h1>
-<p><strong>Los contenedores son efímeros</strong>, es decir, los ficheros, datos y configuraciones que creamos en los contenedores sobreviven a las paradas de los mismos pero, sin embargo, son destruidos si el contenedor es destruido.</p>
-<p>Por lo que todo contenido que tengamos dentro del contenedor puede ser destruido y todo lo que haya en su interior, podemos verlo facilmente con el siguiente ejemplo de un servidor web:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el contenedor con la imagen de apache2 ####</span>
-debian@omega:~$ docker run -d --name my-apache-app -p 8080:80 httpd:2.4
-
-<span style="color:#75715e">#### Le introducimos un comando para crear un fichero en el documentroot ####</span>
-debian@omega:~$ docker exec my-apache-app bash -c <span style="color:#e6db74">&#39;echo &#34;&lt;h1&gt;Hola Docker!!!&lt;/h1&gt;&#34; &gt; htdocs/index.html&#39;</span>
-
-<span style="color:#75715e">#### Comprobamos si tenemos ese mensaje ####</span>
-debian@omega:~$ curl http://localhost:8080
-&lt;h1&gt;Hola Docker!!!&lt;/h1&gt;
-
-<span style="color:#75715e">#### Borramos el contenedor y lo volvemos a crear ####</span>
-debian@omega:~$ docker rm -f my-apache-app
-my-apache-app
-
-debian@omega:~$ sudo docker run -d --name my-apache-app -p 8080:80 httpd:2.4
-
-<span style="color:#75715e">#### Comprobamos el mensaje ####</span>
-debian@omega:~$ curl http://localhost:8080
-&lt;html&gt;&lt;body&gt;&lt;h1&gt;It works!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;
-</code></pre></div><p>Como vemos en el ejemplo anterior podemos ver como los contenedores son efimeros. Pero esto lo podemos solucionar usando volumenes, en este caso podemos hacer mediante dos formas como pueden ser <strong>volumenes docker</strong> o <strong>bind mount</strong></p>
-<ul>
-<li>
-<p>Volúmenes Docker: Si elegimos conseguir la persistencia usando volúmenes estamos haciendo que los datos de los contenedores que nosotros decidamos se almacenen en una parte del sistema de ficheros que es gestionada por docker y a la que, debido a sus permisos, sólo docker tendrá acceso. En linux se guardan en /var/lib/docker/volumes. Este tipo de volúmenes se suele usar en los siguiente casos:</p>
-<ul>
-<li>Para compartir datos entre contenedores. Simplemente tendrán que usar el mismo volumen.</li>
-<li>Para copias de seguridad ya sea para que sean usadas posteriormente por otros contenedores o para mover esos volúmenes a otros hosts.</li>
-<li>Cuando quiero almacenar los datos de mi contenedor no localmente si no en un proveedor cloud.</li>
-</ul>
-</li>
-<li>
-<p>Bind mounts: Si elegimos conseguir la persistencia de los datos de los contenedores usando bind mount lo que estamos haciendo es “mapear” (montar) una parte de mi sistema de ficheros, de la que yo normalmente tengo el control, con una parte del sistema de ficheros del contenedor. De esta manera conseguimos:</p>
-<ul>
-<li>Compartir ficheros entre el host y los containers.</li>
-<li>Que otras aplicaciones que no sean docker tengan acceso a esos ficheros, ya sean código, ficheros etc…</li>
-</ul>
-</li>
-</ul>
-<h2 id="gestión-de-volúmenes-docker">Gestión de volúmenes Docker</h2>
-<p>Algunos comando útiles para trabajar con volúmenes docker:</p>
-<ul>
-<li>docker volumen create: Crea un volumen con el nombre indicado.</li>
-<li>docker volume rm: Elimina el volumen indicado.</li>
-<li>docker volumen prune: Para eliminar los volúmenes que no están siendo usados por ningún contenedor.</li>
-<li>docker volume ls: Nos proporciona una lista de los volúmenes creados y algo de información adicional.</li>
-<li>docker volume inspect: Nos dará una información mucho más detallada de el volumen que hayamos elegido.</li>
-</ul>
-<h2 id="qué-información-tenemos-que-guardar">¿Qué información tenemos que guardar?</h2>
-<p>Para terminar: ¿Qué debemos guardar de forma persistente en un contenedor?</p>
-<ul>
-<li>Los datos de la aplicación</li>
-<li>Los logs del servicio</li>
-<li>La configuración del servicio: En este caso podemos añadirla a la imagen, pero será necesaria la creación de una nueva imagen si cambiamos la configuració</li>
-<li>Si la guardamos en un volumen hay que tener en cuanta que ese fichero lo tenemos que tener en el entorno de producción (puede ser bueno, porque l</li>
-<li>configuraciones de los distintos entornos puede variar).</li>
-</ul>
-<h2 id="asociando-almacenamiento-a-los-contenedores">Asociando almacenamiento a los contenedores</h2>
-<p>Veamos como puedo usar los volúmenes y los bind mounts en los contenedores. Para cualquiera de los dos casos lo haremos mediante el uso de dos flags de la orden <em>docker run</em>:</p>
-<h2 id="ejercicios-1">Ejercicios</h2>
-<ol>
-<li>Vamos a trabajar con volúmenes docker:
-<ul>
-<li>Crea un volumen docker que se llame miweb</li>
-<li>Crea un contenedor desde la imagen php:7.4-apache donde montes en el directorio/var/www/html(que sabemos que es el docuemntroot del servidor que nos ofrece esa imagen) el volumen docker que has creado.</li>
-<li>Utiliza el comando <strong>docker cp</strong> para copiar un fichero info.php en el directorio /var/www/html.</li>
-<li>Accede al contenedor desde el navegador para ver la información ofrecida por el fichero info.php.</li>
-<li>Borra el contenedor</li>
-<li>Crea un nuevo contenedor y monta el mismo volumen como en el ejercicio anterior.</li>
-<li>Accede al contenedor desde el navegador para ver la información ofrecida por el fichero info.php. ¿Seguía existiendo ese fichero?</li>
-</ul>
-</li>
-</ol>
-<p>Para ello lo primero que debemos de hacer es crear el volumen, para ello debemos de usar comando <strong>docker volume create</strong>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el volumen llamado miweb ####</span>
-debian@omega:~$ sudo docker volume create miweb
-miweb
-
-<span style="color:#75715e">#### Creamos el nuevo contenedor con la imagen php:7.4-apache ####</span>
-debian@omega:~$ sudo docker run -d --name prueba-volumenes -v miweb:/var/www/html -p 8080:80 php:7.4-apache
-
-<span style="color:#75715e">#### Le añadimos un fichero info.php con docker cp ####</span>
-debian@omega:~$ cat info.php 
-&lt;?php phpinfo<span style="color:#f92672">()</span>;?&gt;
-
-debian@omega:~$ sudo docker cp info.php prueba-volumenes:/var/www/html
-</code></pre></div><p>De esta forma ya lo tendremos funcionando y si entramos en el direccion de la maquina indicando el puerto y el fichero <em>info.php</em> podremos ver la información que nos ofrece php.</p>
-<p>Ahora vamos a destruir el contenedor y lo vamos a volver a crear para comprobar como sigue sirviendo el fichero info.php porque este fichero esta en un volumen, el cual no se borra al destruir un contenedor:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Destruimos el contenedor ####</span>
-debian@omega:~$ sudo docker rm -f prueba-volumenes
-prueba-volumenes
-
-<span style="color:#75715e">#### Volvemos a crear el volumen ####</span>
-debian@omega:~$ sudo docker run -d --name prueba-volumenes -v miweb:/var/www/html -p 8080:80 php:7.4-apache
-</code></pre></div><p>Si volvemos a entrar en la dirección del contenedor veremos que nos sigue mostrando el fichero de <em>info.php</em></p>
-<ol start="2">
-<li>Vamos a trabajar con bind mount:
-<ul>
-<li>Crea un directorio en tu host y dentro crea un fichero index.html.</li>
-<li>Crea un contenedor desde la imagen php:7.4-apache donde montes en el directorio /var/www/html el directorio que has creado por medio de bind mount.</li>
-<li>Accede al contenedor desde el navegador para ver la información ofrecida por el fichero index.html.</li>
-<li>Modifica el contenido del fichero index.html en tu host y comprueba que al refrescar la página ofrecida por el contenedor, el contenido ha cambiado.</li>
-<li>Borra el contenedor</li>
-<li>Crea un nuevo contenedor y monta el mismo directorio como en el ejercicio anterior.</li>
-<li>Accede al contenedor desde el navegador para ver la información ofrecida por el fichero index.html. ¿Se sigue viendo el mismo contenido?</li>
-</ul>
-</li>
-</ol>
-<p>Lo primero es crear el directorio que lo vamos a llamar <em>vol-html</em> y le vamos a añadir un nuevo fichero <em>index.php</em> con un mensaje de saludo. Una vez hecho debemos de crear un nuevo contenedor en el que vamos a montar el directorio mediando <strong>bind mount</strong> para que nos sirva el contenido de ese directorio, para ell seguimos los siguientes pasos:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el directorio y el fichero ####</span>
-debian@omega:~$ mkdir vol-html
-debian@omega:~$ cd vol-html/
-debian@omega:~/vol-html$ nano index.html
-
-<span style="color:#75715e">#### Creamos el contenedor montando el dirctorio vol-html ####</span>
-debian@omega:~$ sudo docker run -d --name prueba-volumenes -v /home/debian/vol-html/:/var/www/html -p 8080:80 php:7.4-apache
-
-<span style="color:#75715e">#### Comprobamos el mensaje de bienvenida ####</span>
-debian@omega:~$ curl http://localhost:8080
-&lt;h1&gt;Hola Docker!!!&lt;/h1&gt;
-
-<span style="color:#75715e">#### Modificamos el mensaje y vemos si nos lo muestra de nuevo ####</span>
-debian@omega:~$ nano vol-html/index.html
-debian@omega:~$ curl http://localhost:8080
-&lt;h1&gt;Hola Docker!!!, Bienvenido&lt;/h1&gt;
-</code></pre></div><p>Ahora lo que vamos a hacer es borrar el contenedor y vamos a volver a crearlo para ver que no hemos perdido el contenido que teniamos:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Borramos el contenedor ####</span>
-debian@omega:~$ sudo docker rm -f prueba-volumenes
-prueba-volumenes
-
-<span style="color:#75715e">#### Lo volvemos a crear ####</span>
-debian@omega:~$ sudo docker run -d --name prueba-volumenes -v /home/debian/vol-html/:/var/www/html -p 8080:80 php:7.4-apache
-
-<span style="color:#75715e">#### Y lo comprobamos ####</span>
-debian@omega:~$ curl http://localhost:8080
-&lt;h1&gt;Hola Docker!!!, Bienvenido&lt;/h1&gt;
-</code></pre></div><ol start="3">
-<li>Contenedores con almacenamiento persistente
-<ul>
-<li>Crea un contenedor desde la imagen nextcloud (usando sqlite) configurando el almacenamiento como nos muestra la documentación de la imagen en Docker Hub* (pero utilizando bind mount). Sube algún fichero.</li>
-<li>Elimina el contenedor.</li>
-<li>Crea un contenedor nuevo con la misma configuración de volúmenes. Comprueba que la información que teníamos (ficheros, usuaurio, …), sigue existiendo.</li>
-<li>Comprueba el contenido de directorio que se ha creado en el host.</li>
-</ul>
-</li>
-</ol>
-<p>Para ello vamos a seguir los siguientes pasos:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el contenedor ####</span>
-debian@omega:~$ sudo docker run -d --name prueba-volumenes -v /home/debian/vol-nextcloud/:/var/www/html -p 8080:80 nextcloud
-</code></pre></div><p>Una vez hecho, nos vamos al navegador y ponemos la ip de nuestra maquina y el puerto, y completamos la instalacion de nextcloud. Una vez hecho eso subimos un fichero a nextclodu para ver si, al borrar el contenedor persisten los datos, por lo que subimos un fichero y lo volvemos a crear y veremos que tenemos el mismo fichero que habiamos subido ademas de que ya no tendremos que completar la instalacion de nextcloud ya que la información ya esta almacenada en la base de datos de tipo <strong>sqlite</strong>.</p>
 
   
   </div>

@@ -7,7 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Mon, 08 Feb 2021 18:19:40 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 09 Feb 2021 13:22:13 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Redes Docker</title>
+      <link>https://franjavimn.onrender.com/implantacion/redes-docker/</link>
+      <pubDate>Tue, 09 Feb 2021 13:22:13 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/implantacion/redes-docker/</guid>
+      <description>Redes en Docker Aunque hasta ahora no lo hemos tenido en cuenta, cada vez que creamos un contenedor, esté se conecta a una red virtual y docker hace una configuración del sistema (usando interfaces puente e iptables) para que la máquina tenga una ip interna, tenga acceso al exterior, podamos mapear (DNAT) puertos,…)
+debian@omega:~$ docker run -it --rm debian bash -c &amp;#34;ip a&amp;#34; 1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00 inet 127.</description>
+    </item>
+    
+    <item>
+      <title>Almacenamiento Docker</title>
+      <link>https://franjavimn.onrender.com/implantacion/almacenamiento-docker/</link>
+      <pubDate>Tue, 09 Feb 2021 13:22:05 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/implantacion/almacenamiento-docker/</guid>
+      <description>Almacenamiento Los contenedores son efímeros, es decir, los ficheros, datos y configuraciones que creamos en los contenedores sobreviven a las paradas de los mismos pero, sin embargo, son destruidos si el contenedor es destruido.
+Por lo que todo contenido que tengamos dentro del contenedor puede ser destruido y todo lo que haya en su interior, podemos verlo facilmente con el siguiente ejemplo de un servidor web:
+#### Creamos el contenedor con la imagen de apache2 #### debian@omega:~$ docker run -d --name my-apache-app -p 8080:80 httpd:2.</description>
+    </item>
+    
     <item>
       <title>Interconexion</title>
       <link>https://franjavimn.onrender.com/bbdd/interconexion/</link>
