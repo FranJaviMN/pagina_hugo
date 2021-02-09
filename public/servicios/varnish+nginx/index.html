@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Varnish &#43; Nginx | Blog</title>
+  <meta name="description" content="En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Varnish &#43; Nginx" />
+<meta property="og:description" content="Varnish &#43; Nginx En esta practica vamos a montar un escenario con nginx y varnish para ver como mejora el rendimiento de nuestro sitio web de forma significativa pero antes vamos a ecplicar que es Varnish.
+¿Qué es Varnish? Varnish Cache es un acelerador de aplicaciones web, también conocido como caché de proxy HTTP inversa. Se instala delante de cualquier servidor HTTP y se configura para almacenar en el caché del servidor una copia del recurso solicitado." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://franjavimn.onrender.com/servicios/varnish&#43;nginx/" />
+<meta property="article:published_time" content="2021-02-09T13:29:29+01:00" />
+<meta property="article:modified_time" content="2021-02-09T13:29:29+01:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Varnish &#43; Nginx"/>
+<meta name="twitter:description" content="Varnish &#43; Nginx En esta practica vamos a montar un escenario con nginx y varnish para ver como mejora el rendimiento de nuestro sitio web de forma significativa pero antes vamos a ecplicar que es Varnish.
+¿Qué es Varnish? Varnish Cache es un acelerador de aplicaciones web, también conocido como caché de proxy HTTP inversa. Se instala delante de cualquier servidor HTTP y se configura para almacenar en el caché del servidor una copia del recurso solicitado."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://franjavimn.onrender.com/images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://franjavimn.onrender.com">
+  
+    <div id="logo" style="background-image: url(https://franjavimn.onrender.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+       
+        <li><a href="/servicios">Servicios</a></li>
+       
+        <li><a href="/implantacion">Implantacion</a></li>
+       
+        <li><a href="/bbdd">BBDD</a></li>
+       
+        <li><a href="/hlc">HLC</a></li>
+       
+        <li><a href="/cloud">Cloud</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h1 id="varnish--nginx">Varnish + Nginx</h1>
+<p>En esta practica vamos a montar un escenario con nginx y varnish para ver como mejora el rendimiento de nuestro sitio web de forma significativa pero antes vamos a ecplicar que es Varnish.</p>
+<h2 id="qué-es-varnish">¿Qué es Varnish?</h2>
+<p>Varnish Cache es un acelerador de aplicaciones web, también conocido como caché de proxy HTTP inversa. Se instala delante de cualquier servidor HTTP y se configura para almacenar en el caché del servidor una copia del recurso solicitado. Está ideado para aumentar el rendimiento de aplicaciones web con contenidos pesados y APIs altamente consumidas.</p>
+<p>Es una alternativa a otras opciones existentes que plantean caché de cliente o servidores de origen. Además Varnish Cache está orientado exclusivamente a HTTP a diferencia de otros que ofrecen soporte FTP, SMTP u otros protocolos de red.</p>
+<h1 id="ejercicio-a-realizar">Ejercicio a realizar</h1>
+<h2 id="tarea-1">Tarea 1</h2>
+<p>Vamos a configurar una máquina con la configuración ganadora: nginx + fpm_php (socket unix). Para ello ejecuta la receta ansible que encontraras en este <a href="https://github.com/FranJaviMN/ansible_nginx_fpm_php">repositorio</a>. Accede al wordpress y termina la configuración del sitio.</p>
+<p>Una vez tengamos el repositorio solo debemos de ejecutar el <em>playbook</em> teniendo en cuenta que debemos de cambiar la ip que tenemos en el fichero <strong>hosts</strong> por la ip de nuestra maquina a la que queramos dirigir este <em>playbook</em> en mi caso a una maquina con ip <strong>172.22.200.145</strong></p>
+<p>Una vez lo tengamos debemos de terminar la instalacion de wordpress de forma manual, para ello solo debemos de entrar en nuestra pagina de wordpress y seguir.</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Servicios/varnish/wordpress-nginx.png" alt="wordpress nginx"></p>
+<h2 id="tarea-2">Tarea 2</h2>
+<p>Vamos a hacer las pruebas de rendimiento desde la misma máquina, es decir vamos a ejecutar instrucciones similares a esta:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ab -t <span style="color:#ae81ff">10</span> -c <span style="color:#ae81ff">200</span> -k http://localhost/wordpress/index.php
+</code></pre></div><p>Realiza algunas prueba de rendimiento con varios valores distintos para el nivel de concurrencia (50,100,250,500) y apunta el resultado de peticiones/segundo (parámetro Requests per second de ab). Puedes hacer varias pruebas y quedarte con la media. Reinicia el servidor nginx y el fpm-php entre cada prueba para que los resultados sean los más reales posibles.</p>
+<p>Para realizar estas pruebas solo debemos de instalar el paquete donde tenemos la funcionalidad de <strong>ab</strong> que esta en el paquete llamado <strong>apache2-utils</strong> por lo que lo instalamos en nuestra maquina donde tenemos el wordpress:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@varnishnginx:~$ sudo apt install apache2-utils
+</code></pre></div><p>Una vez hayamos instalado el paquete vamos a empezar con las pruebas, para ello vamos aumentando poco a poco el nivel de concurrencia para ver como reacciona nuestro servidor web, para ello usamos el comando que hemos puesto anteriormente y vamos a indicar que las peticiones la van a hacer 10 usuarios a la vez:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Nivel de concurrencia de 50 ####</span>
+debian@varnishnginx:~$ ab -t <span style="color:#ae81ff">10</span> -c <span style="color:#ae81ff">50</span> -k http://localhost/wordpress/index.php
+...
+Requests per second:    29.33 <span style="color:#f92672">[</span><span style="color:#75715e">#/sec] (mean)</span>
+...
+
+<span style="color:#75715e">#### Nivel de concurrencia de 100 ####</span>
+debian@varnishnginx:~$ ab -t <span style="color:#ae81ff">10</span> -c <span style="color:#ae81ff">100</span> -k http://localhost/wordpress/index.php
+...
+Requests per second:    31.71 <span style="color:#f92672">[</span><span style="color:#75715e">#/sec] (mean)</span>
+...
+
+<span style="color:#75715e">#### Nivel de concurrencia de 250 ####</span>
+debian@varnishnginx:~$ ab -t <span style="color:#ae81ff">10</span> -c <span style="color:#ae81ff">250</span> -k http://localhost/wordpress/index.php
+...
+Requests per second:    2601.04 <span style="color:#f92672">[</span><span style="color:#75715e">#/sec] (mean)</span>
+...
+
+<span style="color:#75715e">#### Nivel de concurrencia de 500 ####</span>
+debian@varnishnginx:~$ ab -t <span style="color:#ae81ff">10</span> -c <span style="color:#ae81ff">500</span> -k http://localhost/wordpress/index.php
+...
+Requests per second:    3348.60 <span style="color:#f92672">[</span><span style="color:#75715e">#/sec] (mean)</span>
+...
+</code></pre></div><h2 id="tarea-3">Tarea 3</h2>
+<p>Configura un proxy inverso - caché Varnish escuchando en el puerto 80 y que se comunica con el servidor web por el puerto 8080. Entrega y muestra una comprobación de que varnish está funcionando con la nueva configuración. Realiza pruebas de rendimiento (quedate con el resultado del parámetro Requests per second) y comprueba si hemos aumentado el rendimiento. Si hacemos varias peticiones a la misma URL, ¿cuantas peticiones llegan al servidor web? (comprueba el fichero access.log para averiguarlo).</p>
+<p>Para ello lo primero que debemos de hacer es descargar el paquete donde tenemos el programa de <strong>Varnish</strong>, para ello descargamos el paquete con el mismo nombre:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Descargamos el paquete ####</span>
+debian@varnishnginx:~$ sudo apt install varnish
+
+<span style="color:#75715e">#### Comprobamos su version ####</span>
+debian@varnishnginx:~$ sudo varnishd -V
+varnishd <span style="color:#f92672">(</span>varnish-6.1.1 revision efc2f6c1536cf2272e471f5cff5f145239b19460<span style="color:#f92672">)</span>
+Copyright <span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> <span style="color:#ae81ff">2006</span> Verdens Gang AS
+Copyright <span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> 2006-2015 Varnish Software AS
+</code></pre></div><p>Una vez tengamos instalado <strong>Varnish</strong> debemos de tener en cuenta que, por defecto, varnish escucha en el puerto <strong>6081</strong> y en el puerto <strong>6082</strong> para la interfaz de administración pero nosotros queremos que escuche en el puerto <strong>80</strong> por lo que primero vamos a realizar unas modificaciones en el servidor web <strong>Nginx</strong></p>
+<p>Lo primero que vamos a hacer es irnos al virtualhost que tenemos en nuestro servidor web y vamos a cambiar el puerto por donde escucha nuestro servidor web por el puerto <strong>8080</strong> asi que debemos de tener las siguientes lineas:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Cambiamos el puerto 80 por el puerto 8080 ####</span>
+server <span style="color:#f92672">{</span>
+        listen <span style="color:#ae81ff">8080</span> default_server;
+        listen <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:8080 default_server;
+...
+
+<span style="color:#75715e">#### Reiniciamos el servicio ####</span>
+debian@varnishnginx:~$ sudo systemctl restart nginx.service
+
+<span style="color:#75715e">#### Comprobamos que este escuchando en el puerto 8080 ####</span>
+debian@varnishnginx:~$ netstat -plntu | grep <span style="color:#ae81ff">8080</span>
+tcp        <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> 0.0.0.0:8080            0.0.0.0:*               LISTEN      -         
+</code></pre></div><p>Una vez lo tengamos podemos ver que esta escuchando en el puerto 8080 gracias a <strong>netstat</strong> vemos que esta escuchando en el puerto <strong>8080/tcp</strong>.</p>
+<p>Ahora que tenemos nuestro servidor web escuchando en el puerto <strong>8080</strong> debemos de cambiar la configuracion de <strong>Varnish</strong> para que acepte las peticiones por el puerto <strong>80</strong> y las redirija al puerto <strong>8080</strong> que es donde tenemos nuestro servidor web, para ello debemos de ir al fichero <strong>/etc/varnish/default.vcl</strong> donde le vamos a definir donde tiene que redirigir el trafico, en este caso seria a la propia maquina, es decir <strong>localhost</strong> y al puerto <strong>8080</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Confirguamos el fichero /etc/varnish/default.vcl ####</span>
+backend default <span style="color:#f92672">{</span>
+    .host <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;127.0.0.1&#34;</span>;
+    .port <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;8080&#34;</span>;
+<span style="color:#f92672">}</span>
+
+host <span style="color:#f92672">=</span> Dirección del servidor web.
+port <span style="color:#f92672">=</span> Puerto por donde escucha el servidor web.
+</code></pre></div><p>Una vez tengamos esta parte configurada debemos de confirgurar <strong>Varnish</strong> para que trabaje sobre el puerto <strong>80</strong> por lo que debemos de modificar el fichero <strong>/etc/default/varnish</strong> donde le vamos a indicar el puerto que va a escuchar:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Modificamos el fichero /etc/default/varnish ####</span>
+...
+DAEMON_OPTS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;-a :80 \
+</span><span style="color:#e6db74">             -T localhost:6082 \
+</span><span style="color:#e6db74">             -f /etc/varnish/default.vcl \
+</span><span style="color:#e6db74">             -S /etc/varnish/secret \
+</span><span style="color:#e6db74">             -s malloc,256m&#34;</span>
+...
+</code></pre></div><p>Y por ultimo debemos de configurar el demonio de systemd y cambiar los parametros por el puerto <strong>80</strong>, en el fichero <strong>/lib/systemd/system/varnish.service</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Configuramos el fichero /lib/systemd/system/varnish.service ####</span>
+...
+ExecStart<span style="color:#f92672">=</span>/usr/sbin/varnishd -j unix,user<span style="color:#f92672">=</span>vcache -F -a :80 -T localhost:6082 -f /etc/varnish/default.vcl -S /etc/varnish/secret -s malloc,256m
+...
+
+<span style="color:#75715e">#### Reiniciamos los servicios y demonios ####</span>
+debian@varnishnginx:~$ sudo systemctl daemon-reload
+
+debian@varnishnginx:~$ sudo systemctl restart varnish
+
+<span style="color:#75715e">#### Comprobamos los puertos ####</span>
+debian@varnishnginx:~$ netstat -plntu | grep 80*
+tcp        <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> 0.0.0.0:80              0.0.0.0:*               LISTEN      -                   
+tcp        <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> 0.0.0.0:8080            0.0.0.0:*               LISTEN      -                   
+...
+</code></pre></div><p>Asi ya tendriamos configurado nuestro servidor web y varnish como proxy cache, asi que si entramos en nuestro wordpress veremos que entramos sin problemas:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Servicios/varnish/varnish-wordpress.png" alt="varnish cache wordpress"></p>
+<p>Ahora vamos a hacer unas pruebas de concurrencia como habiamos hecho cuando no teniamos <strong>Varnish</strong> instalado:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Nivel de concurrencia de 50 ####</span>
+debian@varnishnginx:~$ ab -t <span style="color:#ae81ff">10</span> -c <span style="color:#ae81ff">50</span> -k http://localhost/wordpress/index.php
+...
+Requests per second:    11971.84 <span style="color:#f92672">[</span><span style="color:#75715e">#/sec] (mean)</span>
+...
+
+<span style="color:#75715e">#### Nivel de concurrencia de 100 ####</span>
+debian@varnishnginx:~$ ab -t <span style="color:#ae81ff">10</span> -c <span style="color:#ae81ff">100</span> -k http://localhost/wordpress/index.php
+...
+Requests per second:    11859.68 <span style="color:#f92672">[</span><span style="color:#75715e">#/sec] (mean)</span>
+...
+
+<span style="color:#75715e">#### Nivel de concurrencia de 250 ####</span>
+debian@varnishnginx:~$ ab -t <span style="color:#ae81ff">10</span> -c <span style="color:#ae81ff">250</span> -k http://localhost/wordpress/index.php
+...
+Requests per second:    12127.14 <span style="color:#f92672">[</span><span style="color:#75715e">#/sec] (mean)</span>
+...
+
+<span style="color:#75715e">#### Nivel de concurrencia de 500 ####</span>
+debian@varnishnginx:~$ ab -t <span style="color:#ae81ff">10</span> -c <span style="color:#ae81ff">500</span> -k http://localhost/wordpress/index.php
+...
+Requests per second:    11424.25 <span style="color:#f92672">[</span><span style="color:#75715e">#/sec] (mean)</span>
+...
+</code></pre></div><p>Como vemos la mejora es muy considerable, esto se debe a nuestro proxy cache que, a la hora de redirigir el trafico hacia el servidor web y este a su vez a <strong>php-fpm</strong> lo hace solo una vez ya que a la segunda vez ya lo tiene cacheado por lo que la respuesta es mucho mas rapida de ahi la mejora de redimiento. Si bien vamos ahora las peticiones que hace veremos que solo debe de haber una sola petición:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Consultamos el fichero /var/log/nginx/access.log ####</span>
+debian@varnishnginx:~$ tail -f /var/log/nginx/access.log
+...
+127.0.0.1 - - <span style="color:#f92672">[</span>09/Feb/2021:11:25:17 +0000<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;GET /wordpress/index.php HTTP/1.1&#34;</span> <span style="color:#ae81ff">301</span> <span style="color:#ae81ff">5</span> <span style="color:#e6db74">&#34;-&#34;</span> <span style="color:#e6db74">&#34;ApacheBench/2.3&#34;</span>
+</code></pre></div><p>Como podemos comprobar solo tenemos una sola petición, aunque hayamos hecho muchas peticiones con el comando <strong>ab</strong></p>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2021  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+         
+        <li><a href="/servicios">Servicios</a></li>
+         
+        <li><a href="/implantacion">Implantacion</a></li>
+         
+        <li><a href="/bbdd">BBDD</a></li>
+         
+        <li><a href="/hlc">HLC</a></li>
+         
+        <li><a href="/cloud">Cloud</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>

@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Tue, 09 Feb 2021 13:22:13 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 09 Feb 2021 13:29:29 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Varnish &#43; Nginx</title>
+      <link>https://franjavimn.onrender.com/servicios/varnish&#43;nginx/</link>
+      <pubDate>Tue, 09 Feb 2021 13:29:29 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/servicios/varnish&#43;nginx/</guid>
+      <description>Varnish + Nginx En esta practica vamos a montar un escenario con nginx y varnish para ver como mejora el rendimiento de nuestro sitio web de forma significativa pero antes vamos a ecplicar que es Varnish.
+¿Qué es Varnish? Varnish Cache es un acelerador de aplicaciones web, también conocido como caché de proxy HTTP inversa. Se instala delante de cualquier servidor HTTP y se configura para almacenar en el caché del servidor una copia del recurso solicitado.</description>
+    </item>
+    
     <item>
       <title>Redes Docker</title>
       <link>https://franjavimn.onrender.com/implantacion/redes-docker/</link>
