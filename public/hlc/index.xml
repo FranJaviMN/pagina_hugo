@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Wed, 13 Jan 2021 09:50:19 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/hlc/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 10 Feb 2021 19:19:56 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/hlc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ISCSI</title>
+      <link>https://franjavimn.onrender.com/hlc/iscsi/</link>
+      <pubDate>Wed, 10 Feb 2021 19:19:56 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/hlc/iscsi/</guid>
+      <description>iSCI ¿Que es iSCSI? iSCSI (Abreviatura de Internet SCSI) es un estándar que permite el uso del protocolo SCSI sobre redes TCP/IP. iSCSI es un protocolo de la capa de transporte definido en las especificaciones SCSI-3.
+El protocolo iSCSI utiliza TCP/IP para sus transferencias de datos. Al contrario que otros protocolos de red diseñados para almacenamiento solamente requiere una simple y sencilla interfaz Ethernet para funcionar. Esto permite una solución de almacenamiento centralizada de bajo coste sin la necesidad de realizar inversiones costosas ni sufrir las habituales incompatibilidades asociadas a las soluciones de canal de fibra para Redes de área de almacenamiento.</description>
+    </item>
+    
     <item>
       <title>Fs Avanzados</title>
       <link>https://franjavimn.onrender.com/hlc/fs-avanzados/</link>

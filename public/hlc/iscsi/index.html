@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> ISCSI | Blog</title>
+  <meta name="description" content="En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="ISCSI" />
+<meta property="og:description" content="iSCI ¿Que es iSCSI? iSCSI (Abreviatura de Internet SCSI) es un estándar que permite el uso del protocolo SCSI sobre redes TCP/IP. iSCSI es un protocolo de la capa de transporte definido en las especificaciones SCSI-3.
+El protocolo iSCSI utiliza TCP/IP para sus transferencias de datos. Al contrario que otros protocolos de red diseñados para almacenamiento solamente requiere una simple y sencilla interfaz Ethernet para funcionar. Esto permite una solución de almacenamiento centralizada de bajo coste sin la necesidad de realizar inversiones costosas ni sufrir las habituales incompatibilidades asociadas a las soluciones de canal de fibra para Redes de área de almacenamiento." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://franjavimn.onrender.com/hlc/iscsi/" />
+<meta property="article:published_time" content="2021-02-10T19:19:56+01:00" />
+<meta property="article:modified_time" content="2021-02-10T19:19:56+01:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ISCSI"/>
+<meta name="twitter:description" content="iSCI ¿Que es iSCSI? iSCSI (Abreviatura de Internet SCSI) es un estándar que permite el uso del protocolo SCSI sobre redes TCP/IP. iSCSI es un protocolo de la capa de transporte definido en las especificaciones SCSI-3.
+El protocolo iSCSI utiliza TCP/IP para sus transferencias de datos. Al contrario que otros protocolos de red diseñados para almacenamiento solamente requiere una simple y sencilla interfaz Ethernet para funcionar. Esto permite una solución de almacenamiento centralizada de bajo coste sin la necesidad de realizar inversiones costosas ni sufrir las habituales incompatibilidades asociadas a las soluciones de canal de fibra para Redes de área de almacenamiento."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://franjavimn.onrender.com/images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://franjavimn.onrender.com">
+  
+    <div id="logo" style="background-image: url(https://franjavimn.onrender.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+       
+        <li><a href="/servicios">Servicios</a></li>
+       
+        <li><a href="/implantacion">Implantacion</a></li>
+       
+        <li><a href="/bbdd">BBDD</a></li>
+       
+        <li><a href="/hlc">HLC</a></li>
+       
+        <li><a href="/cloud">Cloud</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h1 id="isci">iSCI</h1>
+<h2 id="que-es-iscsi">¿Que es iSCSI?</h2>
+<p>iSCSI (Abreviatura de Internet SCSI) es un estándar que permite el uso del protocolo SCSI sobre redes TCP/IP. iSCSI es un protocolo de la capa de transporte definido en las especificaciones SCSI-3.</p>
+<p>El protocolo iSCSI utiliza TCP/IP para sus transferencias de datos. Al contrario que otros protocolos de red diseñados para almacenamiento solamente requiere una simple y sencilla interfaz Ethernet para funcionar. Esto permite una solución de almacenamiento centralizada de bajo coste sin la necesidad de realizar inversiones costosas ni sufrir las habituales incompatibilidades asociadas a las soluciones de canal de fibra para Redes de área de almacenamiento.</p>
+<h1 id="ejercicios-a-realizar">Ejercicios a realizar</h1>
+<p>Configura un escenario con vagrant o similar que incluya varias máquinas que permita realizar la configuración de un servidor iSCSI y dos clientes (uno linux y otro windows). Explica de forma detallada en la tarea los pasos realizados.</p>
+<ul>
+<li>
+<p>Crea un target con una LUN y conéctala a un cliente GNU/Linux. Explica cómo escaneas desde el cliente buscando los targets disponibles y utiliza la unidad lógica proporcionada, formateándola si es necesario y montándola.</p>
+</li>
+<li>
+<p>Utiliza systemd mount para que el target se monte automáticamente al arrancar el cliente</p>
+</li>
+<li>
+<p>Crea un target con 2 LUN y autenticación por CHAP y conéctala a un cliente windows. Explica cómo se escanea la red en windows y cómo se utilizan las unidades nuevas (formateándolas con NTFS)</p>
+</li>
+</ul>
+<p>En mi caso vamos a usar el siguiente escenario de vagrant en el que vamos a configurar <strong>iSCSI</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># -*- mode: ruby -*-</span>
+<span style="color:#75715e"># vi: set ft=ruby :</span>
+
+
+<span style="color:#66d9ef">Vagrant</span><span style="color:#f92672">.</span>configure(<span style="color:#e6db74">&#34;2&#34;</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>config<span style="color:#f92672">|</span>
+  disco <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;.vagrant/midisco.vdi&#39;</span>
+  config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>define <span style="color:#e6db74">:maquina1</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>maquina1<span style="color:#f92672">|</span>
+    maquina1<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>box <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;debian/buster64&#34;</span>
+    maquina1<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>hostname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;maquina1&#34;</span>
+    maquina1<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>network <span style="color:#e6db74">:public_network</span>, <span style="color:#e6db74">:bridge</span><span style="color:#f92672">=&gt;</span><span style="color:#e6db74">&#34;wlp2s0&#34;</span>
+    maquina1<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>network <span style="color:#e6db74">:private_network</span>, <span style="color:#e6db74">ip</span>: <span style="color:#e6db74">&#34;192.168.100.100&#34;</span>
+    maquina1<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provider <span style="color:#e6db74">:virtualbox</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>v<span style="color:#f92672">|</span>
+      v<span style="color:#f92672">.</span>customize <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;createhd&#34;</span>, <span style="color:#e6db74">&#34;--filename&#34;</span>, disco, <span style="color:#e6db74">&#34;--size&#34;</span>, <span style="color:#ae81ff">1024</span><span style="color:#f92672">]</span>
+      v<span style="color:#f92672">.</span>customize <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;storageattach&#34;</span>, <span style="color:#e6db74">:id</span>, <span style="color:#e6db74">&#34;--storagectl&#34;</span>, <span style="color:#e6db74">&#34;SATA Controller&#34;</span>, <span style="color:#e6db74">&#34;--port&#34;</span>, <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;--device&#34;</span>, <span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#34;--type&#34;</span>, <span style="color:#e6db74">&#34;hdd&#34;</span>, <span style="color:#e6db74">&#34;--medium&#34;</span>, disco<span style="color:#f92672">]</span>
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+  config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>define <span style="color:#e6db74">:maquina2</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>maquina2<span style="color:#f92672">|</span>
+    maquina2<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>box <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;debian/buster64&#34;</span>
+    maquina2<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>hostname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;maquina2&#34;</span>
+    maquina2<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>network <span style="color:#e6db74">:private_network</span>, <span style="color:#e6db74">ip</span>: <span style="color:#e6db74">&#34;192.168.100.101&#34;</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Donde tenemos dos maquinas donde <em>maquina1</em> tiene una interfaz en modo puente para el exterior y un disco adicional y las dos maquinas tienen una interfaz de red con una ip privada.</p>
+<h2 id="tarea-1">Tarea 1</h2>
+<p>Para ello vamos a usar a <em>maquina1</em> para empezar la configuración, lo que vamos a hacer es instalar en ella el paquete <strong>lvm2</strong> en nuestra maquina para emepezar a crear el grupo de volumenes y mas tarde crear los volumenes logicos que necesitemos, en este caso haremos solo un volumen logico de 500MB:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos el paquete de lvm2 ####</span>
+vagrant@maquina1:~$ sudo apt install lvm2
+
+<span style="color:#75715e">#### Creamos el grupo de volumenes con el disco secundario sdb ####</span>
+vagrant@maquina1:~$ sudo pvcreate /dev/sdb 
+  Physical volume <span style="color:#e6db74">&#34;/dev/sdb&#34;</span> successfully created.
+
+vagrant@maquina1:~$ sudo vgcreate grupo1 /dev/sdb
+  Volume group <span style="color:#e6db74">&#34;grupo1&#34;</span> successfully created
+
+<span style="color:#75715e">#### Creamos el volumen logico ####</span>
+vagrant@maquina1:~$ sudo lvcreate -L 500M -n v_grupo1 grupo1
+  Logical volume <span style="color:#e6db74">&#34;v_grupo1&#34;</span> created.
+</code></pre></div><p>Ya hecho el volumen logico lo que vamos a hacer ahora es empezar la configuración del target en nuestra <em>maquina1</em>, por lo que debemos de instalar en ella un paquete llamado <strong>tgt</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos el paquete ####</span>
+vagrant@maquina1:~$ sudo apt install tgt
+</code></pre></div><p>Una vez instalado vamos a configurar el fichero llamado <strong>/etc/tgt/targets.conf</strong> donde, como el nombre indica, tenemos que indicar los target que vamos a tener, en este caso solo vamos a tener uno que va a ser el volumen logico llamado <em>v_grupo1</em>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Configuramos el fichero /etc/tgt/targets.conf ####</span>
+vagrant@maquina1:~$ sudo nano /etc/tgt/targets.conf
+
+&lt;target iqn.prueba-iSCSI.com:target1&gt;
+    backing-store /dev/grupo1/v_grupo1
+&lt;/target&gt;
+</code></pre></div><p>Una vez hecho esto debemos de reinciar el servicio <strong>tgt</strong>, y una vez hecho esto debe de haberse detectado el disco iSCSI, para comprobarlo podemos usar el siguiente comando:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Vemos si el disco esta en linea ####</span>
+vagrant@maquina1:~$ sudo tgtadm --lld iscsi --op show --mode target
+Target 1: iqn.prueba-iSCSI.com:target1
+    System information:
+        Driver: iscsi
+        State: ready
+    I_T nexus information:
+    LUN information:
+        LUN: <span style="color:#ae81ff">0</span>
+            Type: controller
+            SCSI ID: IET     <span style="color:#ae81ff">00010000</span>
+            SCSI SN: beaf10
+            Size: <span style="color:#ae81ff">0</span> MB, Block size: <span style="color:#ae81ff">1</span>
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: null
+            Backing store path: None
+            Backing store flags: 
+        LUN: <span style="color:#ae81ff">1</span>
+            Type: disk
+            SCSI ID: IET     <span style="color:#ae81ff">00010001</span>
+            SCSI SN: beaf11
+            Size: <span style="color:#ae81ff">524</span> MB, Block size: <span style="color:#ae81ff">512</span>
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: rdwr
+            Backing store path: /dev/grupo1/v_grupo1
+            Backing store flags: 
+    Account information:
+    ACL information:
+        ALL
+</code></pre></div><p>De esta forma ya tendremos el servidor configurado y listo para que los clientes puedan usar el disco por lo que vamos a pasar a la configuracion del iniciador.</p>
+<h3 id="iniciador">Iniciador</h3>
+<p>En la <em>maquina2</em> debemos de instalar un paquete llamado <strong>open-iscsi</strong> el cual nos va a permitir usar el disco target que tenemos en la <em>maquina1</em>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@maquina2:~$ sudo apt install open-iscsi
+</code></pre></div><p>Una vez instalado el paquete vamos a configurar el fichero llamado <strong>/etc/iscsi/iscsid.conf</strong> en el cual le vamos a indicar que lea los targets de forma automatica, para ello debemos de añadir la linea siguiente:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@maquina2:~$ sudo nano /etc/iscsi/iscsid.conf
+
+...
+<span style="color:#75715e"># To request that the iscsi initd scripts startup a session set to &#34;automatic&#34;.</span>
+node.startup <span style="color:#f92672">=</span> automatic
+<span style="color:#75715e">#</span>
+<span style="color:#75715e"># To manually startup the session set to &#34;manual&#34;. The default is manual.</span>
+<span style="color:#75715e"># node.startup = manual</span>
+...
+</code></pre></div><p>Hecho esta modificación debemos de reiniciar el servicio de <strong>open-iscsi</strong> para que tenga efecto y, una vez hecho ese reinicio debemos de comprobar si el target esta hecho correctamente, para ello podemos usar el siguiente comando:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Reiniciamos los servicios ####</span>
+vagrant@maquina2:~$ sudo systemctl restart open-iscsi
+
+<span style="color:#75715e">#### Comprobamos los targets ####</span>
+vagrant@maquina2:~$ sudo iscsiadm -m discovery -t st -p 192.168.100.100
+192.168.100.100:3260,1 iqn.prueba-iSCSI.com:target1
+</code></pre></div><p>Como vemos ya nos esta inidicando el target que tenemos en la dirección ip que le hemos indicado, que es la ip de <em>maquina1</em> y nos indica el disco que tenemos en target. Ahora vamos a proceder a conectarnos a este target, para ello debemos de usar el siguiente comando para poder conectarnos a ese target:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Nos conectamos al target que le indicamos junto a la ip de la maquina ####</span>
+vagrant@maquina2:~$ sudo iscsiadm -m node -T iqn.prueba-iSCSI.com:target1 --portal <span style="color:#e6db74">&#34;192.168.100.100&#34;</span> --login
+Logging in to <span style="color:#f92672">[</span>iface: default, target: iqn.prueba-iSCSI.com:target1, portal: 192.168.100.100,3260<span style="color:#f92672">]</span> <span style="color:#f92672">(</span>multiple<span style="color:#f92672">)</span>
+Login to <span style="color:#f92672">[</span>iface: default, target: iqn.prueba-iSCSI.com:target1, portal: 192.168.100.100,3260<span style="color:#f92672">]</span> successful.
+
+<span style="color:#75715e">#### Usamos lsblk para ver que tenemos ese target en nuestra maquina ####</span>
+vagrant@maquina2:~$ lsblk 
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    <span style="color:#ae81ff">0</span> 19.8G  <span style="color:#ae81ff">0</span> disk 
+├─sda1   8:1    <span style="color:#ae81ff">0</span> 18.8G  <span style="color:#ae81ff">0</span> part /
+├─sda2   8:2    <span style="color:#ae81ff">0</span>    1K  <span style="color:#ae81ff">0</span> part 
+└─sda5   8:5    <span style="color:#ae81ff">0</span> 1021M  <span style="color:#ae81ff">0</span> part <span style="color:#f92672">[</span>SWAP<span style="color:#f92672">]</span>
+sdb      8:16   <span style="color:#ae81ff">0</span>  500M  <span style="color:#ae81ff">0</span> disk 
+</code></pre></div><p>Como vemos ya tenemos el target de 500MB en nuestra maquina, por lo que vamos a proceder a formatearlo con un sistema de fichero <strong>ext4</strong> y lo vamos a montar en nuestra maquina, por lo que vamos a seguir los siguiente pasos:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Usamos gdisk para particionarlo ####</span>
+vagrant@maquina2:~$ sudo gdisk /dev/sdb 
+GPT fdisk <span style="color:#f92672">(</span>gdisk<span style="color:#f92672">)</span> version 1.0.3
+
+Partition table scan:
+  MBR: not present
+  BSD: not present
+  APM: not present
+  GPT: not present
+
+Creating new GPT entries.
+
+Command <span style="color:#f92672">(</span>? <span style="color:#66d9ef">for</span> help<span style="color:#f92672">)</span>: n
+Partition number <span style="color:#f92672">(</span>1-128, default 1<span style="color:#f92672">)</span>: 
+First sector <span style="color:#f92672">(</span>34-1023966, default <span style="color:#f92672">=</span> 2048<span style="color:#f92672">)</span> or <span style="color:#f92672">{</span>+-<span style="color:#f92672">}</span>size<span style="color:#f92672">{</span>KMGTP<span style="color:#f92672">}</span>: 
+Last sector <span style="color:#f92672">(</span>2048-1023966, default <span style="color:#f92672">=</span> 1023966<span style="color:#f92672">)</span> or <span style="color:#f92672">{</span>+-<span style="color:#f92672">}</span>size<span style="color:#f92672">{</span>KMGTP<span style="color:#f92672">}</span>: 
+Current type is <span style="color:#e6db74">&#39;Linux filesystem&#39;</span>
+Hex code or GUID <span style="color:#f92672">(</span>L to show codes, Enter <span style="color:#f92672">=</span> 8300<span style="color:#f92672">)</span>: 
+Changed type of partition to <span style="color:#e6db74">&#39;Linux filesystem&#39;</span>
+
+Command <span style="color:#f92672">(</span>? <span style="color:#66d9ef">for</span> help<span style="color:#f92672">)</span>: w
+
+Final checks complete. About to write GPT data. THIS WILL OVERWRITE EXISTING
+PARTITIONS!!
+
+Do you want to proceed? <span style="color:#f92672">(</span>Y/N<span style="color:#f92672">)</span>: y
+OK; writing new GUID partition table <span style="color:#f92672">(</span>GPT<span style="color:#f92672">)</span> to /dev/sdb.
+The operation has completed successfully.
+
+<span style="color:#75715e">#### Lo formateamos en ext4 ####</span>
+vagrant@maquina2:~$ sudo mkfs.ext4 /dev/sdb1
+mke2fs 1.44.5 <span style="color:#f92672">(</span>15-Dec-2018<span style="color:#f92672">)</span>
+Creating filesystem with <span style="color:#ae81ff">510956</span> 1k blocks and <span style="color:#ae81ff">128016</span> inodes
+Filesystem UUID: e296c077-5886-436f-97c2-b27077ac08fb
+Superblock backups stored on blocks: 
+	8193, 24577, 40961, 57345, 73729, 204801, 221185, <span style="color:#ae81ff">401409</span>
+
+Allocating group tables: <span style="color:#66d9ef">done</span>                            
+Writing inode tables: <span style="color:#66d9ef">done</span>                            
+Creating journal <span style="color:#f92672">(</span><span style="color:#ae81ff">8192</span> blocks<span style="color:#f92672">)</span>: <span style="color:#66d9ef">done</span>
+Writing superblocks and filesystem accounting information: <span style="color:#66d9ef">done</span>
+
+<span style="color:#75715e">#### Lo montamos en /mnt ####</span>
+vagrant@maquina2:~$ sudo mount /dev/sdb1 /mnt/
+
+vagrant@maquina2:~$ lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    <span style="color:#ae81ff">0</span> 19.8G  <span style="color:#ae81ff">0</span> disk 
+├─sda1   8:1    <span style="color:#ae81ff">0</span> 18.8G  <span style="color:#ae81ff">0</span> part /
+├─sda2   8:2    <span style="color:#ae81ff">0</span>    1K  <span style="color:#ae81ff">0</span> part 
+└─sda5   8:5    <span style="color:#ae81ff">0</span> 1021M  <span style="color:#ae81ff">0</span> part <span style="color:#f92672">[</span>SWAP<span style="color:#f92672">]</span>
+sdb      8:16   <span style="color:#ae81ff">0</span>  500M  <span style="color:#ae81ff">0</span> disk 
+└─sdb1   8:17   <span style="color:#ae81ff">0</span>  499M  <span style="color:#ae81ff">0</span> part /mnt
+</code></pre></div><h2 id="tarea-2">Tarea 2</h2>
+<p>Utiliza systemd mount para que el target se monte automáticamente al arrancar el cliente.</p>
+<p>En esta parte de la práctica vamos a ver como es la configuración para que se monte automáticamente el target al arrancar el cliente utilizando systemd mount.</p>
+<p>Para ello debemos de irnos a la <em>maquina1</em> para configurar el fichero <strong>/etc/tgt/targets.conf</strong> y debemos de añadir la siguiente linea:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Modificamos el fichero /etc/tgt/targets.conf ####</span>
+vagrant@maquina1:~$ sudo nano /etc/tgt/targets.conf
+
+<span style="color:#75715e">#### Reiniciamos el servicio tgt ####</span>
+vagrant@maquina1:~$ sudo systemctl restart tgt
+</code></pre></div><p>Una vez tengamos esta configuración debemos de irnos a la <em>maquina2</em> y ahi debemos de crear una nueva unidad de systemd en la que le vamos a indicar que se monte el target de forma automatica, para ello debemos de crear la siguiente unidad:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos la unidad de systemd ####</span>
+vagrant@maquina2:~$ sudo nano /etc/systemd/system/prueba-sSCSI.mount
+
+<span style="color:#f92672">[</span>Unit<span style="color:#f92672">]</span>
+Description<span style="color:#f92672">=</span>Montaje
+
+<span style="color:#f92672">[</span>Mount<span style="color:#f92672">]</span>
+What<span style="color:#f92672">=</span>/dev/sdb1
+Where<span style="color:#f92672">=</span>/mnt
+Type<span style="color:#f92672">=</span>ext4
+option<span style="color:#f92672">=</span>_netdev
+
+<span style="color:#f92672">[</span>Install<span style="color:#f92672">]</span>
+WantedBy<span style="color:#f92672">=</span>multi-user.target
+
+<span style="color:#75715e">#### Creamos la unidad de automount de systemd ####</span>
+vagrant@maquina2:~$ sudo nano /etc/systemd/system/mnt.automount
+
+<span style="color:#f92672">[</span>Unit<span style="color:#f92672">]</span>
+Description<span style="color:#f92672">=</span>Automount
+
+<span style="color:#f92672">[</span>Automount<span style="color:#f92672">]</span>
+Where<span style="color:#f92672">=</span>/mnt
+
+<span style="color:#f92672">[</span>Install<span style="color:#f92672">]</span>
+WantedBy<span style="color:#f92672">=</span>multi-user.target
+
+
+<span style="color:#75715e">#### Reiniciamos los servicios ####</span>
+vagrant@maquina2:~$ sudo systemctl daemon-reload
+</code></pre></div><h3 id="fstab">fstab</h3>
+<p>Tambien podemos añadir la unidad al fichero de <strong>fstab</strong> en el que indicamos que unidades se van a montar en el arranque del sistema indicando el UUID del volumen, el punto de montaje, el tipo de formato y las opciones.</p>
+<p>Asi, si queremos hacerlo por esta via solo debemos de añadir la siguiente linea a nuestro fichero <strong>/etc/fstab</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Buscamos el uuid de nuestro volumen ####</span>
+vagrant@maquina2:~$ lsblk -f | grep sdb1
+└─sdb1 ext4         e296c077-5886-436f-97c2-b27077ac08fb
+
+<span style="color:#75715e">#### Añadimos la siguiente linea a nuestro fichero fstab ####</span>
+...
+UUID<span style="color:#f92672">=</span>e296c077-5886-436f-97c2-b27077ac08fb       /mnt    ext4    _netdev <span style="color:#ae81ff">0</span>       <span style="color:#ae81ff">0</span>
+...
+</code></pre></div><p>Ahora que tenemos la linea añadida debemos de comprobar si se monta correctamente, en este caso lo mejor no es reiniciar y ver si se monta ya que eso podria dar un problema y hacer que la maquina no inicie correctamente por lo que debemos de hacer usar el comando <strong>mount</strong> de la siguiente manera:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Comprobamos que no esta montado ####</span>
+vagrant@maquina2:~$ lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    <span style="color:#ae81ff">0</span> 19.8G  <span style="color:#ae81ff">0</span> disk 
+...
+sdb      8:16   <span style="color:#ae81ff">0</span>  500M  <span style="color:#ae81ff">0</span> disk 
+└─sdb1   8:17   <span style="color:#ae81ff">0</span>  499M  <span style="color:#ae81ff">0</span> part 
+
+<span style="color:#75715e">#### Usamos mount para montar todos los volumenes del fichero fstab ####</span>
+vagrant@maquina2:~$ sudo mount -a
+
+<span style="color:#75715e">#### Comprobamos que se haya montado correctamente ####</span>
+vagrant@maquina2:~$ lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    <span style="color:#ae81ff">0</span> 19.8G  <span style="color:#ae81ff">0</span> disk 
+...
+sdb      8:16   <span style="color:#ae81ff">0</span>  500M  <span style="color:#ae81ff">0</span> disk 
+└─sdb1   8:17   <span style="color:#ae81ff">0</span>  499M  <span style="color:#ae81ff">0</span> part /mnt
+</code></pre></div><h2 id="tarea-3">Tarea 3</h2>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2021  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+         
+        <li><a href="/servicios">Servicios</a></li>
+         
+        <li><a href="/implantacion">Implantacion</a></li>
+         
+        <li><a href="/bbdd">BBDD</a></li>
+         
+        <li><a href="/hlc">HLC</a></li>
+         
+        <li><a href="/cloud">Cloud</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>

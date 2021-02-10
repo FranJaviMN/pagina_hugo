@@ -7,7 +7,29 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Tue, 09 Feb 2021 13:29:29 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 10 Feb 2021 19:19:56 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ISCSI</title>
+      <link>https://franjavimn.onrender.com/hlc/iscsi/</link>
+      <pubDate>Wed, 10 Feb 2021 19:19:56 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/hlc/iscsi/</guid>
+      <description>iSCI ¿Que es iSCSI? iSCSI (Abreviatura de Internet SCSI) es un estándar que permite el uso del protocolo SCSI sobre redes TCP/IP. iSCSI es un protocolo de la capa de transporte definido en las especificaciones SCSI-3.
+El protocolo iSCSI utiliza TCP/IP para sus transferencias de datos. Al contrario que otros protocolos de red diseñados para almacenamiento solamente requiere una simple y sencilla interfaz Ethernet para funcionar. Esto permite una solución de almacenamiento centralizada de bajo coste sin la necesidad de realizar inversiones costosas ni sufrir las habituales incompatibilidades asociadas a las soluciones de canal de fibra para Redes de área de almacenamiento.</description>
+    </item>
+    
+    <item>
+      <title>Tarea Vpn</title>
+      <link>https://franjavimn.onrender.com/seguridad/tarea-vpn/</link>
+      <pubDate>Wed, 10 Feb 2021 14:20:10 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/seguridad/tarea-vpn/</guid>
+      <description>VPN con OpenVPN En esta parte del tema vamos a trabajar con Redes Privadas Virtuales que es una red privada que usa una red pública(normalmente Internet) para conectar sucursales o usuarios.
+Existen tres tipos de VPN distintas:
+  Conexiones de clientes de acceso remoto: Dan solución a los trabajadores móviles que deben poder usar los recursos de lared interna desde localizaciones remotas
+  Comunicación site-to-site: Dos o más redes locales son unidas a través de una VPN formando una intranet extendida.</description>
+    </item>
+    
     <item>
       <title>Varnish &#43; Nginx</title>
       <link>https://franjavimn.onrender.com/servicios/varnish&#43;nginx/</link>

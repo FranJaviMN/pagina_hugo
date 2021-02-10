@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Tarea Vpn | Blog</title>
+  <meta name="description" content="En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Tarea Vpn" />
+<meta property="og:description" content="VPN con OpenVPN En esta parte del tema vamos a trabajar con Redes Privadas Virtuales que es una red privada que usa una red pública(normalmente Internet) para conectar sucursales o usuarios.
+Existen tres tipos de VPN distintas:
+  Conexiones de clientes de acceso remoto: Dan solución a los trabajadores móviles que deben poder usar los recursos de lared interna desde localizaciones remotas
+  Comunicación site-to-site: Dos o más redes locales son unidas a través de una VPN formando una intranet extendida." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://franjavimn.onrender.com/seguridad/tarea-vpn/" />
+<meta property="article:published_time" content="2021-02-10T14:20:10+01:00" />
+<meta property="article:modified_time" content="2021-02-10T14:20:10+01:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Tarea Vpn"/>
+<meta name="twitter:description" content="VPN con OpenVPN En esta parte del tema vamos a trabajar con Redes Privadas Virtuales que es una red privada que usa una red pública(normalmente Internet) para conectar sucursales o usuarios.
+Existen tres tipos de VPN distintas:
+  Conexiones de clientes de acceso remoto: Dan solución a los trabajadores móviles que deben poder usar los recursos de lared interna desde localizaciones remotas
+  Comunicación site-to-site: Dos o más redes locales son unidas a través de una VPN formando una intranet extendida."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://franjavimn.onrender.com/images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://franjavimn.onrender.com">
+  
+    <div id="logo" style="background-image: url(https://franjavimn.onrender.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+       
+        <li><a href="/servicios">Servicios</a></li>
+       
+        <li><a href="/implantacion">Implantacion</a></li>
+       
+        <li><a href="/bbdd">BBDD</a></li>
+       
+        <li><a href="/hlc">HLC</a></li>
+       
+        <li><a href="/cloud">Cloud</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h1 id="vpn-con-openvpn">VPN con OpenVPN</h1>
+<p>En esta parte del tema vamos a trabajar con <strong>Redes Privadas Virtuales</strong> que es una red privada que usa una red pública(normalmente Internet) para conectar sucursales o usuarios.</p>
+<p>Existen tres tipos de <strong>VPN</strong> distintas:</p>
+<ul>
+<li>
+<p>Conexiones de clientes de acceso remoto: Dan solución a los trabajadores móviles que deben poder usar los recursos de lared interna desde localizaciones remotas</p>
+</li>
+<li>
+<p>Comunicación site-to-site: Dos o más redes locales son unidas a través de una VPN formando una intranet extendida. Oficinas remotas.</p>
+</li>
+<li>
+<p>Acceso controlado dentro de una red local: Usado en muchas ocasiones para proteger la red wifi</p>
+</li>
+</ul>
+<h2 id="clientes-de-acceso-remoto">Clientes de acceso remoto</h2>
+<p><img src="https://openvpn.net/wp-content/uploads/vpn_server_resources/Secure-Remote-Access.svg" alt="imagen vpn acceso remoto"></p>
+<h2 id="site-to-site">Site-To-Site</h2>
+<p><img src="https://openvpn.net/wp-content/uploads/vpn_server_resources/layer-3-routing-diagram.png" alt="imagen vpn site-to-site"></p>
+<h1 id="openvpn">OpenVPN</h1>
+<p>OpenVPN es una herramienta de conectividad basada en software libre: SSL (Secure Sockets Layer), VPN Virtual Private Network (red virtual privada). OpenVPN ofrece conectividad punto-a-punto con validación jerárquica de usuarios y host conectados remotamente. Resulta una muy buena opción en tecnologías Wi-Fi (redes inalámbricas IEEE 802.11) y soporta una amplia configuración, entre ellas balanceo de cargas. Está publicado bajo la licencia GPL, de software libre.</p>
+<h2 id="sus-caracteristicas-principales-son">Sus caracteristicas principales son:</h2>
+<ul>
+<li>
+<p>El componente principal es el driver tun/tap utilizado para simular interfaces dered, que se encarga de levantar el túnel y encapsular los paquetes a través del enlace virtual.</p>
+</li>
+<li>
+<p>Encriptación y autenticación con OpenSSL</p>
+</li>
+<li>
+<p>Utiliza un único puerto TCP o UDP→fácil para firewalls</p>
+</li>
+<li>
+<p>Multiplataforma→misma herramienta funcionando sobre distintos SO vs implementaciones diferentes de un mismo estándar en distintas arquitecturas</p>
+</li>
+<li>
+<p>Compresión de datos LZO</p>
+</li>
+</ul>
+<p>Aunque tambien podemos encontrar algunos problemas que tiene esta tecnología:</p>
+<ul>
+<li>
+<p>No es compatible con IPSec, el estándar para soluciones VPN</p>
+</li>
+<li>
+<p>Comunidad no muy amplia</p>
+</li>
+<li>
+<p>Faltan dispositivos con clientes OpenVPN integrados</p>
+</li>
+</ul>
+<h2 id="modos-de-funcionamiento">Modos de funcionamiento</h2>
+<ul>
+<li>
+<p><strong>Modo Tunel</strong>: Emplea el driver tun y es utilizado para crear túneles virtuales operando con el protocolo IP</p>
+</li>
+<li>
+<p><strong>Modo Puente</strong>: Hace uso del dirver <strong>tap</strong> y es empleado para túneles que encapsulan directamente paquetes Ethernet. Se recomienda en las siguientes situaciones:</p>
+<ul>
+<li>La VPN necesita encapsular protocolos no-IP.</li>
+<li>Se ejecutan aplicaciones que necesitan network broadcasts.</li>
+<li>No se cuenta con un servidor Samba y se necesita que los usuarios puedan navegar por los ficheros compartidos.</li>
+</ul>
+</li>
+</ul>
+<h2 id="autenticación">Autenticación</h2>
+<p>La autenticación de los extremos remotos de una conexión SSL/TLS está basada en el modelo de claves asimétricas RSA.</p>
+<p>Los participantes intercambian sus claves públicas a través de certificados digitales X.509, que han sido firmados previamente por una Autoridad de Certificación en la que se confía.</p>
+<h1 id="tarea-1">Tarea 1</h1>
+<p>Para esta tarea vamos a usar la receta <em>heat</em> <a href="https://fp.josedomingo.org/seguridadgs/u04/escenario_vpn.yaml">siguiente</a>. En esta tarea vas a realizar el segundo ejercicio del tema:</p>
+<p>Configura una conexión VPN de acceso remoto entre dos equipos:</p>
+<ul>
+<li>
+<p>Uno de los dos equipos (el que actuará como servidor) estará conectado a dos redes</p>
+</li>
+<li>
+<p>Para la autenticación de los extremos se usarán obligatoriamente certificados digitales, que se generarán utilizando openssl y se almacenarán en el directorio /etc/openvpn, junto con los parámetros Diffie-Helman y el certificado de la propia Autoridad de Certificación.</p>
+</li>
+<li>
+<p>Se utilizarán direcciones de la red 10.99.99.0/24 para las direcciones virtuales de la VPN. La dirección 10.99.99.1 se asignará al servidor VPN.</p>
+</li>
+<li>
+<p>Los ficheros de configuración del servidor y del cliente se crearán en el directorio /etc/openvpn de cada máquina, y se llamarán servidor.conf y cliente.conf respectivamente. La configuración establecida debe cumplir los siguientes aspectos:</p>
+<ul>
+<li>El demonio openvpn se manejará con systemctl.</li>
+<li>Se debe configurar para que la comunicación esté comprimida.</li>
+<li>La asignación de direcciones IP será dinámica.</li>
+<li>Existirá un fichero de log en el equipo.</li>
+<li>Se mandarán a los clientes las rutas necesarias.</li>
+</ul>
+</li>
+<li>
+<p>Tras el establecimiento de la VPN, la máquina cliente debe ser capaz de acceder a una máquina que esté en la otra red a la que está conectado el servidor.</p>
+</li>
+<li>
+<p>Instala el complemento de VPN en networkmanager y configura el cliente de forma gráfica desde este complemento.</p>
+</li>
+</ul>
+<h2 id="creación-del-escenario">Creación del escenario</h2>
+<p>Para ello, como indicamos en el apartado, vamos a usar una receta <em>heat</em> para nuestro <strong>openstack</strong> donde vamos a tener dos maquinas, una de ellas actuara como servidor VPN y la otra maquina, que es de la red interna, es a la que queremos acceder y tener la posibilidad de conectividad con la dicha maquina. Cuando tengamos el escenario ya creado nos debe de quedar algo como lo siguiente:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Seguridad/vpn/topologia-escenario-vpn.png" alt="topologia de escenario vpn"></p>
+<p>Una vez ya tenemos el escenario creado solo nos queda la parte de configuración de nuestro servidor VPN, en este caso va a ser la maquina que se encuentra conectada a dos redes distintas y nosotros queremos tener conectividad con la red interna que tiene un direccionamiento <strong>192.168.100.0/24</strong></p>
+<h2 id="configuración-de-vpn">Configuración de VPN</h2>
+<p>Lo primero que debemos de hacer es entrar en nuestro servidor de VPN y ahi debemos de instalar el paquete llamado <strong>openvpn</strong> y tambien el paquete <strong>openssl</strong> que es que contiene el software que vamos a usar para crear nuestra vpn y los certificados que vamos a necesitar:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos el paquete openvpn ####</span>
+debian@vpn-server:~$ sudo apt update <span style="color:#f92672">&amp;&amp;</span> sudo apt install openvpn openssl -y
+
+<span style="color:#75715e">#### Comprobamos la version del paquete ####</span>
+debian@vpn-server:~$ sudo openvpn --version
+OpenVPN 2.4.7 x86_64-pc-linux-gnu <span style="color:#f92672">[</span>SSL <span style="color:#f92672">(</span>OpenSSL<span style="color:#f92672">)]</span> <span style="color:#f92672">[</span>LZO<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>LZ4<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>EPOLL<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>PKCS11<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>MH/PKTINFO<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>AEAD<span style="color:#f92672">]</span> built on Feb <span style="color:#ae81ff">20</span> <span style="color:#ae81ff">2019</span>
+</code></pre></div><p>Una vez tengamos el paquete vamos a activar el <em>bit de forwarding</em> para que asi nuestra VPN funcione correctamente, ademas, para establecer la VPN hay que arrancar OpenVPN en ambos extremos, tenemos que configurar <strong>openvpn</strong> para que lea los ficheros <em>*.conf</em> del directorio <em>/etc/openvpn</em>, para ello, editamos el fichero /etc/default/openvpn y descomentamos la línea <em>AUTOSTART</em>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Activamos el bit de forwarding ####</span>
+root@vpn-server:~# echo <span style="color:#ae81ff">1</span> &gt; /proc/sys/net/ipv4/ip_forward
+
+<span style="color:#75715e">#### Descomentamos la linea AUTOSTART ####</span>
+...
+AUTOSTART<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;all&#34;</span>
+...
+</code></pre></div><h3 id="generar-la-la-autoridad-certificadora">Generar la la autoridad certificadora</h3>
+<p>El siguiente paso es configurar una autoridad certificadora (CA). Esta es la responsable de emitir y revocar certificados digitales y servirá para la confianza entre el equipo o equipos clientes y el servidor, no siendo posible la conexión mediante VPN si se carece de certificado válido.</p>
+<p>OpenVPN permite la autentificación bidireccional mediante certificados, de manera que el cliente debe autenticar el certificado del servidor y éste debe autenticar el certificado del cliente.</p>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2021  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+         
+        <li><a href="/servicios">Servicios</a></li>
+         
+        <li><a href="/implantacion">Implantacion</a></li>
+         
+        <li><a href="/bbdd">BBDD</a></li>
+         
+        <li><a href="/hlc">HLC</a></li>
+         
+        <li><a href="/cloud">Cloud</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>

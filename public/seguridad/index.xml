@@ -7,7 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Wed, 03 Feb 2021 19:30:58 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/seguridad/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 10 Feb 2021 14:20:10 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/seguridad/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Tarea Vpn</title>
+      <link>https://franjavimn.onrender.com/seguridad/tarea-vpn/</link>
+      <pubDate>Wed, 10 Feb 2021 14:20:10 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/seguridad/tarea-vpn/</guid>
+      <description>VPN con OpenVPN En esta parte del tema vamos a trabajar con Redes Privadas Virtuales que es una red privada que usa una red pública(normalmente Internet) para conectar sucursales o usuarios.
+Existen tres tipos de VPN distintas:
+  Conexiones de clientes de acceso remoto: Dan solución a los trabajadores móviles que deben poder usar los recursos de lared interna desde localizaciones remotas
+  Comunicación site-to-site: Dos o más redes locales son unidas a través de una VPN formando una intranet extendida.</description>
+    </item>
+    
     <item>
       <title>Cortafuegos</title>
       <link>https://franjavimn.onrender.com/seguridad/cortafuegos/</link>
