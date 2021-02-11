@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Tue, 09 Feb 2021 13:29:29 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/servicios/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 11 Feb 2021 12:32:11 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/servicios/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Correo Ovh</title>
+      <link>https://franjavimn.onrender.com/servicios/correo-ovh/</link>
+      <pubDate>Thu, 11 Feb 2021 12:32:11 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/servicios/correo-ovh/</guid>
+      <description>Práctica: Servidor de correos Instala y configura de manera adecuada el servidor de correos en tu máquina de OVH, para tu dominio iesgnXX.es. El nombre del servidor de correo será mail.iesgnXX.es (Este es el nombre que deberá aparecer en el registro MX)
+Para ello debemos de añadir un nuevo resgistro MX en nuestro dns de OVH por lo que debemos de dirigirnos a nuestro panel de control del DNS de nuestro OVH y tenemos que añadir una entrada como la siguiente:</description>
+    </item>
+    
     <item>
       <title>Varnish &#43; Nginx</title>
       <link>https://franjavimn.onrender.com/servicios/varnish&#43;nginx/</link>
