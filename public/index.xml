@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Thu, 11 Feb 2021 12:32:11 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 11 Feb 2021 14:17:18 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docker Compose</title>
+      <link>https://franjavimn.onrender.com/implantacion/docker-compose/</link>
+      <pubDate>Thu, 11 Feb 2021 14:17:18 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/implantacion/docker-compose/</guid>
+      <description>Docker Compose La herramienta Docker Compose, que nos permitirá definir y ejecutar múltiples aplicaciones utilizando contenedores de software.
+Con Compose utilizaremos ficheros en formato YAML, que nos servirán para definir la configuración de la aplicación en cuestión. De esta manera podemos, con un solo comando, crear e iniciar los servicios configurados en estos ficheros.
+Vamos a definir el escenario en un fichero llamado docker-compose.yaml y vamos a gestionar el ciclo de vida de la aplicaciones y de todos los contenedores que necesitamos con la utilidad docker-compose.</description>
+    </item>
+    
     <item>
       <title>Correo Ovh</title>
       <link>https://franjavimn.onrender.com/servicios/correo-ovh/</link>

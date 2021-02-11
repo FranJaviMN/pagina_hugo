@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Docker Compose | Blog</title>
+  <meta name="description" content="En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Docker Compose" />
+<meta property="og:description" content="Docker Compose La herramienta Docker Compose, que nos permitirá definir y ejecutar múltiples aplicaciones utilizando contenedores de software.
+Con Compose utilizaremos ficheros en formato YAML, que nos servirán para definir la configuración de la aplicación en cuestión. De esta manera podemos, con un solo comando, crear e iniciar los servicios configurados en estos ficheros.
+Vamos a definir el escenario en un fichero llamado docker-compose.yaml y vamos a gestionar el ciclo de vida de la aplicaciones y de todos los contenedores que necesitamos con la utilidad docker-compose." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://franjavimn.onrender.com/implantacion/docker-compose/" />
+<meta property="article:published_time" content="2021-02-11T14:17:18+01:00" />
+<meta property="article:modified_time" content="2021-02-11T14:17:18+01:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Docker Compose"/>
+<meta name="twitter:description" content="Docker Compose La herramienta Docker Compose, que nos permitirá definir y ejecutar múltiples aplicaciones utilizando contenedores de software.
+Con Compose utilizaremos ficheros en formato YAML, que nos servirán para definir la configuración de la aplicación en cuestión. De esta manera podemos, con un solo comando, crear e iniciar los servicios configurados en estos ficheros.
+Vamos a definir el escenario en un fichero llamado docker-compose.yaml y vamos a gestionar el ciclo de vida de la aplicaciones y de todos los contenedores que necesitamos con la utilidad docker-compose."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://franjavimn.onrender.com/images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://franjavimn.onrender.com">
+  
+    <div id="logo" style="background-image: url(https://franjavimn.onrender.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+       
+        <li><a href="/servicios">Servicios</a></li>
+       
+        <li><a href="/implantacion">Implantacion</a></li>
+       
+        <li><a href="/bbdd">BBDD</a></li>
+       
+        <li><a href="/hlc">HLC</a></li>
+       
+        <li><a href="/cloud">Cloud</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h1 id="docker-compose">Docker Compose</h1>
+<p>La herramienta Docker Compose, que nos permitirá definir y ejecutar múltiples aplicaciones utilizando contenedores de software.</p>
+<p>Con Compose utilizaremos ficheros en formato YAML, que nos servirán para definir la configuración de la aplicación en cuestión. De esta manera podemos, con un solo comando, crear e iniciar los servicios configurados en estos ficheros.</p>
+<p>Vamos a definir el escenario en un fichero llamado docker-compose.yaml y vamos a gestionar el ciclo de vida de la aplicaciones y de todos los contenedores que necesitamos con la utilidad docker-compose.</p>
+<h2 id="ventajas-de-uso-de-docker-compose">Ventajas de uso de Docker Compose</h2>
+<ul>
+<li>
+<p>Hacer todo de manera declarativa para que no tenga que repetir todo el proceso cada vez que construyo el escenario.</p>
+</li>
+<li>
+<p>Poner en funcionamiento todos los contenedores que necesita mi aplicación de una sola vez y debidamente configurados.</p>
+</li>
+<li>
+<p>Garantizar que los contenedores se arrancan en el orden adecuado. Por ejemplo: Mi aplicación no podrá funcionar debidamente hasta que no esté el servidor de bases de datos funcionando en marcha.</p>
+</li>
+<li>
+<p>Asegurarnos de que hay comunicación entre los contenedores que pertenecen a la aplicación.</p>
+</li>
+</ul>
+<h2 id="instalando-docker-compose">Instalando Docker Compose</h2>
+<p>La instalación es simple y podemos hacerlo tanto desde los repositorios de nuestra maquina, en mi caso una maquina Debian 10, o bien podemos hacer con el gesto de paquete <strong>pip</strong> en un entorno <strong>virtual python</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalacion desde repositorios ####</span>
+francisco@debian10:~$ sudo apt install docker-compose
+
+<span style="color:#75715e">#### Instalacion desde un entorno virtual ####</span>
+francisco@debian10:~$ python3 -m venv docker-compose
+
+francisco@debian10:~$ source docker-compose/bin/activate
+<span style="color:#f92672">(</span>docker-compose<span style="color:#f92672">)</span> francisco@debian10:~$ pip install docker-compose
+</code></pre></div><h2 id="estructura-del-fichero-docker-composeyml">Estructura del fichero docker-compose.yml</h2>
+<p>En el fichero docker-compose.yml vamos a definir el escenario. El programa docker-compose se debe ejecutar en el directorio donde este ese fichero. Lo mejor que podemos hacer es fijarnos en otros ficheros <strong>docker-compose.yml</strong> que sean sencillos para saber la estrutuca que debe de tener, para ello y como ejemplo, vamos a usar el fichero <strong>docker-compose</strong> de ejemplo que tiene wordpress en DockerHub:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#39;3.1&#39;</span> <span style="color:#75715e">#La version que estemos usando de docker-compose</span>
+
+<span style="color:#f92672">services</span>: <span style="color:#75715e">#Definimos los contenedores que vamos a levantar</span>
+
+  <span style="color:#f92672">wordpress</span>:
+    <span style="color:#75715e">#Nomber del contenedor</span>
+    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">servidor_wp</span>
+
+    <span style="color:#75715e">#Imagen que vamos a usar</span>
+    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">wordpress</span>
+
+    <span style="color:#75715e">#Indicamos la política de reinicio del contenedor si por cualquier condición se para</span>
+    <span style="color:#f92672">restart</span>: <span style="color:#ae81ff">always</span>
+
+    <span style="color:#75715e">#Definimos las variables de entorno que nos ofrecen en la documentacion de wordpress</span>
+    <span style="color:#f92672">environment</span>:
+      <span style="color:#f92672">WORDPRESS_DB_HOST</span>: <span style="color:#ae81ff">db</span>
+      <span style="color:#f92672">WORDPRESS_DB_USER</span>: <span style="color:#ae81ff">user_wp</span>
+      <span style="color:#f92672">WORDPRESS_DB_PASSWORD</span>: <span style="color:#ae81ff">asdasd</span>
+      <span style="color:#f92672">WORDPRESS_DB_NAME</span>: <span style="color:#ae81ff">bd_wp</span>
+
+    <span style="color:#75715e">#Puertos que vamos a exponer de nuestra maquina y el contenedor  </span>
+    <span style="color:#f92672">ports</span>:
+      - <span style="color:#ae81ff">80</span>:<span style="color:#ae81ff">80</span>
+
+    <span style="color:#75715e">#Volumenes que vamos a usar, en este caso del tipo volumenes de docker  </span>
+    <span style="color:#f92672">volumes</span>:
+      - <span style="color:#ae81ff">/opt/wordpress:/var/www/html/wp-content</span>
+    <span style="color:#75715e">#Si queremos que se de tipo bind mount</span>
+    <span style="color:#75715e">#volumes:</span>
+    <span style="color:#75715e">#  - /home/usuario/wordpress:/var/www/html/wp-content</span>
+
+  <span style="color:#f92672">db</span>:
+    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">servidor_mysql</span>
+    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">mariadb</span>
+    <span style="color:#f92672">restart</span>: <span style="color:#ae81ff">always</span>
+    <span style="color:#f92672">environment</span>:
+      <span style="color:#f92672">MYSQL_DATABASE</span>: <span style="color:#ae81ff">bd_wp</span>
+      <span style="color:#f92672">MYSQL_USER</span>: <span style="color:#ae81ff">user_wp</span>
+      <span style="color:#f92672">MYSQL_PASSWORD</span>: <span style="color:#ae81ff">asdasd</span>
+      <span style="color:#f92672">MYSQL_ROOT_PASSWORD</span>: <span style="color:#ae81ff">asdasd</span>
+    <span style="color:#f92672">volumes</span>:
+      - <span style="color:#ae81ff">/opt/mysql_wp:/var/lib/mysql</span>
+</code></pre></div><p>Podemos encontrar mas parametros del fichero <strong>docker-compose.yml</strong> en <a href="https://docs.docker.com/compose/compose-file/compose-file-v3/">la documentación oficial</a></p>
+<p>Cuando creamos un escenario con docker-compose se crea una nueva red definida por el usuario docker donde se conectan los contenedores, por lo tanto, se pueden tenemos resolución por dns que resuelve tanto el nombre del contenedor (por ejemplo, servidor_mysql) como el alias (por ejemplo, db).</p>
+<p>Una vez tengamos este fichero creado solo debemos de ejecutar el escenario mediante el comando <strong>docker-compose up</strong> y le añadimos la opcion <strong>-d</strong> para que sea como un demonio, para ello lo hacemos de la siguiente forma:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Levantamos el escenario ####</span>
+francisco@debian10:~/Documentos/Implantacion/Docker/docker-compose/wordpress$ docker-compose up -d
+...
+Creating servidor_mysql ... <span style="color:#66d9ef">done</span>
+Creating servidor_wp    ... <span style="color:#66d9ef">done</span>
+</code></pre></div><ul>
+<li>Para listar los contenedores podemos usar el comando <strong>docker-compose ps</strong>:</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">francisco@debian10:~/Documentos/Implantacion/Docker/docker-compose/wordpress$ docker-compose ps
+     Name                   Command               State          Ports        
+------------------------------------------------------------------------------
+servidor_mysql   docker-entrypoint.sh mysqld      Up      3306/tcp            
+servidor_wp      docker-entrypoint.sh apach ...   Up      0.0.0.0:8080-&gt;80/tcp
+</code></pre></div><ul>
+<li>Si queremos para los contenedores debemos de usar el comando <strong>docker-compose stop</strong>:</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">francisco@debian10:~/Documentos/Implantacion/Docker/docker-compose/wordpress$ docker-compose stop
+Stopping servidor_wp    ... <span style="color:#66d9ef">done</span>
+Stopping servidor_mysql ... <span style="color:#66d9ef">done</span>
+</code></pre></div><ul>
+<li>Si esta vez queremos borrar los contenedores, debemos de tener en cuenta que antes deben de estar parados, una vez parados usamos el comando <strong>docker-compose rm</strong>:</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">francisco@debian10:~/Documentos/Implantacion/Docker/docker-compose/wordpress$ docker-compose rm
+Going to remove servidor_wp, servidor_mysql
+Are you sure? <span style="color:#f92672">[</span>yN<span style="color:#f92672">]</span> y
+Removing servidor_wp    ... <span style="color:#66d9ef">done</span>
+Removing servidor_mysql ... <span style="color:#66d9ef">done</span>
+</code></pre></div><h2 id="comando-docker-compose">Comando docker-compose</h2>
+<p>Una vez hemos creado el archivo <strong>docker-compose.yml</strong> tenemos que empezar a trabajar con él, es decir a crear los contenedores que describe su contenido.</p>
+<p>Esto lo haremos mediante el ejecutable <em>docker-compose</em>. <strong>Es importante destacar que debemos invocarla desde el directorio en el que se encuentra el fichero docker-compose.yml</strong>.</p>
+<p>Los subcomandos más usados son:</p>
+<ul>
+<li>
+<p><strong>docker-compose up</strong>: Crear los contenedores (servicios) que están descritos en el docker-compose.yml</p>
+</li>
+<li>
+<p><strong>docker-compose up -d</strong>: Crear en modo detach los contenedores (servicios) que están descritos en el docker-compose.yml. E
+significa que no muestran mensajes de log en el terminal y que se nos vuelve a mostrar un prompt</p>
+</li>
+<li>
+<p><strong>docker-compose stop</strong>: Detiene los contenedores que previamente se han lanzado con docker-compose up</p>
+</li>
+<li>
+<p><strong>docker-compose run</strong>: Inicia los contenedores descritos en el docker-compose.yml que estén parados</p>
+</li>
+<li>
+<p><strong>docker-compose rm</strong>: Borra los contenedores parados del escenario. Con las opción -f elimina también los contenedores
+ejecución</p>
+</li>
+<li>
+<p><strong>docker-compose pause</strong>: Pausa los contenedores que previamente se han lanzado con docker-compose up</p>
+</li>
+<li>
+<p><strong>docker-compose unpause</strong>: Reanuda los contenedores que previamente se han pausado</p>
+</li>
+<li>
+<p><strong>docker-compose restart</strong>: Reinicia los contenedores. Orden ideal para reiniciar servicios con nuevas configuraciones</p>
+</li>
+<li>
+<p><strong>docker-compose down</strong>: Para los contenedores, los borra y también borra las redes que se han creado con docker-compose up (
+caso de haberse creado)</p>
+</li>
+<li>
+<p><strong>docker-compose down -v</strong>: Para los contenedores y borra contenedores, redes y volúmene</p>
+</li>
+<li>
+<p><strong>docker-compose logs servicio1</strong>: Muestra los logs del servicio llamado servicio1 que estaba descrito en el docker-compose.yml</p>
+</li>
+<li>
+<p><strong>docker-compose exec servicio1 /bin/bash</strong>: Ejecuta una orden, en este caso /bin/bash en un contenedor llamado servicio1 q
+estaba descrito en el docker-compose.ym</p>
+</li>
+<li>
+<p><strong>docker-compose build</strong>: Ejecuta, si está indicado, el proceso de construcción de una imagen que va a ser usado en
+docker-compose.yml a partir de los ficheros Dockerfile que se indican</p>
+</li>
+<li>
+<p><strong>docker-compose top</strong>: Muestra los procesos que están ejecutándose en cada uno de los contenedores de los servicios.</p>
+</li>
+</ul>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2021  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+         
+        <li><a href="/servicios">Servicios</a></li>
+         
+        <li><a href="/implantacion">Implantacion</a></li>
+         
+        <li><a href="/bbdd">BBDD</a></li>
+         
+        <li><a href="/hlc">HLC</a></li>
+         
+        <li><a href="/cloud">Cloud</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>
