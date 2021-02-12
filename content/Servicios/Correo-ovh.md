@@ -459,6 +459,35 @@ ssl_key = </etc/letsencrypt/live/mail.iesgn13.es/privkey.pem
 sudo systemctl restart dovecot.service
 ```
 
+Una vez lo tengamos, debemos de dirigirnos al fichero **/etc/dovecot/conf.d/10-master.conf** donde tenemos que descomentar las siguientes lineas para que asi podamos usar los puertos que usa el protocolo **IMAPS** por lo que debemos de tener los siguiente contenido:
+```shell
+#### Descomentamos las lineas sobre los protocoloes que necesitamos ####
+service imap-login {
+  inet_listener imap {
+    port = 143
+  }
+  inet_listener imaps {
+    port = 993
+    ssl = yes
+  }
+...
+#Postfix smtp-auth
+   unix_listener /var/spool/postfix/private/auth {
+   mode = 0660
+   user = postfix
+   group = postfix
+  }
+
+#### Reiniciamos el servicios y vemos los puertos que tenemos abiertos ####
+debian@omega:~$ sudo ss -lnpt | grep 465
+LISTEN    0         100                0.0.0.0:465              0.0.0.0:*        users:(("master",pid=5371,fd=22))                                              
+LISTEN    0         100                   [::]:465                 [::]:*        users:(("master",pid=5371,fd=23))  
+
+debian@omega:~$ sudo ss -lnpt | grep 993
+LISTEN    0         100                0.0.0.0:993              0.0.0.0:*        users:(("dovecot",pid=5377,fd=40))                                             
+LISTEN    0         100                   [::]:993                 [::]:*        users:(("dovecot",pid=5377,fd=41))
+```
+
 Asi, a la hora de entrar en nuestro cliente de correos remoto, como puede ser thunderbird, debemos de poner los siguientes elementos:
 
 ![ssl thunderbird](https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Servicios/mail-ovh/ssl-thunderbird.png)
@@ -466,3 +495,68 @@ Asi, a la hora de entrar en nuestro cliente de correos remoto, como puede ser th
 Y a la hora de entrar en nuestro cliente veremos ya los correos de nuestro usuario:
 
 ![correos thunderbird](https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Servicios/mail-ovh/recibido-thunderbird.png)
+
+
+## Tarea 11
+
+Configura de manera adecuada postfix para que podamos mandar un correo desde un cliente remoto. La conexión entre cliente y servidor debe estar autentificada con SASL usando dovecor y además debe estar cifrada. Para cifrar esta comunicación puedes usar dos opciones:
+
+* ESMTP + STARTTLS: Usando el puerto 567/tcp enviamos de forma segura el correo al servidor.
+
+* SMTPS: Utiliza un puerto no estándar (465) para SMTPS (Simple Mail Transfer Protocol Secure). No es una extensión de smtp. Es muy parecido a HTTPS.
+
+Elige una de las opciones anterior para realizar el cifrado. Y muestra la configuración de un cliente de correo (evolution, thunderbird, …) y muestra como puedes enviar los correos.
+
+En este caso nosotros vamos a usar la segunda opción que, como hemos visto en la anterior tarea, ya tenemos el puerto que necesita el protocolo **SMTPS** que es el puerto 465, asi solo debemos de añadir las siguientes lineas a nuestro fichero **/etc/postfix/main.cf**:
+```shell
+#### Lineas que debemos de añadir ####
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+smtpd_sasl_local_domain =
+smtpd_sasl_security_options = noanonymous
+broken_sasl_auth_clients = yes
+smtpd_sasl_auth_enable = yes
+smtp_tls_security_level = may
+smtpd_tls_security_level = may
+smtp_tls_note_starttls_offer = yes
+smtpd_tls_loglevel = 1
+smtpd_tls_received_header = yes
+```
+
+Una vez añadidas las lineas que hemos indicado debemos de dirigirnos al fichero **/etc/postfix/master.cf** donde tendremos que añadir las siguientes lineas o, si ya estan en ese fichero solo tendremos que descomentar las lineas:
+```shell
+#### Lineas a añadir en el fichero /etc/postfix/master.cf ####
+smtps     inet  n       -       y       -       -       smtpd
+[...]
+  -o syslog_name=postfix/smtps
+  -o smtpd_tls_wrappermode=yes
+  -o smtpd_sasl_auth_enable=yes
+  -o smtpd_reject_unlisted_recipient=no
+  -o smtpd_client_restrictions=$mua_client_restrictions
+  -o smtpd_helo_restrictions=$mua_helo_restrictions
+  -o smtpd_sender_restrictions=$mua_sender_restrictions
+  -o smtpd_recipient_restrictions=
+  -o smtpd_relay_restrictions=permit_sasl_authenticated,reject
+  -o milter_macro_daemon_name=ORIGINATING
+```
+
+Despues de ello, debemos de indicar donde tenemos los certificados que hemos generado anteriormente con Certbot, por lo que nos dirigimos al fichero **/etc/postfix/main.cf** donde tenedremos que indicar la ruta donde tenemos dichas claves:
+```shell
+smtpd_tls_cert_file=/etc/letsencrypt/live/mail.iesgn13.es/fullchain.pem
+smtpd_tls_key_file=/etc/letsencrypt/live/mail.iesgn13.es/privkey.pem
+
+#### Reiniciamos postfix ####
+debian@omega:~$ sudo systemctl restart postfix
+```
+
+Una vez lo tengamos, debemos de tener en nuestro cliente de correos, en el apartado de **SMTP** la opción de **SMTPS** junto al puerto **465**:
+
+![puerto con SMTPS](https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Servicios/mail-ovh/SMTPS-ovh.png)
+
+Y a continuación vamos a enviar un mensaje a nuestro correo personal, de la siguiente forma tendremos el siguiente contenido en el log de mail:
+```shell
+Feb 12 13:12:39 omega postfix/smtp[12285]: DCE85812B0: to=<franjaviermn17100@gmail.com>, relay=127.0.0.1[127.0.0.1]:10025, delay=0.35, delays=0.21/0.01/0.06/0.07, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as 1A66F812B1)
+```
+
+
+![Mensaje enviado mediante thunderbird](https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Servicios/mail-ovh/mensaje-enviado-ovh.png)

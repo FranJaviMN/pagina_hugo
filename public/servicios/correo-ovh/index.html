@@ -408,10 +408,85 @@ ssl_key <span style="color:#f92672">=</span> &lt;/etc/letsencrypt/live/mail.iesg
 
 <span style="color:#75715e">#### Reiniciamos el servicio de dovecot ####</span>
 sudo systemctl restart dovecot.service
+</code></pre></div><p>Una vez lo tengamos, debemos de dirigirnos al fichero <strong>/etc/dovecot/conf.d/10-master.conf</strong> donde tenemos que descomentar las siguientes lineas para que asi podamos usar los puertos que usa el protocolo <strong>IMAPS</strong> por lo que debemos de tener los siguiente contenido:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Descomentamos las lineas sobre los protocoloes que necesitamos ####</span>
+service imap-login <span style="color:#f92672">{</span>
+  inet_listener imap <span style="color:#f92672">{</span>
+    port <span style="color:#f92672">=</span> <span style="color:#ae81ff">143</span>
+  <span style="color:#f92672">}</span>
+  inet_listener imaps <span style="color:#f92672">{</span>
+    port <span style="color:#f92672">=</span> <span style="color:#ae81ff">993</span>
+    ssl <span style="color:#f92672">=</span> yes
+  <span style="color:#f92672">}</span>
+...
+<span style="color:#75715e">#Postfix smtp-auth</span>
+   unix_listener /var/spool/postfix/private/auth <span style="color:#f92672">{</span>
+   mode <span style="color:#f92672">=</span> <span style="color:#ae81ff">0660</span>
+   user <span style="color:#f92672">=</span> postfix
+   group <span style="color:#f92672">=</span> postfix
+  <span style="color:#f92672">}</span>
+
+<span style="color:#75715e">#### Reiniciamos el servicios y vemos los puertos que tenemos abiertos ####</span>
+debian@omega:~$ sudo ss -lnpt | grep <span style="color:#ae81ff">465</span>
+LISTEN    <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">100</span>                0.0.0.0:465              0.0.0.0:*        users:<span style="color:#f92672">((</span><span style="color:#e6db74">&#34;master&#34;</span>,pid<span style="color:#f92672">=</span>5371,fd<span style="color:#f92672">=</span>22<span style="color:#f92672">))</span>                                              
+LISTEN    <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">100</span>                   <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:465                 <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:*        users:<span style="color:#f92672">((</span><span style="color:#e6db74">&#34;master&#34;</span>,pid<span style="color:#f92672">=</span>5371,fd<span style="color:#f92672">=</span>23<span style="color:#f92672">))</span>  
+
+debian@omega:~$ sudo ss -lnpt | grep <span style="color:#ae81ff">993</span>
+LISTEN    <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">100</span>                0.0.0.0:993              0.0.0.0:*        users:<span style="color:#f92672">((</span><span style="color:#e6db74">&#34;dovecot&#34;</span>,pid<span style="color:#f92672">=</span>5377,fd<span style="color:#f92672">=</span>40<span style="color:#f92672">))</span>                                             
+LISTEN    <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">100</span>                   <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:993                 <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:*        users:<span style="color:#f92672">((</span><span style="color:#e6db74">&#34;dovecot&#34;</span>,pid<span style="color:#f92672">=</span>5377,fd<span style="color:#f92672">=</span>41<span style="color:#f92672">))</span>
 </code></pre></div><p>Asi, a la hora de entrar en nuestro cliente de correos remoto, como puede ser thunderbird, debemos de poner los siguientes elementos:</p>
 <p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Servicios/mail-ovh/ssl-thunderbird.png" alt="ssl thunderbird"></p>
 <p>Y a la hora de entrar en nuestro cliente veremos ya los correos de nuestro usuario:</p>
 <p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Servicios/mail-ovh/recibido-thunderbird.png" alt="correos thunderbird"></p>
+<h2 id="tarea-11">Tarea 11</h2>
+<p>Configura de manera adecuada postfix para que podamos mandar un correo desde un cliente remoto. La conexión entre cliente y servidor debe estar autentificada con SASL usando dovecor y además debe estar cifrada. Para cifrar esta comunicación puedes usar dos opciones:</p>
+<ul>
+<li>
+<p>ESMTP + STARTTLS: Usando el puerto 567/tcp enviamos de forma segura el correo al servidor.</p>
+</li>
+<li>
+<p>SMTPS: Utiliza un puerto no estándar (465) para SMTPS (Simple Mail Transfer Protocol Secure). No es una extensión de smtp. Es muy parecido a HTTPS.</p>
+</li>
+</ul>
+<p>Elige una de las opciones anterior para realizar el cifrado. Y muestra la configuración de un cliente de correo (evolution, thunderbird, …) y muestra como puedes enviar los correos.</p>
+<p>En este caso nosotros vamos a usar la segunda opción que, como hemos visto en la anterior tarea, ya tenemos el puerto que necesita el protocolo <strong>SMTPS</strong> que es el puerto 465, asi solo debemos de añadir las siguientes lineas a nuestro fichero <strong>/etc/postfix/main.cf</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Lineas que debemos de añadir ####</span>
+smtpd_sasl_type <span style="color:#f92672">=</span> dovecot
+smtpd_sasl_path <span style="color:#f92672">=</span> private/auth
+smtpd_sasl_local_domain <span style="color:#f92672">=</span>
+smtpd_sasl_security_options <span style="color:#f92672">=</span> noanonymous
+broken_sasl_auth_clients <span style="color:#f92672">=</span> yes
+smtpd_sasl_auth_enable <span style="color:#f92672">=</span> yes
+smtp_tls_security_level <span style="color:#f92672">=</span> may
+smtpd_tls_security_level <span style="color:#f92672">=</span> may
+smtp_tls_note_starttls_offer <span style="color:#f92672">=</span> yes
+smtpd_tls_loglevel <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+smtpd_tls_received_header <span style="color:#f92672">=</span> yes
+</code></pre></div><p>Una vez añadidas las lineas que hemos indicado debemos de dirigirnos al fichero <strong>/etc/postfix/master.cf</strong> donde tendremos que añadir las siguientes lineas o, si ya estan en ese fichero solo tendremos que descomentar las lineas:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Lineas a añadir en el fichero /etc/postfix/master.cf ####</span>
+smtps     inet  n       -       y       -       -       smtpd
+<span style="color:#f92672">[</span>...<span style="color:#f92672">]</span>
+  -o syslog_name<span style="color:#f92672">=</span>postfix/smtps
+  -o smtpd_tls_wrappermode<span style="color:#f92672">=</span>yes
+  -o smtpd_sasl_auth_enable<span style="color:#f92672">=</span>yes
+  -o smtpd_reject_unlisted_recipient<span style="color:#f92672">=</span>no
+  -o smtpd_client_restrictions<span style="color:#f92672">=</span>$mua_client_restrictions
+  -o smtpd_helo_restrictions<span style="color:#f92672">=</span>$mua_helo_restrictions
+  -o smtpd_sender_restrictions<span style="color:#f92672">=</span>$mua_sender_restrictions
+  -o smtpd_recipient_restrictions<span style="color:#f92672">=</span>
+  -o smtpd_relay_restrictions<span style="color:#f92672">=</span>permit_sasl_authenticated,reject
+  -o milter_macro_daemon_name<span style="color:#f92672">=</span>ORIGINATING
+</code></pre></div><p>Despues de ello, debemos de indicar donde tenemos los certificados que hemos generado anteriormente con Certbot, por lo que nos dirigimos al fichero <strong>/etc/postfix/main.cf</strong> donde tenedremos que indicar la ruta donde tenemos dichas claves:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">smtpd_tls_cert_file<span style="color:#f92672">=</span>/etc/letsencrypt/live/mail.iesgn13.es/fullchain.pem
+smtpd_tls_key_file<span style="color:#f92672">=</span>/etc/letsencrypt/live/mail.iesgn13.es/privkey.pem
+
+<span style="color:#75715e">#### Reiniciamos postfix ####</span>
+debian@omega:~$ sudo systemctl restart postfix
+</code></pre></div><p>Una vez lo tengamos, debemos de tener en nuestro cliente de correos, en el apartado de <strong>SMTP</strong> la opción de <strong>SMTPS</strong> junto al puerto <strong>465</strong>:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Servicios/mail-ovh/SMTPS-ovh.png" alt="puerto con SMTPS"></p>
+<p>Y a continuación vamos a enviar un mensaje a nuestro correo personal, de la siguiente forma tendremos el siguiente contenido en el log de mail:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">Feb <span style="color:#ae81ff">12</span> 13:12:39 omega postfix/smtp<span style="color:#f92672">[</span>12285<span style="color:#f92672">]</span>: DCE85812B0: to<span style="color:#f92672">=</span>&lt;franjaviermn17100@gmail.com&gt;, relay<span style="color:#f92672">=</span>127.0.0.1<span style="color:#f92672">[</span>127.0.0.1<span style="color:#f92672">]</span>:10025, delay<span style="color:#f92672">=</span>0.35, delays<span style="color:#f92672">=</span>0.21/0.01/0.06/0.07, dsn<span style="color:#f92672">=</span>2.0.0, status<span style="color:#f92672">=</span>sent <span style="color:#f92672">(</span><span style="color:#ae81ff">250</span> 2.0.0 Ok: queued as 1A66F812B1<span style="color:#f92672">)</span>
+</code></pre></div><p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Servicios/mail-ovh/mensaje-enviado-ovh.png" alt="Mensaje enviado mediante thunderbird"></p>
 
   
   </div>
