@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Thu, 18 Feb 2021 18:08:42 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/bbdd/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 18 Feb 2021 18:22:31 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/bbdd/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Almacenamiento</title>
+      <link>https://franjavimn.onrender.com/bbdd/almacenamiento/</link>
+      <pubDate>Thu, 18 Feb 2021 18:22:31 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/bbdd/almacenamiento/</guid>
+      <description>Oracle  Crea un tablespace de undo e intenta crear una tabla en él.  Creamos el tablespace de nombre undo_oracle1 y con un datafile de nombre tablespaceundo1:
+SQL&amp;gt; create undo tablespace undo_oracle1 DATAFILE &amp;#39;tablespaceundo1.dbf&amp;#39; size 100M autoextend on; Tablespace creado. Ahora bien, si intentamos crear una table en dicho tablespace nos saldrá el siguiente error:
+SQL&amp;gt; create table prueba1( 2 nombre varchar2(10)) 3 tablespace undo_oracle1; create table prueba1( * ERROR en lÝnea 1: ORA-30022: No se pueden crear segmentos en un tablespace de deshacer Crea un tablespace temporal TEMP2 y escribe una sentencia SQL que genere un script que haga usar TEMP2 a todos los usuarios que tienen USERS como tablespace por defecto.</description>
+    </item>
+    
     <item>
       <title>Diferencias Almacenamiento</title>
       <link>https://franjavimn.onrender.com/bbdd/diferencias-almacenamiento/</link>
