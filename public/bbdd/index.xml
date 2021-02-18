@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Mon, 08 Feb 2021 18:19:40 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/bbdd/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 18 Feb 2021 18:08:42 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/bbdd/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Diferencias Almacenamiento</title>
+      <link>https://franjavimn.onrender.com/bbdd/diferencias-almacenamiento/</link>
+      <pubDate>Thu, 18 Feb 2021 18:08:42 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/bbdd/diferencias-almacenamiento/</guid>
+      <description>Diferencias entre MySQL y Postgres para gestionar el almacenamiento. En el siguiente articulo vamos a ver las limitaciones que presentan los gestores de bases de datos MySQL y Postgres en cuanto al almacenamiento respector a Oracle
+MySQL MySQL es un Sistema Gestor de Base de Datos, donde presenta tener un sistema de almacenamiento sobre tablespaces, usando sus motores de almacenamiento, que son los motores de almacenamiento InnoDB y NDB.
+  NDB Cluster es el motor de almacenamiento usado por MySQL Cluster, para implementar tablas que se particionan en varias máquinas.</description>
+    </item>
+    
     <item>
       <title>Interconexion</title>
       <link>https://franjavimn.onrender.com/bbdd/interconexion/</link>
