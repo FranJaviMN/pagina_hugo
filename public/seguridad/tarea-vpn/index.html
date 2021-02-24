@@ -186,7 +186,7 @@ Existen tres tipos de VPN distintas:
 <p>Para ello, como indicamos en el apartado, vamos a usar una receta <em>heat</em> para nuestro <strong>openstack</strong> donde vamos a tener dos maquinas, una de ellas actuara como servidor VPN y la otra maquina, que es de la red interna, es a la que queremos acceder y tener la posibilidad de conectividad con la dicha maquina. Cuando tengamos el escenario ya creado nos debe de quedar algo como lo siguiente:</p>
 <p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Seguridad/vpn/topologia-escenario-vpn.png" alt="topologia de escenario vpn"></p>
 <p>Una vez ya tenemos el escenario creado solo nos queda la parte de configuración de nuestro servidor VPN, en este caso va a ser la maquina que se encuentra conectada a dos redes distintas y nosotros queremos tener conectividad con la red interna que tiene un direccionamiento <strong>192.168.100.0/24</strong></p>
-<h2 id="configuración-de-vpn">Configuración de VPN</h2>
+<h2 id="configuración-de-vpn-en-el-servidor">Configuración de VPN en el servidor</h2>
 <p>Lo primero que debemos de hacer es entrar en nuestro servidor de VPN y ahi debemos de instalar el paquete llamado <strong>openvpn</strong> y tambien el paquete <strong>openssl</strong> que es que contiene el software que vamos a usar para crear nuestra vpn y los certificados que vamos a necesitar:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos el paquete openvpn ####</span>
 debian@vpn-server:~$ sudo apt update <span style="color:#f92672">&amp;&amp;</span> sudo apt install openvpn openssl -y
@@ -202,10 +202,343 @@ root@vpn-server:~# echo <span style="color:#ae81ff">1</span> &gt; /proc/sys/net/
 ...
 AUTOSTART<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;all&#34;</span>
 ...
-</code></pre></div><h3 id="generar-la-la-autoridad-certificadora">Generar la la autoridad certificadora</h3>
-<p>El siguiente paso es configurar una autoridad certificadora (CA). Esta es la responsable de emitir y revocar certificados digitales y servirá para la confianza entre el equipo o equipos clientes y el servidor, no siendo posible la conexión mediante VPN si se carece de certificado válido.</p>
-<p>OpenVPN permite la autentificación bidireccional mediante certificados, de manera que el cliente debe autenticar el certificado del servidor y éste debe autenticar el certificado del cliente.</p>
+</code></pre></div><h3 id="configuracion-del-servidor-vpn">Configuracion del servidor vpn</h3>
+<p>Para ello en nuestro servidor debemos de instalar el paquete de <strong>git</strong> ya que vamos a usar unos scripts que nos ofrece openvpn llamado <strong>easy-rsa</strong> por lo que realizamos las siguientes accione:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos git ####</span>
+debian@vpn-server:~$ sudo apt install git
 
+<span style="color:#75715e">#### Clonamos el repositorio de easy-rsa ####</span>
+debian@vpn-server:~$ git clone https://github.com/OpenVPN/easy-rsa
+</code></pre></div><p>Nos genera un directorio llamado <strong>easy-rsa</strong>, entramos en dicho directorio y lo primero que debemos de hacer es declarar unas variables en el fichero llamado <strong>vars.example</strong> al cual debemos de cambiar el nombre a <strong>vars</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Le cambiamos el nombre ####</span>
+debian@vpn-server:~/easy-rsa/easyrsa3$ mv vars.example vars
+
+<span style="color:#75715e">#### Le añadimos las siguientes variables ####</span>
+...
+set_var EASYRSA_REQ_COUNTRY     <span style="color:#e6db74">&#34;ES&#34;</span>
+set_var EASYRSA_REQ_PROVINCE    <span style="color:#e6db74">&#34;Sevilla&#34;</span>
+set_var EASYRSA_REQ_CITY        <span style="color:#e6db74">&#34;Alcala&#34;</span>
+set_var EASYRSA_REQ_ORG         <span style="color:#e6db74">&#34;Francis Corp&#34;</span>
+set_var EASYRSA_REQ_EMAIL       <span style="color:#e6db74">&#34;fran@iesgn.org&#34;</span>
+set_var EASYRSA_REQ_OU          <span style="color:#e6db74">&#34;iesgn.org&#34;</span>
+...
+</code></pre></div><p>Una vez hecho lo anterior, debemos de usar el script de <strong>easyrsa</strong>, lo primero va a ser generar directorio llamado <strong>pki</strong> donde se almaceran todas la claves y certificados:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Lo ejecutamos con la opcion init-pki ####</span>
+debian@vpn-server:~/easy-rsa/easyrsa3$ ./easyrsa init-pki
+
+Note: using Easy-RSA configuration from: /home/debian/easy-rsa/easyrsa3/vars
+
+init-pki complete; you may now create a CA or requests.
+Your newly created PKI dir is: /home/debian/easy-rsa/easyrsa3/pki
+</code></pre></div><h3 id="generar-credenciales-de-ca">Generar credenciales de CA</h3>
+<p>Para ello vamos a seguir trabajando con el script <strong>easyrsa</strong>, esta vez vamos a generar las credenciales de nuestro CA con la opción <strong>build-ca</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Ejecutamos el script con la opcion build-ca ####</span>
+debian@vpn-server:~/easy-rsa/easyrsa3$ ./easyrsa build-ca
+
+Note: using Easy-RSA configuration from: /home/debian/easy-rsa/easyrsa3/vars
+Using SSL: openssl OpenSSL 1.1.1d  <span style="color:#ae81ff">10</span> Sep <span style="color:#ae81ff">2019</span>
+
+Enter New CA Key Passphrase: 
+Re-Enter New CA Key Passphrase: 
+Generating RSA private key, <span style="color:#ae81ff">2048</span> bit long modulus <span style="color:#f92672">(</span><span style="color:#ae81ff">2</span> primes<span style="color:#f92672">)</span>
+......................................................................................+++++
+..........................................+++++
+e is <span style="color:#ae81ff">65537</span> <span style="color:#f92672">(</span>0x010001<span style="color:#f92672">)</span>
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter <span style="color:#e6db74">&#39;.&#39;</span>, the field will be left blank.
+-----
+Common Name <span style="color:#f92672">(</span>eg: your user, host, or server name<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>Easy-RSA CA<span style="color:#f92672">]</span>:servidor-vpn
+
+CA creation complete and you may now import and sign cert requests.
+Your new CA certificate file <span style="color:#66d9ef">for</span> publishing is at:
+/home/debian/easy-rsa/easyrsa3/pki/ca.crt
+</code></pre></div><p>Durante este proceso nos pedirá una clave, que será la frase de paso de la clave privada de la CA. Clave que nos pedirá en el siguiente paso para generar las credenciales del servidor.</p>
+<h3 id="credenciales-del-servidor">Credenciales del servidor</h3>
+<p>El próximo parámetro que utilizaremos con el script será build-server-full seguido del nombre que queramos que tengan los ficheros. Primero nos pedirá una frase de paso para proteger la clave privada del servidor, y luego nos pedirá la frase de paso de la CA para que pueda firmar dicha clave.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Usamo el parametro build-server-full con el nombre servidor ####</span>
+debian@vpn-server:~/easy-rsa/easyrsa3$ ./easyrsa build-server-full servidor
+
+Note: using Easy-RSA configuration from: /home/debian/easy-rsa/easyrsa3/vars
+Using SSL: openssl OpenSSL 1.1.1d  <span style="color:#ae81ff">10</span> Sep <span style="color:#ae81ff">2019</span>
+Generating a RSA private key
+.........+++++
+............................+++++
+writing new private key to <span style="color:#e6db74">&#39;/home/debian/easy-rsa/easyrsa3/pki/easy-rsa-2261.vUP5jk/tmp.2pqACL&#39;</span>
+Enter PEM pass phrase:
+Verifying - Enter PEM pass phrase:
+-----
+Using configuration from /home/debian/easy-rsa/easyrsa3/pki/easy-rsa-2261.vUP5jk/tmp.bw70r3
+Enter pass phrase <span style="color:#66d9ef">for</span> /home/debian/easy-rsa/easyrsa3/pki/private/ca.key:
+Check that the request matches the signature
+Signature ok
+The Subject<span style="color:#e6db74">&#39;s Distinguished Name is as follows
+</span><span style="color:#e6db74">commonName            :ASN.1 12:&#39;</span>servidor<span style="color:#960050;background-color:#1e0010">&#39;</span>
+Certificate is to be certified <span style="color:#66d9ef">until</span> May <span style="color:#ae81ff">22</span> 12:54:38 <span style="color:#ae81ff">2023</span> GMT <span style="color:#f92672">(</span><span style="color:#ae81ff">825</span> days<span style="color:#f92672">)</span>
+
+Write out database with <span style="color:#ae81ff">1</span> new entries
+Data Base Updated
+</code></pre></div><h3 id="credenciales-del-cliente">Credenciales del cliente</h3>
+<p>En mi caso mi cliente se va a llamar <em>cliente</em>, y la opcion que debemos de usar con el script es <strong>build-client-full</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Generamos las credenciales del cliente ####</span>
+debian@vpn-server:~/easy-rsa/easyrsa3$ ./easyrsa build-client-full cliente
+
+Note: using Easy-RSA configuration from: /home/debian/easy-rsa/easyrsa3/vars
+Using SSL: openssl OpenSSL 1.1.1d  <span style="color:#ae81ff">10</span> Sep <span style="color:#ae81ff">2019</span>
+Generating a RSA private key
+............................................................................+++++
+...+++++
+writing new private key to <span style="color:#e6db74">&#39;/home/debian/easy-rsa/easyrsa3/pki/easy-rsa-2468.oV3MDT/tmp.62prMH&#39;</span>
+Enter PEM pass phrase:
+Verifying - Enter PEM pass phrase:
+-----
+Using configuration from /home/debian/easy-rsa/easyrsa3/pki/easy-rsa-2468.oV3MDT/tmp.xzMYdy
+Enter pass phrase <span style="color:#66d9ef">for</span> /home/debian/easy-rsa/easyrsa3/pki/private/ca.key:
+Check that the request matches the signature
+Signature ok
+The Subject<span style="color:#e6db74">&#39;s Distinguished Name is as follows
+</span><span style="color:#e6db74">commonName            :ASN.1 12:&#39;</span>cliente<span style="color:#960050;background-color:#1e0010">&#39;</span>
+Certificate is to be certified <span style="color:#66d9ef">until</span> May <span style="color:#ae81ff">22</span> 12:58:22 <span style="color:#ae81ff">2023</span> GMT <span style="color:#f92672">(</span><span style="color:#ae81ff">825</span> days<span style="color:#f92672">)</span>
+
+Write out database with <span style="color:#ae81ff">1</span> new entries
+Data Base Updated
+</code></pre></div><h3 id="generar-clave-diffie-hellman">Generar clave Diffie Hellman</h3>
+<p>Para ello, lo primero que vamos a hacer es explicar que son los parametros de <strong>Diffie-Hellman</strong>:</p>
+<p>Diffie-Hellman es un protocolo criptografico, es un protocolo de establecimiento de claves entre partes que no han tenido contacto previo, utilizando un canal inseguro y de manera anónima (no autenticada).</p>
+<p>Se emplea generalmente como medio para acordar claves simétricas que serán empleadas para el cifrado de una sesión (establecer clave de sesión). Siendo no autenticado, sin embargo, provee las bases para varios protocolos autenticados.</p>
+<p>El sistema se basa en la idea de que dos interlocutores pueden generar conjuntamente una clave compartida sin que un intruso, que esté escuchando las comunicaciones, pueda llegar a obtenerla.</p>
+<p>Para ello vamos a seguir usando el script de <strong>easyrsa</strong> y esta vez con la opcion <strong>gen-dh</strong> y debemos de tener en cuenta que es un algoritmo muy fuerte por lo que tardara un poco:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Generamos la clave Diffie Hellman ####</span>
+debian@vpn-server:~/easy-rsa/easyrsa3$ ./easyrsa gen-dh
+
+Note: using Easy-RSA configuration from: /home/debian/easy-rsa/easyrsa3/vars
+Using SSL: openssl OpenSSL 1.1.1d  <span style="color:#ae81ff">10</span> Sep <span style="color:#ae81ff">2019</span>
+Generating DH parameters, <span style="color:#ae81ff">2048</span> bit long safe prime, generator <span style="color:#ae81ff">2</span>
+This is going to take a long time
+.....................................................................................................................................+............................................+.....................................................................................................................................................................+................................................................................+.....+........................................................................................................
+</code></pre></div><h3 id="configuracion-de-openvpn">Configuracion de OpenVPN</h3>
+<p>Lo primero que debemos de hacer es llevarnos los fichero de clave y certificados al directorio <strong>/etc/openvpn</strong>, en mi caso los fichero que debo mover son <strong>ca.crt, ca.key, dh.pem, server.crt y server.key</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Estructura de pki ####</span>
+debian@vpn-server:~/easy-rsa/easyrsa3/pki$ tree
+.
+├── ca.crt
+├── certs_by_serial
+│   └── ...
+├── dh.pem
+├── index.txt
+├── index.txt.attr
+├── index.txt.attr.old
+├── index.txt.old
+├── issued
+│   ├── ...
+│   └── servidor.crt
+├── openssl-easyrsa.cnf
+├── private
+│   ├── ca.key
+│   ├── ...
+│   └── servidor.key
+├── renewed
+│   └── ...
+├── reqs
+│   └── ...
+├── revoked
+│   └── ...
+├── safessl-easyrsa.cnf
+├── serial
+└── serial.old
+
+<span style="color:#75715e">#### Contenido del directorio /etc/openvpn ####</span>
+debian@vpn-server:/etc/openvpn$ ls
+ca.crt  ca.key  client  dh.pem  server  servidor.crt  servidor.key  update-resolv-conf
+</code></pre></div><p>Ahora que ya tenemos los ficheros en el directorio que nosotros necesitamos vamos a pasar a crear el fichero de configuracion de openvpn llamado <strong>servidor.conf</strong>, y debe de contener el siguiente contenido:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Contenido del fichero /etc/openvpn/servidor.conf ####</span>
+<span style="color:#75715e">#Dispositivo de túnel</span>
+dev tun
+<span style="color:#75715e">#Protocolo de red</span>
+proto tcp
+<span style="color:#75715e">#Direcciones IP virtuales</span>
+server 10.99.99.0 255.255.255.0 
+<span style="color:#75715e">#subred local</span>
+push <span style="color:#e6db74">&#34;route 192.168.100.0 255.255.255.0&#34;</span>
+<span style="color:#75715e">#Rol de servidor</span>
+tls-server
+<span style="color:#75715e">#Parámetros Diffie-Hellman</span>
+dh /etc/openvpn/dh.pem
+<span style="color:#75715e">#Certificado de la CA</span>
+ca /etc/openvpn/ca.crt
+<span style="color:#75715e">#Certificado local</span>
+cert /etc/openvpn/servidor.crt
+<span style="color:#75715e">#Clave privada local</span>
+key /etc/openvpn/servidor.key
+<span style="color:#75715e">#Activar la compresión LZO</span>
+comp-lzo
+<span style="color:#75715e">#Detectar caídas de la conexión</span>
+keepalive <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">60</span>
+<span style="color:#75715e">#Nivel de información</span>
+verb <span style="color:#ae81ff">3</span>
+<span style="color:#75715e"># Contraseña del certificado del servidor</span>
+askpass contraseña.txt
+
+<span style="color:#75715e">#### Reiniciamos el servicio y vemos el nuevo dispositivo tun0 ####</span>
+debian@vpn-server:~$ sudo systemctl restart openvpn
+
+debian@vpn-server:~$ ip a show tun0
+4: tun0: &lt;POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">1500</span> qdisc pfifo_fast state UNKNOWN group default qlen <span style="color:#ae81ff">100</span>
+    link/none 
+    inet 10.99.99.1 peer 10.99.99.2/32 scope global tun0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::96a4:ea7d:b8f:d7d/64 scope link stable-privacy 
+       valid_lft forever preferred_lft forever
+</code></pre></div><h2 id="configuración-del-cliente-vpn">Configuración del cliente VPN</h2>
+<p>Debemos de seguir los pasos que hemos seguido con el servidor, pero solo la instalacion de <strong>openvpn</strong> ya que las claves y certificados ya los hemos generado en el servidor, una vez instalado y configurado como en el servidor, podemos seguir</p>
+<p>Para ello debemos de pasar desde el servido vpn a nuestro cliente las credenciales que habiamos generado con el nombre <strong>cliente</strong>, por lo que mediante la utilidad de <strong>scp</strong> debemos de pasarlo al cliente y tambien debemos de pasar el certificado de nuestra CA:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@vpn-server:~/easy-rsa/easyrsa3/pki$ scp ca.crt debian@10.0.0.17:/home/debian/
+debian@vpn-server:~/easy-rsa/easyrsa3/pki$ scp issued/cliente.crt debian@10.0.0.17:/home/debian/
+debian@vpn-server:~/easy-rsa/easyrsa3/pki$ scp private/cliente.key debian@10.0.0.17:/home/debian/
+</code></pre></div><p>Una vez hecho vamos a moverlos a <strong>/etc/openvpn/</strong> y generamos el fichero <strong>cliente.conf</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Contenido del fichero /etc/openvpn/cliente.conf ####</span>
+<span style="color:#75715e">#Dispositivo de túnel</span>
+dev tun
+
+<span style="color:#75715e">#IP del servidor</span>
+remote 10.0.0.15 
+
+<span style="color:#75715e">#Direcciones IP virtuales</span>
+ifconfig 10.99.99.0 255.255.255.0
+pull
+
+<span style="color:#75715e"># Protocolo tcp</span>
+proto tcp-client 
+
+<span style="color:#75715e">#Rol de cliente</span>
+tls-client
+
+<span style="color:#75715e">#Certificado de la CA</span>
+ca /etc/openvpn/ca.crt
+
+<span style="color:#75715e">#Certificado cliente</span>
+cert /etc/openvpn/cliente.crt
+
+<span style="color:#75715e">#Clave privada cliente</span>
+key /etc/openvpn/cliente.key
+
+<span style="color:#75715e">#Activar la compresión LZO</span>
+comp-lzo
+
+<span style="color:#75715e">#Detectar caídas de la conexión</span>
+keepalive <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">60</span>
+
+<span style="color:#75715e">#Nivel de la información</span>
+verb <span style="color:#ae81ff">3</span>
+
+<span style="color:#75715e"># Contraseña del certificado del cliente</span>
+askpass contraseña.txt
+</code></pre></div><h1 id="vpn-site-to-site">VPN Site-to-Site</h1>
+<p>A diferencia del escenario anterior, una VPN sitio a sitio se basa en un concepto algo distinto. Mientras que en el primer caso, hemos conectado una máquina a una red remota, en este caso vamos a conectar dos redes remotas, por lo que técnicamente, estaremos fusionando las dos redes a nivel de aplicación. En este nuevo escenario, tendremos dos máquinas en redes locales diferentes; por un lado la 192.168.100.0/24 y por otro lado la 192.168.200.0/24. A su vez, cada una de estas máquinas estará compartiendo la red con un servidor que serán los que gestionen la conexión de la VPN, que tendrán una red común, la 172.22.0.0/16.</p>
+<p>Para ello, en nuestra maquina servidor vamos a tener el siguiente fichero:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero de configuracion en la maquina servidor para site-to-site ####</span>
+<span style="color:#75715e">#Dispositivo de túnel</span>
+dev tun
+
+<span style="color:#75715e">#Encaminamiento</span>
+ifconfig 10.99.99.1 10.99.99.2
+route 192.168.200.0 255.255.255.0
+
+<span style="color:#75715e">#Rol de servidor</span>
+tls-server
+<span style="color:#75715e">#Parámetros Diffie-Hellman</span>
+dh /etc/openvpn/dh.pem
+<span style="color:#75715e">#Certificado de la CA</span>
+ca /etc/openvpn/ca.crt
+<span style="color:#75715e">#Certificado local</span>
+cert /etc/openvpn/servidor.crt
+<span style="color:#75715e">#Clave privada local</span>
+key /etc/openvpn/servidor.key
+<span style="color:#75715e">#Activar la compresión LZO</span>
+comp-lzo
+<span style="color:#75715e">#Detectar caídas de la conexión</span>
+keepalive <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">60</span>
+<span style="color:#75715e">#Nivel de información</span>
+verb <span style="color:#ae81ff">3</span>
+<span style="color:#75715e"># Contraseña del certificado del servidor</span>
+askpass contraseña.txt
+</code></pre></div><p>Como vemos, respecto al anterior fichero de configuración, las lineas que han cambiado han sido las siguientes:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># CLIENTE-SERVIDOR</span>
+<span style="color:#75715e">#Direcciones IP virtuales</span>
+server 10.99.99.0 255.255.255.0 
+
+<span style="color:#75715e">#subred local</span>
+push <span style="color:#e6db74">&#34;route 192.168.100.0 255.255.255.0&#34;</span>
+
+<span style="color:#75715e"># SITE-TO-SITE</span>
+<span style="color:#75715e"># Encaminamiento</span>
+ifconfig 10.99.99.1 10.99.99.2
+route 192.168.200.0 255.255.255.0
+</code></pre></div><p>Y ahora en la parte de nuestro cliente creamos un nuevo fichero en el cual vamos a tener el siguiente contenido:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero de sit-to-site vpn ####</span>
+<span style="color:#75715e">#Dispositivo de túnel</span>
+dev tun
+
+<span style="color:#75715e">#IP del servidor</span>
+remote 10.0.0.15 
+
+<span style="color:#75715e">#Encaminamiento</span>
+ifconfig 10.99.99.2 10.99.99.1
+
+<span style="color:#75715e"># Subred remota</span>
+route 192.168.100.0 255.255.255.0
+
+<span style="color:#75715e">#Rol de cliente</span>
+tls-client
+
+<span style="color:#75715e">#Certificado de la CA</span>
+ca /etc/openvpn/ca.crt
+
+<span style="color:#75715e">#Certificado cliente</span>
+cert /etc/openvpn/cliente.crt
+
+<span style="color:#75715e">#Clave privada cliente</span>
+key /etc/openvpn/cliente.key
+
+<span style="color:#75715e">#Activar la compresión LZO</span>
+comp-lzo
+
+<span style="color:#75715e">#Detectar caídas de la conexión</span>
+keepalive <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">60</span>
+
+<span style="color:#75715e">#Nivel de la información</span>
+verb <span style="color:#ae81ff">3</span>
+
+<span style="color:#75715e"># Contraseña del certificado del cliente</span>
+askpass contraseña.txt
+</code></pre></div><p>Una vez definidos, modificamos el fichero /etc/default/openvpn si hemos creado nuevos ficheros .conf para definir esta nueva conexión, y posteriormente reiniciamos los servicios. Primero el servicio del servidor, y luego el del cliente. Debemos recordar activar el bit de forward en ambas máquinas, para que puedan “pasar” el tráfico sus respectivas redes locales.</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Seguridad/vpn/site-to-site-vpn.png" alt="site-to-site"></p>
+<p>Asi, si hacemos ping a las redes internas veremos que tenemos ping:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Desde el cliente al servidor ####</span>
+ebian@cliente-vpn:/etc/openvpn$ ping 192.168.100.2
+PING 192.168.100.2 <span style="color:#f92672">(</span>192.168.100.2<span style="color:#f92672">)</span> 56<span style="color:#f92672">(</span>84<span style="color:#f92672">)</span> bytes of data.
+<span style="color:#ae81ff">64</span> bytes from 192.168.100.2: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span> time<span style="color:#f92672">=</span>0.868 ms
+<span style="color:#ae81ff">64</span> bytes from 192.168.100.2: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span> time<span style="color:#f92672">=</span>1.25 ms
+<span style="color:#ae81ff">64</span> bytes from 192.168.100.2: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span> time<span style="color:#f92672">=</span>1.24 ms
+^C
+--- 192.168.100.2 ping statistics ---
+<span style="color:#ae81ff">3</span> packets transmitted, <span style="color:#ae81ff">3</span> received, 0% packet loss, time 5ms
+rtt min/avg/max/mdev <span style="color:#f92672">=</span> 0.868/1.117/1.249/0.180 ms
+
+<span style="color:#75715e">#### Desde el servidor al cliente ####</span>
+debian@vpn-server:/etc/openvpn$ ping 192.168.200.11
+PING 192.168.200.11 <span style="color:#f92672">(</span>192.168.200.11<span style="color:#f92672">)</span> 56<span style="color:#f92672">(</span>84<span style="color:#f92672">)</span> bytes of data.
+<span style="color:#ae81ff">64</span> bytes from 192.168.200.11: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span> time<span style="color:#f92672">=</span>0.860 ms
+<span style="color:#ae81ff">64</span> bytes from 192.168.200.11: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span> time<span style="color:#f92672">=</span>1.16 ms
+<span style="color:#ae81ff">64</span> bytes from 192.168.200.11: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span> time<span style="color:#f92672">=</span>1.09 ms
+^C
+--- 192.168.200.11 ping statistics ---
+<span style="color:#ae81ff">3</span> packets transmitted, <span style="color:#ae81ff">3</span> received, 0% packet loss, time 5ms
+rtt min/avg/max/mdev <span style="color:#f92672">=</span> 0.860/1.036/1.160/0.127 ms
+</code></pre></div>
   
   </div>
 </article>
