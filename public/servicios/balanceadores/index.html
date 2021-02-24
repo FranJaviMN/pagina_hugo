@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Balanceadores | Blog</title>
+  <meta name="description" content="En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Balanceadores" />
+<meta property="og:description" content="Balanceadores de carga Un Balanceador de carga fundamentalmente es un dispositivo de hardware o software que se pone al frente de un conjunto de servidores que atienden una aplicación y, tal como su nombre lo indica, asigna o balancea las solicitudes que llegan de los clientes a los servidores usando algún algoritmo (desde un simple round-robin hasta algoritmos más sofisticados).
+Para que se considere exitoso un ​balanceador de carga:
+  Debe minimizar tiempos de respuesta" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://franjavimn.onrender.com/servicios/balanceadores/" />
+<meta property="article:published_time" content="2021-02-24T19:25:03+01:00" />
+<meta property="article:modified_time" content="2021-02-24T19:25:03+01:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Balanceadores"/>
+<meta name="twitter:description" content="Balanceadores de carga Un Balanceador de carga fundamentalmente es un dispositivo de hardware o software que se pone al frente de un conjunto de servidores que atienden una aplicación y, tal como su nombre lo indica, asigna o balancea las solicitudes que llegan de los clientes a los servidores usando algún algoritmo (desde un simple round-robin hasta algoritmos más sofisticados).
+Para que se considere exitoso un ​balanceador de carga:
+  Debe minimizar tiempos de respuesta"/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://franjavimn.onrender.com/images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://franjavimn.onrender.com">
+  
+    <div id="logo" style="background-image: url(https://franjavimn.onrender.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+       
+        <li><a href="/servicios">Servicios</a></li>
+       
+        <li><a href="/implantacion">Implantacion</a></li>
+       
+        <li><a href="/bbdd">BBDD</a></li>
+       
+        <li><a href="/hlc">HLC</a></li>
+       
+        <li><a href="/cloud">Cloud</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h1 id="balanceadores-de-carga">Balanceadores de carga</h1>
+<p>Un Balanceador de carga fundamentalmente es un dispositivo de hardware o software que se pone al frente de un conjunto de servidores que atienden una aplicación y, tal como su nombre lo indica, asigna o balancea las solicitudes que llegan de los clientes a los servidores usando algún algoritmo (desde un simple round-robin hasta algoritmos más sofisticados).</p>
+<p>Para que se considere exitoso un ​balanceador de carga:</p>
+<ul>
+<li>
+<p>Debe minimizar tiempos de respuesta</p>
+</li>
+<li>
+<p>Mejorar el desempeño del servicio.</p>
+</li>
+<li>
+<p>Evitar la saturación</p>
+</li>
+</ul>
+<h2 id="metodos-de-conexión">Metodos de conexión</h2>
+<ul>
+<li><strong>Round-Robin</strong>: las peticiones son distribuidas entre los servidores de forma cíclica, independientemente de la carga del servidor. Distribuye las peticiones de forma ecuánime pero la carga no.</li>
+</ul>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Screen_Shot_2015-09-24_at_12.54.32.png/141px-Screen_Shot_2015-09-24_at_12.54.32.png" alt="Round-robin"></p>
+<ul>
+<li><strong>Weighted Round-Robin</strong>: Las peticiones se entregan dependiendo del peso que se le de a cada servidor.</li>
+</ul>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Weighted_Round-Robin.png/143px-Weighted_Round-Robin.png" alt="Weighted Round-Robin"></p>
+<ul>
+<li><strong>LeastConnection</strong>: Cada petición es atendida por el servidor con menos conexiones activas en ese momento.</li>
+</ul>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Least_Connection.png/153px-Least_Connection.png" alt="LeastConnection"></p>
+<ul>
+<li><strong>Weighted LeastConnection</strong>: Las peticiones se entregan dependiendo del peso y el número de conexiones que se tengan</li>
+</ul>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Weighted_LeastConnection.png/159px-Weighted_LeastConnection.png" alt="Weighted LeastConnection"></p>
+<ul>
+<li><strong>Ip-hash</strong>: se selecciona el servidor que atenderá la petición con base en algún dato como la dirección IP, de esta forma todas las peticiones de un usuario son atendidas por el mismo servidor.</li>
+</ul>
+<h2 id="practica-de-balanceadores-de-carga">Practica de balanceadores de carga</h2>
+<p>En el siguiente ejercicio que vamos a realizar vamos a utilizar un escenario en vagrant del cual vamos a necesitar distintos ficheros por lo que para conseguir el escenario podemos descargarlo desde <a href="https://fp.josedomingo.org/serviciosgs/u08/doc/haproxy/vagrant.zip">aqui</a>. El esquema del escenario es el siguiente:</p>
+<p><img src="https://fp.josedomingo.org/serviciosgs/u08/img/haproxy.jpg" alt="escenario vagrant balanceadores"></p>
+<p>Una vez tengamos el escenario desplegado vamos a proceder a instalar en la maquina llamada <strong>balanceador</strong> el respectivo balanceador que necesitamos, en este caso va a ser el balanceador llamado <strong>HAproxy</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos HAproxy en la maquina balanceador ####</span>
+vagrant@balanceador:~$ sudo apt install haproxy
+</code></pre></div><p>Una vez hayamos instalado el balanceador nos dirigimos al fichero de configuración <strong>/etc/haproxy/haproxy.cfg</strong> y ahi vamos a añadir las siguientes lineas que vamos a explicar a continuación:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Añadimos la siguiente configuracion al fichero /etc/haproxy/haproxy.cfg ####</span>
+global
+    daemon
+    maxconn <span style="color:#ae81ff">256</span>
+    user    haproxy
+    group   haproxy
+    log     127.0.0.1       local0
+    log     127.0.0.1       local1  notice     
+defaults
+    mode    http
+    log     global
+    timeout connect 5000ms
+    timeout client  50000ms
+    timeout server  50000ms        
+listen granja_cda 
+    bind 192.168.1.117:80 <span style="color:#75715e">#aquí pon la dirección ip del balanceador</span>
+    mode http
+    stats enable
+    stats auth  cda:cda
+    balance roundrobin
+    server uno 10.10.10.11:80 maxconn <span style="color:#ae81ff">128</span>
+    server dos 10.10.10.22:80 maxconn <span style="color:#ae81ff">128</span>
+</code></pre></div><p>Donde, en la sección <em>listen</em> definimos un “proxy inverso” de nombre granja_cda que:</p>
+<ul>
+<li>
+<p>trabajará en modo http (la otra alternativa es el modo tcp, pero no analiza las peticiones/respuestas HTTP, sólo retransmite paquetes TCP) <strong>(mode http)</strong></p>
+</li>
+<li>
+<p>atendiendo peticiones en el puerto 80 del balanceador</p>
+</li>
+<li>
+<p>con balanceo <strong>round-robin</strong> <strong>(balance roundrobin)</strong></p>
+</li>
+<li>
+<p>que repartirá las peticiones entre dos servidores reales (de nombres uno y dos) en el puerto 80 de las direcciones 10.10.10.11 y 10.10.10.22</p>
+</li>
+<li>
+<p>adicionalmente, habilita la consola Web de estadísticas, accesible con las credenciales cda:cda <strong>(stats auth  cda:cda)</strong></p>
+</li>
+</ul>
+<p>Una vez hecho esto debemos de reiniciar el balanceador de <strong>haproxy</strong> y lo vamos a habilitar al iniciar la maquina:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Reiniciamos el servicio ####</span>
+vagrant@balanceador:~$ sudo systemctl restart haproxy.service
+
+<span style="color:#75715e">#### Lo habilitamos al inicio de la maquina ####</span>
+vagrant@balanceador:~$ sudo systemctl enable haproxy.service 
+Synchronizing state of haproxy.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install enable haproxy
+</code></pre></div><p>Una vesz hecho esto solo debemos de irnos a nuestro navegador y poner la ip de nuestra maquina <strong>balanceador</strong> para asi poder ver el contenidor de las paginas que sirven los dos servidores apache ya que, al actuar como balanceador, ira mostrando un servidor u otro dependiendo de cuantas veces hayamos entrado:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Servicios/balanceador/apache1_balanceador.png" alt="balanceador apache1"></p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Servicios/balanceador/apache2_balanceador.png" alt="balanceador apache2"></p>
+<p>Una vez visto que nuestro balanceador funciona correctamente, vamos a entrar en la zona de nuestro fichero php que se llama <strong>http://192.168.X.X/haproxy?stats</strong>:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Servicios/balanceador/haproxy_stats.png" alt="stats de haproxy"></p>
+<p>Una vez hecho lo anterior vamos a revisar los logs de uno de los servidores de apache que tenemos en nuestro escneario, para ello lo que vamos a hacer es entrar en dicha maquina y vamos a comprobar los logs que podemos ver en <strong>/var/log/apache2/access.log</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@apache1:~$ sudo cat /var/log/apache2/access.log
+10.10.10.1 - - <span style="color:#f92672">[</span>23/Feb/2021:15:37:37 +0000<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;GET / HTTP/1.1&#34;</span> <span style="color:#ae81ff">200</span> <span style="color:#ae81ff">437</span> <span style="color:#e6db74">&#34;-&#34;</span> <span style="color:#e6db74">&#34;Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0&#34;</span>
+10.10.10.1 - - <span style="color:#f92672">[</span>23/Feb/2021:15:38:10 +0000<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;GET / HTTP/1.1&#34;</span> <span style="color:#ae81ff">200</span> <span style="color:#ae81ff">437</span> <span style="color:#e6db74">&#34;-&#34;</span> <span style="color:#e6db74">&#34;Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0&#34;</span>
+10.10.10.1 - - <span style="color:#f92672">[</span>23/Feb/2021:15:38:39 +0000<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;GET /favicon.ico HTTP/1.1&#34;</span> <span style="color:#ae81ff">404</span> <span style="color:#ae81ff">436</span> <span style="color:#e6db74">&#34;http://192.168.1.117/&#34;</span> <span style="color:#e6db74">&#34;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36&#34;</span>
+10.10.10.1 - - <span style="color:#f92672">[</span>23/Feb/2021:15:47:15 +0000<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;GET /favicon.ico HTTP/1.1&#34;</span> <span style="color:#ae81ff">404</span> <span style="color:#ae81ff">436</span> <span style="color:#e6db74">&#34;-&#34;</span> <span style="color:#e6db74">&#34;Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0&#34;</span>
+10.10.10.1 - - <span style="color:#f92672">[</span>23/Feb/2021:15:48:26 +0000<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;GET /favicon.ico HTTP/1.1&#34;</span> <span style="color:#ae81ff">404</span> <span style="color:#ae81ff">436</span> <span style="color:#e6db74">&#34;-&#34;</span> <span style="color:#e6db74">&#34;Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0&#34;</span>
+</code></pre></div><p>Como podemos apreciar figura como única dirección IP, la IP interna de la máquina balanceador ya que dicho balanceador hemos espcificado un balanceo tipo <strong>round-robin</strong>, este es que se encarga de hacer la peticiones a estos servidores por lo que solo aparece en las peticiones, las peticiones que hace el servidor <strong>balanceador</strong>.</p>
+<h3 id="configurar-la-persistencia-de-conexiones-web-sticky-sessions">Configurar la persistencia de conexiones Web (sticky sessions)</h3>
+<p>En los servidores internos hay una aplicación PHP para trabajar con sesiones, puedes encontrar el fichero sesion.php con el siguiente contenido:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+     <span style="color:#a6e22e">header</span>(<span style="color:#e6db74">&#39;Content-Type: text/plain&#39;</span>);
+     <span style="color:#a6e22e">session_start</span>();
+     <span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span><span style="color:#a6e22e">isset</span>($_SESSION[<span style="color:#e6db74">&#39;visit&#39;</span>]))
+     {
+             <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;This is the first time you&#39;re visiting this server&#34;</span>;
+             $_SESSION[<span style="color:#e6db74">&#39;visit&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+     }
+     <span style="color:#66d9ef">else</span>
+             <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;Your number of visits: &#34;</span><span style="color:#f92672">.</span>$_SESSION[<span style="color:#e6db74">&#39;visit&#39;</span>];             
+
+     $_SESSION[<span style="color:#e6db74">&#39;visit&#39;</span>]<span style="color:#f92672">++</span>;              
+
+     <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">Server IP: &#34;</span><span style="color:#f92672">.</span>$_SERVER[<span style="color:#e6db74">&#39;SERVER_ADDR&#39;</span>];
+     <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">Client IP: &#34;</span><span style="color:#f92672">.</span>$_SERVER[<span style="color:#e6db74">&#39;REMOTE_ADDR&#39;</span>];
+     <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">X-Forwarded-for: &#34;</span><span style="color:#f92672">.</span>$_SERVER[<span style="color:#e6db74">&#39;HTTP_X_FORWARDED_FOR&#39;</span>]<span style="color:#f92672">.</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+     <span style="color:#a6e22e">print_r</span>($_COOKIE);
+<span style="color:#75715e">?&gt;</span><span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>Vamos a añadir las opciones de persistencia de conexiones HTTP (sticky cookies) al fichero de configuración:
+Contenido a incluir: (añadidos marcados con &lt;- aquí):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Modificamos el fichero /etc/haproxy/haproxy.cfg ####</span>
+global
+    daemon
+    maxconn <span style="color:#ae81ff">256</span>
+    user    haproxy
+    group   haproxy
+    log     127.0.0.1       local0
+    log     127.0.0.1       local1  notice     
+defaults
+    mode    http
+    log     global
+    timeout connect 5000ms
+    timeout client  50000ms
+    timeout server  50000ms        
+listen granja_cda 
+    bind 192.168.1.117:80 <span style="color:#75715e">#aquí pon la dirección ip del balanceador</span>
+    mode http
+    stats enable
+    stats auth  cda:cda
+    balance roundrobin
+    <span style="color:#75715e">#server uno 10.10.10.11:80 maxconn 128</span>
+    <span style="color:#75715e">#server dos 10.10.10.22:80 maxconn 128</span>
+    cookie PHPSESSID prefix                               <span style="color:#75715e"># &lt;- aquí</span>
+    server uno 10.10.10.11:80 cookie EL_UNO maxconn <span style="color:#ae81ff">128</span>   <span style="color:#75715e"># &lt;- aquí</span>
+    server dos 10.10.10.22:80 cookie EL_DOS maxconn <span style="color:#ae81ff">128</span>   <span style="color:#75715e"># &lt;- aquí</span>
+</code></pre></div><p>El parámetro cookie especifica el nombre de la cookie que se usa como identificador único de la sesión del cliente (en el caso de aplicaciones web PHP se suele utilizar por defecto el nombre PHPSESSID). Para cada “servidor real” se especifica una etiqueta identificativa exclusiva mediante el parámetro cookie. Con esa información HAproxy reescribirá las cabeceras HTTP de peticiones y respuestas para seguir la pista de las sesiones establecidas en cada “servidor real” usando el nombre de cookie especificado (PHPSESSID):</p>
+<ul>
+<li>
+<p>conexión cliente -&gt; balanceador HAproxy : cookie original + etiqueta de servidor</p>
+</li>
+<li>
+<p>conexión balanceador HAproxy -&gt; servidor : cookie original</p>
+</li>
+</ul>
+<p>Reiniciamos el balanceador y realizamos las siguientes acciones:</p>
+<ul>
+<li>Desde el navegador web acceder varias veces a la URL <strong><a href="http://172.22.x.x/sesion.php">http://172.22.x.x/sesion.php</a></strong> (comprobar el incremento del contador [variable de sesión])</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Servicios/balanceador/incremento_sesion.png" alt="incremento de sesion"></p>
+<ul>
+<li>Acceder la misma URL desde el navegador en modo texto lynx (o desde una pestaña de “incógnito” del Navegador para forzar la creación de una nueva sesión):</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Servicios/balanceador/primera_sesion.png" alt="nueva sesion desde privado"></p>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2021  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+         
+        <li><a href="/servicios">Servicios</a></li>
+         
+        <li><a href="/implantacion">Implantacion</a></li>
+         
+        <li><a href="/bbdd">BBDD</a></li>
+         
+        <li><a href="/hlc">HLC</a></li>
+         
+        <li><a href="/cloud">Cloud</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>

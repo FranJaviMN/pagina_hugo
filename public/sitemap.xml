@@ -3,17 +3,32 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://franjavimn.onrender.com/</loc>
+    <lastmod>2021-02-24T19:25:28+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://franjavimn.onrender.com/servicios/</loc>
+    <lastmod>2021-02-24T19:25:28+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://franjavimn.onrender.com/servicios/squid/</loc>
+    <lastmod>2021-02-24T19:25:28+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://franjavimn.onrender.com/servicios/balanceadores/</loc>
+    <lastmod>2021-02-24T19:25:03+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://franjavimn.onrender.com/bbdd/almacenamiento/</loc>
     <lastmod>2021-02-18T18:22:31+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://franjavimn.onrender.com/bbdd/</loc>
-    <lastmod>2021-02-18T18:22:31+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://franjavimn.onrender.com/</loc>
     <lastmod>2021-02-18T18:22:31+01:00</lastmod>
   </url>
   
@@ -34,11 +49,6 @@
   
   <url>
     <loc>https://franjavimn.onrender.com/servicios/correo-ovh/</loc>
-    <lastmod>2021-02-11T12:32:11+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://franjavimn.onrender.com/servicios/</loc>
     <lastmod>2021-02-11T12:32:11+01:00</lastmod>
   </url>
   

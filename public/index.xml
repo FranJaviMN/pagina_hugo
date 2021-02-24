@@ -7,7 +7,29 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Thu, 18 Feb 2021 18:22:31 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 24 Feb 2021 19:25:28 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Squid</title>
+      <link>https://franjavimn.onrender.com/servicios/squid/</link>
+      <pubDate>Wed, 24 Feb 2021 19:25:28 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/servicios/squid/</guid>
+      <description>Proxy En esta práctica vamos a instalar un proxy squid para configurar nuestro cliente para que acceda a internet por medio de este proxy.
+Vamos a usar el fichero Vagrantfile para crear el escenario: un ordenador llamado proxy donde instalaremos squid y un cliente interno (cliente_int).
+# -*- mode: ruby -*- # vi: set ft=ruby : Vagrant.configure(&amp;#34;2&amp;#34;) do |config| config.vm.define :proxy do |proxy| proxy.vm.box = &amp;#34;debian/buster64&amp;#34; proxy.vm.hostname = &amp;#34;proxy&amp;#34; proxy.vm.network :private_network, ip: &amp;#34;10.</description>
+    </item>
+    
+    <item>
+      <title>Balanceadores</title>
+      <link>https://franjavimn.onrender.com/servicios/balanceadores/</link>
+      <pubDate>Wed, 24 Feb 2021 19:25:03 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/servicios/balanceadores/</guid>
+      <description>Balanceadores de carga Un Balanceador de carga fundamentalmente es un dispositivo de hardware o software que se pone al frente de un conjunto de servidores que atienden una aplicación y, tal como su nombre lo indica, asigna o balancea las solicitudes que llegan de los clientes a los servidores usando algún algoritmo (desde un simple round-robin hasta algoritmos más sofisticados).
+Para que se considere exitoso un ​balanceador de carga:
+  Debe minimizar tiempos de respuesta</description>
+    </item>
+    
     <item>
       <title>Almacenamiento</title>
       <link>https://franjavimn.onrender.com/bbdd/almacenamiento/</link>
