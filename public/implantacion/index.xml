@@ -7,7 +7,54 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Thu, 11 Feb 2021 14:17:18 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/implantacion/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 02 Mar 2021 10:33:43 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/implantacion/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Tarea5 Docker Php</title>
+      <link>https://franjavimn.onrender.com/implantacion/tarea5-docker-php/</link>
+      <pubDate>Tue, 02 Mar 2021 10:33:43 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/implantacion/tarea5-docker-php/</guid>
+      <description>Repositorio git: https://github.com/FranJaviMN/Docker-php/tree/main/Tarea%205
+Tarea 5: Ejecución de un CMS en docker Busca una imagen oficial de un CMS PHP en docker hub (distinto al que has instalado en la tarea anterior, ni wordpress), y crea los contenedores necesarios para servir el CMS, siguiendo la documentación de dockerhub.
+En mi caso vamos a instalar el cms llamado Mediawiki y aquí podemos ver su pagina oficial.
+Siguiendo la documentación que nos ofrece la imagen en dockerhub, vamos a generar un fichero docker-compose con el cual vamos a levantar los contenedores que necesitemos, para ello solo debemos de leer la documentación para poder enetender como funciona y que variables de entorno necesita:</description>
+    </item>
+    
+    <item>
+      <title>Tarea4 Docker Php</title>
+      <link>https://franjavimn.onrender.com/implantacion/tarea4-docker-php/</link>
+      <pubDate>Tue, 02 Mar 2021 10:33:40 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/implantacion/tarea4-docker-php/</guid>
+      <description>Repositorio git: https://github.com/FranJaviMN/Docker-php/tree/main/Tarea%204
+Tarea 4: Ejecución de un CMS en dockerPermalink   A partir de una imagen base (que no sea una imagen con el CMS), genera una imagen que despliegue un CMS PHP (que no sea wordpress).
+  Crea los volúmenes necesarios para que la información que se guarda sea persistente.
+  Para ello vamos a usar el CMS de Drupal por lo que vamos a necesitar de nuevo dos directorios, uno llamado Deploy donde tendremos nuestro fichero docker-compose y otro directorio llamado Build</description>
+    </item>
+    
+    <item>
+      <title>Tarea2 Docker Php</title>
+      <link>https://franjavimn.onrender.com/implantacion/tarea2-docker-php/</link>
+      <pubDate>Tue, 02 Mar 2021 10:33:38 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/implantacion/tarea2-docker-php/</guid>
+      <description>Repositorio git: https://github.com/FranJaviMN/Docker-php/tree/main/Tarea%202
+Tarea 2: Ejecución de una aplicación web PHP en docker   Realiza la imagen docker de la aplicación a partir de la imagen oficial PHP que encuentras en docker hub. Lee la documentación de la imagen para configurar una imagen con apache2 y php, además seguramente tengas que instalar alguna extensión de php.
+  Crea esta imagen en docker hub
+  Crea un script con docker compose que levante el escenario con los dos contenedores.</description>
+    </item>
+    
+    <item>
+      <title>Tarea1 Docker Php</title>
+      <link>https://franjavimn.onrender.com/implantacion/tarea1-docker-php/</link>
+      <pubDate>Tue, 02 Mar 2021 10:33:35 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/implantacion/tarea1-docker-php/</guid>
+      <description>Repositorio git: https://github.com/FranJaviMN/Docker-php/tree/main/Tarea%201
+Tarea 1: Ejecución de una aplicación web PHP en docker   Queremos ejecutar en un contenedor docker la aplicación web escrita en PHP: bookMedik (https://github.com/evilnapsis/bookmedik).
+  Es necesario tener un contenedor con mariadb donde vamos a crear la base de datos y los datos de la aplicación. El script para generar la base de datos y los registros lo encuentras en el repositorio y se llama schema.</description>
+    </item>
+    
     <item>
       <title>Docker Compose</title>
       <link>https://franjavimn.onrender.com/implantacion/docker-compose/</link>
