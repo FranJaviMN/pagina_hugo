@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Tue, 02 Mar 2021 10:33:43 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 04 Mar 2021 12:11:18 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes Letschat</title>
+      <link>https://franjavimn.onrender.com/hlc/kubernetes-letschat/</link>
+      <pubDate>Thu, 04 Mar 2021 12:11:18 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/hlc/kubernetes-letschat/</guid>
+      <description>Despliegue de un cluster de kubernetes En este ejercicio vamos a realizar el despliegue de una cluster de kubernetes en el que vamos a tener un total de 3 nodos, 1 nodo controlador al que le vamos a llamar Master y dos nodos workers que se van a llamar Worker1 y Worker2 respectivamente.
+Para el despliegue de nuestro cluster vamos a usar la herramienta de k3s
+¿Qué es K3S? K3S es una solución Kubernetes creada por Rancher Labs que nos promete fácil instalación, pocos requisitos y un uso de memoría mínimo.</description>
+    </item>
+    
     <item>
       <title>Tarea5 Docker Php</title>
       <link>https://franjavimn.onrender.com/implantacion/tarea5-docker-php/</link>

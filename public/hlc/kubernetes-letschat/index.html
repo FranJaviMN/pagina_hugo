@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Kubernetes Letschat | Blog</title>
+  <meta name="description" content="En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Kubernetes Letschat" />
+<meta property="og:description" content="Despliegue de un cluster de kubernetes En este ejercicio vamos a realizar el despliegue de una cluster de kubernetes en el que vamos a tener un total de 3 nodos, 1 nodo controlador al que le vamos a llamar Master y dos nodos workers que se van a llamar Worker1 y Worker2 respectivamente.
+Para el despliegue de nuestro cluster vamos a usar la herramienta de k3s
+¿Qué es K3S? K3S es una solución Kubernetes creada por Rancher Labs que nos promete fácil instalación, pocos requisitos y un uso de memoría mínimo." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://franjavimn.onrender.com/hlc/kubernetes-letschat/" />
+<meta property="article:published_time" content="2021-03-04T12:11:18+01:00" />
+<meta property="article:modified_time" content="2021-03-04T12:11:18+01:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Kubernetes Letschat"/>
+<meta name="twitter:description" content="Despliegue de un cluster de kubernetes En este ejercicio vamos a realizar el despliegue de una cluster de kubernetes en el que vamos a tener un total de 3 nodos, 1 nodo controlador al que le vamos a llamar Master y dos nodos workers que se van a llamar Worker1 y Worker2 respectivamente.
+Para el despliegue de nuestro cluster vamos a usar la herramienta de k3s
+¿Qué es K3S? K3S es una solución Kubernetes creada por Rancher Labs que nos promete fácil instalación, pocos requisitos y un uso de memoría mínimo."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://franjavimn.onrender.com/images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://franjavimn.onrender.com">
+  
+    <div id="logo" style="background-image: url(https://franjavimn.onrender.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+       
+        <li><a href="/servicios">Servicios</a></li>
+       
+        <li><a href="/implantacion">Implantacion</a></li>
+       
+        <li><a href="/bbdd">BBDD</a></li>
+       
+        <li><a href="/hlc">HLC</a></li>
+       
+        <li><a href="/cloud">Cloud</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h1 id="despliegue-de-un-cluster-de-kubernetes">Despliegue de un cluster de kubernetes</h1>
+<p>En este ejercicio vamos a realizar el despliegue de una cluster de kubernetes en el que vamos a tener un total de 3 nodos, 1 nodo controlador al que le vamos a llamar <strong>Master</strong> y dos nodos <em>workers</em> que se van a llamar <strong>Worker1</strong> y <strong>Worker2</strong> respectivamente.</p>
+<p>Para el despliegue de nuestro cluster vamos a usar la herramienta de <strong>k3s</strong></p>
+<h2 id="qué-es-k3s">¿Qué es K3S?</h2>
+<p><strong>K3S</strong> es una solución Kubernetes creada por <em>Rancher Labs</em> que nos promete fácil instalación, pocos requisitos y un uso de memoría mínimo.</p>
+<p>Para el planteamiento de un entorno Demo/Desarrollo esto se convierte en una gran mejora ya que nos elimina las complicaciones que puede llegar a tener el despliegue de escenarios donde vamos a trabajar con nuestras pruebas, ademas de la gran cantidad de recursos que esta puede llegar a consumir de nuestro equipo, siendo un inconveniente si tenemos un equipo de bajas prestaciones.</p>
+<h2 id="explicando-el-escenario">Explicando el escenario</h2>
+<p>En nuestro caso y como hemos visto antes, vamos a usar tres nodos los cuales vamos a tener montados en unas maquinas virtuales en <strong>openstack</strong> con los nombres <strong>Master</strong>, <strong>Worker1</strong> y <strong>Worker2</strong> respectivamente.</p>
+<ul>
+<li><strong>Master</strong>: Controla el cluster, tiene llamadas a la API&hellip;</li>
+<li><strong>Workers</strong>: Son los encargados de manejar la carga de trabajo, donde los <em>pods</em> son desplegados y donde corren las aplicaciones que tengamos.</li>
+</ul>
+<p>Nuestro objetivo final es el despliegue de una aplicacion llamada <strong>lestchat</strong> la cual hace uso de una base de datos <strong>mongodb</strong>. Los fichero de despliegue y servicio los podemos encontrar en el siguiente <a href="https://github.com/iesgn/kubernetes-storm/tree/master/unidad3/ejemplos-3.2/ejemplo8">repositorio</a></p>
+<h2 id="instalacion-de-docker">Instalacion de Docker</h2>
+<p>Para ello lo primero que debemos de tener es las maquinas actualizadas, por lo que en cada una de ellas en conveniente usar el siguiente comando para procurar que esten correctamente actualizadas:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo apt update <span style="color:#f92672">&amp;&amp;</span> sudo apt upgrade -y
+</code></pre></div><p>Una vez tengamos los tres nodos ya actualizados vamos a proceder a la instalación de docker en cada uno de los nodos ya que kubernetes se usa sobretodo para la administración de contenedores Docker por lo que vamos a proceder a la instalación:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### En cada una de las maquinas debemos de realizar los siguientes comandos para la instalacion de Docker ####</span>
+<span style="color:#75715e"># Master #</span>
+debian@master:~$ sudo apt install apt-transport-https ca-certificates curl software-properties-common gnupg -y
+<span style="color:#75715e"># Worker1 y Worker2 #</span>
+debian@worker1:~$ sudo apt install apt-transport-https ca-certificates curl software-properties-common gnupg -y
+debian@worker2:~$ sudo apt install apt-transport-https ca-certificates curl software-properties-common gnupg -y
+
+<span style="color:#75715e">#### Obtenemos la clave en los tres nodos ####</span>
+debian@master:~$ sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+debian@worker1:~$ sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+debian@worker2:~$ sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+<span style="color:#75715e">#### Añadimos los repositorios necesarios ####</span>
+debian@master:~$ sudo add-apt-repository <span style="color:#e6db74">&#34;deb [arch=amd64] https://download.docker.com/linux/debian buster stable&#34;</span>
+debian@worker1:~$ sudo add-apt-repository <span style="color:#e6db74">&#34;deb [arch=amd64] https://download.docker.com/linux/debian buster stable&#34;</span>
+debian@worker2:~$ sudo add-apt-repository <span style="color:#e6db74">&#34;deb [arch=amd64] https://download.docker.com/linux/debian buster stable&#34;</span>
+
+<span style="color:#75715e">#### Instalamos docker ####</span>
+debian@master:~$ sudo apt install docker-ce -y
+debian@worker1:~$ sudo apt install docker-ce -y
+debian@worker2:~$ sudo apt install docker-ce -y
+</code></pre></div><h2 id="instalacion-de-k3s-en-el-nodo-master">Instalacion de K3S en el nodo master</h2>
+<p>Una vez tengamos instalado Docker debemos de dirigirnos a nuestra maquina master que es donde vamos a tener el nodo master de nuestro escenario y ahi vamos a empezar a instalar <strong>k3s</strong> para ello debemos de seguir los siguientes pasos teniendo en cuanta que es solo en la maquina master:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos k3s ####</span>
+debian@master:~$ curl -sfL https://get.k3s.io | sh -s - --docker
+<span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span>  Finding release <span style="color:#66d9ef">for</span> channel stable
+<span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span>  Using v1.20.4+k3s1 as release
+<span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span>  Downloading hash https://github.com/rancher/k3s/releases/download/v1.20.4+k3s1/sha256sum-amd64.txt
+<span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span>  Downloading binary https://github.com/rancher/k3s/releases/download/v1.20.4+k3s1/k3s
+<span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span>  Verifying binary download
+<span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span>  Installing k3s to /usr/local/bin/k3s
+<span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span>  Creating /usr/local/bin/kubectl symlink to k3s
+<span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span>  Creating /usr/local/bin/crictl symlink to k3s
+<span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span>  Skipping /usr/local/bin/ctr symlink to k3s, command exists in PATH at /usr/bin/ctr
+<span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span>  Creating killall script /usr/local/bin/k3s-killall.sh
+<span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span>  Creating uninstall script /usr/local/bin/k3s-uninstall.sh
+<span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span>  env: Creating environment file /etc/systemd/system/k3s.service.env
+<span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span>  systemd: Creating service file /etc/systemd/system/k3s.service
+<span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span>  systemd: Enabling k3s unit
+Created symlink /etc/systemd/system/multi-user.target.wants/k3s.service → /etc/systemd/system/k3s.service.
+<span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span>  systemd: Starting k3s
+
+<span style="color:#75715e">#### Comprobamos la nueva unidad de systemd que nos ha creado ####</span>
+debian@master:~$ sudo systemctl status k3s
+● k3s.service - Lightweight Kubernetes
+   Loaded: loaded <span style="color:#f92672">(</span>/etc/systemd/system/k3s.service; enabled; vendor preset: enabled<span style="color:#f92672">)</span>
+   Active: active <span style="color:#f92672">(</span>running<span style="color:#f92672">)</span> since Wed 2021-03-03 16:47:21 UTC; 1min 12s ago
+     Docs: https://k3s.io
+
+<span style="color:#75715e">#### Comprobamos si el nodo maestro esta funcionando ####</span>
+debian@master:~$ sudo kubectl get nodes -o wide
+NAME     STATUS   ROLES                  AGE     VERSION        INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                       KERNEL-VERSION          CONTAINER-RUNTIME
+master   Ready    control-plane,master   8m34s   v1.20.4+k3s1   10.0.0.12     &lt;none&gt;        Debian GNU/Linux <span style="color:#ae81ff">10</span> <span style="color:#f92672">(</span>buster<span style="color:#f92672">)</span>   4.19.0-14-cloud-amd64   docker://20.10.5
+</code></pre></div><p>Una vez hemos hecho las comprobaciones debemos de extraer el <em>token</em> del master que es el que debemos de poner mas adelante en los <em>worker</em>, para ello debemos de consultar el fichero <strong>/var/lib/rancher/k3s/server/node-token</strong> y nos mostrara algo como lo siguiente:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Obtenemos el token de nuestro master ####</span>
+debian@master:~$ sudo cat /var/lib/rancher/k3s/server/node-token
+K105622af8f80bbae94421ada3fd7b6853db903e9f0988b27378248ab5fa19cab51::server:98d2c10ecb5234e5621bce6834f7da5c
+</code></pre></div><h2 id="instalando-k3s-en-los-worker">Instalando k3s en los worker</h2>
+<p>Ya tenemos en nuestro nodo <strong>master</strong> toda la cofiguración que necesitamos de momento asi que ahora vamos a proceder a instalar en las maquinas <em>worker</em> nuestro <strong>k3s</strong>, para ello debemos de hacer uso del toker que hemos obtenido de nuestra maquina <strong>master</strong> y tambien de la <strong>ip</strong> de nuestra maquina master, en mi caso es una ip interna de dirección <strong>10.0.0.12</strong>.</p>
+<p>Teniendo en cuenta los datos anteriores, en cada uno de los <em>worker</em> debemos de instalar k3s de la siguiente manera:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos en cada uno de los worker k3s ####</span>
+<span style="color:#75715e"># Worker1</span>
+debian@worker1:~$ curl -sfL http://get.k3s.io | K3S_URL<span style="color:#f92672">=</span>https://10.0.0.12:6443 K3S_TOKEN<span style="color:#f92672">=</span>K105622af8f80bbae94421ada3fd7b6853db903e9f0988b27378248ab5fa19cab51::server:98d2c10ecb5234e5621bce6834f7da5c sh -s - --docker
+
+<span style="color:#75715e"># Worker2</span>
+debian@worker2:~$ curl -sfL http://get.k3s.io | K3S_URL<span style="color:#f92672">=</span>https://10.0.0.12:6443 K3S_TOKEN<span style="color:#f92672">=</span>K105622af8f80bbae94421ada3fd7b6853db903e9f0988b27378248ab5fa19cab51::server:98d2c10ecb5234e5621bce6834f7da5c sh -s - --docker
+
+<span style="color:#75715e">#### Verificamos que estan funcionando correctamente</span>
+<span style="color:#75715e"># Worker1</span>
+debian@worker1:~$ sudo systemctl status k3s-agent
+● k3s-agent.service - Lightweight Kubernetes
+   Loaded: loaded <span style="color:#f92672">(</span>/etc/systemd/system/k3s-agent.service; enabled; vendor
+   Active: active <span style="color:#f92672">(</span>running<span style="color:#f92672">)</span> since Thu 2021-03-04 07:33:24 UTC; 4min 11s a
+     Docs: https://k3s.io
+
+<span style="color:#75715e"># Worker2</span>
+debian@worker2:~$ sudo systemctl status k3s-agent
+● k3s-agent.service - Lightweight Kubernetes
+   Loaded: loaded <span style="color:#f92672">(</span>/etc/systemd/system/k3s-agent.service; enabled; vendor 
+   Active: active <span style="color:#f92672">(</span>running<span style="color:#f92672">)</span> since Thu 2021-03-04 07:35:19 UTC; 2min 46s ag
+     Docs: https://k3s.io
+</code></pre></div><p>Una vez instalado vamos a irnos a nuestra maquina <strong>master</strong> donde vamos a verificar que los nodos los hemos añadidio correctamente a nuestro cluster, para ello usamos <strong>kubectl get nodes</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Comprobamos que los nodos estan añadidos correctamente a nuestro cluster ####</span>
+debian@master:~$ sudo kubectl get nodes -o wide
+NAME      STATUS   ROLES                  AGE     VERSION        INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                       KERNEL-VERSION          CONTAINER-RUNTIME
+worker2   Ready    &lt;none&gt;                 3m56s   v1.20.4+k3s1   10.0.0.11     &lt;none&gt;        Debian GNU/Linux <span style="color:#ae81ff">10</span> <span style="color:#f92672">(</span>buster<span style="color:#f92672">)</span>   4.19.0-14-cloud-amd64   docker://20.10.5
+master    Ready    control-plane,master   14h     v1.20.4+k3s1   10.0.0.12     &lt;none&gt;        Debian GNU/Linux <span style="color:#ae81ff">10</span> <span style="color:#f92672">(</span>buster<span style="color:#f92672">)</span>   4.19.0-14-cloud-amd64   docker://20.10.5
+worker1   Ready    &lt;none&gt;                 5m58s   v1.20.4+k3s1   10.0.0.8      &lt;none&gt;        Debian GNU/Linux <span style="color:#ae81ff">10</span> <span style="color:#f92672">(</span>buster<span style="color:#f92672">)</span>   4.19.0-14-cloud-amd64   docker://20.10.5
+</code></pre></div><h2 id="desplegando-nuestra-aplicacion-lets-chat">Desplegando nuestra aplicacion lets-chat</h2>
+<p>Para hacer las pruebas en nuestro cluster vamos a desplegar en nuestro cluster la aplicación de <strong>lets-chat</strong> que debe de tener una base de datos <strong>mongodb</strong> por lo que en total vamos a tener dos fichero <strong>deployment</strong>, uno para la aplicación de <strong>lets-chat</strong> y otro para la base de datos <strong>mongodb</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#75715e">#### Ficher de deployment de lets-chat ####</span>
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Deployment</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">letschat</span>
+  <span style="color:#f92672">labels</span>:
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">letschat</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span> 
+  <span style="color:#f92672">selector</span>:
+    <span style="color:#f92672">matchLabels</span>:
+      <span style="color:#f92672">name</span>: <span style="color:#ae81ff">letschat</span>
+  <span style="color:#f92672">template</span>:
+    <span style="color:#f92672">metadata</span>:
+      <span style="color:#f92672">labels</span>:
+        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">letschat</span>
+    <span style="color:#f92672">spec</span>:
+      <span style="color:#f92672">containers</span>:
+      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">letschat</span>
+        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">sdelements/lets-chat</span>
+        <span style="color:#f92672">ports</span>:
+          - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">http-server</span>
+            <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">8080</span>
+
+<span style="color:#75715e">#### Fichero de deployment de mongodb ####</span>
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Deployment</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">mongo</span>
+  <span style="color:#f92672">labels</span>:
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">mongo</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">1</span>
+  <span style="color:#f92672">selector</span>:
+    <span style="color:#f92672">matchLabels</span>:
+      <span style="color:#f92672">name</span>: <span style="color:#ae81ff">mongo</span>
+  <span style="color:#f92672">template</span>:
+    <span style="color:#f92672">metadata</span>:
+      <span style="color:#f92672">labels</span>:
+        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">mongo</span>
+    <span style="color:#f92672">spec</span>:
+      <span style="color:#f92672">containers</span>:
+      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">mongo</span>
+        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">mongo</span>
+        <span style="color:#f92672">ports</span>:
+          - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">mongo</span>
+            <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">27017</span>
+</code></pre></div><p>Como podemos ver en los ficheros de <strong>deployment</strong>, vemos que cada uno de ellos solo va a crear un pod que es dondde vamos a estar ejecutando nuestras aplicaciones y vemos como en el fichero de <strong>lets-chat</strong> tenemos expuesto el puerto <strong>8080</strong> y a este puerto le hemos llamado <strong>http-server</strong></p>
+<p>Una vez tengamos esos ficheros vamos a desplegarlos de la siguiente forma:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Desplegamos el fichero deployment de lets-chat ####</span>
+debian@master:~$ sudo kubectl apply -f letschat-deployment.yaml
+
+<span style="color:#75715e">#### Desplegamos el fichero deployment de mongodb ####</span>
+debian@master:~$ sudo kubectl apply -f mongodb-deployment.yaml
+
+<span style="color:#75715e">#### Comprobamos que se han desplegado correctamente ####</span>
+debian@master:~/kubernetes-storm/unidad3/ejemplos-3.2/ejemplo8$ sudo kubectl get all -o wide
+NAME                            READY   STATUS    RESTARTS   AGE     IP           NODE      NOMINATED NODE   READINESS GATES
+pod/mongo-5c694c878b-b67g8      1/1     Running   <span style="color:#ae81ff">0</span>          5m26s   10.42.2.3    worker2   &lt;none&gt;           &lt;none&gt;
+pod/letschat-7c66bd64f5-9z58n   1/1     Running   <span style="color:#ae81ff">0</span>          6m16s   10.42.0.13   master    &lt;none&gt;           &lt;none&gt;
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT<span style="color:#f92672">(</span>S<span style="color:#f92672">)</span>   AGE   SELECTOR
+service/kubernetes   ClusterIP   10.43.0.1    &lt;none&gt;        443/TCP   15h   &lt;none&gt;
+
+NAME                       READY   UP-TO-DATE   AVAILABLE   AGE     CONTAINERS   IMAGES                 SELECTOR
+deployment.apps/mongo      1/1     <span style="color:#ae81ff">1</span>            <span style="color:#ae81ff">1</span>           5m26s   mongo        mongo                  name<span style="color:#f92672">=</span>mongo
+deployment.apps/letschat   1/1     <span style="color:#ae81ff">1</span>            <span style="color:#ae81ff">1</span>           6m16s   letschat     sdelements/lets-chat   name<span style="color:#f92672">=</span>letschat
+
+NAME                                  DESIRED   CURRENT   READY   AGE     CONTAINERS   IMAGES                 SELECTOR
+replicaset.apps/mongo-5c694c878b      <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>       5m26s   mongo        mongo                  name<span style="color:#f92672">=</span>mongo,pod-template-hash<span style="color:#f92672">=</span>5c694c878b
+replicaset.apps/letschat-7c66bd64f5   <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>       6m16s   letschat     sdelements/lets-chat   name<span style="color:#f92672">=</span>letschat,pod-template-hash<span style="color:#f92672">=</span>7c66bd64f5
+</code></pre></div><p>Una vez tengamos nuestros fichero de <strong>deployment</strong> ya desplegados, podemos ver que el pod donde tenemos la aplicación de lets-chat esta reiniciando constantemente y eso se debe a que aun no puede acceder a la base de datos de mongodb por lo que debemos de tener dos ficheros <strong>service</strong> que son los que haran de proxy para que los pods de los distintos <strong>deployment</strong> puedan conectarse entre si:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#75715e">#### Fichero lets-chat service ####</span>
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Service</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">letschat</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">type</span>: <span style="color:#ae81ff">NodePort</span>
+  <span style="color:#f92672">ports</span>:
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">http</span>
+    <span style="color:#f92672">port</span>: <span style="color:#ae81ff">8080</span>
+    <span style="color:#f92672">targetPort</span>: <span style="color:#ae81ff">http-server</span>
+  <span style="color:#f92672">selector</span>:
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">letschat</span>
+
+<span style="color:#75715e">#### Fichero mongodb service ####</span>
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Service</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">mongo</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">ports</span>:
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">mongo</span>
+    <span style="color:#f92672">port</span>: <span style="color:#ae81ff">27017</span>
+    <span style="color:#f92672">targetPort</span>: <span style="color:#ae81ff">mongo</span>
+  <span style="color:#f92672">selector</span>:
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">mongo</span>
+</code></pre></div><p>Y ahoda solo queda desplegar estos servicios:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Service de lets-chat ####</span>
+debian@master:~/kubernetes-storm/unidad3/ejemplos-3.2/ejemplo8$ sudo kubectl apply -f letschat-srv.yaml 
+service/letschat created
+
+<span style="color:#75715e">#### Service de mongodb ####</span>
+debian@master:~/kubernetes-storm/unidad3/ejemplos-3.2/ejemplo8$ sudo kubectl apply -f mongo-srv.yaml 
+service/mongo created
+
+<span style="color:#75715e">#### Comprobamos que ambos servicios estan activos ####</span>
+debian@master:~/kubernetes-storm/unidad3/ejemplos-3.2/ejemplo8$ sudo kubectl get all
+NAME                            READY   STATUS    RESTARTS   AGE
+pod/mongo-5c694c878b-b67g8      1/1     Running   <span style="color:#ae81ff">0</span>          11m
+pod/letschat-7c66bd64f5-9z58n   1/1     Running   <span style="color:#ae81ff">5</span>          12m
+
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT<span style="color:#f92672">(</span>S<span style="color:#f92672">)</span>          AGE
+service/kubernetes   ClusterIP   10.43.0.1       &lt;none&gt;        443/TCP          15h
+service/mongo        ClusterIP   10.43.67.197    &lt;none&gt;        27017/TCP        4m1s
+service/letschat     NodePort    10.43.190.237   &lt;none&gt;        8080:31855/TCP   4s
+
+NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/mongo      1/1     <span style="color:#ae81ff">1</span>            <span style="color:#ae81ff">1</span>           11m
+deployment.apps/letschat   1/1     <span style="color:#ae81ff">1</span>            <span style="color:#ae81ff">1</span>           12m
+
+NAME                                  DESIRED   CURRENT   READY   AGE
+replicaset.apps/mongo-5c694c878b      <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>       11m
+replicaset.apps/letschat-7c66bd64f5   <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>       12m
+</code></pre></div><p>Asi, a la hora de hacer los despliegues de <strong>deployment</strong> y de <strong>service</strong> ya esta nuestro cluster sirviendo la aplicación de lets-chat por lo que debemos de irnos a nuestro navegador y en él debemos de poner la ip de nuestra maquina <strong>master</strong> junto con el puerto que nos ha asignado dentro del rango <strong>30000-40000</strong>, en mi caso me ha asignado el puerto <strong>31855</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Obtenemos el puerto que nos ha dado ####</span>
+debian@master:~$ sudo kubectl describe service/letschat | grep NodePort
+Type:                     NodePort
+NodePort:                 http  31855/TCP
+</code></pre></div><p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/sistemas/kubernetes/lets-chat-no-ingress.png" alt="accediendo a lets-chat sin ingress"></p>
+<h2 id="usando-el-fichero-ingressyml">Usando el fichero ingress.yml</h2>
+<p>Ahora que ya hemos accedido a nuestra aplicación por medio de la ip de nuestro master, ahora vamos a hacerlo pero esta vez con un proxy que nos va a dar la posibilidad de entrar en la aplicación usando un nombre de dominio como puede ser <strong><a href="http://www.lets-chat.com">www.lets-chat.com</a></strong>.</p>
+<p>Para ello debemos de usar un fichero que le llamaremos <strong>ingress.yml</strong> donde vamos a definir el nombre del host, en este caso va a ser <strong><a href="http://www.letschat.com">www.letschat.com</a></strong>, el puerto en el que va a escuchar y el nombre del servicio:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#75715e">#### Fichero ingress.yml ####</span>
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">networking.k8s.io/v1beta1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Ingress</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">ingress-letschat</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">rules</span>:
+  - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">www.letschat.com</span>
+    <span style="color:#f92672">http</span>:
+      <span style="color:#f92672">paths</span>:
+      - <span style="color:#f92672">path</span>: <span style="color:#e6db74">&#34;/&#34;</span>
+        <span style="color:#f92672">backend</span>:
+          <span style="color:#f92672">serviceName</span>: <span style="color:#ae81ff">letschat</span>
+          <span style="color:#f92672">servicePort</span>: <span style="color:#ae81ff">8080</span>
+</code></pre></div><p>Asi ahora solo debemos de cargarlo:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Usamos el fichero ingress.yml ####</span>
+debian@master:~/kubernetes-storm/unidad3/ejemplos-3.2/ejemplo8$ sudo kubectl apply -f ingress.yaml 
+Warning: networking.k8s.io/v1beta1 Ingress is deprecated in v1.19+, unavailable in v1.22+; use networking.k8s.io/v1 Ingress
+ingress.networking.k8s.io/ingress-letschat created
+</code></pre></div><p>Y ahora debemos de tener en nuestro fichero <strong>/etc/hosts</strong> una linea donde apunte a la ip y al nombre del host Hecho esto solo debemos de entrar en nuestro navegador y poner el nombre del host:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/sistemas/kubernetes/lets-chat-ingress.png" alt="accediendo a lets-chat con ingress"></p>
+<h2 id="escalar-varias-replicas">Escalar varias replicas</h2>
+<p>Ahotra que ya tenemos nuestra aplicación corriendo podemos ampliar el numero de replicas según necesitemos, para ello vamos a ampliar el numero de replicas a 5 aunque pueden ser el numero que necesitemos, para ello vamos a usar el comando <strong>kubectl scale</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Escalamos a 5 replicas ####</span>
+debian@master:~/kubernetes-storm/unidad3/ejemplos-3.2/ejemplo8$ sudo kubectl scale deployment.apps/letschat --replicas<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>
+deployment.apps/letschat scaled
+
+<span style="color:#75715e">#### Comprobamos que se ha escalado correctamente ####</span>
+debian@master:~$ sudo kubectl get all
+NAME                            READY   STATUS    RESTARTS   AGE
+pod/mongo-5c694c878b-b67g8      1/1     Running   <span style="color:#ae81ff">0</span>          3h13m
+pod/letschat-7c66bd64f5-9z58n   1/1     Running   <span style="color:#ae81ff">5</span>          3h14m
+pod/letschat-7c66bd64f5-bbhsm   1/1     Running   <span style="color:#ae81ff">0</span>          177m
+pod/letschat-7c66bd64f5-psjz6   1/1     Running   <span style="color:#ae81ff">0</span>          177m
+pod/letschat-7c66bd64f5-vgwqg   1/1     Running   <span style="color:#ae81ff">0</span>          177m
+pod/letschat-7c66bd64f5-df4x9   1/1     Running   <span style="color:#ae81ff">0</span>          177m
+
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT<span style="color:#f92672">(</span>S<span style="color:#f92672">)</span>          AGE
+service/kubernetes   ClusterIP   10.43.0.1       &lt;none&gt;        443/TCP          18h
+service/mongo        ClusterIP   10.43.67.197    &lt;none&gt;        27017/TCP        3h5m
+service/letschat     NodePort    10.43.190.237   &lt;none&gt;        8080:31855/TCP   3h1m
+
+NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/mongo      1/1     <span style="color:#ae81ff">1</span>            <span style="color:#ae81ff">1</span>           3h13m
+deployment.apps/letschat   5/5     <span style="color:#ae81ff">5</span>            <span style="color:#ae81ff">5</span>           3h14m
+
+NAME                                  DESIRED   CURRENT   READY   AGE
+replicaset.apps/mongo-5c694c878b      <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>       3h13m
+replicaset.apps/letschat-7c66bd64f5   <span style="color:#ae81ff">5</span>         <span style="color:#ae81ff">5</span>         <span style="color:#ae81ff">5</span>       3h14m
+</code></pre></div><h2 id="usar-otra-maquina-para-manejar-nuestro-cluster">Usar otra maquina para manejar nuestro cluster</h2>
+<p>Para ello debemos de dirigirnos a nuestra maquina master y debemos de copiar el fichero <strong>/etc/rancher/k3s/k3s.yaml</strong> a la maquina donde queramos manejar el cluster con <strong>kubectl</strong>, para ello debemos de dirigirnos a la carpeta <strong>.kube</strong> y buscar un fichero llamado <strong>config</strong> y ahi debemos de pegar el contenido del fichero del master.</p>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2021  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+         
+        <li><a href="/servicios">Servicios</a></li>
+         
+        <li><a href="/implantacion">Implantacion</a></li>
+         
+        <li><a href="/bbdd">BBDD</a></li>
+         
+        <li><a href="/hlc">HLC</a></li>
+         
+        <li><a href="/cloud">Cloud</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>
