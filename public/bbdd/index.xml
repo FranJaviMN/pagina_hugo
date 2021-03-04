@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Thu, 18 Feb 2021 18:22:31 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/bbdd/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 04 Mar 2021 12:55:26 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/bbdd/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Auditorias</title>
+      <link>https://franjavimn.onrender.com/bbdd/auditorias/</link>
+      <pubDate>Thu, 04 Mar 2021 12:55:26 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/bbdd/auditorias/</guid>
+      <description>Auditoría de Bases de Datos  Activa desde SQL*Plus la auditoría de los intentos de acceso fallidos al sistema. Comprueba su funcionamiento  Para activar la auditoría de los intentos de acceso fallidos primero tenemos que ver los parámetros de auditoría que tenemos en nuestra base de datos:
+SQL&amp;gt; SHOW PARAMETER AUDIT NAME TYPE VALUE ------------------------------------ ----------- ------------------------------ audit_file_dest string C:\APP\FRANJ\ADMIN\ORCL\ADUMP audit_sys_operations boolean FALSE audit_trail string DB Una vez hecho esto y visto los parametros vamos a activar el parametro audit_trail:</description>
+    </item>
+    
     <item>
       <title>Almacenamiento</title>
       <link>https://franjavimn.onrender.com/bbdd/almacenamiento/</link>
