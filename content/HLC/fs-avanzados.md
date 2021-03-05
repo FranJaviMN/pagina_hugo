@@ -57,7 +57,7 @@ EL sistema de ficheros de ZFS incluye algunas caracteristicas muy interesantes q
 * Compresión: Los ficheros pueden estar comprimidos o descomprimidos en vuelo, lo que aumenta la velocidad de lectura.
 
 
-##3 Instalacion en Debian 10
+### Instalacion en Debian 10
 
 Para realizar la instalacion del sistema de ficheros de ZFS en nuestro sistema Debian 10 lo que debemos de hacer es instalar el paquete llamado **zfs-dkms**, para ello lo que vamos a hacer es añadir a nuestros repositorios la rama llamada **contrib non-free** ya que ZFS tiene una licencia distinta a la que tiene linux, por lo que debemos descargarlo desde esa rama:
 ```shell
