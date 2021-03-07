@@ -257,7 +257,59 @@ audit_trail                          string      DB, EXTENDED
 
 8. Averigua si en Postgres se pueden realizar los apartados 1, 3 y 4. Si es así, documenta el proceso adecuadamente.
 
-**Leyendo la documentación de PostgreSQL, he podido leer que no se pueden realizar igual que en Oracle, la forma de hacerlo es mediante funciones y procedimientos**
+PostgreSQL por defecto no incorpora una herramienta de auditorías, por lo que, si queremos conseguir realizar auditorías, tendremos que descargarnos una herramienta que ha desarrollado la comunidad, llamada Audit trigger 91plus.
+
+Para ello, desde git, descargamos el repositorio con el fichero de la siguiente forma:
+```shell
+debian@postgres-audit:~$ wget https://raw.githubusercontent.com/2ndQuadrant/audit-trigger/master/audit.sql
+```
+
+Y una vez descargado entramos en nuestro servidor y ejecutamos el siguiente comando:
+```sql
+postgres=# \i audit.sql 
+CREATE EXTENSION
+CREATE SCHEMA
+REVOKE
+COMMENT
+CREATE TABLE
+REVOKE
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+COMMENT
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE FUNCTION
+COMMENT
+CREATE FUNCTION
+COMMENT
+CREATE FUNCTION
+CREATE FUNCTION
+COMMENT
+CREATE VIEW
+COMMENT
+```
+
+Y ahora solo nos queda activar la recolección de los datos de las auditorias, para ello solo debemos de ejecutar la siguiente sentencia:
+```sql
+postgres=# select audit.audit_table({nombre_de_la_tabla});
+```
+
 
 9. Averigua si en MySQL se pueden realizar los apartados 1, 3 y 4. Si es así, documenta el proceso adecuadamente.
 
