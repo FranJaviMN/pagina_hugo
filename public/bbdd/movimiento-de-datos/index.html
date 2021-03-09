@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Movimiento De Datos | Blog</title>
+  <meta name="description" content="En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Movimiento De Datos" />
+<meta property="og:description" content="Realiza una exportación del esquema de SCOTT usando la consola Enterprise Manager, con las siguientes condiciones:   Exporta tanto la estructura de las tablas como los datos de las mismas Excluye la tabla BONUS y los departamentos sin empleados. Realiza una estimación previa del tamaño necesario para el fichero de exportación. Programa la operación para dentro de 5 minutos. Genera un archivo de log en el directorio raíz.  Realiza ahora la operación con Oracle Data Pump." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://franjavimn.onrender.com/bbdd/movimiento-de-datos/" />
+<meta property="article:published_time" content="2021-03-09T12:28:51+01:00" />
+<meta property="article:modified_time" content="2021-03-09T12:28:51+01:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Movimiento De Datos"/>
+<meta name="twitter:description" content="Realiza una exportación del esquema de SCOTT usando la consola Enterprise Manager, con las siguientes condiciones:   Exporta tanto la estructura de las tablas como los datos de las mismas Excluye la tabla BONUS y los departamentos sin empleados. Realiza una estimación previa del tamaño necesario para el fichero de exportación. Programa la operación para dentro de 5 minutos. Genera un archivo de log en el directorio raíz.  Realiza ahora la operación con Oracle Data Pump."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://franjavimn.onrender.com/images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://franjavimn.onrender.com">
+  
+    <div id="logo" style="background-image: url(https://franjavimn.onrender.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+       
+        <li><a href="/servicios">Servicios</a></li>
+       
+        <li><a href="/implantacion">Implantacion</a></li>
+       
+        <li><a href="/bbdd">BBDD</a></li>
+       
+        <li><a href="/hlc">HLC</a></li>
+       
+        <li><a href="/cloud">Cloud</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <ol>
+<li>Realiza una exportación del esquema de SCOTT usando la consola Enterprise Manager, con las siguientes condiciones:</li>
+</ol>
+<ul>
+<li>Exporta tanto la estructura de las tablas como los datos de las mismas</li>
+<li>Excluye la tabla BONUS y los departamentos sin empleados.</li>
+<li>Realiza una estimación previa del tamaño necesario para el fichero de exportación.</li>
+<li>Programa la operación para dentro de 5 minutos.</li>
+<li>Genera un archivo de log en el directorio raíz.</li>
+</ul>
+<p>Realiza ahora la operación con Oracle Data Pump.</p>
+<ol start="2">
+<li>
+<p>Importa el fichero obtenido anteriormente usando Enterprise Manager pero en un usuario distinto de la misma base de datos.</p>
+</li>
+<li>
+<p>Realiza una exportación de la estructura de todas las tablas de la base de datos usando el comando expdp de Oracle Data Pump probando todas las posibles opciones que ofrece dicho comando y documentándolas adecuadamente.</p>
+</li>
+<li>
+<p>Intenta realizar operaciones similares de importación y exportación con las herramientas proporcionadas con MySQL desde línea de comandos, documentando el proceso.</p>
+</li>
+</ol>
+<p>Primero tenemos que agregar unas tablas a la base de datos que queremos exportar para realizar la prueba.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">MariaDB [(<span style="color:#66d9ef">none</span>)]<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">create</span> <span style="color:#66d9ef">database</span> export;
+Query OK, <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">row</span> affected (<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">000</span> sec)
+
+MariaDB [(<span style="color:#66d9ef">none</span>)]<span style="color:#f92672">&gt;</span> use export
+<span style="color:#66d9ef">Database</span> changed
+
+MariaDB [export]<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">show</span> tables
+    <span style="color:#f92672">-&gt;</span> ;
+<span style="color:#f92672">+</span><span style="color:#75715e">------------------+
+</span><span style="color:#75715e"></span><span style="color:#f92672">|</span> Tables_in_export <span style="color:#f92672">|</span>
+<span style="color:#f92672">+</span><span style="color:#75715e">------------------+
+</span><span style="color:#75715e"></span><span style="color:#f92672">|</span> depart           <span style="color:#f92672">|</span>
+<span style="color:#f92672">+</span><span style="color:#75715e">------------------+
+</span><span style="color:#75715e"></span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">row</span> <span style="color:#66d9ef">in</span> <span style="color:#66d9ef">set</span> (<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">000</span> sec)
+</code></pre></div><p>Realizaremos la exportacion:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@pruebas-auditorias:~$ sudo mysqldump -u root -p export &gt; export.sql
+Enter password: 
+
+debian@pruebas-auditorias:~$ ls
+export.sql
+</code></pre></div><p>Tendremos que crear la nueva base de datos para la importacion:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">MariaDB [(<span style="color:#66d9ef">none</span>)]<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">create</span> <span style="color:#66d9ef">database</span> import;
+Query OK, <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">row</span> affected (<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">000</span> sec)
+
+MariaDB [(<span style="color:#66d9ef">none</span>)]<span style="color:#f92672">&gt;</span> Bye
+</code></pre></div><p>Y ahora procedemos a importar los datos:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@pruebas-auditorias:~$ sudo mysql -u root -p import &lt; export.sql 
+Enter password: 
+
+debian@pruebas-auditorias:~$ sudo mysql -u root -p
+Enter password: 
+
+Welcome to the MariaDB monitor.  Commands end with ; or <span style="color:#ae81ff">\g</span>.
+Your MariaDB connection id is <span style="color:#ae81ff">41</span>
+Server version: 10.3.27-MariaDB-0+deb10u1 Debian <span style="color:#ae81ff">10</span>
+
+Copyright <span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type <span style="color:#e6db74">&#39;help;&#39;</span> or <span style="color:#e6db74">&#39;\h&#39;</span> <span style="color:#66d9ef">for</span> help. Type <span style="color:#e6db74">&#39;\c&#39;</span> to clear the current input statement.
+
+MariaDB <span style="color:#f92672">[(</span>none<span style="color:#f92672">)]</span>&gt; use import
+Reading table information <span style="color:#66d9ef">for</span> completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MariaDB <span style="color:#f92672">[</span>import<span style="color:#f92672">]</span>&gt; show tables;
++------------------+
+| Tables_in_import |
++------------------+
+| depart           |
++------------------+
+<span style="color:#ae81ff">1</span> row in set <span style="color:#f92672">(</span>0.000 sec<span style="color:#f92672">)</span>
+</code></pre></div><ol start="5">
+<li>Intenta realizar operaciones similares de importación y exportación con las herramientas proporcionadas con Postgres desde línea de comandos, documentando el proceso.</li>
+</ol>
+<p>Para ello creamos una base de datos y la poblamos de datos para el ejemplo:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">postgres<span style="color:#f92672">=#</span> <span style="color:#66d9ef">create</span> <span style="color:#66d9ef">database</span> export;
+<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">DATABASE</span>
+
+postgres<span style="color:#f92672">=#</span> <span style="color:#960050;background-color:#1e0010">\</span><span style="color:#66d9ef">c</span> export 
+You <span style="color:#66d9ef">are</span> now connected <span style="color:#66d9ef">to</span> <span style="color:#66d9ef">database</span> <span style="color:#e6db74">&#34;export&#34;</span> <span style="color:#66d9ef">as</span> <span style="color:#66d9ef">user</span> <span style="color:#e6db74">&#34;postgres&#34;</span>.
+
+export<span style="color:#f92672">=#</span> <span style="color:#960050;background-color:#1e0010">\</span>d
+         List <span style="color:#66d9ef">of</span> relations
+ <span style="color:#66d9ef">Schema</span> <span style="color:#f92672">|</span>  Name  <span style="color:#f92672">|</span> <span style="color:#66d9ef">Type</span>  <span style="color:#f92672">|</span>  <span style="color:#66d9ef">Owner</span>   
+<span style="color:#75715e">--------+--------+-------+----------
+</span><span style="color:#75715e"></span> <span style="color:#66d9ef">public</span> <span style="color:#f92672">|</span> depart <span style="color:#f92672">|</span> <span style="color:#66d9ef">table</span> <span style="color:#f92672">|</span> postgres
+(<span style="color:#ae81ff">1</span> <span style="color:#66d9ef">row</span>)
+</code></pre></div><p>Una vez hecho esto vamos a usar la herramienta llamada <strong>pg_dump</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">postgres@postgres-audit:~$ pg_dump -U postgres export &gt; export.sql
+
+postgres@postgres-audit:~$ ls
+<span style="color:#ae81ff">11</span>  export.sql
+</code></pre></div><p>Ahora, si queremos importar la copia debemos de usar el comando <strong>psql</strong> desde el usuario <strong>postgres</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">postgres@postgres-audit:~$ psql -U postgres &lt; export.sql 
+SET
+SET
+SET
+SET
+SET
+ set_config 
+------------
+ 
+<span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> row<span style="color:#f92672">)</span>
+
+SET
+SET
+SET
+SET
+SET
+SET
+CREATE TABLE
+ALTER TABLE
+COPY <span style="color:#ae81ff">4</span>
+ALTER TABLE
+</code></pre></div><ol start="6">
+<li>
+<p>Exporta los documentos de una colección de MongoDB que cumplan una determinada condición e impórtalos en otra base de datos.</p>
+</li>
+<li>
+<p>SQL*Loader es una herramienta que sirve para cargar grandes volúmenes de datos en una instancia de ORACLE. Exportad los datos de uno de vuestros proyectos de 1º desde Postgres a  texto plano con delimitadores y emplead SQL*Loader para realizar el proceso de carga de dichos datos a una instancia ORACLE. Debéis explicar los distintos ficheros de configuración y de log que tiene SQL*Loader</p>
+</li>
+</ol>
+<h1 id="fuentes">Fuentes</h1>
+<p>Importar y exportar en mysql - <a href="https://www.stackscale.com/es/blog/importar-exportar-bases-datos-mysql-mariadb/">https://www.stackscale.com/es/blog/importar-exportar-bases-datos-mysql-mariadb/</a></p>
+<p>Importar y exportar en postgresql - <a href="https://www.linuxito.com/programacion/333-como-exportar-y-restaurar-bases-de-datos-postgres">https://www.linuxito.com/programacion/333-como-exportar-y-restaurar-bases-de-datos-postgres</a></p>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2021  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+         
+        <li><a href="/servicios">Servicios</a></li>
+         
+        <li><a href="/implantacion">Implantacion</a></li>
+         
+        <li><a href="/bbdd">BBDD</a></li>
+         
+        <li><a href="/hlc">HLC</a></li>
+         
+        <li><a href="/cloud">Cloud</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>

@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Thu, 04 Mar 2021 12:55:26 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 09 Mar 2021 12:28:51 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Movimiento De Datos</title>
+      <link>https://franjavimn.onrender.com/bbdd/movimiento-de-datos/</link>
+      <pubDate>Tue, 09 Mar 2021 12:28:51 +0100</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/bbdd/movimiento-de-datos/</guid>
+      <description>Realiza una exportación del esquema de SCOTT usando la consola Enterprise Manager, con las siguientes condiciones:   Exporta tanto la estructura de las tablas como los datos de las mismas Excluye la tabla BONUS y los departamentos sin empleados. Realiza una estimación previa del tamaño necesario para el fichero de exportación. Programa la operación para dentro de 5 minutos. Genera un archivo de log en el directorio raíz.  Realiza ahora la operación con Oracle Data Pump.</description>
+    </item>
+    
     <item>
       <title>Auditorias</title>
       <link>https://franjavimn.onrender.com/bbdd/auditorias/</link>
