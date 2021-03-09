@@ -97,9 +97,236 @@
 <li>
 <p>Realiza una exportación de la estructura de todas las tablas de la base de datos usando el comando expdp de Oracle Data Pump probando todas las posibles opciones que ofrece dicho comando y documentándolas adecuadamente.</p>
 </li>
-<li>
-<p>Intenta realizar operaciones similares de importación y exportación con las herramientas proporcionadas con MySQL desde línea de comandos, documentando el proceso.</p>
-</li>
+</ol>
+<p>Lo primero que podemos hacer es ver las opciones que tenemos con el comando <strong>expdp</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\f</span>ranj&gt; expdp HELP<span style="color:#f92672">=</span>Y
+
+Export: Release 11.2.0.1.0 - Production on Mar Mar <span style="color:#ae81ff">9</span> 12:42:34 <span style="color:#ae81ff">2021</span>
+
+Copyright <span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+
+La utilidad de exportaci¾n de pump de datos proporciona un mecanismo para transferir objetos de datos
+entre bases de datos Oracle. La utilidad se llama con el siguiente comando:
+
+   Ejemplo: expdp scott/tiger DIRECTORY<span style="color:#f92672">=</span>dmpdir DUMPFILE<span style="color:#f92672">=</span>scott.dmp
+
+Puede controlar c¾mo se ejecuta la exportaci¾n introduciendo el comando <span style="color:#e6db74">&#39;expdp&#39;</span> seguido
+por varios parßmetros. Para especificar los parßmetros, utilice palabras clave:
+
+   Formato:  expdp KEYWORD<span style="color:#f92672">=</span>valor o KEYWORD<span style="color:#f92672">=(</span>valor1,valor2,...,valorN<span style="color:#f92672">)</span>
+   Ejemplo: expdp scott/tiger DUMPFILE<span style="color:#f92672">=</span>scott.dmp DIRECTORY<span style="color:#f92672">=</span>dmpdir SCHEMAS<span style="color:#f92672">=</span>scott
+               o TABLES<span style="color:#f92672">=(</span>T1:P1,T1:P2<span style="color:#f92672">)</span>, si T1 es una tabla particionada
+
+USERID debe ser el primer parßmetro de la lÝnea de comandos.
+</code></pre></div><p>Y ahora vamos a ver la opciones que nos ofrece:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ATTACH
+Conectar a un trabajo existente.
+Por ejemplo, ATTACH<span style="color:#f92672">=</span>nombre_trabajo.
+
+COMPRESSION
+Reduce el tama±o de un archivo de volcado.
+Los valores de palabras clave vßlidos son: ALL, DATA_ONLY, <span style="color:#f92672">[</span>METADATA_ONLY<span style="color:#f92672">]</span> y NONE.
+
+CONTENT
+Especifica los datos que se van a descargar.
+Los valores de palabras clave vßlidos son: <span style="color:#f92672">[</span>ALL<span style="color:#f92672">]</span>, DATA_ONLY y METADATA_ONLY.
+
+DATA_OPTIONS
+Indicadores de opciones de nivel de datos.
+Los valores de palabra clave vßlidos son: XML_CLOBS.
+
+DIRECTORY
+Objeto de directorio que se va a utilizar para los archivos de volcado y log.
+
+DUMPFILE
+Lista de nombres de archivo de volcado de destino <span style="color:#f92672">[</span>expdat.dmp<span style="color:#f92672">]</span>.
+Por ejemplo, DUMPFILE<span style="color:#f92672">=</span>scott1.dmp, scott2.dmp, dmpdir:scott3.dmp.
+
+ENCRYPTION
+Cifra todo o parte del archivo de volcado.
+Los valores de palabras clave vßlidos son: ALL, DATA_ONLY, ENCRYPTED_COLUMNS_ONLY, METADATA_ONLY y NONE.
+
+ENCRYPTION_ALGORITHM
+Especifica c¾mo se debe hacer el cifrado.
+Los valores de palabras clave vßlidos son: <span style="color:#f92672">[</span>AES128<span style="color:#f92672">]</span>, AES192 y AES256.
+
+ENCRYPTION_MODE
+MÚtodo para generar la clave de cifrado.
+Los valores de palabras clave vßlidos son: DUAL, PASSWORD y <span style="color:#f92672">[</span>TRANSPARENT<span style="color:#f92672">]</span>.
+
+ENCRYPTION_PASSWORD
+Clave de contrase±a para crear datos cifrados en un archivo de volcado.
+
+ESTIMATE
+Calcula estimaciones de trabajo.
+Los valores de palabras clave vßlidos son: <span style="color:#f92672">[</span>BLOCKS<span style="color:#f92672">]</span> y STATISTICS.
+
+ESTIMATE_ONLY
+Calcula las estimaciones de trabajo sin realizar la exportaci¾n.
+
+EXCLUDE
+Excluye tipos de objeto especÝficos.
+Por ejemplo, EXCLUDE<span style="color:#f92672">=</span>SCHEMA:<span style="color:#e6db74">&#34;=&#39;HR&#39;&#34;</span>.
+
+FILESIZE
+Especifica el tama±o de cada archivo de volcado en unidades de bytes.
+
+FLASHBACK_SCN
+SCN utilizado para restablecer la instantßnea de sesi¾n.
+
+FLASHBACK_TIME
+Tiempo utilizado para buscar el valor de SCN correspondiente mßs cercano.
+
+FULL
+Exporta toda la base de datos <span style="color:#f92672">[</span>N<span style="color:#f92672">]</span>.
+
+HELP
+Muestra mensajes de ayuda <span style="color:#f92672">[</span>N<span style="color:#f92672">]</span>.
+
+INCLUDE
+Incluye tipos de objetos especÝficos.
+Por ejemplo, INCLUDE<span style="color:#f92672">=</span>TABLE_DATA.
+
+JOB_NAME
+Nombre del trabajo de exportaci¾n que se va a crear.
+
+LOGFILE
+Especifica el nombre del archivo log <span style="color:#f92672">[</span>export.log<span style="color:#f92672">]</span>.
+
+NETWORK_LINK
+Nombre del enlace de base de datos remota al sistema de origen.
+
+NOLOGFILE
+No se escribe el archivo log <span style="color:#f92672">[</span>N<span style="color:#f92672">]</span>.
+
+PARALLEL
+Cambia el n·mero de workers activos para el trabajo actual.
+
+PARFILE
+Especifica el nombre del archivo de parßmetros.
+
+QUERY
+Clßusula de predicado utilizada para exportar un subjuego de una tabla.
+Por ejemplo, QUERY<span style="color:#f92672">=</span>employees:<span style="color:#e6db74">&#34;WHERE identificador_departamento &gt; 10&#34;</span>.
+
+REMAP_DATA
+Especifica una funci¾n de conversi¾n de datos.
+Por ejemplo, REMAP_DATA<span style="color:#f92672">=</span>EMP.EMPNO:REMAPPKG.EMPNO.
+
+REUSE_DUMPFILES
+Sobrescribe el archivo de volcado de destino si existe <span style="color:#f92672">(</span>N<span style="color:#f92672">)</span>.
+
+SAMPLE
+Porcentaje de datos para exportar.
+
+SCHEMAS
+Lista de esquemas que se van a exportar <span style="color:#f92672">(</span>esquema de conexi¾n<span style="color:#f92672">)</span>.
+
+SOURCE_EDITION
+Edici¾n que se usarß para extraer metadatos.
+
+STATUS
+Estado del trabajo de frecuencia <span style="color:#f92672">(</span>seg<span style="color:#f92672">)</span> que se va a controlar donde
+el valor por defecto <span style="color:#f92672">(</span>0<span style="color:#f92672">)</span> mostrarß el nuevo estado cuando estÚ disponible.
+
+TABLES
+Identifica una lista de tablespaces que se van a exportar.
+Por ejemplo, TABLES<span style="color:#f92672">=</span>HR.EMPLOYEES,SH.SALES:SALES_1995.
+
+TABLESPACES
+Identifica una lista de tablespaces que se van a exportar.
+
+TRANSPORTABLE
+Especifica si el mÚtodo transportable se puede utilizar.
+Los valores de palabras clave vßlidos son: ALWAYS y <span style="color:#f92672">[</span>NEVER<span style="color:#f92672">]</span>.
+
+TRANSPORT_FULL_CHECK
+Verifica segmentos de almacenamiento de todas las tablas <span style="color:#f92672">[</span>N<span style="color:#f92672">]</span>.
+
+TRANSPORT_TABLESPACES
+Lista de tablespaces desde los que se descargarßn los metadatos.
+
+VERSION
+Versi¾n de los objetos que se van a exportar.
+Los valores de palabra cable vßlidos son: <span style="color:#f92672">[</span>COMPATIBLE<span style="color:#f92672">]</span>, LATEST o cualquier versi¾n de base de datos vßlida.
+
+------------------------------------------------------------------------------
+
+Los siguientes comandos son vßlidos en el modo interactivo.
+Nota: Estßn permitidas las abreviaturas.
+
+ADD_FILE
+Agrega un archivo de volcado al juego de archivos de volcado.
+
+CONTINUE_CLIENT
+Vuelve al modo de registro. El trabajo se reiniciarß si estß inactivo.
+
+EXIT_CLIENT
+Sale de la sesi¾n del cliente y deja el trabajo ejecutßndose.
+
+FILESIZE
+Tama±o de archivo <span style="color:#f92672">(</span>bytes<span style="color:#f92672">)</span> por defecto para los comandos ADD_FILE posteriores.
+
+HELP
+Resume los comandos interactivos.
+
+KILL_JOB
+Desconecta y suprime un trabajo.
+
+PARALLEL
+Cambia el n·mero de workers activos para el trabajo actual.
+
+REUSE_DUMPFILES
+Sobrescribe el archivo de volcado de destino si existe <span style="color:#f92672">[</span>N<span style="color:#f92672">]</span>.
+
+START_JOB
+Inicia o reanuda el trabajo actual.
+Los valores de palabra clave vßlidos son: SKIP_CURRENT.
+
+STATUS
+Estado del trabajo de frecuencia <span style="color:#f92672">(</span>seg<span style="color:#f92672">)</span> que se va a controlar donde
+el valor por defecto <span style="color:#f92672">(</span>0<span style="color:#f92672">)</span> mostrarß el nuevo estado cuando estÚ disponible.
+
+STOP_JOB
+Cierra en orden la ejecuci¾n del trabajo y sale del cliente.
+Los valores de palabra clave vßlidos son: IMMEDIATE.
+</code></pre></div><p>Vamos a realizar una exportación de ejemplo:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\f</span>ranj&gt; expdp system dumpfile<span style="color:#f92672">=</span>prueba_copia.dmp include<span style="color:#f92672">=</span>table content<span style="color:#f92672">=</span>metadata_only full<span style="color:#f92672">=</span>y
+
+Export: Release 11.2.0.1.0 - Production on Mar Mar <span style="color:#ae81ff">9</span> 12:50:34 <span style="color:#ae81ff">2021</span>
+
+Copyright <span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+Contrase±a:
+
+Conectado a: Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+Iniciando <span style="color:#e6db74">&#34;SYSTEM&#34;</span>.<span style="color:#e6db74">&#34;SYS_EXPORT_FULL_01&#34;</span>:  system/******** dumpfile<span style="color:#f92672">=</span>prueba_copia.dmp include<span style="color:#f92672">=</span>table content<span style="color:#f92672">=</span>metadata_only full<span style="color:#f92672">=</span>y
+Procesando el tipo de objeto DATABASE_EXPORT/SCHEMA/TABLE/TABLE
+Procesando el tipo de objeto DATABASE_EXPORT/SCHEMA/TABLE/PRE_TABLE_ACTION
+Procesando el tipo de objeto DATABASE_EXPORT/SCHEMA/TABLE/GRANT/OWNER_GRANT/OBJECT_GRANT
+Procesando el tipo de objeto DATABASE_EXPORT/SCHEMA/TABLE/GRANT/CROSS_SCHEMA/OBJECT_GRANT
+Procesando el tipo de objeto DATABASE_EXPORT/SCHEMA/TABLE/INDEX/INDEX
+Procesando el tipo de objeto DATABASE_EXPORT/SCHEMA/TABLE/CONSTRAINT/CONSTRAINT
+Procesando el tipo de objeto DATABASE_EXPORT/SCHEMA/TABLE/INDEX/STATISTICS/INDEX_STATISTICS
+Procesando el tipo de objeto DATABASE_EXPORT/SCHEMA/TABLE/COMMENT
+Procesando el tipo de objeto DATABASE_EXPORT/SCHEMA/TABLE/FGA_POLICY
+Procesando el tipo de objeto DATABASE_EXPORT/SCHEMA/TABLE/CONSTRAINT/REF_CONSTRAINT
+Procesando el tipo de objeto DATABASE_EXPORT/SCHEMA/TABLE/INDEX/FUNCTIONAL_AND_BITMAP/INDEX
+Procesando el tipo de objeto DATABASE_EXPORT/SCHEMA/TABLE/INDEX/STATISTICS/FUNCTIONAL_AND_BITMAP/INDEX_STATISTICS
+Procesando el tipo de objeto DATABASE_EXPORT/SCHEMA/TABLE/STATISTICS/TABLE_STATISTICS
+Procesando el tipo de objeto DATABASE_EXPORT/SCHEMA/TABLE/INDEX/DOMAIN_INDEX/INDEX
+Procesando el tipo de objeto DATABASE_EXPORT/SCHEMA/TABLE/POST_TABLE_ACTION
+Procesando el tipo de objeto DATABASE_EXPORT/SCHEMA/TABLE/TRIGGER
+Procesando el tipo de objeto DATABASE_EXPORT/SCHEMA/TABLE/POST_INSTANCE/PROCACT_INSTANCE
+Procesando el tipo de objeto DATABASE_EXPORT/SCHEMA/TABLE/POST_INSTANCE/PROCDEPOBJ
+La tabla maestra <span style="color:#e6db74">&#34;SYSTEM&#34;</span>.<span style="color:#e6db74">&#34;SYS_EXPORT_FULL_01&#34;</span> se ha cargado/descargado correctamente
+******************************************************************************
+El juego de archivos de volcado para SYSTEM.SYS_EXPORT_FULL_01 es:
+  C:<span style="color:#ae81ff">\A</span>PP<span style="color:#ae81ff">\F</span>RANJ<span style="color:#ae81ff">\A</span>DMIN<span style="color:#ae81ff">\O</span>RCL<span style="color:#ae81ff">\D</span>PDUMP<span style="color:#ae81ff">\P</span>RUEBA_COPIA.DMP
+El trabajo <span style="color:#e6db74">&#34;SYSTEM&#34;</span>.<span style="color:#e6db74">&#34;SYS_EXPORT_FULL_01&#34;</span> ha terminado correctamente en 12:52:43
+</code></pre></div><ol start="4">
+<li>Intenta realizar operaciones similares de importación y exportación con las herramientas proporcionadas con MySQL desde línea de comandos, documentando el proceso.</li>
 </ol>
 <p>Primero tenemos que agregar unas tablas a la base de datos que queremos exportar para realizar la prueba.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">MariaDB [(<span style="color:#66d9ef">none</span>)]<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">create</span> <span style="color:#66d9ef">database</span> export;
