@@ -42,10 +42,10 @@ theme = "cactus"
 
 [params]
 
-  colortheme = "white"
+  colortheme = "light"
   description = "En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno."
-  showAllPostsOnHomePage = false
-  postsOnHomePage = 5
+  showAllPostsOnHomePage = true
+  postsOnHomePage = 8
 
 [[params.social]]
   name = "github"
