@@ -35,8 +35,8 @@ theme = "cactus"
   weight = 6
 
 [[menu.main]]
-  name = "Cloud"
-  url = "/Cloud"
+  name = "Proyecto Podman"
+  url = "/Proyecto-Podman"
   weight = 7
 
 
