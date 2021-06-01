@@ -12,9 +12,10 @@
 <meta property="og:description" content="Instalacion de un servidor Postgres Lo primero que debemos de tener es una maquina virtual en la cual vamos a realizar esta instalacion, en mi caso voy a usar una maquina con un sistema debian 10, creada mediante vagrant:
 # Fichero vagrant Vagrant.configure(&#34;2&#34;) do |config| config.vm.define :postgres do |postgres| postgres.vm.box = &#34;debian/buster64&#34; postgres.vm.hostname = &#34;postgres&#34; postgres.vm.network :public_network, :bridge=&gt;&#34;wlp2s0&#34; end end Para poder instalar el servidor de postgreSQL vamos a instalar el paquete llamado postgresql el cual, al instalarlo y ver su version vemos que actualmente tenemos la version 11." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://franjavimn.onrender.com/bbdd/postgres-debian/" />
-<meta property="article:published_time" content="2020-12-09T13:45:06+01:00" />
-<meta property="article:modified_time" content="2020-12-09T13:45:06+01:00" />
+<meta property="og:url" content="https://franjavimn.onrender.com/bbdd/postgres-debian/" /><meta property="article:section" content="BBDD" />
+<meta property="article:published_time" content="2020-12-09T13:45:06&#43;01:00" />
+<meta property="article:modified_time" content="2020-12-09T13:45:06&#43;01:00" />
+
 
   <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Postgres Debian"/>
@@ -69,7 +70,7 @@
        
         <li><a href="/hlc">HLC</a></li>
        
-        <li><a href="/cloud">Cloud</a></li>
+        <li><a href="/proyecto-podman">Proyecto Podman</a></li>
       
     </ul>
   </div>
@@ -307,7 +308,7 @@ vagrant@postgres:~$ sudo nano /etc/apache2/conf-available/phppgadmin.conf
          
         <li><a href="/hlc">HLC</a></li>
          
-        <li><a href="/cloud">Cloud</a></li>
+        <li><a href="/proyecto-podman">Proyecto Podman</a></li>
         
       </ul>
     </nav>

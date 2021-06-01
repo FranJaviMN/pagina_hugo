@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Proyecto-podmen on Blog</title>
+    <link>https://franjavimn.onrender.com/proyecto-podman/</link>
+    <description>Recent content in Proyecto-podmen on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>es-ES</language>
+    <copyright>Francisco Javier Martín Núñez</copyright>
+    <lastBuildDate>Tue, 01 Jun 2021 11:55:04 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/proyecto-podman/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Compose Wordpress</title>
+      <link>https://franjavimn.onrender.com/proyecto-podman/compose-wordpress/</link>
+      <pubDate>Tue, 01 Jun 2021 11:55:04 +0200</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/proyecto-podman/compose-wordpress/</guid>
+      <description>Para este escenario podemos seguir la documentación sobre la imagen que estamos usando, en este caso usamos la imagen de wordpress y de mariadb.
+Podemos ver mas parametros y variables a configurar en la documentacion:
+ Mariadb: documentación de la imagen Wordpress: Documentación de la imagen Fichero .yml  #### Ejecutamos el fichero docker-compose.yml con podman-compose #### vagrant@podman:~/.local/bin$ ./podman-compose -t 1podfw -p wp_compose -f /home/vagrant/Proyecto-integrado/podman/podman-compose/wordpress/docker-compose.yml up #### Veremos que tenemos 3 contenedores #### vagrant@podman:~/.</description>
+    </item>
+    
+    <item>
+      <title>Compose Redmine</title>
+      <link>https://franjavimn.onrender.com/proyecto-podman/compose-redmine/</link>
+      <pubDate>Tue, 01 Jun 2021 11:54:54 +0200</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/proyecto-podman/compose-redmine/</guid>
+      <description>Para este escenario podemos seguir la documentación sobre la imagen que estamos usando, en este caso usamos la imagen de redmine y la imagen de mysql.
+Podemos ver mas parametros y variables a configurar en la documentacion:
+ Redmine: documentación de la imagen MySQL: Documentación de la imagen Fichero .yml  #### Ejecutamos el fichero docker-compose.yml con podman-compose #### vagrant@podman:~/.local/bin$ ./podman-compose -t pod1fw -p redmine -f /home/vagrant/Proyecto-integrado/podman/podman-compose/redmine/docker-compose.yml up #### Veremos que tenemos 3 contenedores #### vagrant@podman:~/.</description>
+    </item>
+    
+    <item>
+      <title>Compose Prestashop</title>
+      <link>https://franjavimn.onrender.com/proyecto-podman/compose-prestashop/</link>
+      <pubDate>Tue, 01 Jun 2021 11:54:46 +0200</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/proyecto-podman/compose-prestashop/</guid>
+      <description>Para este escenario podemos seguir la documentación sobre la imagen que estamos usando, en este caso usamos la imagen de prestashop y mariadb.
+Podemos ver mas parametros y variables a configurar en la documentacion:
+ Mariadb: documentación de la imagen Prestashop: documentacion de la imagen Fichero .yml  #### Ejecutamos el fichero docker-compose.yml con podman-compose #### vagrant@podman:~/.local/bin$ ./podman-compose -t 1podfw -p presta -f /home/vagrant/Proyecto-integrado/podman/podman-compose/prestashop/docker-compose.yml up #### Veremos que tenemos 3 contenedores #### vagrant@podman:~/.</description>
+    </item>
+    
+    <item>
+      <title>Compose Nextcloud</title>
+      <link>https://franjavimn.onrender.com/proyecto-podman/compose-nextcloud/</link>
+      <pubDate>Tue, 01 Jun 2021 11:54:38 +0200</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/proyecto-podman/compose-nextcloud/</guid>
+      <description>Para este escenario podemos seguir la documentación sobre la imagen que estamos usando, en este caso usamos la imagen de nextcloud y mariadb.
+Podemos ver mas parametros y variables a configurar en la documentacion:
+ Mariadb: documentación de la imagen Nextcloud: documentacion de la imagen Fichero .yml  #### Ejecutamos el fichero docker-compose.yml con podman-compose #### vagrant@podman:~/.local/bin$ ./podman-compose -t 1podfw -p nextcloud -f /home/vagrant/Proyecto-integrado/podman/podman-compose/nextcloud/docker-compose.yml up #### Veremos que tenemos 3 contenedores #### vagrant@podman:~/.</description>
+    </item>
+    
+    <item>
+      <title>Compose Grafana</title>
+      <link>https://franjavimn.onrender.com/proyecto-podman/compose-grafana/</link>
+      <pubDate>Tue, 01 Jun 2021 11:54:30 +0200</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/proyecto-podman/compose-grafana/</guid>
+      <description>Para este escenario podemos seguir la documentación sobre la imagen que estamos usando, en este caso usamos la imagen de grafana.
+Podemos ver mas parametros y variables a configurar en la documentacion:
+ Grafana: documentación de la imagen Fichero .yml  #### Ejecutamos el fichero docker-compose.yml con podman-compose #### vagrant@podman:~/.local/bin$ ./podman-compose -t 1podfw -p grafana -f /home/vagrant/Proyecto-integrado/podman/podman-compose/grafana/docker-compose.yml up #### Veremos que tenemos 3 contenedores #### vagrant@podman:~/.local/bin$ podman ps -a --pod CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES POD ID PODNAME b5d5f3ae0b3e k8s.</description>
+    </item>
+    
+    <item>
+      <title>Podman</title>
+      <link>https://franjavimn.onrender.com/proyecto-podman/podman/</link>
+      <pubDate>Tue, 01 Jun 2021 11:52:23 +0200</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/proyecto-podman/podman/</guid>
+      <description>Contenedores podman En el siguiente post vamos a ver como podemos encontrar una alternativa a los contenedores Docker sin necesidad de tener que aprender nuevos comandos y sintaxis, para ello, la solución son los contenedores Podman
+ Repositorio GitHub: https://github.com/FranJaviMN/Proyecto-integrado  ¿Qué son los contenedores Podman? Lo primero de lo que vamos a hablar es de donde surgio este motor de contenedores, sus caracteristicas mas representativas y las diferencias que podemos ver con su rival mas directo, Docker.</description>
+    </item>
+    
+  </channel>
+</rss>

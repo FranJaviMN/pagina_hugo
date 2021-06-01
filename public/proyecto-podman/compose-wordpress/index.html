@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Compose Wordpress | Blog</title>
+  <meta name="description" content="En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Compose Wordpress" />
+<meta property="og:description" content="Para este escenario podemos seguir la documentación sobre la imagen que estamos usando, en este caso usamos la imagen de wordpress y de mariadb.
+Podemos ver mas parametros y variables a configurar en la documentacion:
+ Mariadb: documentación de la imagen Wordpress: Documentación de la imagen Fichero .yml  #### Ejecutamos el fichero docker-compose.yml con podman-compose #### vagrant@podman:~/.local/bin$ ./podman-compose -t 1podfw -p wp_compose -f /home/vagrant/Proyecto-integrado/podman/podman-compose/wordpress/docker-compose.yml up #### Veremos que tenemos 3 contenedores #### vagrant@podman:~/." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://franjavimn.onrender.com/proyecto-podman/compose-wordpress/" /><meta property="article:section" content="Proyecto-podman" />
+<meta property="article:published_time" content="2021-06-01T11:55:04&#43;02:00" />
+<meta property="article:modified_time" content="2021-06-01T11:55:04&#43;02:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Compose Wordpress"/>
+<meta name="twitter:description" content="Para este escenario podemos seguir la documentación sobre la imagen que estamos usando, en este caso usamos la imagen de wordpress y de mariadb.
+Podemos ver mas parametros y variables a configurar en la documentacion:
+ Mariadb: documentación de la imagen Wordpress: Documentación de la imagen Fichero .yml  #### Ejecutamos el fichero docker-compose.yml con podman-compose #### vagrant@podman:~/.local/bin$ ./podman-compose -t 1podfw -p wp_compose -f /home/vagrant/Proyecto-integrado/podman/podman-compose/wordpress/docker-compose.yml up #### Veremos que tenemos 3 contenedores #### vagrant@podman:~/."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://franjavimn.onrender.com/images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://franjavimn.onrender.com">
+  
+    <div id="logo" style="background-image: url(https://franjavimn.onrender.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+       
+        <li><a href="/servicios">Servicios</a></li>
+       
+        <li><a href="/implantacion">Implantacion</a></li>
+       
+        <li><a href="/bbdd">BBDD</a></li>
+       
+        <li><a href="/hlc">HLC</a></li>
+       
+        <li><a href="/proyecto-podman">Proyecto Podman</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <p>Para este escenario podemos seguir la documentación sobre la imagen que estamos usando, en este caso usamos la imagen de wordpress y de mariadb.</p>
+<p>Podemos ver mas parametros y variables a configurar en la documentacion:</p>
+<ul>
+<li>Mariadb: <a href="https://hub.docker.com/_/mariadb">documentación de la imagen</a></li>
+<li>Wordpress: <a href="https://hub.docker.com/_/wordpress">Documentación de la imagen</a></li>
+<li><a href="https://github.com/FranJaviMN/Proyecto-integrado/blob/main/Podman/podman-compose/wordpress/docker-compose.yml">Fichero .yml</a></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Ejecutamos el fichero docker-compose.yml con podman-compose ####</span>
+vagrant@podman:~/.local/bin$ ./podman-compose -t 1podfw -p wp_compose -f /home/vagrant/Proyecto-integrado/podman/podman-compose/wordpress/docker-compose.yml up 
+
+<span style="color:#75715e">#### Veremos que tenemos 3 contenedores ####</span>
+vagrant@podman:~/.local/bin$ podman ps -a --pod
+CONTAINER ID  IMAGE                               COMMAND               CREATED             STATUS             PORTS                 NAMES               POD ID        PODNAME
+ed3a940dd61f  k8s.gcr.io/pause:3.2                                      <span style="color:#ae81ff">2</span> minutes ago       Up <span style="color:#ae81ff">44</span> seconds ago  0.0.0.0:8080-&gt;80/tcp  ee6df39a4ee5-infra  ee6df39a4ee5  wp_compose
+94b706df3c83  docker.io/library/wordpress:latest  apache2-foregroun...  About a minute ago  Up <span style="color:#ae81ff">10</span> seconds ago  0.0.0.0:8080-&gt;80/tcp  servidor_wp         ee6df39a4ee5  wp_compose
+8582bf54eca4  docker.io/library/mariadb:latest    mysqld                <span style="color:#ae81ff">45</span> seconds ago      Up <span style="color:#ae81ff">11</span> seconds ago  0.0.0.0:8080-&gt;80/tcp  servidor_mysql      ee6df39a4ee5  wp_compose
+</code></pre></div><p>Y ahora si entramos en http://ip-maquina:8080 veremos el instalador de wordpress para terminar de tenerlo listo para usar:</p>
+<p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Proyecto/captura-worpress-podman-compose.png" alt="wordpres podman-compose"></p>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2021  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+         
+        <li><a href="/servicios">Servicios</a></li>
+         
+        <li><a href="/implantacion">Implantacion</a></li>
+         
+        <li><a href="/bbdd">BBDD</a></li>
+         
+        <li><a href="/hlc">HLC</a></li>
+         
+        <li><a href="/proyecto-podman">Proyecto Podman</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>

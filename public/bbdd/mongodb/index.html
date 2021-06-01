@@ -13,9 +13,10 @@
 Vagrant.configure(&#34;2&#34;) do |config| config.vm.define :mongodb do |mongodb| mongodb.vm.box = &#34;debian/buster64&#34; mongodb.vm.hostname = &#34;mongodb&#34; mongodb.vm.network :public_network, :bridge=&gt;&#34;wlp2s0&#34; end end Cuando tengamos la maquina lista lo que vamos a hacer es instalar unas herramientas antes de empezar:
 #### Actualizamos las listas de repositorios #### vagrant@mongodb:~$ sudo apt update #### Instalamos las herramientas necesarias #### vagrant@mongodb:~$ sudo apt install gnupg -y Descargar mongodb para debian 10 AHora que ya tenemos las herramientas anteriores lo que debemos de hacer es añadir un nuevo repositorio a nuestra maquina ya que los paquetes de mongodb no se encuentran en los repositorios de debian, por lo que ejecutamos los siguientes comandos:" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://franjavimn.onrender.com/bbdd/mongodb/" />
-<meta property="article:published_time" content="2020-12-09T13:46:40+01:00" />
-<meta property="article:modified_time" content="2020-12-09T13:46:40+01:00" />
+<meta property="og:url" content="https://franjavimn.onrender.com/bbdd/mongodb/" /><meta property="article:section" content="BBDD" />
+<meta property="article:published_time" content="2020-12-09T13:46:40&#43;01:00" />
+<meta property="article:modified_time" content="2020-12-09T13:46:40&#43;01:00" />
+
 
   <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Mongodb"/>
@@ -71,7 +72,7 @@ Vagrant.configure(&#34;2&#34;) do |config| config.vm.define :mongodb do |mongodb
        
         <li><a href="/hlc">HLC</a></li>
        
-        <li><a href="/cloud">Cloud</a></li>
+        <li><a href="/proyecto-podman">Proyecto Podman</a></li>
       
     </ul>
   </div>
@@ -217,7 +218,7 @@ vagrant@postgres:~$ mongo --host 192.168.1.120 -u cliente
          
         <li><a href="/hlc">HLC</a></li>
          
-        <li><a href="/cloud">Cloud</a></li>
+        <li><a href="/proyecto-podman">Proyecto Podman</a></li>
         
       </ul>
     </nav>
