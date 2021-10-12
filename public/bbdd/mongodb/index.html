@@ -14,8 +14,8 @@ Vagrant.configure(&#34;2&#34;) do |config| config.vm.define :mongodb do |mongodb
 #### Actualizamos las listas de repositorios #### vagrant@mongodb:~$ sudo apt update #### Instalamos las herramientas necesarias #### vagrant@mongodb:~$ sudo apt install gnupg -y Descargar mongodb para debian 10 AHora que ya tenemos las herramientas anteriores lo que debemos de hacer es añadir un nuevo repositorio a nuestra maquina ya que los paquetes de mongodb no se encuentran en los repositorios de debian, por lo que ejecutamos los siguientes comandos:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://franjavimn.onrender.com/bbdd/mongodb/" /><meta property="article:section" content="BBDD" />
-<meta property="article:published_time" content="2020-12-09T13:46:40&#43;01:00" />
-<meta property="article:modified_time" content="2020-12-09T13:46:40&#43;01:00" />
+<meta property="article:published_time" content="2020-12-09T13:46:40+01:00" />
+<meta property="article:modified_time" content="2020-12-09T13:46:40+01:00" />
 
 
   <meta name="twitter:card" content="summary"/>
@@ -29,7 +29,7 @@ Vagrant.configure(&#34;2&#34;) do |config| config.vm.define :mongodb do |mongodb
     
   
   
-  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-light.css">
   
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -86,7 +86,7 @@ Vagrant.configure(&#34;2&#34;) do |config| config.vm.define :mongodb do |mongodb
   
     <h1 id="instalar-mongodb-en-una-maquina-debian-10">Instalar mongodb en una maquina debian 10</h1>
 <p>En mi caso vamos a instalar debian 10 en una maquina virtual con vagrant, el codigo de vagrant que he usado es el siguiente:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">Vagrant</span><span style="color:#f92672">.</span>configure(<span style="color:#e6db74">&#34;2&#34;</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>config<span style="color:#f92672">|</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">Vagrant</span><span style="color:#f92672">.</span>configure(<span style="color:#e6db74">&#34;2&#34;</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>config<span style="color:#f92672">|</span>
   config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>define <span style="color:#e6db74">:mongodb</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>mongodb<span style="color:#f92672">|</span>
     mongodb<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>box <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;debian/buster64&#34;</span>
     mongodb<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>hostname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;mongodb&#34;</span>
@@ -94,14 +94,14 @@ Vagrant.configure(&#34;2&#34;) do |config| config.vm.define :mongodb do |mongodb
   <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>Cuando tengamos la maquina lista lo que vamos a hacer es instalar unas herramientas antes de empezar:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Actualizamos las listas de repositorios ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Actualizamos las listas de repositorios ####</span>
 vagrant@mongodb:~$ sudo apt update
 
 <span style="color:#75715e">#### Instalamos las herramientas necesarias ####</span>
 vagrant@mongodb:~$ sudo apt install gnupg -y
 </code></pre></div><h2 id="descargar-mongodb-para-debian-10">Descargar mongodb para debian 10</h2>
 <p>AHora que ya tenemos las herramientas anteriores lo que debemos de hacer es añadir un nuevo repositorio a nuestra maquina ya que los paquetes de mongodb no se encuentran en los repositorios de debian, por lo que ejecutamos los siguientes comandos:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Importamos la clave publica ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Importamos la clave publica ####</span>
 vagrant@mongodb:~$ wget https://www.mongodb.org/static/pgp/server-4.4.asc -qO- | sudo apt-key add
 OK
 
@@ -113,7 +113,7 @@ añadimos el siguiente repositorio:
 deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.4 main
 </code></pre></div><h2 id="instalar-mongodb-para-debian-10">Instalar mongodb para debian 10</h2>
 <p>Ya que hemos hecho los pasos de añadir el repositorio de mongodb para debian lo que debemos de hacer es actualizar la lista de paquetes e instalar los paquetes que vamos a necesitar para poder empezar a usar mongodb:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Actualizamos la lista de paquetes ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Actualizamos la lista de paquetes ####</span>
 vagrant@mongodb:~$ sudo apt update
 
 <span style="color:#75715e">#### Instalamos mongodb en nuestra maquina virtual ####</span>
@@ -129,7 +129,7 @@ vagrant@mongodb:~$ sudo systemctl status mongod
    Loaded: loaded <span style="color:#f92672">(</span>/lib/systemd/system/mongod.service; enabled; vendor preset: enabled<span style="color:#f92672">)</span>
    Active: active <span style="color:#f92672">(</span>running<span style="color:#f92672">)</span> since Tue 2020-12-01 09:41:20 GMT; 22s ago
 </code></pre></div><p>Ahora para comprobar si esta funcionando bien ejecutamos el comando de <strong>mongo</strong> para ver si funciona. Una vez entremos vamos a crear un nuevo usuario sobre la base de datos llamada <strong>admin</strong>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Conectamos a nuestra base de datos admin ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Conectamos a nuestra base de datos admin ####</span>
 vagrant@mongodb:~$ mongo
 
 <span style="color:#75715e">#### Usamos la base de datos admin ####</span>
@@ -148,13 +148,13 @@ Successfully added user: <span style="color:#f92672">{</span>
 	<span style="color:#f92672">]</span>
 <span style="color:#f92672">}</span>
 </code></pre></div><p>Ahora que ya hemos creado nuestro usuario administrador, salimos de la linea de comando de mongo y esta vez volvemos a entrar pero con el usuario que hemos creado anteriormente, para ello solo debemos de usar el siguiente comando:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Entramos en mongo con el usuario cliente ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Entramos en mongo con el usuario cliente ####</span>
 vagrant@mongodb:~$ mongo -u admin
 MongoDB shell version v4.4.2
 Enter password: 
 &gt; 
 </code></pre></div><p>Hecho esto vamos a proceder a crear en nuestro mongodb una nueva coleccion, que es como se le llama a las bases de datos en mongo, y la vamos a poblar con algunos elementos de prueba. Para ello vamos a crear una coleccion llamada nba en la cual vamos a tener el siguiente fichero .json que le vamos a insertar a nuestra coleccion:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Descargamos el fichero .json ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Descargamos el fichero .json ####</span>
 vagrant@mongodb:~$ wget https://gitlab.com/FranJaviMN/ejercicio_json/-/raw/master/playerdata.json
 
 <span style="color:#75715e">#### Entramos en mongo y creamos la coleccion junto a un nuevo usuario ####</span>
@@ -176,7 +176,7 @@ Successfully added user: <span style="color:#f92672">{</span>
 vagrant@mongodb:~$ mongoimport --db nba --collection league --type json --file playerdata.json
 </code></pre></div><h2 id="acceso-remoto-a-mongo">Acceso remoto a mongo</h2>
 <p>Ahora que ya tenemos un usuario y una coleccion creada vamos a entrar remotamente a nuestra base de datos mongodb, para ello debemos de ir al servidor de mongo y editar el fichero llamado <strong>/etc/mongod.conf</strong> editando el parametro <em>bindIp</em>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Editamos el fichero mongod.conf ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Editamos el fichero mongod.conf ####</span>
 vagrant@mongodb:~$ sudo nano /etc/mongod.conf
 ...
 <span style="color:#75715e"># network interfaces</span>
@@ -188,7 +188,7 @@ net:
 <span style="color:#75715e">#### Reiniciamos el servicio de mongo ####</span>
 vagrant@mongodb:~$ sudo systemctl restart mongod.service
 </code></pre></div><p>Ahora desde nuestro cliente vamos a conectar con el siguiente comando:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Desde la maquina postgres vamos a conectar a la maquina con mongodb ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Desde la maquina postgres vamos a conectar a la maquina con mongodb ####</span>
 vagrant@postgres:~$ mongo --host 192.168.1.120 -u cliente
 </code></pre></div><p>Como vemos hemos usado la maquina donde tenemos el servidor postgres para realizar la prueba y como vemos en la imagen sioguiente ha sido un exito, ya tenemos acceso remoto a la maquina con mongodb.</p>
 <p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/base%20de%20datos/mongo/cliente-mong.png" alt="cliente en mongodb"></p>

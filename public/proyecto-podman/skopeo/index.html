@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Skopeo | Blog</title>
+  <meta name="description" content="En esta página estatica vamos a guardar algunos de los trabajos que vaya realizando a lo largo del curso de 2ºASIR en el instituto I.E.S. Gonzalo Nazareno.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Skopeo" />
+<meta property="og:description" content="Skopeo Cuando hablamos de contenedores tambien podemos hablar de las imagenes que se usan para la creación de estos, las imagenes normalmente las descargamaos desde registros como son Docker Hub o sobre registros privados creados en local.
+Si queremos ver que tipo de imagenes tenemos en estos registros, ver si la imagen existe, obtener informacion sobre una imagen&hellip; Para ello tenemos la herramienta de Skopeo que es una utilidad línea de comandos que realiza varias operaciones en imágenes de contenedores y registros de imágenes." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://franjavimn.onrender.com/proyecto-podman/skopeo/" /><meta property="article:section" content="Proyecto-podman" />
+<meta property="article:published_time" content="2021-06-01T12:13:22+02:00" />
+<meta property="article:modified_time" content="2021-06-01T12:13:22+02:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Skopeo"/>
+<meta name="twitter:description" content="Skopeo Cuando hablamos de contenedores tambien podemos hablar de las imagenes que se usan para la creación de estos, las imagenes normalmente las descargamaos desde registros como son Docker Hub o sobre registros privados creados en local.
+Si queremos ver que tipo de imagenes tenemos en estos registros, ver si la imagen existe, obtener informacion sobre una imagen&hellip; Para ello tenemos la herramienta de Skopeo que es una utilidad línea de comandos que realiza varias operaciones en imágenes de contenedores y registros de imágenes."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-light.css">
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://franjavimn.onrender.com/images/favicon.ico" />
+
+  
+</head>
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="https://franjavimn.onrender.com">
+  
+    <div id="logo" style="background-image: url(https://franjavimn.onrender.com/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Blog</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/sistemas">Sistemas</a></li>
+       
+        <li><a href="/seguridad">Seguridad</a></li>
+       
+        <li><a href="/servicios">Servicios</a></li>
+       
+        <li><a href="/implantacion">Implantacion</a></li>
+       
+        <li><a href="/bbdd">BBDD</a></li>
+       
+        <li><a href="/hlc">HLC</a></li>
+       
+        <li><a href="/proyecto-podman">Proyecto Podman</a></li>
+      
+    </ul>
+  </div>
+</header>
+  
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h1 id="skopeo">Skopeo</h1>
+<p>Cuando hablamos de contenedores tambien podemos hablar de las imagenes que se usan para la creación de estos, las imagenes normalmente las descargamaos desde registros como son <a href="https://hub.docker.com/">Docker Hub</a> o sobre registros privados creados en local.</p>
+<p>Si queremos ver que tipo de imagenes tenemos en estos registros, ver si la imagen existe, obtener informacion sobre una imagen&hellip; Para ello tenemos la herramienta de <strong>Skopeo</strong> que es una utilidad línea de comandos que realiza varias operaciones en imágenes de contenedores y registros de imágenes. Con <strong>Skopeo</strong> podemos gestionar las imágenes generadas por Buidah y subirlas a diferentes registros.</p>
+<ul>
+<li>Repositorio GitHub: <a href="https://github.com/FranJaviMN/Proyecto-integrado">https://github.com/FranJaviMN/Proyecto-integrado</a></li>
+</ul>
+<h2 id="sobre-skopeo">Sobre Skopeo</h2>
+<p>Una de las principales ventajas que tiene <strong>Skopeo</strong> es que puede ser ejecutado sin ser usuario root al igual que pasa con podman y tambien, como caracteristica principal es que no tiene ningun <em>demonio</em> ejecutandose para su funcionamiento.</p>
+<p>Como caracteristica sobre la compatibilidad de Skopeo con imagenes, este es compatibles con imagenes de tipo <strong>OCI</strong>(Open Container Initiative) y con imagenes de docker v2.</p>
+<p>Teniendo en cuenta estas caracteristicas, Skopeo tiene las siguientes operaciones:</p>
+<ul>
+<li>
+<p>Copiar una imagen desde y hacia varios mecanismos de almacenamiento. Por ejemplo, podemos copiar imágenes de un registro a otro, sin necesidad de privilegios.</p>
+</li>
+<li>
+<p>Inspeccionar una imagen remota para que muestre sus propiedades, incluidas sus capas, sin que sea necesario que se descargue la imagen</p>
+</li>
+<li>
+<p>Eliminar una imagen de un registro que nosotros le indiquemos, ya sea privado o en docker hub.</p>
+</li>
+<li>
+<p>Sincronizar un repositorio de imágenes externo con un registro interno.</p>
+</li>
+<li>
+<p>Cuando lo requiera el repositorio, Skopeo puede pasar las credenciales y certificados apropiados para la autentificación.</p>
+</li>
+</ul>
+<h2 id="escenario-para-skopeo">Escenario para Skopeo</h2>
+<p>Para ello vamos a usar en una maquina independiente creada con vagrant mediante el siguiente fichero:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># -*- mode: ruby -*-</span>
+<span style="color:#75715e"># vi: set ft=ruby :</span>
+
+<span style="color:#66d9ef">Vagrant</span><span style="color:#f92672">.</span>configure(<span style="color:#e6db74">&#34;2&#34;</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>skopeo<span style="color:#f92672">|</span>
+  skopeo<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>box <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;generic/debian10&#34;</span>
+  skopeo<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>hostname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;skopeo&#34;</span>
+  skopeo<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>synced_folder <span style="color:#e6db74">&#34;.&#34;</span>, <span style="color:#e6db74">&#34;/vagrant&#34;</span>, <span style="color:#e6db74">disabled</span>: <span style="color:#66d9ef">true</span>
+  skopeo<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>provider <span style="color:#e6db74">:libvirt</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>libvirt<span style="color:#f92672">|</span>
+    libvirt<span style="color:#f92672">.</span>uri <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;qemu+unix:///system&#39;</span>
+    libvirt<span style="color:#f92672">.</span>host <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;skopeo&#34;</span>
+    libvirt<span style="color:#f92672">.</span>cpus <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+    libvirt<span style="color:#f92672">.</span>memory <span style="color:#f92672">=</span> <span style="color:#ae81ff">1024</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><h3 id="instalación-en-debian-10">Instalación en debian 10</h3>
+<p>Para ello, en debian 10 aun no se encuentra en repositorios el paquete de <strong>Skopeo</strong> que es el que queremos instalar, para ello debemos de añadir los repositorios de backports:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Añadimos los repositorios de backports ####</span>
+root@skopeo:/home/vagrant# echo <span style="color:#e6db74">&#39;deb http://deb.debian.org/debian buster-backports main&#39;</span> &gt;&gt; /etc/apt/sources.list
+root@skopeo:/home/vagrant# echo <span style="color:#e6db74">&#39;deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/Debian_10/ /&#39;</span> &gt; /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+
+<span style="color:#75715e">#### Descargamos la clave de los repositorios ####</span>
+<span style="color:#f92672">(</span>Instalar si no se tiene el paquete de gnupg<span style="color:#f92672">)</span>
+vagrant@skopeo:~$ sudo apt install gnupg
+
+vagrant@skopeo:~$ curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/Debian_10/Release.key | sudo apt-key add -
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+<span style="color:#ae81ff">100</span>  <span style="color:#ae81ff">1093</span>  <span style="color:#ae81ff">100</span>  <span style="color:#ae81ff">1093</span>    <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>   <span style="color:#ae81ff">3149</span>      <span style="color:#ae81ff">0</span> --:--:-- --:--:-- --:--:--  <span style="color:#ae81ff">3140</span>
+OK
+
+<span style="color:#75715e">#### Actualizamos la lista de paquetes y descargamos Skopeo ####</span>
+vagrant@skopeo:~$ sudo apt update
+
+vagrant@skopeo:~$ sudo apt install -t buster-backports skopeo
+</code></pre></div><p>De esta forma ya tendriamos <strong>Skopeo</strong> en nuestra maquina de pruebas instalado, si queremos instalarlo en otra distribución que no sea debian podemos seguir los pasos del siguiente <a href="https://github.com/containers/skopeo/blob/master/install.md">enlace</a></p>
+<p>Adicionalmente vamos a instalar tambien un procesador de ficheros <strong>JSON</strong> en linea de comandos llamado <strong>jq</strong> con el cual nos va a ser mas sencillo ver la informción de las imagenes ya que estas se nos presentan en formato <strong>JSON</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Actualizamos la lista de paquetes e instalamos jq ####</span>
+vagrant@skopeo:~$ sudo apt update
+
+vagrant@skopeo:~$ sudo apt install jq
+</code></pre></div><h2 id="primeros-pasos">Primeros pasos</h2>
+<p>Como hemos visto, skopeo nos da la posibilidad de obtener mas información sobre las imagenes que tenemos en local o en registros publicos como <strong>DockerHub</strong>. Si necesitamos guiarnos sobre las opciones que tenemos podemos usar <em>&ndash;help</em>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@skopeo:~$ skopeo --help
+Operaciones con imagenes de contenedores y con registros de imagenes
+
+Uso:
+  skopeo <span style="color:#f92672">[</span>command<span style="color:#f92672">]</span>
+
+Available Commands:
+  copy                                          Copia una imagen de origen a destino<span style="color:#f92672">(</span>Ej: skopeo copy docker://registry.fedoraproject.org/fedora:latest dir:pruebas_imagen <span style="color:#f92672">)</span>
+  delete                                        Elimina una imagen 
+  help                                          Invocamos la ayuda de terminal
+  inspect                                       Obtenemos información sobre una imagen
+  list-tags                                     Listamos los tags de la imagen sobre un repositorios
+  login                                         Nos logeamos en un registro de contenedores <span style="color:#f92672">(</span>Ej: Docker Hub<span style="color:#f92672">)</span>
+  logout                                        Nos desconectamos de un registro de contenedores
+  manifest-digest                               Compute a manifest digest of a file
+  standalone-sign                               Create a signature using local files
+  standalone-verify                             Verify a signature using local files
+  sync                                          Sincroniza una o mas imagenes desde origen a destino
+
+Flags:
+      --command-timeout duration   timeout <span style="color:#66d9ef">for</span> the command execution
+      --debug                      enable debug output
+  -h, --help                       help <span style="color:#66d9ef">for</span> skopeo
+      --insecure-policy            run the tool without any policy check
+      --override-arch ARCH         use ARCH instead of the architecture of the machine <span style="color:#66d9ef">for</span> choosing images
+      --override-os OS             use OS instead of the running OS <span style="color:#66d9ef">for</span> choosing images
+      --override-variant VARIANT   use VARIANT instead of the running architecture variant <span style="color:#66d9ef">for</span> choosing images
+      --policy string              Path to a trust policy file
+      --registries.d DIR           use registry configuration files in DIR <span style="color:#f92672">(</span>e.g. <span style="color:#66d9ef">for</span> container signature storage<span style="color:#f92672">)</span>
+      --tmpdir string              directory used to store temporary files
+  -v, --version                    Version <span style="color:#66d9ef">for</span> Skopeo
+
+Use <span style="color:#e6db74">&#34;skopeo [command] --help&#34;</span> <span style="color:#66d9ef">for</span> more information about a command.
+</code></pre></div><h3 id="obtener-información-de-imagenes">Obtener información de imagenes</h3>
+<p>Skopeo nos da la posibilidad de <em>inspeccionar</em> repositorios de imagenes y puede recuperar las capas de esa imagen. Con la opción <em>inspect</em> nos da la posibilidad de obtener el manifiesto del repositorio y podemos mostrar la salida por pantalla en formato <strong>JSON</strong>, como podemos hacer tambien con <strong>Docker inspect</strong> o, en nuestro caso, con <strong>Podman inspect</strong>. La opción inspect puede mostrarnos qué etiquetas están disponibles para el repositorio dado, las etiquetas que tiene la imagen, la fecha de creación y el sistema operativo de la imagen y más.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#960050;background-color:#1e0010">####</span> <span style="color:#960050;background-color:#1e0010">Inspeccionamos</span> <span style="color:#960050;background-color:#1e0010">la</span> <span style="color:#960050;background-color:#1e0010">imagen</span> <span style="color:#960050;background-color:#1e0010">de</span> <span style="color:#960050;background-color:#1e0010">wordpress</span> <span style="color:#960050;background-color:#1e0010">en</span> <span style="color:#960050;background-color:#1e0010">docker</span> <span style="color:#960050;background-color:#1e0010">hub</span> <span style="color:#960050;background-color:#1e0010">####</span>
+<span style="color:#960050;background-color:#1e0010">vagrant@skopeo:~$</span> <span style="color:#960050;background-color:#1e0010">skopeo</span> <span style="color:#960050;background-color:#1e0010">inspect</span> <span style="color:#960050;background-color:#1e0010">docker://wordpress</span> <span style="color:#960050;background-color:#1e0010">|</span> <span style="color:#960050;background-color:#1e0010">jq</span>
+{
+  <span style="color:#f92672">&#34;Name&#34;</span>: <span style="color:#e6db74">&#34;docker.io/library/wordpress&#34;</span>,
+  <span style="color:#f92672">&#34;Digest&#34;</span>: <span style="color:#e6db74">&#34;sha256:7caa73eb01258d36b2b1c7401ae37869ac4ef4fc4ef2aff91a19075b1e950923&#34;</span>,
+  <span style="color:#f92672">&#34;RepoTags&#34;</span>: [
+    <span style="color:#e6db74">&#34;3.9.1&#34;</span>,
+    <span style="color:#960050;background-color:#1e0010">...</span>
+    <span style="color:#e6db74">&#34;php7.4-apache&#34;</span>,
+    <span style="color:#e6db74">&#34;php8.0-fpm&#34;</span>,
+    <span style="color:#e6db74">&#34;php8.0&#34;</span>
+  ],
+  <span style="color:#f92672">&#34;Created&#34;</span>: <span style="color:#e6db74">&#34;2021-05-25T00:23:22.141847003Z&#34;</span>,
+  <span style="color:#f92672">&#34;DockerVersion&#34;</span>: <span style="color:#e6db74">&#34;19.03.12&#34;</span>,
+  <span style="color:#f92672">&#34;Labels&#34;</span>: <span style="color:#66d9ef">null</span>,
+  <span style="color:#f92672">&#34;Architecture&#34;</span>: <span style="color:#e6db74">&#34;amd64&#34;</span>,
+  <span style="color:#f92672">&#34;Os&#34;</span>: <span style="color:#e6db74">&#34;linux&#34;</span>,
+  <span style="color:#f92672">&#34;Layers&#34;</span>: [
+    <span style="color:#e6db74">&#34;sha256:69692152171afee1fd341febc390747cfca2ff302f2881d8b394e786af605696&#34;</span>,
+    <span style="color:#e6db74">&#34;sha256:2040822db3250a09a3fee8c4e36a2a87d925b04776a46ea33dd94c111d5af366&#34;</span>,
+    <span style="color:#e6db74">&#34;sha256:9b4ca5ae9dfad3ef8929b7c016d54518c9d29b6da520c7728e17885936824da8&#34;</span>,
+    <span style="color:#e6db74">&#34;sha256:ac1fe7c6d9669614ca12d3a7e70ba5aa1a348b8620e251245d7dbf01f8b927b8&#34;</span>,
+    <span style="color:#e6db74">&#34;sha256:5b26fc9ce030104e3ed1dc2b6231067d9eaa629b129a71c9bc21aed211beb9dd&#34;</span>,
+    <span style="color:#e6db74">&#34;sha256:3492f4769444367000d2c12c6b1482630c1a6df69440fa64ee6d34e6ce93f2ae&#34;</span>,
+    <span style="color:#e6db74">&#34;sha256:1dec05775a74fc3e3e317e71f6b606242142211e697a35c9dcfcef9ea4887113&#34;</span>,
+    <span style="color:#e6db74">&#34;sha256:9ed895bcea3373e0b11f55512f2c9b7a7debb74349c05c929573a359395e0318&#34;</span>,
+    <span style="color:#e6db74">&#34;sha256:bcc491c2ddc4f4ce32ada9b3a1c40f82be8e298b3b7dd60509627be7b122a4dd&#34;</span>,
+    <span style="color:#e6db74">&#34;sha256:8469abe55c178684ce64c5d4bd328014677a9a67e10d454f47a6624f3cfde7d5&#34;</span>,
+    <span style="color:#e6db74">&#34;sha256:d74704ab90e5119dbcaffbc6448fe036b9ad293fb67979951208eb1efb222d5c&#34;</span>,
+    <span style="color:#e6db74">&#34;sha256:2f6f8b7d4ce2252ea9fcb0239a8129b6b3e332966aff90fefc76179d4d997b53&#34;</span>,
+    <span style="color:#e6db74">&#34;sha256:3407998a353d94569ec57e88f5ce7165977657cdda4dddd3bf8775b6f5d5d779&#34;</span>,
+    <span style="color:#e6db74">&#34;sha256:310682739bc5e5c930436e40e3fe76c6e61286cdc92de4bcb48bbf0a0c47210e&#34;</span>,
+    <span style="color:#e6db74">&#34;sha256:c82f18ace11b8d5c439414729b9aec565202c7aeaa34bbf490e8466a985fd428&#34;</span>,
+    <span style="color:#e6db74">&#34;sha256:1a3b9d474dbe2bd85daf81485b4019e812fc381dbc9d297b5908c95595f6ce0f&#34;</span>,
+    <span style="color:#e6db74">&#34;sha256:97060a6e7f081f2ce133fa1ae0ad31a3a5b6ebc2650eb00f500e45cff3b2ebc0&#34;</span>,
+    <span style="color:#e6db74">&#34;sha256:61f5c6c4243b37af3a3c0ea23b86251e2490a4dbfab62dc6ee665bc1d419050b&#34;</span>,
+    <span style="color:#e6db74">&#34;sha256:9d18afd88d9835b61728472261cc88f75d530281886b1afaa0a43b3fd951d31b&#34;</span>,
+    <span style="color:#e6db74">&#34;sha256:2c0d01114559864deda89d2465084a71e31b4ddc6ffd3afcf95d93216f581e88&#34;</span>,
+    <span style="color:#e6db74">&#34;sha256:2791c3bb8577da9da7212c7d074e99eb26c1fc5655bbce0bba19c0953e39bfd3&#34;</span>
+  ],
+  <span style="color:#f92672">&#34;Env&#34;</span>: [
+    <span style="color:#e6db74">&#34;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#34;</span>,
+    <span style="color:#e6db74">&#34;PHPIZE_DEPS=autoconf \t\tdpkg-dev \t\tfile \t\tg++ \t\tgcc \t\tlibc-dev \t\tmake \t\tpkg-config \t\tre2c&#34;</span>,
+    <span style="color:#e6db74">&#34;PHP_INI_DIR=/usr/local/etc/php&#34;</span>,
+    <span style="color:#e6db74">&#34;APACHE_CONFDIR=/etc/apache2&#34;</span>,
+    <span style="color:#e6db74">&#34;APACHE_ENVVARS=/etc/apache2/envvars&#34;</span>,
+    <span style="color:#e6db74">&#34;PHP_EXTRA_BUILD_DEPS=apache2-dev&#34;</span>,
+    <span style="color:#e6db74">&#34;PHP_EXTRA_CONFIGURE_ARGS=--with-apxs2 --disable-cgi&#34;</span>,
+    <span style="color:#e6db74">&#34;PHP_CFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64&#34;</span>,
+    <span style="color:#e6db74">&#34;PHP_CPPFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64&#34;</span>,
+    <span style="color:#e6db74">&#34;PHP_LDFLAGS=-Wl,-O1 -pie&#34;</span>,
+    <span style="color:#e6db74">&#34;GPG_KEYS=42670A7FE4D0441C8E4632349E4FDC074A4EF02D 5A52880781F755608BF815FC910DEB46F53EA312&#34;</span>,
+    <span style="color:#e6db74">&#34;PHP_VERSION=7.4.19&#34;</span>,
+    <span style="color:#e6db74">&#34;PHP_URL=https://www.php.net/distributions/php-7.4.19.tar.xz&#34;</span>,
+    <span style="color:#e6db74">&#34;PHP_ASC_URL=https://www.php.net/distributions/php-7.4.19.tar.xz.asc&#34;</span>,
+    <span style="color:#e6db74">&#34;PHP_SHA256=6c17172c4a411ccb694d9752de899bb63c72a0a3ebe5089116bc13658a1467b2&#34;</span>
+  ]
+}
+</code></pre></div><p>Y a continuación vamos a ver la configuración de la misma imagen añadiendo <em>&ndash;config</em>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#960050;background-color:#1e0010">vagrant@skopeo:~$</span> <span style="color:#960050;background-color:#1e0010">skopeo</span> <span style="color:#960050;background-color:#1e0010">inspect</span> <span style="color:#960050;background-color:#1e0010">--config</span> <span style="color:#960050;background-color:#1e0010">docker://wordpress</span> <span style="color:#960050;background-color:#1e0010">|</span> <span style="color:#960050;background-color:#1e0010">jq</span>
+{
+  <span style="color:#f92672">&#34;created&#34;</span>: <span style="color:#e6db74">&#34;2021-05-25T00:23:22.141847003Z&#34;</span>,
+  <span style="color:#f92672">&#34;architecture&#34;</span>: <span style="color:#e6db74">&#34;amd64&#34;</span>,
+  <span style="color:#f92672">&#34;os&#34;</span>: <span style="color:#e6db74">&#34;linux&#34;</span>,
+  <span style="color:#f92672">&#34;config&#34;</span>: {
+    <span style="color:#f92672">&#34;ExposedPorts&#34;</span>: {
+      <span style="color:#f92672">&#34;80/tcp&#34;</span>: {}
+    },
+    <span style="color:#f92672">&#34;Env&#34;</span>: [
+      <span style="color:#e6db74">&#34;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#34;</span>,
+      <span style="color:#e6db74">&#34;PHPIZE_DEPS=autoconf \t\tdpkg-dev \t\tfile \t\tg++ \t\tgcc \t\tlibc-dev \t\tmake \t\tpkg-config \t\tre2c&#34;</span>,
+      <span style="color:#e6db74">&#34;PHP_INI_DIR=/usr/local/etc/php&#34;</span>,
+      <span style="color:#e6db74">&#34;APACHE_CONFDIR=/etc/apache2&#34;</span>,
+      <span style="color:#e6db74">&#34;APACHE_ENVVARS=/etc/apache2/envvars&#34;</span>,
+      <span style="color:#e6db74">&#34;PHP_EXTRA_BUILD_DEPS=apache2-dev&#34;</span>,
+      <span style="color:#e6db74">&#34;PHP_EXTRA_CONFIGURE_ARGS=--with-apxs2 --disable-cgi&#34;</span>,
+      <span style="color:#e6db74">&#34;PHP_CFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64&#34;</span>,
+      <span style="color:#e6db74">&#34;PHP_CPPFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64&#34;</span>,
+      <span style="color:#e6db74">&#34;PHP_LDFLAGS=-Wl,-O1 -pie&#34;</span>,
+      <span style="color:#e6db74">&#34;GPG_KEYS=42670A7FE4D0441C8E4632349E4FDC074A4EF02D 5A52880781F755608BF815FC910DEB46F53EA312&#34;</span>,
+      <span style="color:#e6db74">&#34;PHP_VERSION=7.4.19&#34;</span>,
+      <span style="color:#e6db74">&#34;PHP_URL=https://www.php.net/distributions/php-7.4.19.tar.xz&#34;</span>,
+      <span style="color:#e6db74">&#34;PHP_ASC_URL=https://www.php.net/distributions/php-7.4.19.tar.xz.asc&#34;</span>,
+      <span style="color:#e6db74">&#34;PHP_SHA256=6c17172c4a411ccb694d9752de899bb63c72a0a3ebe5089116bc13658a1467b2&#34;</span>
+    ],
+    <span style="color:#f92672">&#34;Entrypoint&#34;</span>: [
+      <span style="color:#e6db74">&#34;docker-entrypoint.sh&#34;</span>
+    ],
+    <span style="color:#f92672">&#34;Cmd&#34;</span>: [
+      <span style="color:#e6db74">&#34;apache2-foreground&#34;</span>
+    ],
+    <span style="color:#f92672">&#34;Volumes&#34;</span>: {
+      <span style="color:#f92672">&#34;/var/www/html&#34;</span>: {}
+    },
+    <span style="color:#f92672">&#34;WorkingDir&#34;</span>: <span style="color:#e6db74">&#34;/var/www/html&#34;</span>,
+    <span style="color:#f92672">&#34;StopSignal&#34;</span>: <span style="color:#e6db74">&#34;SIGWINCH&#34;</span>
+  },
+  <span style="color:#f92672">&#34;rootfs&#34;</span>: {
+    <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;layers&#34;</span>,
+    <span style="color:#f92672">&#34;diff_ids&#34;</span>: [
+      <span style="color:#e6db74">&#34;sha256:02c055ef67f5904019f43a41ea5f099996d8e7633749b6e606c400526b2c4b33&#34;</span>,
+      <span style="color:#e6db74">&#34;sha256:d2252dfd3726823303a8f54483e10f3ed7959f33ba63ea3a19bd0fc46587bc8f&#34;</span>,
+      <span style="color:#e6db74">&#34;sha256:6c63b3f282cb455ac2e456fb99cdceab42a876603b54cc97087c17b9999b780b&#34;</span>,
+      <span style="color:#e6db74">&#34;sha256:8e859e616115511355eadb05cbdcf86333434621f77c3ac80c410257ea39f115&#34;</span>,
+      <span style="color:#e6db74">&#34;sha256:652f02132f2db1e1e65572f6bef8cccfeb879e9fc4b88662dad574154145bc00&#34;</span>,
+      <span style="color:#e6db74">&#34;sha256:f8b772487fdc0a3dc28c00f882637c1dc77be22c041aa9a966b786ba4eda59b5&#34;</span>,
+      <span style="color:#e6db74">&#34;sha256:75426ca6aa9c06f3f5eef14ec5f47da06035ab266b0e36b4401585b00c2682b3&#34;</span>,
+      <span style="color:#e6db74">&#34;sha256:8a1d55fcf58ea2354eaa038197ef356872c9a565b79b281fd24806bc36666400&#34;</span>,
+      <span style="color:#e6db74">&#34;sha256:4e0b8c77bcc3f10eb0046faa0347db5067d5e499b9547a2d21fbda8457476ead&#34;</span>,
+      <span style="color:#e6db74">&#34;sha256:b63d491f00b6bf15d36d8518f32e6acf6da524c170eafd15784763d27f402341&#34;</span>,
+      <span style="color:#e6db74">&#34;sha256:191e1c00984b32fc3aa9f1c54f4d774c67ce35799cc55b8836a7fdbf76ddff84&#34;</span>,
+      <span style="color:#e6db74">&#34;sha256:ed2b71ab32f37d35d38c91e1c265872e499ecdf7bc6c3362b8fc2a3a486a2a73&#34;</span>,
+      <span style="color:#e6db74">&#34;sha256:9d36eae86a28026ea9ece02220cdf2630b1492469c7488c69e2d601c09866940&#34;</span>,
+      <span style="color:#e6db74">&#34;sha256:97a54d9096e38763bec8b13cba0639aab5f678142f0298a7207176861997cf4a&#34;</span>,
+      <span style="color:#e6db74">&#34;sha256:ae32d5fd238e3c0111a89c7173edf2639cb5c6ac5c0b3041674e9392d7e2375c&#34;</span>,
+      <span style="color:#e6db74">&#34;sha256:0934026db75c35abec48a0996713485e84914a98d06ea4440fd9845d1a2a5280&#34;</span>,
+      <span style="color:#e6db74">&#34;sha256:d4fbc135b31a935df6083b07d2f1a881d9a366f032b58f6946b4bbdf6239fdf3&#34;</span>,
+      <span style="color:#e6db74">&#34;sha256:ba81158cca039568ad72421987d2afbc4741440821d0f11cf3261d8fd79234a2&#34;</span>,
+      <span style="color:#e6db74">&#34;sha256:7a22b82077d1fffc8ea88e9a899e949dcbc74e1aab667e9c8d8915b4232174e7&#34;</span>,
+      <span style="color:#e6db74">&#34;sha256:9d205b44b84d24405a2424614ea837186135fbfd811b6f43504e4ff44cdf914e&#34;</span>,
+      <span style="color:#e6db74">&#34;sha256:228a987eb0faf022977b382ab11fa98c16ca5456eb0d1dc21536f5950b49ace0&#34;</span>
+    ]
+  },
+  <span style="color:#f92672">&#34;history&#34;</span>: [
+    {
+      <span style="color:#f92672">&#34;created&#34;</span>: <span style="color:#e6db74">&#34;2021-05-12T01:21:22.128649612Z&#34;</span>,
+      <span style="color:#f92672">&#34;created_by&#34;</span>: <span style="color:#e6db74">&#34;/bin/sh -c #(nop) ADD file:7362e0e50f30ff45463ea38bb265cb8f6b7cd422eb2d09de7384efa0b59614be in / &#34;</span>
+    },
+    {
+      <span style="color:#f92672">&#34;created&#34;</span>: <span style="color:#e6db74">&#34;2021-05-12T01:21:22.552826465Z&#34;</span>,
+      <span style="color:#f92672">&#34;created_by&#34;</span>: <span style="color:#e6db74">&#34;/bin/sh -c #(nop)  CMD [\&#34;bash\&#34;]&#34;</span>,
+      <span style="color:#f92672">&#34;empty_layer&#34;</span>: <span style="color:#66d9ef">true</span>
+    }
+  ]
+}
+</code></pre></div><h3 id="copiando-imagenes">Copiando imagenes</h3>
+<p>A la hora de copiar imagenes con <strong>skopeo</strong>, tenemos varias posibilidades a la hora de copiar estas imagenes, eligiendo entre multiples mecanismos de almacenamiento:</p>
+<ul>
+<li>
+<p>Registro de contenedores:</p>
+<ul>
+<li>Como puede ser <strong>The Quay, Docker Hub, OpenShift, GCR, Artifactory &hellip;</strong></li>
+</ul>
+</li>
+<li>
+<p>Almacenamiento <em>backends</em>:</p>
+<ul>
+<li>Almacenamiento del demonio de docker</li>
+</ul>
+</li>
+<li>
+<p>Almacenamiento en directorios locales</p>
+</li>
+<li>
+<p>Directorios locales <strong>OCI-layout</strong></p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Copiamos del registro de docker a un directorio local ####</span>
+vagrant@skopeo:~/imagenes/wordpress$ skopeo copy docker://wordpress dir:./
+Getting image source signatures
+Copying blob 69692152171a <span style="color:#66d9ef">done</span>  
+Copying blob 2040822db325 <span style="color:#66d9ef">done</span>  
+Copying blob 9b4ca5ae9dfa <span style="color:#66d9ef">done</span>  
+Copying blob ac1fe7c6d966 <span style="color:#66d9ef">done</span>  
+Copying blob 5b26fc9ce030 <span style="color:#66d9ef">done</span>  
+...
+
+vagrant@skopeo:~/imagenes/wordpress$ ls
+0adda6ed742f6c79261fa2a49e24e5909be720a9b144c1ffb0431262b8bae9c8  3407998a353d94569ec57e88f5ce7165977657cdda4dddd3bf8775b6f5d5d779  9d18afd88d9835b61728472261cc88f75d530281886b1afaa0a43b3fd951d31b
+1a3b9d474dbe2bd85daf81485b4019e812fc381dbc9d297b5908c95595f6ce0f  3492f4769444367000d2c12c6b1482630c1a6df69440fa64ee6d34e6ce93f2ae  9ed895bcea3373e0b11f55512f2c9b7a7debb74349c05c929573a359395e0318
+1dec05775a74fc3e3e317e71f6b606242142211e697a35c9dcfcef9ea4887113  5b26fc9ce030104e3ed1dc2b6231067d9eaa629b129a71c9bc21aed211beb9dd  ac1fe7c6d9669614ca12d3a7e70ba5aa1a348b8620e251245d7dbf01f8b927b8
+2040822db3250a09a3fee8c4e36a2a87d925b04776a46ea33dd94c111d5af366  61f5c6c4243b37af3a3c0ea23b86251e2490a4dbfab62dc6ee665bc1d419050b  bcc491c2ddc4f4ce32ada9b3a1c40f82be8e298b3b7dd60509627be7b122a4dd
+2791c3bb8577da9da7212c7d074e99eb26c1fc5655bbce0bba19c0953e39bfd3  69692152171afee1fd341febc390747cfca2ff302f2881d8b394e786af605696  c82f18ace11b8d5c439414729b9aec565202c7aeaa34bbf490e8466a985fd428
+2c0d01114559864deda89d2465084a71e31b4ddc6ffd3afcf95d93216f581e88  8469abe55c178684ce64c5d4bd328014677a9a67e10d454f47a6624f3cfde7d5  d74704ab90e5119dbcaffbc6448fe036b9ad293fb67979951208eb1efb222d5c
+2f6f8b7d4ce2252ea9fcb0239a8129b6b3e332966aff90fefc76179d4d997b53  97060a6e7f081f2ce133fa1ae0ad31a3a5b6ebc2650eb00f500e45cff3b2ebc0  manifest.json
+310682739bc5e5c930436e40e3fe76c6e61286cdc92de4bcb48bbf0a0c47210e  9b4ca5ae9dfad3ef8929b7c016d54518c9d29b6da520c7728e17885936824da8  version
+</code></pre></div>
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2021  Francisco Javier Martín Núñez 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/sistemas">Sistemas</a></li>
+         
+        <li><a href="/seguridad">Seguridad</a></li>
+         
+        <li><a href="/servicios">Servicios</a></li>
+         
+        <li><a href="/implantacion">Implantacion</a></li>
+         
+        <li><a href="/bbdd">BBDD</a></li>
+         
+        <li><a href="/hlc">HLC</a></li>
+         
+        <li><a href="/proyecto-podman">Proyecto Podman</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+  
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>

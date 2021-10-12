@@ -13,8 +13,8 @@
  Vista para la red externa (172.22.0.0/15 y 192.168.202.2) Vista para la red interna (10." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://franjavimn.onrender.com/servicios/trabajo-openstack/" /><meta property="article:section" content="Servicios" />
-<meta property="article:published_time" content="2020-12-30T16:33:01&#43;01:00" />
-<meta property="article:modified_time" content="2020-12-30T16:33:01&#43;01:00" />
+<meta property="article:published_time" content="2020-12-30T16:33:01+01:00" />
+<meta property="article:modified_time" content="2020-12-30T16:33:01+01:00" />
 
 
   <meta name="twitter:card" content="summary"/>
@@ -27,7 +27,7 @@
     
   
   
-  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-light.css">
   
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -91,13 +91,13 @@
 </ul>
 <p>Una vez tengamos claro que tenemos que hacer esas 3 vistas, instalamos el paquete de bind9 que es el paquete donde tenemos el servidor dns que vamos a usar.</p>
 <p>Como vamos a usar unas vistas en bind, debemos de documentar en el fichero de configuracion llamado /etc/bind/named.conf y nos debe de quedar de la siguiente:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero /etc/bind/named.conf ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero /etc/bind/named.conf ####</span>
 ...
 include <span style="color:#e6db74">&#34;/etc/bind/named.conf.options&#34;</span>;
 include <span style="color:#e6db74">&#34;/etc/bind/named.conf.local&#34;</span>;
 //include <span style="color:#e6db74">&#34;/etc/bind/named.conf.default-zones&#34;</span>;
 </code></pre></div><p>Ahora, para poder permitir la conexion desde todas las maquinas y desde la maquina llamada <strong>papion</strong> debemos de dirigirnos al fichero de configuracion llamado <strong>/etc/bind/named.conf.options</strong> debemos de añadir las siguientes lineas:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero /etc/bind/named.conf.options ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero /etc/bind/named.conf.options ####</span>
 ...
 allow-query <span style="color:#f92672">{</span> 172.22.0.0/15;10.0.1.0/24;10.0.2.0/24;192.168.202.2; <span style="color:#f92672">}</span>;
 allow-recursion <span style="color:#f92672">{</span> any; <span style="color:#f92672">}</span>;
@@ -106,7 +106,7 @@ allow-query-cache <span style="color:#f92672">{</span> any; <span style="color:#
 </code></pre></div><p>Una vez tengamos todo esto ya podemos proceder a crear nuestras vistas para las distintas maquinas y redes que va a consultar nuestro dns.</p>
 <h2 id="vista-para-la-red-interna">Vista para la red interna</h2>
 <p>En este apartado vamos a crear la vista para la red interna que sera la siguiente estructura:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">view interna <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">view interna <span style="color:#f92672">{</span>
         match-clients <span style="color:#f92672">{</span>10.0.1.0/24;<span style="color:#f92672">}</span>;
         allow-recursion <span style="color:#f92672">{</span> any; <span style="color:#f92672">}</span>;
 
@@ -134,7 +134,7 @@ allow-query-cache <span style="color:#f92672">{</span> any; <span style="color:#
 </code></pre></div><p>Si queremos podemos comprobar la sintaxis del fichero antes de seguir con las demas vistas mediante el comando <strong>named-checkconf /etc/bind/named.conf.local</strong></p>
 <h2 id="vista-para-la-red-dmz">Vista para la red DMZ</h2>
 <p>Ahora aqui tendremos la vista sobre la zona de dmz, que sera la siguiente:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">view dmz <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">view dmz <span style="color:#f92672">{</span>
         match-clients <span style="color:#f92672">{</span>10.0.2.0/24;<span style="color:#f92672">}</span>;
         allow-recursion <span style="color:#f92672">{</span> any; <span style="color:#f92672">}</span>;
 
@@ -161,7 +161,7 @@ allow-query-cache <span style="color:#f92672">{</span> any; <span style="color:#
 <span style="color:#f92672">}</span>;
 </code></pre></div><h2 id="vista-para-la-red-externa">Vista para la red externa</h2>
 <p>Y esta es la vista para las consultas desde el exterior y desde el servidor papion:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">view externa <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">view externa <span style="color:#f92672">{</span>
         match-clients <span style="color:#f92672">{</span> 172.22.0.0/15; 192.168.202.2;<span style="color:#f92672">}</span>;
         allow-recursion <span style="color:#f92672">{</span> any; <span style="color:#f92672">}</span>;
 
@@ -178,7 +178,7 @@ allow-query-cache <span style="color:#f92672">{</span> any; <span style="color:#
 <p>Ahora que tenemos las vistas creadas, tenemos que definir las zonas y, por consiguiente, debemos de crear los ficheros con los nombres que le hemos indicado en el fichero de las vistas. Primero vamos a crear la zona para la vista llamada <em>externa</em> por lo que debemos de seguir los siguientes pasos</p>
 <h3 id="creando-la-zona-dmz">Creando la zona dmz</h3>
 <p>Para ello nos dirigimos al directorio <strong>/var/cache/bind/</strong> y ahi vamos a generar un fichero con el nombre <strong>db.dmz.fj.gonzalonazareno.org</strong> que es donde le vamos a definir las zonas de la vista <em>dmz</em> para ello podemos usar como plantilla el fichero <strong>/etc/bind/db.empty</strong>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Copiamos el fichero db.empy ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Copiamos el fichero db.empy ####</span>
 debian@freston:~$ sudo cp /etc/bind/db.empty /var/cache/bind/db.dmz.fj.gonzalonazareno.org
 
 <span style="color:#75715e">#### Definimos las zonas necesarias en el fichero que hemos generado ####</span>
@@ -209,7 +209,7 @@ ldap            IN      CNAME   freston
 </code></pre></div><p>Hecho esto, en la maquina <strong>Quijote</strong>, debemos de comentar todas las lineas del fichero <strong>/etc/hosts</strong> salvo la linea de quijote. UNa vez hecho esto, cambiamos el fichero <strong>/etc/resolv.conf</strong> y le ponemos la ip del servidor dns de freston, en este caso <strong>10.0.1.11</strong> y le ponemos la opcion <strong>search franjavier.gonzalonazareno.org</strong>. De esta forma podremos hacer ping a las maquinas mediante el nombre corto sin necesidad de tener los nombre en el fichero <strong>/etc/hosts</strong>.</p>
 <h3 id="creando-la-zona-interna">Creando la zona interna</h3>
 <p>Para ello seguimos el mismo procedimiento que hemos seguido en la creacion de la zona dmz, por ello tendremos el siguiente fichero:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Copiamos el fichero db.empy ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Copiamos el fichero db.empy ####</span>
 debian@freston:~$ sudo cp /etc/bind/db.empty /var/cache/bind/db.interno.fj.gonzalonazareno.org
 
 <span style="color:#75715e">#### Definimos las zonas necesarias en el fichero que hemos generado ####</span>
@@ -239,7 +239,7 @@ bd              IN      CNAME   sancho
 </code></pre></div><p>Una vez hecho esto debemos de irnos a las maquinas que tenemos en la red interna, en este caso son 3, dulcinea, sancho y freston y en cada una de ellas debemos de comentar las lineas del fichero <strong>/etc/hosts</strong> salvo la linea en la que especificamos el nombre largo de las maquinas y en el fichero de <strong>/etc/resolv.conf</strong> debemos de tener como servidor dns a freston y como opcion de <strong>search franjavier.gonzalonazareno.org</strong>.</p>
 <h3 id="creando-la-zona-inversa-10020">Creando la zona inversa 10.0.2.0</h3>
 <p>Ahora que ya tenemos las zonas directas definidas, vamos a proceder a crear las zonas de resolucion inversa de la red 10.0.1.0 que corresponde a la ip inversa <strong>1.0.10</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el fichero de las zonas inversas ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el fichero de las zonas inversas ####</span>
 debian@freston:/var/cache/bind$ sudo cp /etc/bind/db.127 ./db.2.0.10
 
 <span style="color:#75715e">#### Modificamos el fichero con las zonas que necesitamos ####</span>
@@ -261,7 +261,7 @@ $ORIGIN 2.0.10.in-addr.arpa.
 <span style="color:#ae81ff">3</span>       IN      PTR     quijote.franjavier.gonzalonazareno.org.
 </code></pre></div><h3 id="creando-la-zona-inversa-10010">Creando la zona inversa 10.0.1.0</h3>
 <p>Seguimos el mismo procedimiento que con el anterior fichero de las zonas inversas, para ello debemos de seguir los pasos siguientes:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el fichero de las zonas inversas ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el fichero de las zonas inversas ####</span>
 debian@freston:/var/cache/bind$ sudo cp /etc/bind/db.127 ./db.1.0.10
 
 <span style="color:#75715e">#### Modificamos el fichero con las zonas que necesitamos ####</span>
@@ -285,7 +285,7 @@ $ORIGIN 1.0.10.in-addr.arpa.
 11	IN	PTR	freston.franjavier.gonzalonazareno.org.
 </code></pre></div><h3 id="creando-la-zona-externa">Creando la zona externa</h3>
 <p>Para ello vamos a seguir el mismo procedimiento que en las anteriores zonas:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el fichero de las zonas inversas ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el fichero de las zonas inversas ####</span>
 debian@freston:~$ sudo cp /etc/bind/db.empty /var/cache/bind/db.externa.fj.gonzalonazareno.org
 
 <span style="color:#75715e">#### Definimos las zonas que necesitamos ####</span>
@@ -310,13 +310,13 @@ dulcinea        IN      A       172.22.200.155
 www		IN	CNAME	dulcinea
 </code></pre></div><h2 id="añadiendo-la-regla-dnat">Añadiendo la regla dnat</h2>
 <p>Para poder realizar las consultas a nuestro servidor dns que se encuentra en la red interna de nuestro escenario debemos de añadir la siguiente regla con iptables:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@dulcinea:~$ sudo iptables -t nat -A PREROUTING -p udp --dport <span style="color:#ae81ff">53</span> -i eth0 -j DNAT --to 10.0.1.11:53
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@dulcinea:~$ sudo iptables -t nat -A PREROUTING -p udp --dport <span style="color:#ae81ff">53</span> -i eth0 -j DNAT --to 10.0.1.11:53
 </code></pre></div><p>De tal forma que, con la regla anterior, lo que estamos indicando es que todo el trafico que tenga como destino el puerto 53 y venga desde la interfaz eth0, se redirija a la ip <strong>10.0.1.11</strong> y al puerto <strong>53</strong>.</p>
 <h3 id="pruebas-de-funcionamiento">Pruebas de funcionamiento</h3>
 <ul>
 <li>El servidor DNS con autoridad sobre la zona del dominio tu_nombre.gonzalonazareno.org</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@dulcinea:~$ dig ns franjavier.gonzalonazareno.org
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@dulcinea:~$ dig ns franjavier.gonzalonazareno.org
 
 ; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1+deb10u2-Debian &lt;&lt;&gt;&gt; ns franjavier.gonzalonazareno.org
 ;; global options: +cmd
@@ -343,7 +343,7 @@ freston.franjavier.gonzalonazareno.org.	<span style="color:#ae81ff">86400</span>
 </code></pre></div><ul>
 <li>La dirección IP de dulcinea y resolucion de www.</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">francisco@debian10:~/.ssh$ dig www.franjavier.gonzalonazareno.org
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">francisco@debian10:~/.ssh$ dig www.franjavier.gonzalonazareno.org
 
 ; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1+deb10u2-Debian &lt;&lt;&gt;&gt; www.franjavier.gonzalonazareno.org
 ;; global options: +cmd
@@ -373,10 +373,10 @@ franjavier.gonzalonazareno.org.	<span style="color:#ae81ff">86400</span> IN NS	d
 </ul>
 <h1 id="instalando-apache2-en-centos8">Instalando apache2 en Centos8</h1>
 <p>Para ello nos vamos a ir a nuestra maquina llamada <strong>quijote</strong> que es donde tenemos el sistema de centos8, una vez alli debemos e instalar en esta maquina el paquete llamado <strong>httpd</strong> que es el paquete que contiene el servidor web de apache2, por lo que procedemos a hacerlo:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos el servidor apache2 ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos el servidor apache2 ####</span>
 <span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ sudo dnf install httpd
 </code></pre></div><p>Una vez instalado el paquete httpd y sus dependencias, vamos a comprobar que tenemos el servicio debidamente arrancado y funcionando mediante el comando <strong>systemctl status httpd</strong>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Arrancamos el servicio ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Arrancamos el servicio ####</span>
 <span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ sudo systemctl start httpd
 
 <span style="color:#75715e">#### Comprobamos el servicio ####</span>
@@ -391,13 +391,13 @@ firewall-cmd --zone<span style="color:#f92672">=</span>public --permanent --add-
 firewall-cmd –reload
 </code></pre></div><h2 id="configuracion-de-virtualhost">Configuracion de virtualhost</h2>
 <p>Como vemos, en la instalacion de los viritualhost en centos es distinta a como esta en debian10, ya que no tenemos ni la carpeta <strong>sites-availables</strong> ni la carpeta de <strong>sites-enabled</strong>, por lo que nosotros vamos a proceder a crearlas, para ello nos dirigimos al directorio <strong>/etc/httpd</strong> y las creamos:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ sudo mkdir /etc/httpd/<span style="color:#f92672">{</span>sites-availble,sites-enabled<span style="color:#f92672">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ sudo mkdir /etc/httpd/<span style="color:#f92672">{</span>sites-availble,sites-enabled<span style="color:#f92672">}</span>
 </code></pre></div><p>De esta forma ya tendremos las carpetas en las que iremos definiendo neustros virtualhost. Despues de crearlas debemos de dirigirnos al fichero que se encuentra en <strong>/etc/httpd/conf/httpd.conf</strong> y ahi debemos de indicarle que en la carpeta de sites-enabled es donde debe de buscar los virtualhost:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Editamos el fichero ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Editamos el fichero ####</span>
 ...
 IncludeOptional sites-enabled/*.conf
 </code></pre></div><p>Ahora vamos a proceder a crear en nuestro directorio <strong>/var/www/</strong> un directorio donde tendremos nuestro virtualhost, en este caso lo vamos a llamar <strong>gonzalonazareno</strong>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el directorio ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el directorio ####</span>
 <span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ sudo mkdir -P /var/www/gonzalonazareno/html
 
 <span style="color:#75715e">#### Creamos la carpeta log dentro del directorio ####</span>
@@ -406,7 +406,7 @@ IncludeOptional sites-enabled/*.conf
 <span style="color:#75715e">#### Cambiamos los permisos ####</span>
 <span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ sudo chmod -R <span style="color:#ae81ff">755</span> /var/www
 </code></pre></div><p>Una vez tengamos hecho esto, vamos a generar un fichero de configuracion de nuestro virtualhost, para ello vamos a usar el siguiente comando y le añadimos el siguiente contenido:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el fichero ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el fichero ####</span>
 <span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ sudo nano /etc/httpd/sites-availble/gonzalonazareno.conf
 
 <span style="color:#75715e">#### Le añadimos el siguiente contenido ####</span>
@@ -417,15 +417,15 @@ IncludeOptional sites-enabled/*.conf
     CustomLog /var/www/gonzalonazareno/log/requests.log combined
 &lt;/VirtualHost&gt;
 </code></pre></div><p>Una vez hecho esto vamos a crear un enlace simbolico hacia la carpeta llamada <strong>sites-enabled</strong> por lo que usamos el siguiente comando:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ sudo ln -s /etc/httpd/sites-availble/gonzalonazareno.conf /etc/httpd/sites-enabled/
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ sudo ln -s /etc/httpd/sites-availble/gonzalonazareno.conf /etc/httpd/sites-enabled/
 </code></pre></div><p>Y para terminar debemos de ajustar las politicas de seguridad de SELinux, por lo que vamos a usar el siguiente comando:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ sudo setsebool -P httpd_unified <span style="color:#ae81ff">1</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ sudo setsebool -P httpd_unified <span style="color:#ae81ff">1</span>
 </code></pre></div><p>Y ya lo tenemos listo, ahora solo nos queda dirigirnos a nuestra maquina <strong>dulcinea</strong> y ahi debemos de añadir la regla <strong>dnat</strong> que nos permita acceder desde el exterior a nuestro servidor web, para ello usamos la siguiente regla:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@dulcinea:~$ sudo iptables -t nat -A PREROUTING -p tcp --dport <span style="color:#ae81ff">80</span> -i eth0 -j DNAT --to 10.0.2.3:80
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@dulcinea:~$ sudo iptables -t nat -A PREROUTING -p tcp --dport <span style="color:#ae81ff">80</span> -i eth0 -j DNAT --to 10.0.2.3:80
 </code></pre></div><p>Y probamos a entrar en nuestro nuevo sitio web, en mi caso con un mensaje de bienvenida:</p>
 <p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Servicios/apache/captura-web-centos.png" alt="mensaje web centos"></p>
 <p>Ahora vamos a proceder a servir lenguaje php en nuestrp servidor web mediante <strong>php-fpm</strong> para ello vamos a seguir los siguientes pasos:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos los paquetes de php-fpm para centos ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos los paquetes de php-fpm para centos ####</span>
 <span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ sudo dnf update
 <span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ sudo dnf install php php-fpm  php-gd php-mysqlnd
 
@@ -457,12 +457,12 @@ sudo nano /var/www/gonzalonazareno/html/info.php
 <p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Servicios/apache/php-info-quijote.png" alt="php en quijote"></p>
 <h2 id="añadiendo-la-regla-dnat-1">Añadiendo la regla dnat</h2>
 <p>Ahora debemos de añadir la regla DNAT a nuestra maquina dulcinea para que puedan hacerse peticiones a nuestro servidor web, de tal forma que podamos obtener la pagina desde cualquier maquina, para ello usamos la siguiente regla:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@dulcinea:~$ sudo iptables -t nat -A PREROUTING -p tcp --dport <span style="color:#ae81ff">80</span> -i eth0 -j DNAT --to 10.0.2.3:80
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@dulcinea:~$ sudo iptables -t nat -A PREROUTING -p tcp --dport <span style="color:#ae81ff">80</span> -i eth0 -j DNAT --to 10.0.2.3:80
 </code></pre></div><p>Donde vemos que, desde cualquier ip que tenga destino el puerto 80 y venga por la interfaz eth0, se le va a pasar el trafico a nuestra maquina interna con ip 10.0.2.3 en el puerto 80/tcp.</p>
 <h1 id="instalar-mysql-en-sancho">Instalar mysql en sancho</h1>
 <p>En esta ocasion necesitamos instalar un servidor de bases de datos mysql en nuestra maquina sancho. Este servicio se va a llamar <strong>bd.franjavier.gonzalonazareno.org</strong> que esta nombrado en la zona dns interna y dmz pero no en la zona externa, ya que no tenemos por que saber quien es el servidor de bases de datos.</p>
 <p>Para ello vamos a irnos a nuestra maquina de sancho y ahi vamos a instalar el servidor de bases de datos de mysql:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos el servidor de bases de datos ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos el servidor de bases de datos ####</span>
 ubuntu@sancho:~$ sudo apt install mariadb-server
 
 <span style="color:#75715e">#### Realizamos una instalacion segura ####</span>

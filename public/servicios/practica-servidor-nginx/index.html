@@ -13,8 +13,8 @@
 Debido a su excelente capacidad para manejar muchas conexiones y a su velocidad, muchos sitios web de alto tráfico usan el servicio de NGINX." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://franjavimn.onrender.com/servicios/practica-servidor-nginx/" /><meta property="article:section" content="Servicios" />
-<meta property="article:published_time" content="2020-11-04T17:42:53&#43;01:00" />
-<meta property="article:modified_time" content="2020-11-04T17:42:53&#43;01:00" />
+<meta property="article:published_time" content="2020-11-04T17:42:53+01:00" />
+<meta property="article:modified_time" content="2020-11-04T17:42:53+01:00" />
 
 
   <meta name="twitter:card" content="summary"/>
@@ -27,7 +27,7 @@ Debido a su excelente capacidad para manejar muchas conexiones y a su velocidad,
     
   
   
-  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-light.css">
   
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -94,7 +94,7 @@ Debido a su excelente capacidad para manejar muchas conexiones y a su velocidad,
 <li>Entrega una captura de pantalla accediendo a ella.</li>
 </ul>
 <p>Para ello, previamente debemos de crear una instancia en nuestro servicio de cloud que tenemos en nuestro instituto, para ello hemos elegido una maquina con un sistema operativo <strong>Debian Buster 10.6</strong>, de <em>flavor</em> hemos escogido <strong>m1.mini</strong> y como clave hemos usado la clave publica que anteriormente hemos generado en nuestro ordenador y que hemos copiado a nuestro servicio cloud. Con todo ello le hemos dado como nombre <strong>practica-nginx</strong>. Para poder entrar a dicha instancia usaremos la ip flotante que le hemos asociado, en este caso la ip es <strong>172.22.200.118</strong>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Entrando en la maquina via ssh con nuestra clave publica ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Entrando en la maquina via ssh con nuestra clave publica ####</span>
 francisco@debian10:~/.ssh$ ssh -i id_rsa debian@172.22.200.118
 The authenticity of host <span style="color:#e6db74">&#39;172.22.200.118 (172.22.200.118)&#39;</span> cant be established.
 ECDSA key fingerprint is SHA256:X+YOR4W1fJ5XZ7KRBBdauEpUHxCbYrRX1kOfBZFHIuk.
@@ -133,21 +133,21 @@ debian@practica-nginx:~$
 <h2 id="tarea-2">Tarea 2</h2>
 <p>Configura la resolución estática en los clientes y muestra el acceso a cada una de las páginas.</p>
 <p>Para ello debemos de instalar previamente nuestro servidor <strong>nginx</strong>, para ello debemos de instalar el siguiente paquete:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos el paquete de nginx ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos el paquete de nginx ####</span>
 debian@practica-nginx:~$ sudo apt install nginx
 </code></pre></div><p>Siguiendo con la filosofia que teniamos en <strong>apache2</strong>, podemos encontrar los sitios disponibles y activos en los mismos directorios donde los encontrabamos en <strong>apache2</strong>, es decir:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Directorio de sitios disponibles ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Directorio de sitios disponibles ####</span>
 /etc/nginx/sites-availables/
 
 <span style="color:#75715e">#### Directorio de sitios activos ####</span>
 /etc/nginx/sites-enabled/
 </code></pre></div><p>Por lo tanto, si necesitamos tener nuestras dos paginas debemos de generar primero los dos virtualhost, para ello vamos a realizar la copia del fichero <em>default</em> para crear nuestros dos virtualhost:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Copiamos el fichero default ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Copiamos el fichero default ####</span>
 debian@practica-nginx:/etc/nginx/sites-available$ sudo cp default ./iesgn.conf
 
 debian@practica-nginx:/etc/nginx/sites-available$ sudo cp default ./departamentos.conf
 </code></pre></div><p>Una vez tengamos copiados los ficheros debemos de tener el siguiente contenido en los fichero que hemos creado:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero de iesgn.conf ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero de iesgn.conf ####</span>
 ...
 server <span style="color:#f92672">{</span>
     listen 80;
@@ -181,13 +181,13 @@ server <span style="color:#f92672">{</span>
 ...
 <span style="color:#f92672">}</span>
 </code></pre></div><p>Una vez tengamos ya nuestros fichero debemos de crear un enlace simbolico para hacer que estos sitios esten activos, para ello usamos el siguiente comando:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero departamentos.conf ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero departamentos.conf ####</span>
 debian@practica-nginx:/etc/nginx/sites-available$ sudo ln -s /etc/nginx/sites-available/departamentos.conf /etc/nginx/sites-enabled/
 
 <span style="color:#75715e">#### Fichero iegn.conf ####</span>
 debian@practica-nginx:/etc/nginx/sites-available$ sudo ln -s /etc/nginx/sites-available/iesgn.conf /etc/nginx/sites-enabled/
 </code></pre></div><p>Ahora debemos de crear en el directorio <strong>/srv/www</strong> las dos carpetas llamadas iesgn y departamentos y dentro de ellas un fichero index.html en el cual tendremos un mensaje de bienvenida:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos las carpetas ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos las carpetas ####</span>
 debian@practica-nginx:~$ sudo mkdir /srv/www/<span style="color:#f92672">{</span>iesgn,departamentos<span style="color:#f92672">}</span>
 
 <span style="color:#75715e">#### Creamos los dos fichero index.html ####</span>
@@ -197,13 +197,13 @@ debian@practica-nginx:~$ sudo touch /srv/www/iesgn/index.html
 <span style="color:#75715e">#### Cambiamos los permisos a www-data ####</span>
 debian@practica-nginx:~$ sudo chown -R www-data:www-data /srv/www
 </code></pre></div><p>Entonces ya tendremos nuestros dos sitios, si queremos verificar que todo esta correcto podemos ejecutar el siguiente comando:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Verificamos que esta correcto todo ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Verificamos que esta correcto todo ####</span>
 debian@practica-nginx:~$ sudo nginx -t
 
 <span style="color:#75715e">#### Reiniciamos el servicio ####</span>
 debian@practica-nginx:~$ sudo systemctl restart nginx.service
 </code></pre></div><p>Una vez hecho todo solo debemos de entrar en nuestro <strong>/etc/hosts</strong> de la maquina clientes, es decir la nuestra, y poner las siguientes lineas:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">172.22.200.118  www.iesgn.org
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">172.22.200.118  www.iesgn.org
 172.22.200.118  departamentos.iesgn.org
 </code></pre></div><p>Y si nos dirigimos a las direcciones en nuestro navegador veremos las siguientes paginas:</p>
 <p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Servicios/nginx/iesgn-nginx.png" alt="pagina iesgn"></p>
@@ -213,7 +213,7 @@ debian@practica-nginx:~$ sudo systemctl restart nginx.service
 <h2 id="tarea-3">Tarea 3</h2>
 <p>Cuando se entre a la dirección <a href="http://www.iesgn.org">www.iesgn.org</a> se redireccionará automáticamente a <a href="http://www.iesgn.org/principal,">www.iesgn.org/principal,</a> donde se mostrará el mensaje de bienvenida. En el directorio principal no se permite ver la lista de los ficheros, no se permite que se siga los enlaces simbólicos y no se permite negociación de contenido. Muestra al profesor el funcionamiento.</p>
 <p>Lo primero que vamos a hacer es crear el directorio <strong>/principal</strong> en el directorio <strong>/srv/www/iesgn</strong>. Una vez la tengamos creada vamos a añadir un fichero index.html dando la bienvenida a principal:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el directorio /principal ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el directorio /principal ####</span>
 debian@practica-nginx:~$ sudo mkdir /srv/www/iesgn/principal
 
 <span style="color:#75715e">#### Creamos el fichero index.html con el saludo ####</span>
@@ -222,7 +222,7 @@ debian@practica-nginx:~$ sudo touch /srv/www/iesgn/principal/index.html
 <span style="color:#75715e">#### Cambiamos el propietario ####</span>
 debian@practica-nginx:~$ sudo chown -R www-data:www-data /srv/www
 </code></pre></div><p>Ahora que ya tenemos los elementos anteriores debemos de crear el alias, para ello debemos de añadir la siguiente liena a nuestro fichero <strong>iesgn.conf</strong>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Interior del fichero iesgn.conf</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Interior del fichero iesgn.conf</span>
 rewrite ^/$ principal permanent;
 
 <span style="color:#75715e">#### Vemos si hay algun error ####</span>
@@ -235,7 +235,7 @@ debian@practica-nginx:~$ sudo systemctl restart nginx.service
 <h2 id="tarea-4">Tarea 4</h2>
 <p>Si accedes a la página <a href="http://www.iesgn.org/principal/documentos">www.iesgn.org/principal/documentos</a> se visualizarán los documentos que hay en /srv/doc. Por lo tanto se permitirá el listado de fichero y el seguimiento de enlaces simbólicos siempre que sean a ficheros o directorios cuyo dueño sea el usuario. Muestra al profesor el funcionamiento.</p>
 <p>Lo primero creamos el directorio <strong>srv/doc</strong> en el cual vamos a añadir unos cuantos ficheros de prueba, para ello usamos los siguinetes comandos:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el directorio doc ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el directorio doc ####</span>
 debian@practica-nginx:~$ sudo mkdir /srv/doc
 
 <span style="color:#75715e">#### Creamos los fichero de prueba ####</span>
@@ -244,7 +244,7 @@ debian@practica-nginx:~$ sudo touch /srv/doc/<span style="color:#f92672">{</span
 <span style="color:#75715e">#### Cambiamos el propietario de los nuevos ficheros ####</span>
 debian@practica-nginx:~$ sudo chown -R www-data:www-data /srv/
 </code></pre></div><p>Ahora que ya tenemos nuestros fichero de prueba vamos a crear nuestro nuevo alias para que nos muestre todo los fichero de <strong>/srv/doc</strong>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Contenido del fichero iesgn.conf ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Contenido del fichero iesgn.conf ####</span>
 location /principal/documentos <span style="color:#f92672">{</span>
     alias /srv/doc/;
     autoindex on;
@@ -260,7 +260,7 @@ debian@practica-nginx:~$ sudo systemctl restart nginx.service
 <h2 id="tarea-5">Tarea 5</h2>
 <p>En todo el host virtual se debe redefinir los mensajes de error de objeto no encontrado y no permitido. Para el ello se crearan dos ficheros html dentro del directorio error. Entrega las modificaciones necesarias en la configuración y una comprobación del buen funcionamiento.</p>
 <p>Para ello vamos a crear el directorio error y dentro de el vamos a tener dos ficheros de error, para ello usamos el siguiente comando:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el directorio de error ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el directorio de error ####</span>
 debian@practica-nginx:~$ sudo mkdir /srv/www/iesgn/error
 
 <span style="color:#75715e">#### Creamos los ficheros de error con un mensaje de error ####</span>
@@ -278,7 +278,7 @@ error_page <span style="color:#ae81ff">403</span> /error/403.html; -&gt; Error p
 <p>Añade al escenario otra máquina conectada por una red interna al servidor. A la URL departamentos.iesgn.org/intranet sólo se debe tener acceso desde el cliente de la red local, y no se pueda acceder desde la anfitriona por la red pública. A la URL departamentos.iesgn.org/internet, sin embargo, sólo se debe tener acceso desde la anfitriona por la red pública, y no desde la red local.</p>
 <p>Para ello hemos creado una maquina llamada <strong>cliente-nginx</strong> con la ip privada 10.0.0.11.</p>
 <p>Lo primero que vamos a hacer va a ser crear los dos directorios llamados internet e intranet, para ello usamos el siguiente comando:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos los directorios ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos los directorios ####</span>
 debian@practica-nginx:~$ sudo mkdir /srv/www/iesgn/internet
 debian@practica-nginx:~$ sudo mkdir /srv/www/iesgn/intranet
 
@@ -289,7 +289,7 @@ debian@practica-nginx:~$ sudo nano /srv/www/iesgn/intranet/index.html
 <span style="color:#75715e">#### Cambiamos los propietarios de los ficheros ####</span>
 debian@practica-nginx:~$ sudo chown -R www-data:www-data /srv/
 </code></pre></div><p>Entonces en nuestro fichero de iesgn.conf debemos de tener las siguientes lineas:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### COntenido del fichero iesgn.conf ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### COntenido del fichero iesgn.conf ####</span>
 location /internet <span style="color:#f92672">{</span>
     allow 172.22.200.118;
     autoindex on;
@@ -310,7 +310,7 @@ debian@practica-nginx:~$ sudo systemctl restart nginx.service
 <h2 id="tarea-7">Tarea 7</h2>
 <p>Autentificación básica. Limita el acceso a la URL departamentos.iesgn.org/secreto. Comprueba las cabeceras de los mensajes HTTP que se intercambian entre el servidor y el cliente.</p>
 <p>Para ello creamos el directorio <strong>/secreto</strong> en el cual tendremos un mensaje de bienvenida y este estara restringido por un usuario y una contraseña, primero creamos el directorio y el fichero:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el directorio ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el directorio ####</span>
 debian@practica-nginx:~$ sudo mkdir /srv/www/iesgn/secreto
 
 <span style="color:#75715e">#### Creamos el fichero con un mensaje ####</span>
@@ -319,7 +319,7 @@ debian@practica-nginx:~$ sudo nano /srv/www/iesgn/secreto/index.html
 <span style="color:#75715e">#### Le cambiamos el propietario a nuestro nuevo directorio ####</span>
 debian@practica-nginx:~$ sudo chown -R www-data:www-data /srv/
 </code></pre></div><p>Una vez tengamos lo anterior debemos de crear nuestro fichero donde vamos a guardar el usuario y la contraseña de este, para ello vamos a usar una utilidad llamada htpasswd que esta dentro del paquete que debemos instalar llamado <strong>apache2-utils</strong>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Primero instalamos el paquete ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Primero instalamos el paquete ####</span>
 debian@practica-nginx:~$ sudo apt install apache2-utils
 
 <span style="color:#75715e">#### Creamos el fichero con el usuario fran ####</span>
@@ -333,7 +333,7 @@ Nota: Si queremos añadir mas usuarios debemos de quitar la opcion -c
 <span style="color:#75715e">#### Cambiamos el propietario del fichero ####</span>
 debian@practica-nginx:~$ sudo chown -R www-data:www-data /srv/
 </code></pre></div><p>De esta forma ya tendremos todo listo, ahora solo debemos de añadir la siguiente linea a nuestro fichero de iesgn.conf:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Linea que tenemos que añadir ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Linea que tenemos que añadir ####</span>
 location /secreto <span style="color:#f92672">{</span>
     auth_basic <span style="color:#e6db74">&#34;Area secreta&#34;</span>;
     auth_basic_user_file /srv/passwd.txt;
@@ -352,22 +352,22 @@ debian@practica-nginx:~$ sudo systemctl restart nginx.service
 <ol>
 <li>Creamos el directorio secreto:</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@practica-nginx:~$ sudo mkdir /srv/www/departamentos/secreto
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@practica-nginx:~$ sudo mkdir /srv/www/departamentos/secreto
 </code></pre></div><ol start="2">
 <li>Creamos el fichero de bienvenida:</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@practica-nginx:~$ sudo nano /srv/www/departamentos/secreto/index.html
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@practica-nginx:~$ sudo nano /srv/www/departamentos/secreto/index.html
 </code></pre></div><ol start="3">
 <li>Creamos el usuario con htpasswd:</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@practica-nginx:~$ sudo htpasswd -c /srv/www/departamentos/passwd.txt fran
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@practica-nginx:~$ sudo htpasswd -c /srv/www/departamentos/passwd.txt fran
 New password: 
 Re-type new password: 
 Adding password <span style="color:#66d9ef">for</span> user fran
 </code></pre></div><ol start="4">
 <li>Configuramos el fichero de <strong>departamentos.conf</strong> con las siguientes lineas:</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Linea a añadir ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Linea a añadir ####</span>
 location /secreto <span style="color:#f92672">{</span>
     auth_basic <span style="color:#e6db74">&#34;Area secreta&#34;</span>;
     auth_basic_user_file /srv/passwd.txt;

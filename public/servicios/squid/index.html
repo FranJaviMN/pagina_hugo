@@ -14,8 +14,8 @@ Vamos a usar el fichero Vagrantfile para crear el escenario: un ordenador llamad
 # -*- mode: ruby -*- # vi: set ft=ruby : Vagrant.configure(&#34;2&#34;) do |config| config.vm.define :proxy do |proxy| proxy.vm.box = &#34;debian/buster64&#34; proxy.vm.hostname = &#34;proxy&#34; proxy.vm.network :private_network, ip: &#34;10." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://franjavimn.onrender.com/servicios/squid/" /><meta property="article:section" content="Servicios" />
-<meta property="article:published_time" content="2021-02-24T19:25:28&#43;01:00" />
-<meta property="article:modified_time" content="2021-02-24T19:25:28&#43;01:00" />
+<meta property="article:published_time" content="2021-02-24T19:25:28+01:00" />
+<meta property="article:modified_time" content="2021-02-24T19:25:28+01:00" />
 
 
   <meta name="twitter:card" content="summary"/>
@@ -29,7 +29,7 @@ Vamos a usar el fichero Vagrantfile para crear el escenario: un ordenador llamad
     
   
   
-  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-light.css">
   
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -87,7 +87,7 @@ Vamos a usar el fichero Vagrantfile para crear el escenario: un ordenador llamad
     <h1 id="proxy">Proxy</h1>
 <p>En esta práctica vamos a instalar un proxy squid para configurar nuestro cliente para que acceda a internet por medio de este proxy.</p>
 <p>Vamos a usar el fichero Vagrantfile para crear el escenario: un ordenador llamado proxy donde instalaremos squid y un cliente interno (cliente_int).</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># -*- mode: ruby -*-</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># -*- mode: ruby -*-</span>
 <span style="color:#75715e"># vi: set ft=ruby :</span>
 
 
@@ -110,7 +110,7 @@ Vamos a usar el fichero Vagrantfile para crear el escenario: un ordenador llamad
 <h2 id="tarea-1">Tarea 1</h2>
 <p>Instala squid en la máquina squid y configúralo para que permita conexiones desde la red donde este tu ordenador.</p>
 <p>Para ello, en nuestra maquina <strong>proxy</strong> vamos a instalar el proxy <strong>squid</strong>, para ello vamos a usar el gestor de paquetes <strong>apt</strong> y vamos a instalarlo desde repositorios:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos el paquete ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos el paquete ####</span>
 vagrant@proxy:~$ sudo apt update <span style="color:#f92672">&amp;&amp;</span> sudo apt install squid3 -y
 
 <span style="color:#75715e">#### Comprobamos su version ####</span>
@@ -120,7 +120,7 @@ Service Name: squid
 Debian linux
 ...
 </code></pre></div><p>Ahora debemos de dirigirnos a nuestro equipo <strong>cliente_int</strong> en el cual debemos de cambiar los enrutamientos para que asi pueda pasar por nuestra maquina <strong>proxy</strong>, para ello debemos de indicar los siguientes comandos en nuestro <strong>client_int</strong>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Cambiamos el enrutamiento ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Cambiamos el enrutamiento ####</span>
 vagrant@buster:~$ sudo ip r del default
 
 vagrant@buster:~$ sudo ip r add default via 10.0.0.10 dev eth1
@@ -130,7 +130,7 @@ vagrant@buster:~$ ip r
 default via 10.0.0.10 dev eth1 
 ...
 </code></pre></div><p>Ahora que ya tenemos nuestro equipio y el cliente conectados a nuestra maquina con el proxy, vamos a proceder a configurar <strong>squid</strong>, para ello debemos de irnos al fichero <strong>/etc/squid/squid.conf</strong> el cual es preferible hacer una copia de seguridad antes de empezar:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos una copia de seguridad ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos una copia de seguridad ####</span>
 vagrant@proxy:~$ sudo cp /etc/squid/squid.conf /etc/squid/squid.conf.old
 
 <span style="color:#75715e">#### Vaciamos el fichero para configurarlo ####</span>
@@ -167,7 +167,7 @@ coredump_dir /var/spool/squid
 <h2 id="tarea-3">Tarea 3</h2>
 <p>Configura squid para que pueda ser utilizado desde el cliente interno. En el cliente interno configura el proxy desde la línea de comandos (con una variable de entorno). Fíjate que no hemos puesto ninguna regla SNAT y podemos navegar (protocolo HTTP), pero no podemos hacer ping o utilizar otro servicio.</p>
 <p>En este caso, buscando en la documentación he descubierto que la variable de entorno que debemos de definir en nuestro equipo <strong>client_int</strong> es una variable llamada <strong>http_proxy</strong>, por lo que ahi debemos de indicarle la ip y el puerto de nuestro servidor proxy, por lo que debe de quedarnos algo como lo siguiente:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Añadimos la variable de entorno ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Añadimos la variable de entorno ####</span>
 vagrant@buster:~$ export http_proxy<span style="color:#f92672">=</span>http://10.0.0.10:8080/
 
 <span style="color:#75715e">#### Comprobamos que podemos navegar ####</span>
@@ -192,7 +192,7 @@ vagrant@proxy:~$ sudo tail -f /var/log/squid/access.log
 <p>Para gestionar el acceso a internet utilizaremos listas blancas y negras. Una lista blanca se encarga de permitir solo el acceso a los dominios que figuran en ella y deniegan todo lo demás. Por el contrario, una lista negra deniega los dominios que contiene y permite el acceso a todo lo demás.</p>
 <h3 id="lista-negra">Lista negra</h3>
 <p>Para ello vamos a irnos a nuestro fichero de configuracion <strong>/etc/squid/squid.conf</strong> y ahi vamos a definir una nueva acl en la que le vamos a indicar el fichero donde vamos a tener los dominios que no vamos a dejar que se puedan visitar con nuestr proxy, por lo que procedemos a configurar:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Añadimos la nueva acl a nuestro fichero ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Añadimos la nueva acl a nuestro fichero ####</span>
 <span style="color:#75715e"># Lista negra</span>
 acl blacklist dstdomain <span style="color:#e6db74">&#34;/etc/squid/blacklist.txt&#34;</span>
 http_access deny blacklist
@@ -202,7 +202,7 @@ vagrant@proxy:~$ sudo nano /etc/squid/blacklist.txt
 
 www.google.es
 </code></pre></div><p>De esta forma, si intentamos entrar en <a href="http://www.google.es">www.google.es</a> usando nuestro proxy, veremos que no nos dejara acceder:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@buster:~$ wget www.google.es
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@buster:~$ wget www.google.es
 --2021-02-23 12:43:10--  http://www.google.es/
 Connecting to 10.0.0.10:8080... connected.
 Proxy request sent, awaiting response... <span style="color:#ae81ff">403</span> Forbidden
@@ -214,7 +214,7 @@ Proxy request sent, awaiting response... <span style="color:#ae81ff">403</span> 
 ...
 </code></pre></div><h3 id="lista-blanca">Lista blanca</h3>
 <p>En este caso vamos a crear una lista blanca y el proceso de creación de esta es muy similar a la lista negra. Lo primero que debemos de hacer es difinir una nueva acl en la que le vamos a indicar nuestra lista blanca, para ello usamos las siguientes opciones en el fichero <strong>/etc/squid/squid.conf</strong>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Añadimos las siguientes lineas ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Añadimos las siguientes lineas ####</span>
 <span style="color:#75715e"># Lista blanca</span>
 acl whitelist dstdomain <span style="color:#e6db74">&#34;/etc/squid/whitelist.txt&#34;</span>
 http_access deny !whitelist
@@ -227,7 +227,7 @@ www.google.com
 <span style="color:#75715e">#### Cargamos la nueva configuracion ####</span>
 vagrant@proxy:~$ sudo squid -k reconfigure
 </code></pre></div><p>Ahora vamos a probar a intentar entrar en <strong><a href="http://www.google.es">www.google.es</a></strong> y en <strong><a href="http://www.google.com">www.google.com</a></strong> y en otras paginas y veremos que solo nos dejara en los dominios que tebfamos en nuestra lista blanca:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Probamos a www.google.es ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Probamos a www.google.es ####</span>
 vagrant@buster:~$ wget www.google.es
 --2021-02-23 12:47:57--  http://www.google.es/
 Connecting to 10.0.0.10:8080... connected.

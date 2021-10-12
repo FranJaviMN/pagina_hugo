@@ -15,8 +15,8 @@
   Instala un servidor dhcp en el ordenador “servidor” que de servicio a los ordenadores de red local, teniendo en cuenta que el tiempo de concesión sea 12 horas y que la red local tiene el direccionamiento 192." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://franjavimn.onrender.com/servicios/practica-dhcp/" /><meta property="article:section" content="Servicios" />
-<meta property="article:published_time" content="2020-10-10T12:40:00&#43;02:00" />
-<meta property="article:modified_time" content="2020-10-10T12:40:00&#43;02:00" />
+<meta property="article:published_time" content="2020-10-10T12:40:00+02:00" />
+<meta property="article:modified_time" content="2020-10-10T12:40:00+02:00" />
 
 
   <meta name="twitter:card" content="summary"/>
@@ -31,7 +31,7 @@
     
   
   
-  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-light.css">
   
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -181,7 +181,7 @@
 <p>En el caso de que no hubiese respuesta de ningún servidor dhcp, el cliente pasa al estado INIT para buscar un nuevo servidor.</p>
 <h3 id="tarea-2">Tarea 2</h3>
 <p>Como hemos leido en las tareas de esta practica, ahora nos toca montar el escenario en el que vamos a ver en funcionamiento el protocolo DHCP, para ello vamos a usar el siguiente fichero <em><strong>Vagrantfile:</strong></em></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">Vagrant</span><span style="color:#f92672">.</span>configure(<span style="color:#e6db74">&#34;2&#34;</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>config<span style="color:#f92672">|</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">Vagrant</span><span style="color:#f92672">.</span>configure(<span style="color:#e6db74">&#34;2&#34;</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>config<span style="color:#f92672">|</span>
   config<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>define <span style="color:#e6db74">:servidor</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>servidor<span style="color:#f92672">|</span>
     servidor<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>box <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;debian/buster64&#34;</span>
     servidor<span style="color:#f92672">.</span>vm<span style="color:#f92672">.</span>hostname <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;servidor&#34;</span>
@@ -200,12 +200,12 @@
 <h3 id="tarea-3">Tarea 3</h3>
 <h4 id="servidor">Servidor</h4>
 <p>Lo priemro que debemos hacer es instalar un servidor DHCP en nuestra maquina <em>servidor</em>, para ello vamos a usar el siguiente comando:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@servidor:~$ sudo apt install isc-dhcp-server
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@servidor:~$ sudo apt install isc-dhcp-server
 </code></pre></div><p>Con ese comando vamos a hacer la instalacion de nuestro servidor. Veremos que cuando estamos instalado este servidor dhcp nos saldra unos errores pero no debemos tenerlos en cuenta ya que estos errores se deben a que nuestro servidor dhcp no esta configurado.</p>
 <p>Ahora que tenemos instalado nuestro servidor DHCP debemos de entrar en la configuracion para poder hacer que funcione correctamente. Primero debemos de ver cual va a ser la interfaz de red que va a usar nuestro <em>servidor</em> para dar servicio DHCP, para ello realizamos un <em><strong>ip a</strong></em> y vemos cual vamos a escoger, en mi caso va a ser la interfaz <em>eth2</em> ya que es la que tiene asignada la ip publica. Una vez hayamos visto cual es la que vamos a usar nos vamos al fichero de configuración <em><strong>/etc/default/isc-dhcp-server</strong></em> y buscamos la linea donde pone <strong>INTERFACESv4=&quot;&quot;</strong> y ahi le indicamos nuestra interfaz, en mi caso seria:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">INTERFACESv4<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;eth2&#34;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">INTERFACESv4<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;eth2&#34;</span>
 </code></pre></div><p>Ahora nos dirigimos al fichero de configuracion de dhcp que es <em><strong>/etc/dhcp/dhcpd.conf</strong></em>. En dicho fichero debemos de poner la configuracion dhcp que nosotros necesitemos en nuestro servidor. Hay muchos <a href="https://franjavimn.onrender.com/servicios/dhcp-ejercicio/">parametros</a> que podemos contemplar a la hora de configurar nuestros servidor DHCP. En este caso vamos a usar la siguiente configuracion:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">subnet 192.168.100.0 netmask 255.255.255.0 <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">subnet 192.168.100.0 netmask 255.255.255.0 <span style="color:#f92672">{</span>
   range 192.168.100.100 192.168.100.110;
   option domain-name-servers 8.8.8.8, 8.8.4.4;
   option routers 192.168.100.1;
@@ -214,13 +214,13 @@
   max-lease-time 43200;
 <span style="color:#f92672">}</span>
 </code></pre></div><p>Despues de haber configurado nuestro servidor lo que debemos hacer es reiniciar el servicio para que se ponga en funcionamiento, para ello usamos el siguiente comando:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@servidor:~$ sudo systemctl restart isc-dhcp-server.service -&gt; Reiniciamos servicio
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@servidor:~$ sudo systemctl restart isc-dhcp-server.service -&gt; Reiniciamos servicio
 
 vagrant@servidor:~$ sudo systemctl status isc-dhcp-server.service -&gt; Vemos el status del servicio
 </code></pre></div><p>Y con este proceso nuestra maquina ya debe de poder dar servicio DHCP a los clientes de nuestra red interna.</p>
 <h4 id="nodolan1">nodolan1</h4>
 <p>Ahora que ya tenemos el servicio dhcp configurado y activado, si nos dirigimos a nuestra maquina cliente y hacemos <em><strong>vagrant@nodolan1:~$ ip a show dev eth1</strong></em> y veremos que tiene asignada una ip del rango que nosotros le hemos dicho en nuestro fichero de configuracion del servidor dhcp y tambien la direccion de broadcast que le hemos indicado.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">####Salida del comando ip address####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">####Salida del comando ip address####</span>
 
 3: eth1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">1500</span> qdisc pfifo_fast state UP group default qlen <span style="color:#ae81ff">1000</span>
     link/ether 08:00:27:ec:34:83 brd ff:ff:ff:ff:ff:ff
@@ -232,10 +232,10 @@ vagrant@servidor:~$ sudo systemctl status isc-dhcp-server.service -&gt; Vemos el
 <p>Para ver este fichero nos dirigimos al fichero <em><strong>/var/lib/dhcp/dhcpd.leases</strong></em> de nuestra maquina <em>servidor</em> y ahi tendremos todas las concesiones a los clientes que estan cogiendo ip de nuestro servidor dhcp.</p>
 <h3 id="tarea-4">Tarea 4</h3>
 <p>En esta parte tenemos que hacer que nuestro <em>servidor</em> actue como router-nat para que le de internet a nuestra maquina <em>cliente</em> y asi tenga internet, para ello nos dirigimos a nuestra maquina <em><strong>servidor</strong></em> primero y realizamos el comando siguiente:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@servidor:~$ sudo ip route replace default via 192.168.1.1 -&gt; Cambiamos la ruta por defecto
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@servidor:~$ sudo ip route replace default via 192.168.1.1 -&gt; Cambiamos la ruta por defecto
 </code></pre></div><p>Una vez hecho esto tendremos internet a traves de la interfaz <em>eth1</em> en vez de tener internet a traves de <em>eth0</em>.</p>
 <p>Una vez hecho este comando necesitamos añadirle las reglas necesarias para que nuestra maquina actue como un router-nat y pueda enrutar correctamente las peticiones que le vamos a hacer a traves de la maquina cliente, para ello usaremos la siguiente regla de iptables:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">iptables -t nat -A POSTROUTING -s 192.168.100.1/24 -o eth1 -j MASQUERADE
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">iptables -t nat -A POSTROUTING -s 192.168.100.1/24 -o eth1 -j MASQUERADE
 
 <span style="color:#75715e">####Donde podemos ver los parametros siguientes:####</span>
 
@@ -250,18 +250,18 @@ vagrant@servidor:~$ sudo systemctl status isc-dhcp-server.service -&gt; Vemos el
 MASQUERADE: Cuando la dirección IP pública que sustituye a la IP origen es dinámica, caso bastante habitual en conexiones a Internet domésticas.
 </code></pre></div><p>Una vez hecho esto debemos de hacer un ultimo paso que es activar el bit de FORWARD ya que, en principio un equipo con GNU/Linux no permite que pasen paquetes de una interfaz de red a otra, para que se permita esto y por tanto pueda funcionar el equipo como router-nat debemos de activarlo.</p>
 <p>Podemos hacerlo para que solo se active hasta que el equipo se apaga, una vez se vuelva a encender debemos de activarlo otra vez o podemos hacerlo de forma permanente:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">####Solo hasta que se apague el equipo####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">####Solo hasta que se apague el equipo####</span>
 echo <span style="color:#ae81ff">1</span> &gt; /proc/sys/net/ipv4/ip_forward
 
 <span style="color:#75715e">####De forma permanente####</span>
 Nos dirigimos al fichero /etc/sysctl.conf y buscamos una linea como: net.ipv4.ip_forward<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
 </code></pre></div><p>Ahora vamos a nuestra maquina <em><strong>nodolan1</strong></em> y en ella tenemos que hacer que salga a internet a traves de la interfaz por la que esta recibiendo servicio DHCP, en este caso es <em>eth1</em>. Para hacer eso posible usamos el comando siguiente:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@nodolan1:~$ sudo ip route replace default via 192.168.100.1
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@nodolan1:~$ sudo ip route replace default via 192.168.100.1
 </code></pre></div><p>Asi cambiaremos la ruta por defecto por la que tenemos asignada en nuestro <em>servidor</em>.</p>
 <p>Ahora si realizamos un <em><strong>apt update</strong></em> en nuestra maquina <em>nodolan1</em> veremos que lo hace sin problemas. <a href="https://youtu.be/A14CUHS93Xk">ver video demostración</a></p>
 <h3 id="tarea-5">Tarea 5</h3>
 <p>Ahora vamos a realizar una captura de los paquetes que corresponden a una concesión: <em>DISCOVER, OFFER, REQUEST, ACK</em>. Para ello vamos a usar <em>tcpdump</em> para la captura de los paquetes. Debemos asegurarnos que esta instalado, normalmente no lo esta y tendremos que instalarlo usando <em><strong>vagrant@servidor:~$ sudo apt install tcpdump</strong></em> y una vez instalado usamos el siguiente comando:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@servidor:~$ sudo tcpdump -i eth2 port <span style="color:#ae81ff">67</span> or port <span style="color:#ae81ff">68</span> -e -n -vv
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@servidor:~$ sudo tcpdump -i eth2 port <span style="color:#ae81ff">67</span> or port <span style="color:#ae81ff">68</span> -e -n -vv
 
 <span style="color:#75715e">#### Donde podemos ver: ####</span>
 
@@ -277,7 +277,7 @@ Nos dirigimos al fichero /etc/sysctl.conf y buscamos una linea como: net.ipv4.ip
 <p>A la hora de apagar nuestro servidor dhcp, si le cambiamos la concesion a un numero muy bajo veremos que en una maquina linux, al no encontrar el servidor dhcp y no poder recibir la respuesta por parte del servidor, si hacemos un <em><strong>ip a</strong></em> veremos que ya no tiene la asignacion ip que tenia antes de apagar el servidor. <a href="https://youtu.be/e70UdFwDvYI">video</a></p>
 <h3 id="tarea-7">Tarea 7</h3>
 <p>En la siguiente tarea vamos a cambiar la configuracion de nuestro servidor dhcp, para ello nos dirigimos al fichero <em><strong>/etc/dhcp/dhcpd.conf</strong></em> y una vez ahi, cambiamos el rango de ip que vamos a servir, en este caso el fichero de configuracion quedaria asi:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">subnet 192.168.100.0 netmask 255.255.255.0 <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">subnet 192.168.100.0 netmask 255.255.255.0 <span style="color:#f92672">{</span>
   range 192.168.100.111 192.168.100.120;
   option domain-name-servers 8.8.8.8, 8.8.4.4;
   option routers 192.168.100.2;
@@ -286,7 +286,7 @@ Nos dirigimos al fichero /etc/sysctl.conf y buscamos una linea como: net.ipv4.ip
   max-lease-time 43200;
 <span style="color:#f92672">}</span>
 </code></pre></div><p>Y si esperamos el tiempo 1 minuto y se acaba el tiempo de concesión veremos que la ip a camabiado a una del nuevo rango:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@nodolan1:~$ ip a show dev eth1
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@nodolan1:~$ ip a show dev eth1
 3: eth1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">1500</span> qdisc pfifo_fast state UP group default qlen <span style="color:#ae81ff">1000</span>
     link/ether 08:00:27:a1:26:74 brd ff:ff:ff:ff:ff:ff
     inet 192.168.100.111/24 brd 192.168.100.255 scope global dynamic eth1
@@ -296,12 +296,12 @@ Nos dirigimos al fichero /etc/sysctl.conf y buscamos una linea como: net.ipv4.ip
 </code></pre></div><p><a href="https://youtu.be/DtaTbQh5558">Ver video de demostración</a></p>
 <h3 id="tarea-8">Tarea 8</h3>
 <p>Ahoa vamos a añadir una reserva en nuestro servidor dhcp para que, cuando nosotros tengamos a nuestro cliente y su tiempo de concesion acabe, le de una ip que nosotros hemos reservado, para ello vamos a necesitar la MAC de la interfaz de red de nuestra maquina <em>cliente</em>, para ello usamos el comando <em><strong>ip link show dev eth1</strong></em>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@nodolan1:~$ ip link show dev eth1
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@nodolan1:~$ ip link show dev eth1
 3: eth1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">1500</span> qdisc pfifo_fast state UP mode DEFAULT group default qlen <span style="color:#ae81ff">1000</span>
     link/ether 08:00:27:a1:26:74 brd ff:ff:ff:ff:ff:ff
 </code></pre></div><p>En mi caso, la MAC es la <strong>08:00:27:a1:26:74</strong> .</p>
 <p>El siguiente paso es dirigirnos a nuestra maquina servidor e ir al fichero de configuracion <em><strong>/etc/dhcp/dhcpd.conf</strong></em> y ahí tenemos que añadir el campo <em>&ldquo;host&rdquo;</em> dentro de los parametros que indicamos. Deberia de quedar de la siguiente forma:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">subnet 192.168.100.0 netmask 255.255.255.0 <span style="color:#f92672">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">subnet 192.168.100.0 netmask 255.255.255.0 <span style="color:#f92672">{</span>
   range 192.168.100.111 192.168.100.120;
   option domain-name-servers 8.8.8.8, 8.8.4.4;
   option routers 192.168.100.2;
@@ -320,9 +320,9 @@ Nos dirigimos al fichero /etc/sysctl.conf y buscamos una linea como: net.ipv4.ip
 <h3 id="tarea-10">Tarea 10</h3>
 <p>Ahora que ya tenemos las maquinas levantadas, solo debemos de entrar en la maquina servidor y hacer <em><strong>ip a</strong></em> y veremos que nos ha creado otra interfaz nueva, esta vez sera la interfaz <em>eth3</em> con la ip estatica que nosotros le hemos indicado.</p>
 <p>Ahora debemos de configurar nuestra servidor para que pueda actuar como servidor dhcp en la nueva maquina que hemos añadido, para ello debemos de ir al fichero de configuración <em><strong>/etc/default/isc-dhcp-server</strong></em> y donde dice <em><strong>INTERFACESv4=&quot;&quot;</strong></em> deben de estar las dos interfaces por la que nuestro servidor va a repartir las ip, en este caso debe de estar asi:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">INTERFACESv4<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;eth2 eth3&#34;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">INTERFACESv4<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;eth2 eth3&#34;</span>
 </code></pre></div><p>Una vez hecho esto nos dirigimos al fichero de configuración <em><strong>/etc/dhcp/dhcpd.conf</strong></em> y una vez estemos dentro debemos de añadir los parametros necesarios para que nuestro servidor dhcp pueda dar direccionamiento a nuestra nueva maquina <em>nodolan2</em>, para ello nuestro fichero debe de quedar asi:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Parametros de la maquina nodolan1 ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Parametros de la maquina nodolan1 ####</span>
 
 subnet 192.168.100.0 netmask 255.255.255.0 <span style="color:#f92672">{</span>
   range 192.168.100.100 192.168.100.110;
@@ -344,7 +344,7 @@ subnet 192.168.200.0 netmask 255.255.255.0 <span style="color:#f92672">{</span>
   max-lease-time 86400;
 <span style="color:#f92672">}</span>
 </code></pre></div><p>Una vez hecho lo anterior debemos de reiniciar nuestro servicio en nuestra maquina <em>servidor</em> con los comandos <em><strong>systemctl restart isc-dhcp-server.service</strong></em> y para ver su status con el comando <em><strong>systemctl status isc-dhcp-server.service</strong></em>. Hechoe sto si nos vamos a nuestra maquinas <em>nodolan1</em> y <em>nodolan2</em> y realizamos un <em><strong>dhclient</strong></em> y seguido hacemos <em><strong>ip a</strong></em> veremos que nuestro servidor nos ha asignado una ip del rango ip que nosotros le hemos indicado.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">
 <span style="color:#75715e">#### Nodolan1 ####</span>
 
 vagrant@nodolan1:~$ ip addr show eth1
@@ -367,7 +367,7 @@ vagrant@nodolan2:~$ ip addr show eth1
 </code></pre></div><h3 id="tarea-11">Tarea 11</h3>
 <p>Ahora lo que debemos de hacer es que nuestro servidor pueda dar servicio de router-nat al igual que hicimos en la <strong>tarea 4</strong>.</p>
 <p>Primero configuramos el servidor con la siguiente lista de comandos:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">
 <span style="color:#75715e">#### Cambiamos la ruta por defecto ####</span>
 
 vagrant@servidor:~$ sudo ip route replace default via 192.168.1.1
@@ -382,7 +382,7 @@ vagrant@servidor:~$ iptables -t nat -A POSTROUTING -s 192.168.200.1/24 -o eth1 -
 
 vagrant@servidor:~$ echo <span style="color:#ae81ff">1</span> &gt; /proc/sys/net/ipv4/ip_forward
 </code></pre></div><p>Ahoara nos dirigimos a nuestras maquinas <em>nodolan1</em> y <em>nodolan2</em>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">
 <span style="color:#75715e">#### nodolan1 ####</span>
 
 vagrant@nodolan1:~$ sudo ip route replace default via 192.168.100.1

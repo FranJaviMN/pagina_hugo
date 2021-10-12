@@ -13,8 +13,8 @@
  Disponer de un certificado x509 para nuestro equipo firmado por la CA Gonzalo Nazareno Configurar OpenVPN para que se conecte a sputnik.  Creacion de clave privada y solicitud de firma. Lo primero que vamos a crear va a ser una clave privada con la herramienta openssl, en este caso una clave privada RSA de 4096 bits." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://franjavimn.onrender.com/sistemas/vpn-openstack/" /><meta property="article:section" content="Sistemas" />
-<meta property="article:published_time" content="2020-10-30T13:21:46&#43;01:00" />
-<meta property="article:modified_time" content="2020-10-30T13:21:46&#43;01:00" />
+<meta property="article:published_time" content="2020-10-30T13:21:46+01:00" />
+<meta property="article:modified_time" content="2020-10-30T13:21:46+01:00" />
 
 
   <meta name="twitter:card" content="summary"/>
@@ -27,7 +27,7 @@
     
   
   
-  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-light.css">
   
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -93,7 +93,7 @@
 <ol>
 <li>Creamos nuestra clave privada desde el usuario <strong>root</strong>:</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@debian10:~# openssl genrsa <span style="color:#ae81ff">4096</span> &gt; /etc/ssl/private/nombredemimaquina.key
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@debian10:~# openssl genrsa <span style="color:#ae81ff">4096</span> &gt; /etc/ssl/private/nombredemimaquina.key
 Generating RSA private key, <span style="color:#ae81ff">4096</span> bit long modulus <span style="color:#f92672">(</span><span style="color:#ae81ff">2</span> primes<span style="color:#f92672">)</span>
 ..................................................................................................................................................................................++++
 ..............................................................++++
@@ -101,7 +101,7 @@ e is <span style="color:#ae81ff">65537</span> <span style="color:#f92672">(</spa
 </code></pre></div><ol start="2">
 <li>Generamos el fichero csr que debe de ser firmado por CA del Gonzalo Nazareno:</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@debian10:~# openssl req -new -key /etc/ssl/private/nombredemimaquina.key -out /root/nombredemimaquina.csr
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@debian10:~# openssl req -new -key /etc/ssl/private/nombredemimaquina.key -out /root/nombredemimaquina.csr
 You are about to be asked to enter information that will be incorporated
 into your certificate request.
 What you are about to enter is what is called a Distinguished Name or a DN.
@@ -118,7 +118,7 @@ Common Name <span style="color:#f92672">(</span>e.g. server FQDN or YOUR name<sp
 </code></pre></div><p>De esta forma ya tendremos la clave privada y el fichero csr, dicho fichero csr debe de ser firmado. Para poder entragar nuestro fichero csr debemos de enviarlo por este <a href="https://dit.gonzalonazareno.org/gestiona/">enlace</a> en el apartado de de Utilidades -&gt; Certifcados.</p>
 <h2 id="configuración-de-openvpn">Configuración de OpenVPN</h2>
 <p>Una vez hayamos obtenido el certificado debemos de configurar nuestro OpenVPN, para ello debemos de dirigirnos(como root) al directorio <strong>/etc/openvpn</strong> y en dicho directorio generamos un fichero de extensión <strong>.conf</strong> en el cual debemos de tener las siguientes lineas:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">dev tun
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">dev tun
 remote sputnik.gonzalonazareno.org
 ifconfig 172.23.0.0 255.255.255.0
 pull
@@ -139,12 +139,12 @@ verb <span style="color:#ae81ff">1</span>
 <li>nombredemimaquina.key: Es la clave privada que habiamos generado anteriormente.</li>
 </ul>
 <p>Una vez creado el fichero vamos a reiniciar el servicio de OpenVPN y comprobamos que tenemos las rutas de enlace y veremos una linea como la siguiente:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@debian10:~# ip r
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@debian10:~# ip r
 ...
 172.22.0.0/16 via 172.23.0.37 dev tun0 
 ...
 </code></pre></div><p>Y si vemos el documento de log de OpenVPN en <strong>/var/log/openvpn.log</strong>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@debian10:~# cat /var/log/openvpn-sputnik.log 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@debian10:~# cat /var/log/openvpn-sputnik.log 
 Fri Oct <span style="color:#ae81ff">30</span> 13:10:22 <span style="color:#ae81ff">2020</span> OpenVPN 2.4.7 x86_64-pc-linux-gnu <span style="color:#f92672">[</span>SSL <span style="color:#f92672">(</span>OpenSSL<span style="color:#f92672">)]</span> <span style="color:#f92672">[</span>LZO<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>LZ4<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>EPOLL<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>PKCS11<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>MH/PKTINFO<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>AEAD<span style="color:#f92672">]</span> built on Feb <span style="color:#ae81ff">20</span> <span style="color:#ae81ff">2019</span>
 Fri Oct <span style="color:#ae81ff">30</span> 13:10:22 <span style="color:#ae81ff">2020</span> library versions: OpenSSL 1.1.1d  <span style="color:#ae81ff">10</span> Sep 2019, LZO 2.10
 Fri Oct <span style="color:#ae81ff">30</span> 13:10:22 <span style="color:#ae81ff">2020</span> WARNING: using --pull/--client and --ifconfig together is probably not what you want
@@ -160,16 +160,16 @@ Fri Oct <span style="color:#ae81ff">30</span> 13:10:26 <span style="color:#ae81f
 Fri Oct <span style="color:#ae81ff">30</span> 13:10:26 <span style="color:#ae81ff">2020</span> WARNING: this configuration may cache passwords in memory -- use the auth-nocache option to prevent this
 Fri Oct <span style="color:#ae81ff">30</span> 13:10:26 <span style="color:#ae81ff">2020</span> Initialization Sequence Completed
 </code></pre></div><p><strong>IMPORTANTE:</strong> Si queremos que este servicio solo se active manualmente debemos de usar el siguiente comando con el que dehabilitalemos que inicie al encender el ordenador:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@debian10:~# systemctl disable openvpn.service
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@debian10:~# systemctl disable openvpn.service
 Synchronizing state of openvpn.service with SysV service script with /lib/systemd/systemd-sysv-install.
 Executing: /lib/systemd/systemd-sysv-install disable openvpn
 </code></pre></div><p>Tambien es recomendable actualizar nuestro fichero <strong>/etc/hosts</strong> y añadir la resolucion estatica de las siguientes ip:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">...
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">...
 172.22.222.1    jupiter
 172.22.0.1       macaco
 ...
 </code></pre></div><p>Comprobamos que podemos hacer ping a <strong>172.22.0.1</strong>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@debian10:~# ping 172.22.0.1
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">root@debian10:~# ping 172.22.0.1
 PING 172.22.0.1 <span style="color:#f92672">(</span>172.22.0.1<span style="color:#f92672">)</span> 56<span style="color:#f92672">(</span>84<span style="color:#f92672">)</span> bytes of data.
 <span style="color:#ae81ff">64</span> bytes from 172.22.0.1: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">63</span> time<span style="color:#f92672">=</span><span style="color:#ae81ff">157</span> ms
 <span style="color:#ae81ff">64</span> bytes from 172.22.0.1: icmp_seq<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">63</span> time<span style="color:#f92672">=</span><span style="color:#ae81ff">107</span> ms

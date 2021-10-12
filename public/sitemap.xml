@@ -2,13 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://franjavimn.onrender.com/</loc>
-    <lastmod>2021-06-01T11:55:04+02:00</lastmod>
+    <loc>https://franjavimn.onrender.com/bbdd/</loc>
+    <lastmod>2021-10-12T20:52:50+02:00</lastmod>
   </url><url>
-    <loc>https://franjavimn.onrender.com/proyecto-podman/compose-wordpress/</loc>
-    <lastmod>2021-06-01T11:55:04+02:00</lastmod>
+    <loc>https://franjavimn.onrender.com/</loc>
+    <lastmod>2021-10-12T20:52:50+02:00</lastmod>
+  </url><url>
+    <loc>https://franjavimn.onrender.com/bbdd/sql_desde_cero/</loc>
+    <lastmod>2021-10-12T20:52:50+02:00</lastmod>
+  </url><url>
+    <loc>https://franjavimn.onrender.com/proyecto-podman/buildah/</loc>
+    <lastmod>2021-06-01T13:15:43+02:00</lastmod>
   </url><url>
     <loc>https://franjavimn.onrender.com/proyecto-podman/</loc>
+    <lastmod>2021-06-01T13:15:43+02:00</lastmod>
+  </url><url>
+    <loc>https://franjavimn.onrender.com/proyecto-podman/skopeo/</loc>
+    <lastmod>2021-06-01T12:13:22+02:00</lastmod>
+  </url><url>
+    <loc>https://franjavimn.onrender.com/proyecto-podman/compose-wordpress/</loc>
     <lastmod>2021-06-01T11:55:04+02:00</lastmod>
   </url><url>
     <loc>https://franjavimn.onrender.com/proyecto-podman/compose-redmine/</loc>
@@ -25,9 +37,6 @@
   </url><url>
     <loc>https://franjavimn.onrender.com/proyecto-podman/podman/</loc>
     <lastmod>2021-06-01T11:52:23+02:00</lastmod>
-  </url><url>
-    <loc>https://franjavimn.onrender.com/bbdd/</loc>
-    <lastmod>2021-03-09T12:28:51+01:00</lastmod>
   </url><url>
     <loc>https://franjavimn.onrender.com/bbdd/movimiento-de-datos/</loc>
     <lastmod>2021-03-09T12:28:51+01:00</lastmod>

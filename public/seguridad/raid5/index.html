@@ -12,8 +12,8 @@
 <meta property="og:description" content="Raid 5 ¿Qué es RAID 5? Un RAID 5 (también llamado distribuido con paridad) es una división de datos a nivel de bloques que distribuye la información de paridad entre todos los discos miembros del conjunto. El RAID 5 ha logrado popularidad gracias a su bajo coste de redundancia. Generalmente, el RAID 5 se implementa con soporte hardware para el cálculo de la paridad. RAID 5 necesitará un mínimo de 3 discos para ser implementado." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://franjavimn.onrender.com/seguridad/raid5/" /><meta property="article:section" content="Seguridad" />
-<meta property="article:published_time" content="2020-10-05T20:01:02&#43;02:00" />
-<meta property="article:modified_time" content="2020-10-05T20:01:02&#43;02:00" />
+<meta property="article:published_time" content="2020-10-05T20:01:02+02:00" />
+<meta property="article:modified_time" content="2020-10-05T20:01:02+02:00" />
 
 
   <meta name="twitter:card" content="summary"/>
@@ -25,7 +25,7 @@
     
   
   
-  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-light.css">
   
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -119,7 +119,7 @@
 </ul>
 <h3 id="tarea-1">Tarea 1</h3>
 <p>En la tarea 1 debemos de crear el RAID 5 con 3 discos de 1GB en nuestra maquina virtual que hayamos levantado con vagrant, para ello usamos el siguiente codigo en Vagrantfile:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># -*- mode: ruby -*- </span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># -*- mode: ruby -*- </span>
 <span style="color:#75715e"># vi: set ft=ruby : </span>
 
 <span style="color:#66d9ef">Vagrant</span><span style="color:#f92672">.</span>configure(<span style="color:#e6db74">&#34;2&#34;</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>config<span style="color:#f92672">|</span> 
@@ -145,7 +145,7 @@
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>Una vez tengamos el anterior código en nuestro fichero de configuración de Vagrantfile, lo que debemos de hacer es levantar nuestra maquina y comprobar que tenemos 3 discos de 1GB cada uno con los que conseguiremos el RAID 5 de 2GB ya que, como sabemos, los RAID 5 guardan datos de paridad sobre los demás discos en su almacenamiento por lo que se pierde uno de los discos como almacenamiento.</p>
 <p>Para poder crear nuestro RAID5 debemos de tener en nuestro ordenador instalado el paquete de mdadm, para instalarlo usamos el siguiente comando:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo apt install mdadm
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo apt install mdadm
 </code></pre></div><p>Una vez instalado el paquete de mdadm, solo debemos elegir los discos que vamos a usar en nuestro RAID5, que mínimo deben ser 3, para ver los discos que disponemos podemos usar el comando:</p>
 <ul>
 <li>
@@ -159,11 +159,11 @@
 <ul>
 <li>Formato largo:</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo mdadm --create /dev/md5 --level<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> --raid-devices<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> /dev/sdb /dev/sdc /dev/sdd
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo mdadm --create /dev/md5 --level<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> --raid-devices<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> /dev/sdb /dev/sdc /dev/sdd
 </code></pre></div><ul>
 <li>Formato corto:</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo mdadm -C /dev/md5 -l<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> -n<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> /dev/sdb /dev/sdc /dev/sdd
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo mdadm -C /dev/md5 -l<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> -n<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> /dev/sdb /dev/sdc /dev/sdd
 </code></pre></div><h4 id="cual-es-la-diferencia-entre-raid1-y-raid5">¿Cual es la diferencia entre RAID1 y RAID5?</h4>
 <p>Raid1 es tener en espejo 2 discos, los 2 contienen la misma información y se replican entre ellos, esto lo puedes hacer por software.</p>
 <p>Raid5 es tener 3 o + discos y te ofrece redundancia de datos y con menos espacio perdido cosa que con RAID1 pierdes la mitad del disco.</p>
@@ -172,46 +172,46 @@
 <ul>
 <li>Mediante el fichero mdstat podemos ver el estado en el que se encuentran los raid software que tengamos en nuestro equipo o equipo remoto:</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ cat /proc/mdstat
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ cat /proc/mdstat
 </code></pre></div><ul>
 <li>Mediante un comando del paquete mdadm también podemos ver informacion mas detallada de un raid en concreto:</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo mdadm -D /dev/md5
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo mdadm -D /dev/md5
 </code></pre></div><p>Si nos fijamos bien en la información que hemos obtenido con este ultimo comando nos daremos cuenta que el tamaño total de nuestro raid es de 2GB.</p>
 <h3 id="tarea-3">Tarea 3</h3>
 <p>Ahora vamos crear dentro de nuestro raid5 un volumen logico de 500MB, para ello lo primero que debemos de hacer es tener instalado en nuestro equipo el paquete lvm2 que contiene las herramientas necesarias para poder crear volúmenes logicos.</p>
 <ul>
 <li>Instalamos el paquete lvm2:</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo apt install lvm2
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo apt install lvm2
 </code></pre></div><ul>
 <li>Una vez instalado el paquete de lvm2 lo que debemos de hacer es crear un grupo de volúmenes donde incluyamos a nuestro raid5, para ello el grupo de volúmenes se llamara “prueba” e incluirá a nuestro raid5 llamado “md5”:</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo vgcreate prueba /dev/md5
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo vgcreate prueba /dev/md5
 </code></pre></div><ul>
 <li>Una vez creado el grupo de volúmenes llamado “prueba”, lo que debemos hacer es crear nuestro volumen lógico de 500MB al que llamaremos “storage”:</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo lvcreate prueba -L 500M -n storage
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo lvcreate prueba -L 500M -n storage
 </code></pre></div><p>De esta forma, si realizamos el comando “lsblk -f” nos mostrara a información de los discos y particiones del sistema y podremos ver como dentro del raid5 “md5” que habíamos creado tenemos un grupo de volúmenes llamado “prueba” y que dentro de este grupo de volúmenes tenemos un volumen lógico llamado “storage”.</p>
 <h3 id="tarea-4">Tarea 4</h3>
 <p>En la siguiente tarea debemos darle un formato a nuestro volumen lógico que hemos creado, para ello vamos a darle el formato xfs, para poder dar este formato necesitamos tener instalado el paquete “xfsprogs”:</p>
 <ul>
 <li>Instalamos xfsprogs:</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo apt install xfsprogs
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo apt install xfsprogs
 </code></pre></div><p>Una vez instalado debemos usar el comando “mkfs” para poder formatear el volumen logico “storage” que hemos creado, para ello usaremos el siguiente comando:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo mkfs.xfs -f /dev/prueba/storage
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo mkfs.xfs -f /dev/prueba/storage
 </code></pre></div><p>Ahora si hacemos un “lsblk -f” veremos que el formato que tiene el volumen “storage” es el de xfs por lo que ya tendríamos el volumen formateado.</p>
 <h3 id="tarea-5">Tarea 5</h3>
 <p>Para esta tarea lo que debemos de hacer es montar el volumen “storage” en el directorio mnt/raid5, para ello debemos de tener creado en el directorio /mnt la carpeta “raid5”, una vez creada dicha carpeta lo que debemos de hacer es montar este volumen en ese directorio:</p>
 <ul>
 <li>Primero creamos la carpeta en el directorio /mnt:</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo mkdir /mnt/raid5
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo mkdir /mnt/raid5
 </code></pre></div><ul>
 <li>Ahora debemos de montar el volumen en el directorio creado y dentro de este crear un fichero vacío que llamaremos “hola.txt”</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">    vagrant@raid5:~$ sudo mount -t xfs /dev/prueba/storage /mnt/raid5/
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">    vagrant@raid5:~$ sudo mount -t xfs /dev/prueba/storage /mnt/raid5/
 
     y creamos el fichero “hola.txt”
 
@@ -220,7 +220,7 @@
 <ul>
 <li>El uuid del volumen a montar, para ello vamos a usar el siguiente comando:</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo blkid /dev/mapper/prueba-storage
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo blkid /dev/mapper/prueba-storage
 </code></pre></div><ul>
 <li>
 <p>Necesitaremos también el punto de montaje, que en este caso sera /mnt/raid5</p>
@@ -236,29 +236,29 @@
 </li>
 </ul>
 <p>En ese caso deberia de quedar de la siguiente forma en el fichero <strong>/etc/fstab</strong>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">UUID<span style="color:#f92672">=</span>84f5ed91-538a-4764-b123-624c797bb0dc	/mnt/raid5	xfs	defaults	0	<span style="color:#ae81ff">0</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">UUID<span style="color:#f92672">=</span>84f5ed91-538a-4764-b123-624c797bb0dc	/mnt/raid5	xfs	defaults	0	<span style="color:#ae81ff">0</span>
 </code></pre></div><h3 id="tarea-6">Tarea 6</h3>
 <p>Ahora debemos ver como actúa nuestro raid 5 cuando nosotros marcamos un disco como estropeado, para poder marcar un disco como estropeado ejecutamos el siguiente comando, en mi caso marcare como estropeado el disco “sdc”:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo mdadm -f /dev/md5 /dev/sdc
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo mdadm -f /dev/md5 /dev/sdc
 </code></pre></div><p>Vemos que no ha ocurrido nada, pero si nos vamos al comando que nos muestra los detalles de nuestro radi5, veremos lo siguiente:</p>
 <p>Donde vemos que donde dice “failed devices” nos marca como que uno de los disco esta estropeado y solo funcionan 2 de los 3 que tenemos. Y veremos que si queremos entrar en el fichero que hemos creado anteriormente veremos que nos deja verlo.</p>
 <h3 id="tarea-7">Tarea 7</h3>
 <p>Como tenemos el disco “sdc” estropeado lo que debemos de hacer ahora es retirarlo de nuestro raid, para ello debemos usar el siguiente comando:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo mdadm --remove /dev/md5 /dev/sdc
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo mdadm --remove /dev/md5 /dev/sdc
 </code></pre></div><p>Y nos saldrá el mensaje de que se ha retirado en caliente nuestro disco dañado, si nos vamos a la información del raid veremos que solo nos aparece que tiene 2 discos.</p>
 <h3 id="tarea-8">Tarea 8</h3>
 <p>Ahora que hemos sacado un disco de nuestro raid, vamos a volver a añadirlo para así poder ver como se sincroniza con los otros 2 discos que tenemos en el raid, para ello solo debemos localizar el disco que vayamos a introducir en el raid, en este caso sera el disco “sdc” que es el disco que hemos sacado anteriormente, para ello usamos el siguiente comando:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo mdadm --add /dev/md5 /dev/sdc
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo mdadm --add /dev/md5 /dev/sdc
 </code></pre></div><p>Ahora si queremos ver como se sincroniza solo debemos de ver los detalles del raid y veremos como nos aparece que 1 disco esta en “repuesto” y se esta sincronizando con los otros dos discos de nuestro raid:</p>
 <h3 id="tarea-9">Tarea 9</h3>
 <p>Hemos visto que, si eliminamos uno de los discos de nuestro raid, luego podemos poner otro pata que este se sincronice con los que tenemos en nuestro raid. En situaciones de raid que este en producción no se puede dejar solo los discos que tiene el raid y ya, sino que tenemos que asegurarnos que si uno de los discos falla, tenga otro de respaldo para así poder continuar en producción, a estos disco se le llamo discos de respaldo. Para añadir un disco de respaldo necesitamos otro disco mas en nuestra maquina. Una vez lo tengamos solo debemos de añadirlo a nuestro raid como hemos hecho anteriormente:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo mdadm --add /dev/md5 /dev/sde
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo mdadm --add /dev/md5 /dev/sde
 </code></pre></div><p>Aquí vemos como ahora tenemos un disco de respaldo añadido a nuestro raid.  Ahoara vamos a probar a marca un disco como estropeado, por ejemplo el disco “sdd”, para ello lo que debemos hacer es el mismo comando que hemos hecho anteriormente:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo mdadm -f /dev/md5 /dev/sdd
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo mdadm -f /dev/md5 /dev/sdd
 </code></pre></div><p>Y ahora si nos vamos a los detalles del disco veremos como automáticamente el disco de reserva a sustituido al disco que ha fallado:</p>
 <h3 id="tarea-10">Tarea 10</h3>
 <p>Ahora solo debemos de redimensionar nuestro volumen lógico con el siguiente comando.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo lvextend -L +1.5G /dev/mapper/prueba-storage
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vagrant@raid5:~$ sudo lvextend -L +1.5G /dev/mapper/prueba-storage
 </code></pre></div>
   
   </div>

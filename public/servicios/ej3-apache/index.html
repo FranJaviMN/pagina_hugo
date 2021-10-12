@@ -12,8 +12,8 @@
 <meta property="og:description" content="Ejercicio 3: VirtualHosting con Apache Introducción al VirtualHosting El término Hosting Virtual se refiere a hacer funcionar más de un sitio web (tales como www.company1.com y www.company2.com) en una sola máquina. Los sitios web virtuales pueden estar “basados en direcciones IP”, lo que significa que cada sitio web tiene una dirección IP diferente, o “basados en nombres diferentes”, lo que significa que con una sola dirección IP están funcionando sitios web con diferentes nombres (de dominio)." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://franjavimn.onrender.com/servicios/ej3-apache/" /><meta property="article:section" content="Servicios" />
-<meta property="article:published_time" content="2020-10-16T09:11:56&#43;02:00" />
-<meta property="article:modified_time" content="2020-10-16T09:11:56&#43;02:00" />
+<meta property="article:published_time" content="2020-10-16T09:11:56+02:00" />
+<meta property="article:modified_time" content="2020-10-16T09:11:56+02:00" />
 
 
   <meta name="twitter:card" content="summary"/>
@@ -25,7 +25,7 @@
     
   
   
-  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-light.css">
   
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -84,9 +84,9 @@
 <h2 id="introducción-al-virtualhosting">Introducción al VirtualHosting</h2>
 <p>El término Hosting Virtual se refiere a hacer funcionar más de un sitio web (tales como <a href="http://www.company1.com">www.company1.com</a> y <a href="http://www.company2.com">www.company2.com</a>) en una sola máquina. Los sitios web virtuales pueden estar “basados en direcciones IP”, lo que significa que cada sitio web tiene una dirección IP diferente, o “basados en nombres diferentes”, lo que significa que con una sola dirección IP están funcionando sitios web con diferentes nombres (de dominio). Apache fue uno de los primeros servidores web en soportar hosting virtual basado en direcciones IP.</p>
 <p>El servidor web Apache2 se instala por defecto con un host virtual. La configuración de este sitio la podemos encontrar en:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">/etc/apache2/sites-available/000-default.conf
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">/etc/apache2/sites-available/000-default.conf
 </code></pre></div><p>Y cuyo contenido es el siguiente:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">&lt;VirtualHost *:80&gt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">&lt;VirtualHost *:80&gt;
         <span style="color:#75715e">#ServerName www.example.com	-&gt; Nombre del sitio web</span>
         ServerAdmin webmaster@localhost -&gt; Correo del admin del servidor apache
         DocumentRoot /var/www/html	-&gt; Indicamos el directorio con los fichero que va a servir apache
@@ -101,9 +101,9 @@ Donde:
     ErrorLog: El nombre del fichero donde se refejaran los errores que encuentre
     CustomLog: Proporciona un registro flexible de las solicitudes de los clientes
 </code></pre></div><p>Y por defecto este sitio virtual está habilitado, por lo que podemos comprobar que existe un enlace simbólico a este fichero en el directorio /etc/apache2/sites-enables:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">lrwxrwxrwx <span style="color:#ae81ff">1</span> root root   <span style="color:#ae81ff">35</span> Oct  <span style="color:#ae81ff">3</span> 15:24 000-default.conf -&gt; ../sites-available/000-default.conf
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">lrwxrwxrwx <span style="color:#ae81ff">1</span> root root   <span style="color:#ae81ff">35</span> Oct  <span style="color:#ae81ff">3</span> 15:24 000-default.conf -&gt; ../sites-available/000-default.conf
 </code></pre></div><p>Podemos habilitar o deshabilitar nuestros host virtuales utilizando los siguientes comandos:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">a2ensite
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">a2ensite
 a2dissite
 </code></pre></div><p>En el fichero de configuración general <em><strong>/etc/apache2/apache2.conf</strong></em> nos encontramos las opciones de configuración del directorio padre del indicado en la directiva DocumentRoot (suponemos que todos los host virtuales van a estar guardados en subdirectorios de este directorio).</p>
 <h2 id="configuración-de-virtualhosting">Configuración de VirtualHosting</h2>
@@ -129,7 +129,7 @@ a2dissite
 <ol>
 <li>Lo primero que debemos de hacer es crear los ficheros de configuración de los dos sitios web que vamos a crear, para ello vamos a hacerlo de una forma facil copiando el fichero de configuracion que viene por defecto al instalar apache2 que es <em><strong>000-default.conf</strong></em>, este fichero se encuentra en el directorio <em><strong>/etc/apache2/sites-available</strong></em>. Una vez estemos en el directorio anterior copiamos el fichero por defecto dos veces, uno por cada sitio que vamos a crear:</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Primero nos dirigimos al directorio /etc/apache2/sites-available ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Primero nos dirigimos al directorio /etc/apache2/sites-available ####</span>
 
 cd /etc/apache2/sites-available
 
@@ -141,7 +141,7 @@ cp 000-default.conf departamentos.conf
 <ol start="2">
 <li>Ahora debemos de configurar nuestro fichero de configuracion de apache2 para que asi podamos tener como directorio de trabajo la ruta <em><strong>/srv/www</strong></em>, para ello realizamos los siguientes cambios:</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Nos dirigimos al fichero /etc/apache2/apache2.conf y descomentamos las siguientes lineas ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Nos dirigimos al fichero /etc/apache2/apache2.conf y descomentamos las siguientes lineas ####</span>
 
 &lt;Directory /srv/www&gt;
         Options Indexes FollowSymLinks
@@ -151,7 +151,7 @@ cp 000-default.conf departamentos.conf
 </code></pre></div><ol start="3">
 <li>Ahora modificamos el fichero de configuracion de los dos sitios que hemos generado anteriormente para que el ServerName sea <em><strong><a href="http://www.iesgn.org">www.iesgn.org</a></strong></em> y <em><strong><a href="http://www.departamentosgn.org">www.departamentosgn.org</a></strong></em> respectivamente y debemos de poner el DocumentRoot en los directorios <em><strong>/srv/www/iesgn</strong></em> y <em><strong>/srv/www/departamentos</strong></em>:</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Configuracion del fichero iesgn.conf ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Configuracion del fichero iesgn.conf ####</span>
 
 &lt;VirtualHost *:80&gt;
     ServerName www.iesgn.org
@@ -174,7 +174,7 @@ cp 000-default.conf departamentos.conf
 </code></pre></div><ol start="4">
 <li>Ahora lo que debemos de hacer es que estos ficheros de configuracion sean funcionales, para hacer esto debemos de crear un enlace simbolico a estos ficheros dentro del directorio <em><strong>/etc/apache2/sites-enabled</strong></em>, para ello usamos el siguiente comando:</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Crear el enlace simbolico con a2ensite ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Crear el enlace simbolico con a2ensite ####</span>
 
 a2ensite iesgn -&gt; enlace simbolico para el fichero iesgn.conf
 a2ensite departamentos -&gt; enlace simbolico para el fichero departamentos.conf
@@ -186,7 +186,7 @@ a2dissite departamentos -&gt; eliminar el enlace simbolico para el fichero depar
 </code></pre></div><ol start="5">
 <li>Ahora que tenemos los enlaces creados solo tenemos que añadir el contenido al DocumentRoot de cada uno de los sitios que hemos creado, para ello debemos de dirigirnos al directorio <em><strong>/srv/www</strong></em> y ahi debemos de crear dos carpetas llamadas <em>iesgn</em> y <em>departamentos</em> respectivamente. Una vez creados los directorios, dentro de cada uno de ellos añadimos un fichero index.html con un mensaje de bienvenida a cada pagina:</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Index.html del sitio iesgn ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Index.html del sitio iesgn ####</span>
 
 &lt;h1&gt; Hola, bienvenido a la pagina de iesgn &lt;/h1&gt;
 
@@ -194,15 +194,15 @@ a2dissite departamentos -&gt; eliminar el enlace simbolico para el fichero depar
 
 &lt;h1&gt; Hola, bienvenido a la pagina de departamentos &lt;/h1&gt;
 </code></pre></div><p>Una vez creados estos fichero solo debemos de cambiarle el propietario al usuario de opache llamado <em><strong>www-data</strong></em> de la siguiente forma:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo chown -R www-data:www-data <span style="color:#f92672">(</span>directorio<span style="color:#f92672">)</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo chown -R www-data:www-data <span style="color:#f92672">(</span>directorio<span style="color:#f92672">)</span>
 </code></pre></div><p>Despues de realizar todos estos cambios vamos a reiniciar el servicio de apache2 para que todos estos cambios se realicen:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Reiniciamos el servicio apache ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Reiniciamos el servicio apache ####</span>
 
 sudo systemctl reload apache2.service
 </code></pre></div><ol start="6">
 <li>Ahora en nuestra maquina cliente, que en este caso va a ser nuestro pc, nos dirigimos al fichero <em><strong>/etc/hosts</strong></em> este fichero se utiliza para obtener una relación entre un nombre de máquina y una dirección IP. Por lo tanto debemos de añadir las siguientes lineas:</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#IP SERVIDOR#        #NOMBRE DEL SITIO#</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#IP SERVIDOR#        #NOMBRE DEL SITIO#</span>
 
 192.168.100.100        www.iesgn.org 
 192.168.100.100        www.departamentosgn.org

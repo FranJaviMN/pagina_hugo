@@ -13,8 +13,8 @@
 Creacion en el entorno de desarrollo Lo primero que debemos de hacer es desplegar nuestra aplicacion en nuestro entorno de desarrollo para asi, mediante un repositorio en github, podamos llevarnos todo el despliegue a nuestra maquina en desarrollo, en este caso va a ser la maquina Quijote." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://franjavimn.onrender.com/implantacion/cms-python/" /><meta property="article:section" content="Implantacion" />
-<meta property="article:published_time" content="2021-01-22T20:22:10&#43;01:00" />
-<meta property="article:modified_time" content="2021-01-22T20:22:10&#43;01:00" />
+<meta property="article:published_time" content="2021-01-22T20:22:10+01:00" />
+<meta property="article:modified_time" content="2021-01-22T20:22:10+01:00" />
 
 
   <meta name="twitter:card" content="summary"/>
@@ -27,7 +27,7 @@ Creacion en el entorno de desarrollo Lo primero que debemos de hacer es desplega
     
   
   
-  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-light.css">
   
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -87,7 +87,7 @@ Creacion en el entorno de desarrollo Lo primero que debemos de hacer es desplega
 <h2 id="creacion-en-el-entorno-de-desarrollo">Creacion en el entorno de desarrollo</h2>
 <p>Lo primero que debemos de hacer es desplegar nuestra aplicacion en nuestro entorno de desarrollo para asi, mediante un repositorio en github, podamos llevarnos todo el despliegue a nuestra maquina en desarrollo, en este caso va a ser la maquina <strong>Quijote</strong>.</p>
 <p>Lo primero que debemos de hacer es crear un entorno virtual python en el cual vamos a estar instalando los paquetes necesarios para que no interfieran con los paquetes de nuestra maquina por lo que debemos de crear el entorno de desarrollo:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos los paquetes necesarios ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos los paquetes necesarios ####</span>
 francisco@debian10:~$ sudo apt install python3-venv
 
 <span style="color:#75715e">#### Creamos el entorno virtual ####</span>
@@ -116,27 +116,27 @@ francisco@debian10:~/Documentos/Implantacion/Python/practica-cms$ source mezzani
 <p>Una vez ahi, debemos de irnos a la pestaña donde dice <strong>Settings</strong> y ahi debemos de buscar la zona donde pone <strong>Site</strong> y ahi tendremos dos campos, uno en el que viene una pequeña descripcion de la pagina y en la otra el nombre de la pagina. Lo editamos a nuestro gusto y volvemos a la pagina de inicio donde ya deberiamos de ver los cambios:</p>
 <p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Implantacion/mezzanine/cambios-desarrollo-mezanine.png" alt="cambios en desarrollo"></p>
 <p>Despues de esto debemos de realizar una copia de la base de datos para llevarnosla a nuestro entorno de produccion donde nosotros la cargaremos en nuestra base de datos <strong>mariadb</strong>, por lo que vamos a ejecutar la copia de la base de dtaos en el entorno de desarrollo:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Realizamos la copia de la base de datos ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Realizamos la copia de la base de datos ####</span>
 <span style="color:#f92672">(</span>mezzanine<span style="color:#f92672">)</span> francisco@debian10:~/Documentos/Implantacion/Python/practica-cms/python-cms-mezzanine/mezzanine_openstack$ python manage.py dumpdata &gt; copia_db.json
 </code></pre></div><p>Despues de esto solo debemos de llevarnoslo a nuestro repositorio de git:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Añadimos todos los ficheros que tenemos ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Añadimos todos los ficheros que tenemos ####</span>
 francisco@debian10:~/Documentos/Implantacion/Python/practica-cms/python-cms-mezzanine$ git add mezzanine_openstack/
 
 <span style="color:#75715e">#### Añadimos los commits que deseemos y lo subimos al repositorio ####</span>
 francisco@debian10:~/Documentos/Implantacion/Python/practica-cms/python-cms-mezzanine$ git push
 </code></pre></div><h2 id="despliegue-en-produccion">Despliegue en produccion</h2>
 <p>Para ello vamos a hacer primero los preparativos con la base de datos mariadb ya que, esta base de datos se encuentra en otra maquina, por lo que debemos de crear en nuestra maquina con la base de datos un usuario especifico para esta aplicacion que vamos a usar, en mi caso la maquina es <strong>Sancho</strong> y su ip es <strong>10.0.1.8</strong>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el usuario con una contraseña ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el usuario con una contraseña ####</span>
 MariaDB <span style="color:#f92672">[(</span>none<span style="color:#f92672">)]</span>&gt; CREATE USER <span style="color:#e6db74">&#39;mezzanine&#39;</span>@<span style="color:#e6db74">&#39;10.0.2.3&#39;</span> IDENTIFIED BY <span style="color:#e6db74">&#39;mezzanine&#39;</span>;
 Query OK, <span style="color:#ae81ff">0</span> rows affected <span style="color:#f92672">(</span>0.100 sec<span style="color:#f92672">)</span>
 </code></pre></div><p>Una vez hecho esto debemos de asegurarnos de que nuestra base de datos mariadb es capaz de ser accedida desde la ip donde tenemos nuestra aplicacion, por lo que debemos de dirigirnos a nuestro fichero de configuracion <strong>/etc/mysql/mariadb.conf.d/50-server.cnf</strong> y vemos que la linea <em>bind-address</em> esta de la siguiente forma:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Comprobamos que esta correcto ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Comprobamos que esta correcto ####</span>
 bind-address            <span style="color:#f92672">=</span> 0.0.0.0
 
 <span style="color:#75715e">#### Reiniciamos el servicios de mariadb ####</span>
 root@sancho:~# systemctl restart mariadb
 </code></pre></div><p>De esta forma ya tendremos la base de datos accesible desde nuestra maquina <strong>quijote</strong>, por lo que vamos a hacer una prueba desde quijote para ver que podemos acceder, aunque debemos de tener en cuenta que tenemos que tener instalado un paquete llamado mariadb para poder realizar la conexion a la base de datos remota:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos (si no lo tuvieramos) el paquete mariadb ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos (si no lo tuvieramos) el paquete mariadb ####</span>
 <span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ sudo dnf install mariadb
 
 <span style="color:#75715e">#### Hacemos la comprobacion ####</span>
@@ -155,20 +155,20 @@ MariaDB <span style="color:#f92672">[(</span>none<span style="color:#f92672">)]<
 <h2 id="instalacion-de-paquetes-necesarios">Instalacion de paquetes necesarios</h2>
 <p>Antes de seguir debemos de instalar algunos paquetes que nos haran falta para poder poner nuestra aplicacion en produccion, para ello debemos de tener instalado <strong>python3-venv</strong> para poder crear el entorno virtual de python, debemos de tener instalado <strong>uwsgi</strong> que es el servidor de aplicaciones que usaremos junto a apache2 para servir nuestra pagina y tambien debemos de instalar el conector con la base de datos que es <strong>python3-mysqldb</strong>. Si no fueran suficientes, mas adelante indicare los paquetes que debemos de tener instalados ya que iremos paso a paso.</p>
 <p>Primero necesitamos nuestro repositorio, por lo que vamos a instalar el paquete llamado <strong>git</strong> y clonamos el repositorio via https:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos el paquete git ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos el paquete git ####</span>
 <span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ sudo dnf install git
 
 <span style="color:#75715e">#### Clonamos el repositorio en /var/www/ ####</span>
 <span style="color:#f92672">[</span>centos@quijote www<span style="color:#f92672">]</span>$ sudo git clone https://github.com/FranJaviMN/python-cms-mezzanine.git
 </code></pre></div><p>Una vez ya tengamos clonado el repositorio podemos seguir con nuestro despliegue.</p>
 <p>Hecho esto ahora vamos a crear nuestro entorno virtual con python3-venv por lo que lo vamos a llamar mezzanine:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el entorno virtual ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos el entorno virtual ####</span>
 <span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ python3 -m venv mezzanine
 
 <span style="color:#75715e">#### Entramos en el entorno virtual y copiamos los paquetes del fichero requirement.txt ####</span>
 <span style="color:#f92672">(</span>mezzanine<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ pip install -r /var/www/python-cms-mezzanine/mezzanine_openstack/requirements.txt
 </code></pre></div><p>Una vez hecho esto tendremos los mismos paquetes instalados en el entorno de produccion como en el entorno de desarrollo. Ahora necesitamos varios paquetes, priemro el paquete que permite a apache2 ejecutar codigo pyhton, segundo debemos de instalar el modulo para que python trabaje con mariadb y luego, en el entorno virtual debemos de instalar el conector:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos el modulo de wsgi ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos el modulo de wsgi ####</span>
 <span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ sudo dnf install python3-mod_wsgi
 
 <span style="color:#75715e">#### Instalamos en el entorno virtual el conector ####</span>
@@ -184,7 +184,7 @@ Antes debemos de tener instalados en nuestra maquina los siguientes paquetes:
 
 <span style="color:#f92672">(</span>mezzanine<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ pip install uwsgi
 </code></pre></div><p>Ahora si nosotros intentamos ejecutar <strong>uwsgi</strong> veremos que se ejecuta sin problemas, en mi caso vamos a ejecutar el cms llamado mezzanine:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Desde el entorno virtual ejecutamos uwsgi ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Desde el entorno virtual ejecutamos uwsgi ####</span>
 <span style="color:#f92672">(</span>mezzanine<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ mezzanine/bin/uwsgi --http <span style="color:#ae81ff">8080</span> --plugin python35 --chdir /var/www/python-cms-mezzanine/mezzanine_openstack/ --wsgi-file /var/www/python-cms-mezzanine/mezzanine_openstack/mezzanine_openstack/wsgi.py --process <span style="color:#ae81ff">4</span> --threads <span style="color:#ae81ff">2</span> --master
 
 <span style="color:#75715e">#### Nos debe salir de la siguiente manera ####</span>
@@ -234,13 +234,13 @@ goodbye to uWSGI.
 </code></pre></div><h2 id="conexion-con-la-base-de-datos">Conexion con la base de datos</h2>
 <p>Para ello debemos de tener en cuenta que la base de datos se encuentra en otra maquina y en otra red, mas concretamente en la maquina sancho por lo que debemos de asegurarnos que nos podemos conectar a ella sin problemas como hemos visto al principio del post.</p>
 <p>Ahora debemos de crear una nueva base de datos en la que vamos copiar las tablas que necesitamos para poder seguir con el ejercicio por lo que nos dirigimos a nuestra maquina <strong>Sancho</strong> y ahi vamos a crear la base de datos llamada <strong>mezzanine</strong> y le vamos a dar al usuario <strong>mezzanine</strong> los privilegios necesarios para poder interactuar con esa tabla, por lo que hacemos lo siguiente:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos nuestra nueva tabla ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Creamos nuestra nueva tabla ####</span>
 MariaDB <span style="color:#f92672">[(</span>none<span style="color:#f92672">)]</span>&gt; create database mezzanine;
 
 <span style="color:#75715e">#### Le damos los privilegios necesarios al usuario mezzanine ####</span>
 MariaDB <span style="color:#f92672">[(</span>none<span style="color:#f92672">)]</span>&gt; GRANT ALL privileges ON <span style="color:#e6db74">`</span>mezzanine<span style="color:#e6db74">`</span>.* TO <span style="color:#e6db74">&#39;mezzanine&#39;</span>@<span style="color:#e6db74">&#39;10.0.2.3&#39;</span>;
 </code></pre></div><p>De esta forma, desde nuestra maquina vamos a conectarnos a la base de datos y vamos a usar la base de datos que hemos creado para ver si funciona correctamente:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Nos conectamos remotamente ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Nos conectamos remotamente ####</span>
 <span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ mysql -u mezzanine -p -h bd.franjavier.gonzalonazareno.org
 Enter password: 
 Welcome to the MariaDB monitor.  Commands end with ; or <span style="color:#ae81ff">\g</span>.
@@ -261,7 +261,7 @@ You can turn off this feature to get a quicker startup with -A
 Database changed
 MariaDB <span style="color:#f92672">[</span>mezzanine<span style="color:#f92672">]</span>&gt; 
 </code></pre></div><p>Como vemos funciona correctamente por lo que podemos seguir con la copia de la base de datos a mysql, para ello nos dirigimos al fichero de <strong>mezzanine</strong> que se llama <strong>settings.py</strong> y ahi buscamos el apartado llamado <strong>DATABASES</strong> y debemos de añadirle las credenciales de la base de datos asi como su ip y el puerto que usa:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">DATABASES <span style="color:#f92672">=</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">DATABASES <span style="color:#f92672">=</span> {
     <span style="color:#e6db74">&#34;default&#34;</span>: {
         <span style="color:#75715e"># Add &#34;postgresql_psycopg2&#34;, &#34;mysql&#34;, &#34;sqlite3&#34; or &#34;oracle&#34;.</span>
         <span style="color:#e6db74">&#34;ENGINE&#34;</span>: <span style="color:#e6db74">&#34;django.db.backends.mysql&#34;</span>,
@@ -278,7 +278,7 @@ MariaDB <span style="color:#f92672">[</span>mezzanine<span style="color:#f92672"
     }
 }
 </code></pre></div><p>Asi ya tendremos la base de datos asignada por lo que vamos a proceder a copiar los datos a la base de datos, para ello debemos de usar el entorno virtual de python y ejecutar el siguiente comando:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Usamos el entorno virtual ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Usamos el entorno virtual ####</span>
 <span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ source mezzanine/bin/activate
 
 <span style="color:#75715e">#### Creamos la migracion a la base de datos remota ####</span>
@@ -290,7 +290,7 @@ MariaDB <span style="color:#f92672">[</span>mezzanine<span style="color:#f92672"
 <h2 id="despliegue-del-cms-en-apache2">Despliegue del CMS en apache2</h2>
 <p>Para ello debemos de tener ya instalado apache2 en nuestra maquina, recalco que la maquina es <strong>centos8</strong> por lo que la instalacion de apache2 cambia un poco, pero puedes ver como lo instale en el siguiente <a href="https://franjavimn.onrender.com/servicios/trabajo-openstack/">documento</a>.</p>
 <p>Cuadno lo tengamos instalado lo que vamos a hacer es formar un nuevo virtualhost el cual vamos a llamar <strong>mezzanine.conf</strong> el cual va a tener solo la siguiente información:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">&lt;VirtualHost *:80&gt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">&lt;VirtualHost *:80&gt;
     ServerName python.franjavier.gonzalonazareno.org
     DocumentRoot /var/www/python-cms-mezzanine/mezzanine_openstack
     ErrorLog /var/www/python-cms-mezzanine/log/error.log
@@ -306,7 +306,7 @@ MariaDB <span style="color:#f92672">[</span>mezzanine<span style="color:#f92672"
 
     Redirect permanent / https://python.franjavier.gonzalonazareno.org
 </code></pre></div><p>Donde vamos a tener nuestro fichero con la redireccion hacia <strong>https</strong>, por lo que tendremos un fichero llamado <strong>mezzanine-https.conf</strong> con la siguiente configuración:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">&lt;VirtualHost *:443&gt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">&lt;VirtualHost *:443&gt;
     ServerName python.franjavier.gonzalonazareno.org
     DocumentRoot /var/www/python-cms-mezzanine/mezzanine_openstack
     ErrorLog /var/www/python-cms-mezzanine/log/error.log
@@ -336,14 +336,14 @@ MariaDB <span style="color:#f92672">[</span>mezzanine<span style="color:#f92672"
 &lt;/VirtualHost&gt;
 </code></pre></div><p>Donde vemos que vamos a usar como proxy nuestro apache como proxy inverso, por lo que vamos a usar uwsgi y vamos a usar el puerto <strong>http :8080</strong>, por lo que le indicamos como va a hacer el proxy y en que puerto. La opcion que estamos añadiendo de <strong>ProxyPass /static !</strong> nos sirve para que, la carpeta de static no pase por el proxy para asi poder servir adecuadamente los ficheros estaticos. De tal forma que si reinciamos el servicio de apache debe de ir bien.</p>
 <p>Ahora necesitamos iniciar el proxy con uwsgi, para ell podemos, o bien usar un fichero <strong>.ini</strong> o un comando, para este vamos a usar un fichero .ini:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero uwsgi.ini ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Fichero uwsgi.ini ####</span>
 <span style="color:#f92672">[</span>uwsgi<span style="color:#f92672">]</span>
 http <span style="color:#f92672">=</span> :8080
 chdir <span style="color:#f92672">=</span> /var/www/python-cms-mezzanine/mezzanine_openstack 
 wsgi-file <span style="color:#f92672">=</span> /var/www/python-cms-mezzanine/mezzanine_openstack/mezzanine_openstack/wsgi.py
 master
 </code></pre></div><p>Lo inciamos y veremos lo siguiente:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">(</span>mezzanine<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ uwsgi uwsgi.ini 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">(</span>mezzanine<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>centos@quijote ~<span style="color:#f92672">]</span>$ uwsgi uwsgi.ini 
 <span style="color:#f92672">[</span>uWSGI<span style="color:#f92672">]</span> getting INI configuration from uwsgi.ini
 *** Starting uWSGI 2.0.19.1 <span style="color:#f92672">(</span>64bit<span style="color:#f92672">)</span> on <span style="color:#f92672">[</span>Mon Jan <span style="color:#ae81ff">25</span> 10:37:57 2021<span style="color:#f92672">]</span> ***
 compiled with version: 8.3.1 <span style="color:#ae81ff">20191121</span> <span style="color:#f92672">(</span>Red Hat 8.3.1-5<span style="color:#f92672">)</span> on <span style="color:#ae81ff">19</span> January <span style="color:#ae81ff">2021</span> 11:18:26

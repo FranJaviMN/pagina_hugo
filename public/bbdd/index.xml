@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Tue, 09 Mar 2021 12:28:51 +0100</lastBuildDate><atom:link href="https://franjavimn.onrender.com/bbdd/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 12 Oct 2021 20:52:50 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/bbdd/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Sql_desde_cero</title>
+      <link>https://franjavimn.onrender.com/bbdd/sql_desde_cero/</link>
+      <pubDate>Tue, 12 Oct 2021 20:52:50 +0200</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/bbdd/sql_desde_cero/</guid>
+      <description>Bases de datos Una base de datos es una recopilación organizada de información o datos estructurados, que normalmente se almacena de forma electrónica en un sistema informático. Normalmente, una base de datos está controlada por un sistema de gestión de bases de datos (DBMS). En conjunto, los datos y el DBMS, junto con las aplicaciones asociadas a ellos, reciben el nombre de sistema de bases de datos, abreviado normalmente a simplemente base de datos.</description>
+    </item>
+    
     <item>
       <title>Movimiento De Datos</title>
       <link>https://franjavimn.onrender.com/bbdd/movimiento-de-datos/</link>

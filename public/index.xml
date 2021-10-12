@@ -7,7 +7,36 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>es-ES</language>
     <copyright>Francisco Javier Martín Núñez</copyright>
-    <lastBuildDate>Tue, 01 Jun 2021 11:55:04 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 12 Oct 2021 20:52:50 +0200</lastBuildDate><atom:link href="https://franjavimn.onrender.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Sql_desde_cero</title>
+      <link>https://franjavimn.onrender.com/bbdd/sql_desde_cero/</link>
+      <pubDate>Tue, 12 Oct 2021 20:52:50 +0200</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/bbdd/sql_desde_cero/</guid>
+      <description>Bases de datos Una base de datos es una recopilación organizada de información o datos estructurados, que normalmente se almacena de forma electrónica en un sistema informático. Normalmente, una base de datos está controlada por un sistema de gestión de bases de datos (DBMS). En conjunto, los datos y el DBMS, junto con las aplicaciones asociadas a ellos, reciben el nombre de sistema de bases de datos, abreviado normalmente a simplemente base de datos.</description>
+    </item>
+    
+    <item>
+      <title>Buildah</title>
+      <link>https://franjavimn.onrender.com/proyecto-podman/buildah/</link>
+      <pubDate>Tue, 01 Jun 2021 13:15:43 +0200</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/proyecto-podman/buildah/</guid>
+      <description>Buildah Buildah es una herramienta de linea de comandos que nos permite la construcción de imagenes para contenedores del tipo OCI(Open Container Initiative).
+Buildah es una herramienta de creación que le permite controlar cómo se disponen las capas de imágenes y se accede a los datos durante las creaciones. Para utilizar este programa, no se requiere ser el usuario root por lo que, al igual que ocurre con podman, es una herramienta rootless y podemos usarla siendo usuarios normales del sistema.</description>
+    </item>
+    
+    <item>
+      <title>Skopeo</title>
+      <link>https://franjavimn.onrender.com/proyecto-podman/skopeo/</link>
+      <pubDate>Tue, 01 Jun 2021 12:13:22 +0200</pubDate>
+      
+      <guid>https://franjavimn.onrender.com/proyecto-podman/skopeo/</guid>
+      <description>Skopeo Cuando hablamos de contenedores tambien podemos hablar de las imagenes que se usan para la creación de estos, las imagenes normalmente las descargamaos desde registros como son Docker Hub o sobre registros privados creados en local.
+Si queremos ver que tipo de imagenes tenemos en estos registros, ver si la imagen existe, obtener informacion sobre una imagen&amp;hellip; Para ello tenemos la herramienta de Skopeo que es una utilidad línea de comandos que realiza varias operaciones en imágenes de contenedores y registros de imágenes.</description>
+    </item>
+    
     <item>
       <title>Compose Wordpress</title>
       <link>https://franjavimn.onrender.com/proyecto-podman/compose-wordpress/</link>
@@ -70,7 +99,7 @@ Podemos ver mas parametros y variables a configurar en la documentacion:
       
       <guid>https://franjavimn.onrender.com/proyecto-podman/podman/</guid>
       <description>Contenedores podman En el siguiente post vamos a ver como podemos encontrar una alternativa a los contenedores Docker sin necesidad de tener que aprender nuevos comandos y sintaxis, para ello, la solución son los contenedores Podman
- Repositorio GitHub: https://github.com/FranJaviMN/Proyecto-integrado  ¿Qué son los contenedores Podman? Lo primero de lo que vamos a hablar es de donde surgio este motor de contenedores, sus caracteristicas mas representativas y las diferencias que podemos ver con su rival mas directo, Docker.</description>
+¿Qué son los contenedores Podman? Lo primero de lo que vamos a hablar es de donde surgio este motor de contenedores, sus caracteristicas mas representativas y las diferencias que podemos ver con su rival mas directo, Docker.</description>
     </item>
     
     <item>

@@ -13,8 +13,8 @@
 ¿Qué es Guacamole apache? Guacamole es un proyecto de escritorio remoto desarrollado por la Apache Software Foundation. Es un sistema compuesto por una parte cliente y una parte servidor. La aplicación servidor es la que se encarga de la autenticación y precisa de la instalación en infraestructura propia o acogerse la un servicio de terceros y estar accesible desde la parte cliente." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://franjavimn.onrender.com/implantacion/instalar-guacamole/" /><meta property="article:section" content="Implantacion" />
-<meta property="article:published_time" content="2020-12-30T16:13:32&#43;01:00" />
-<meta property="article:modified_time" content="2020-12-30T16:13:32&#43;01:00" />
+<meta property="article:published_time" content="2020-12-30T16:13:32+01:00" />
+<meta property="article:modified_time" content="2020-12-30T16:13:32+01:00" />
 
 
   <meta name="twitter:card" content="summary"/>
@@ -27,7 +27,7 @@
     
   
   
-  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-white.css">
+  <link rel="stylesheet" href="https://franjavimn.onrender.com/css/style-light.css">
   
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -95,20 +95,20 @@
 </ul>
 <h2 id="instalacion-de-guacamole-en-tomcat">Instalacion de Guacamole en tomcat</h2>
 <p>LO primero que debemos de hacer es instalar el contenedor de servlets <strong>tomcat</strong> en su verison <strong>9</strong>, para ello lo estamos realizando en una maquina con un sistema debian 10 buster, por lo que el nombre del paquete con <strong>tomcat</strong> se llama <strong>tomact9</strong>, por lo que vamos a proceder a instalar dicho paquete en nuestra maquina:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos tomcat9 ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos tomcat9 ####</span>
 debian@pruebas-apache-tomcat:~$ sudo apt install tomcat9
 </code></pre></div><p>Una vez lo tengamos instalado vemos que como dependendia a nuestro paquete de tomcat 9 nos ha instalado el paquete <strong>openjdk-11-jre-headless</strong>, que corresponde a una implementación de la JVM mínima para poder ejecutar nuestros programas java.</p>
 <p>Una vez hecho esta ya tendremos tomcat disponible escuchando en el puerto 8080:</p>
 <p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Implantacion/java/principio-tomcat.png" alt="tomcat inicio"></p>
 <p>Ya que tenemos tomcat instalado vamos a proceder a instalar el cms llamado <strong>Guacamole</strong>, para ello nos dirigimos a la pagina principal del proyecto guacamole y descargamos el fichero <strong>.war</strong>, una vez lo tengamos descargado debemos de llevarnos ese fichero al directorio donde vamos a desplegar nuestra aplicacion gaucamole que es en <strong>/var/lib/tomcat9/webapps/</strong> y ahi lo movemos y como resultado debemos de tener algo como lo siguiente:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@pruebas-apache-tomcat:/var/lib/tomcat9/webapps$ ls
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">debian@pruebas-apache-tomcat:/var/lib/tomcat9/webapps$ ls
 guacamole-1.2.0  guacamole-1.2.0.war  ROOT
 </code></pre></div><p>Como vemos, al meter el fichero .war en nuestra carpeta de despliegues nos ha generado una carpeta que es de la descompresion del fichero .war, por lo que si ahora entramos en la url <strong>http://172.22.200.147:8080/guacamole-1.2.0/#/</strong></p>
 <p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Implantacion/java/guacamole-tomcat.png" alt="guacamole tomcat"></p>
 <p>De esta forma ya tenemos el cms de guacamole instalado en tomcat pero ahora queremos usar apache con tomcat para poder asi crear un proxy inverso.</p>
 <h2 id="instalacion-de-apache-para-trabajar-con-tomcat">Instalacion de apache para trabajar con tomcat</h2>
 <p>Para ello lo que vamos a hacer es instalar el paquete de apache2 en debian y una vez lo tengamos instalado vamos a confirgurar el virtualhost para que sirva una pagina sencilla:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos apache2 ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos apache2 ####</span>
 debian@pruebas-apache-tomcat:~$ sudo apt install apache2
 
 <span style="color:#75715e">#### Configuramos el virtualhost ####</span>
@@ -132,20 +132,20 @@ debian@pruebas-apache-tomcat:~$ sudo systemctl reload apache2.service
 </code></pre></div><p>Ahora si entramos en <strong><a href="http://www.prueba-tomcat.org">www.prueba-tomcat.org</a></strong> nos debe de salir algo como lo siguiente:</p>
 <p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Implantacion/java/apache2-funcionando.png" alt="apache2 funcionando"></p>
 <p>Ahora que ya tenemos nuestro apache funcionando vamos a conectar tanto apache2 como tomcat para asi poder usarlo como proxy inverso, para ello primero debemos de instalar unos modulos de apache para poder realizar la conexion entre ellos:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos los modulos necesarios ####</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#### Instalamos los modulos necesarios ####</span>
 debian@pruebas-apache-tomcat:~$ sudo apt install libapache2-mod-jk
 
 <span style="color:#75715e">#### Habilitamos los modulos de los conectores ####</span>
 debian@pruebas-apache-tomcat:~$ sudo a2enmod proxy proxy_http
 </code></pre></div><p>UNa vez hayamos hecho el paso anterior debemos de irnos al virtualhost que tenemos creado y ahi debemos de añadir las siguientes lineas:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">&lt;Location /guacamole/&gt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">&lt;Location /guacamole/&gt;
     Order allow,deny
     Allow from all
     ProxyPass http://localhost:8080/guacamole-1.2.0/ flushpackets<span style="color:#f92672">=</span>on
     ProxyPassReverse http://localhost:8080/guacamole-1.2.0/
 &lt;/Location&gt;
 </code></pre></div><p>Y en nuestro fichero index.html vamos a añadir lo siguiente:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">p</span>&gt;enlace hacia guacamole&lt;/<span style="color:#f92672">p</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">http://www.prueba-tomcat.org/guacamole/#/</span>&gt; Ir a guacamole &lt;/<span style="color:#f92672">a</span>&gt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">p</span>&gt;enlace hacia guacamole&lt;/<span style="color:#f92672">p</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">http://www.prueba-tomcat.org/guacamole/#/</span>&gt; Ir a guacamole &lt;/<span style="color:#f92672">a</span>&gt;
 </code></pre></div><p>Reinciamos el servicio de apache y al entrar en la url <a href="http://www.prueba-tomcat.org/">http://www.prueba-tomcat.org/</a> veremos un enlace que nos llevara hasta la aplicacion de guacamole:</p>
 <p><img src="https://raw.githubusercontent.com/FranJaviMN/elementos-grado/main/Implantacion/java/guacamole-apache-tomcat.png" alt="guacamole tomcat apache"></p>
 
