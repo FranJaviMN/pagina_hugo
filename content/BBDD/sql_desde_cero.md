@@ -1,5 +1,5 @@
 ---
-title: "Sql_desde_cero"
+title: "Sql desde cero"
 date: 2021-10-12T20:52:50+02:00
 draft: true
 ---
