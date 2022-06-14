@@ -25,8 +25,8 @@ theme = "cactus"
   weight = 4
 
 [[menu.main]]
-  name = "BBDD"
-  url = "/BBDD"
+  name = "Python"
+  url = "/Python"
   weight = 5
 
 [[menu.main]]
