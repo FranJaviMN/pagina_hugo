@@ -67,3 +67,100 @@ Python 3.6.8
 ### Instalación en Windows 10
 
 Para ello lo que debemos de hacer es dirigirnos a este [enlace a la pagina de python](https://www.python.org/downloads/) y ahi, podemos descargar la versión que necesitemos, en nuestro caso lo mas recomendable es instalar la ultima versión en nuestro sistema, para ello solo debemos de descargar el paquete y ejecutar el fichero **.exe** y seguir los pasos del instalador.
+
+## 3. Tipos de datos
+
+En python tenemos distintos tipos de datos que podemos usar como son los siguientes:
+
+* **Numeros enteros**: Podemos usar numeros enteros como pueden ser 8, 10, 200...
+* **Numeros reales**: Tambien podemos usar numeros reales como 10.7, 137.78...
+* **Cadenas de texto**: Podemos usar cadenas de texto que podemos mostrar por pantalla, usar variables...
+
+### Variables
+
+Una de las partes mas importantes es el uso de **variables** en las cuales podemos almacenar distintos tipos de datos para poder usarlos mas adelante o, tambien podemos guardar datos los cuales se iran modificando a lo largo del programa
+```python
+## Ejemplos de variables
+
+>>> cadena_texto = "hola mundo"
+>>> print(cadena_texto)
+hola mundo
+
+>>> cadena_numeros = 88
+>>> print(cadena_numeros)
+88
+```
+
+### Operadores
+
+Tambien podemos hacer uso de distintos operadores para realizar operaciones como pueden los siguientes operadores:
+
+* **Operadores aritmeticos**: Podemos usar tanto sumas(+) como restas(-) para realizar operaciones aritmeticas, tambien podemos multiplicar(\*), podemos dividr(/), podemos hacer divisiones enteras(//), podemos hacer el modulo de un numero(%) o podemos hacer pontencias de un numero(\*\*).
+
+- Sumas y restas
+```python
+### Ejemplos de sumas
+
+>>> print(3+9)
+12
+
+>>> print(3+34553.23)
+34556.23
+
+### Ejemplos de restas
+>>> print(2321414-34553.23)
+2286860.77
+
+>>> print(2321414-334344314553.23)
+-334341993139.23
+
+## Tambien podemos unir cadenas de texto
+
+>>> print("hola que tal" + " estas amigo?")
+hola que tal estas amigo?
+```
+
+- Multiplicaciones y divisiones
+```python
+### Ejemplo de multiplicaciones
+
+>>> print(3434*2)
+6868
+
+>>> print(3*2.99)
+8.97
+
+### Ejemplos de divisiones
+
+>>> print(3/2.99)
+1.0033444816053512
+
+>>> print(3/2344)
+0.001279863481228669
+```
+
+- Divisiones enteras, modulos y potencias
+```python
+### Ejemplo divisiones enteras
+
+>>> print(80//2)
+40
+>>> print(80//2.24)
+35.0
+
+### Ejemplos de modulos
+
+>>> print(80%2.24)
+1.5999999999999925
+
+print(80%2443)
+80
+
+### Ejemplos de potencias
+
+>>> print(80**2)
+6400
+
+>>> print(2**10)
+1024
+```
