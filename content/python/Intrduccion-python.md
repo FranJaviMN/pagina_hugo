@@ -97,7 +97,7 @@ Tambien podemos hacer uso de distintos operadores para realizar operaciones como
 
 * **Operadores aritmeticos**: Podemos usar tanto sumas(+) como restas(-) para realizar operaciones aritmeticas, tambien podemos multiplicar(\*), podemos dividr(/), podemos hacer divisiones enteras(//), podemos hacer el modulo de un numero(%) o podemos hacer pontencias de un numero(\*\*).
 
-- Sumas y restas
+	* Sumas y restas
 ```python
 ### Ejemplos de sumas
 
@@ -120,7 +120,7 @@ Tambien podemos hacer uso de distintos operadores para realizar operaciones como
 hola que tal estas amigo?
 ```
 
-- Multiplicaciones y divisiones
+	* Multiplicaciones y divisiones
 ```python
 ### Ejemplo de multiplicaciones
 
@@ -139,7 +139,7 @@ hola que tal estas amigo?
 0.001279863481228669
 ```
 
-- Divisiones enteras, modulos y potencias
+	* Divisiones enteras, modulos y potencias
 ```python
 ### Ejemplo divisiones enteras
 
