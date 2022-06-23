@@ -164,3 +164,76 @@ print(80%2443)
 >>> print(2**10)
 1024
 ```
+
+**Operadores booleanos**: Una variable booleana es una variable que sólo puede tomar dos posibles valores: **True (verdadero) o False (falso)**.
+
+En Python **cualquier variable** (en general, cualquier objeto) puede considerarse como una variable booleana. En general los elementos nulos o vacíos se consideran False y el resto se consideran True.
+
+Pero, ¿Que valores se consideran falsos?:
+* False
+* Cualquier numero que sea 0 o 0.0...
+* Cualquier secuencia vacia, ya sean tuplas o diccionarios.
+
+De este modo podemos tener los siguientes ejemplos:
+
+* Ejemplos de valores booleanos:
+```python
+### Ejemplos de booleanos.
+
+>>> bool(0)
+False
+>>> bool(1)
+True
+>>> bool("")
+False
+>>> bool(None)
+False
+>>> bool(())
+False
+>>> bool([])
+False
+>>> bool({})
+False
+>>> bool(34)
+True
+>>> bool(3222)
+True
+>>> bool(322.3)
+True
+```
+
+**Operadores logicos**: Los operadores lógicos son unas operaciones que trabajan con valores booleanos. Existen distintos tipos de booleanos:
+
+* and: Es el ***y^*** lógico. Este operador da como resultado **True** si y sólo si sus dos operandos son **True**:
+```python
+>>> True and True
+True
+>>> True and False
+False
+>>> False and True
+False
+>>> False and False
+False
+```
+
+* or: Es el ***o*** lógico. Este operador da como resultado True si algún operando es True:
+```python
+>>> True or True
+True
+>>> True or False
+True
+>>> False or True
+True
+>>> False or False
+False
+```
+
+**Nota: En el lenguaje cotidiano, el "o" se utiliza a menudo en situaciones en las que sólo puede darse una de las dos alternativas. Por ejemplo, en un menú de restaurante se puede elegir "postre o café", pero no las dos cosas (salvo que se pague aparte, claro). En lógica, ese tipo de "o" se denomina "o exclusivo" (xor).**
+
+* not: Es la negación lógica. Este operador da como resultado True si y sólo si su argumento es False:
+```python
+>>> not True
+False
+>>> not False
+True
+```
