@@ -237,3 +237,75 @@ False
 >>> not False
 True
 ```
+
+#### Comparaciones: Las comparaciones también dan como resultado valores booleanos.
+
+* **> Mayor que; < Menor que**:
+```python
+>>> 3 > 2
+True
+>>> 3 < 2
+False
+```
+
+* **>= Mayor o igual que; <= Menos o igual que**:
+```python
+>>> 2 >= 1 + 1
+True
+>>> 4 - 2 <= 1
+False
+```
+
+* **== igual que; != Distinto de**:
+```python
+>>> 2 == 1 + 1
+True
+>>> 6 / 2 != 3
+False
+```
+
+**Es importante señalar que en matemáticas el signo igual se utiliza tanto en las asignaciones como en las comparaciones, mientras que en Python (y en otros muchos lenguajes de programación):**
+
+**un signo igual (=) significa asignación, es decir, almacenar un valor en una variable
+mientras que dos signos iguales seguidos (==) significa comparación, es decir, decir si es verdad o mentira que dos expresiones son iguales**
+
+## 4. Entrada y salida
+
+Los programas serían de muy poca utilidad si no fueran capaces de interaccionar con el usuario. Por lo que en python, al igual que en todos los lenguajes de programación, podemos introducir datos manualmente y que este nos muestre un resultado o mensaje por pantalla. Para ello hacemos uso de dos funciones llamadas **print() e input()**
+
+### Entrada estandar
+
+* **función raw_input**: La función raw_input() siempre devuelve un valor de cadenas de caracteres:
+```python
+>>> nombre = raw_input('¿Cómo se llama su perro?: ')
+Ana: ¿Cómo se llama usted?: Toby
+>>> print nombre
+Toby
+>>> print(type(nombre))
+<type 'str'>
+
+>>> nombre = raw_input("¿Que edad tienes?: ")
+¿Que edad tienes?: 22
+>>> print(type(nombre))
+<type 'str'>
+```
+
+* **función input**: La función input() siempre devuelve un valor numérico o de caracteres si se trata de una cadena:
+```python
+>>> edad = input('¿Que edad tiene usted?: ')
+¿Que edad tiene usted?: 38
+>>> print edad
+38
+```
+
+### Salida estandar
+
+La forma general de mostrar información por pantalla es mediante una consola de comando, generalmente podemos mostrar texto y variables separándolos con comas, para este se usa la función print().
+
+* **Función print()**: La función print() es sin duda una de las instrucciones más sencillas y que usaremos en el curso, ya que nos permite mostrar información por consola como mensajes, números o valores de una variable. para su uso solo le pasamos en los argumentos lo que deseamos mostrar en consola.
+
+```python
+>>> nombre = "Fran"
+>>> print 'Ana: Hola', nombre, ', encantada de conocerte :3'
+Ana: Hola Fran , encantado de conocerte :3
+```
