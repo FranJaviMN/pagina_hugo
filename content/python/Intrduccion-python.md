@@ -95,7 +95,7 @@ hola mundo
 
 Tambien podemos hacer uso de distintos operadores para realizar operaciones como pueden los siguientes operadores:
 
-**Operadores aritmeticos**: Podemos usar tanto sumas(+) como restas(-) para realizar operaciones aritmeticas, tambien podemos multiplicar(\*), podemos dividr(/), podemos hacer divisiones enteras(//), podemos hacer el modulo de un numero(%) o podemos hacer pontencias de un numero(\*\*).
+#### **Operadores aritmeticos**: Podemos usar tanto sumas(+) como restas(-) para realizar operaciones aritmeticas, tambien podemos multiplicar(\*), podemos dividr(/), podemos hacer divisiones enteras(//), podemos hacer el modulo de un numero(%) o podemos hacer pontencias de un numero(\*\*).
 
 * Sumas y restas
 ```python
@@ -165,7 +165,7 @@ print(80%2443)
 1024
 ```
 
-**Operadores booleanos**: Una variable booleana es una variable que sólo puede tomar dos posibles valores: **True (verdadero) o False (falso)**.
+#### **Operadores booleanos**: Una variable booleana es una variable que sólo puede tomar dos posibles valores: **True (verdadero) o False (falso)**.
 
 En Python **cualquier variable** (en general, cualquier objeto) puede considerarse como una variable booleana. En general los elementos nulos o vacíos se consideran False y el resto se consideran True.
 
@@ -202,7 +202,7 @@ True
 True
 ```
 
-**Operadores logicos**: Los operadores lógicos son unas operaciones que trabajan con valores booleanos. Existen distintos tipos de booleanos:
+#### **Operadores logicos**: Los operadores lógicos son unas operaciones que trabajan con valores booleanos. Existen distintos tipos de booleanos:
 
 * and: Es el ***y^*** lógico. Este operador da como resultado **True** si y sólo si sus dos operandos son **True**:
 ```python
